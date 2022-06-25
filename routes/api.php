@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
+salah
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
    important default prefix => 'api' */
 
 Route::group(['as' => 'api.' ,'namespace' => 'Api'], function () {
-   
+
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
     Route::post('employees/is_employee_phone_exist', 'EmployeesController@isEmployeePhoneExist'); // parameters ($phone)
@@ -41,7 +42,7 @@ Route::group(['as' => 'api.' ,'namespace' => 'Api'], function () {
 
     // Attenance Methodd Apis
     Route::post('attend_methods/getData', 'AttendMethodController@getData');
-    
+
 
 });
 
