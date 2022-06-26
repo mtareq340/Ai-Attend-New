@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Role;
+use App\Branch;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -35,12 +37,41 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('users.add' , compact('roles'));
+        $branches = Branch::all();
+        return view('users.add' , compact('roles', 'branches'));
     }
 
     public function store(Request $request)
     {
-        $data = $request->except('role_id');
+        $validator = Validator::make($request->all() ,
+        [
+            'name' => 'required',
+            "email" => "required|email|unique:users",
+            "address" => "required",
+            "phone" => "required",
+            "password" => "required",
+            "role_id" => "required",
+            "branch_id" => "required",
+        ],
+        [
+            'name.required' => "يجب ادخال اسم المستخدم" ,
+            "email.required" => 'يجب ادخال الايميل',
+            "email.email" => 'الايميل يجب ان يكون ايميل',
+            "address.required" => 'العنوان مطلوب',
+            "phone.required" => 'الهاتف مطلوب',
+            "password.required" => 'كلمة المرور مطلوبة',
+            "role_id.required" => 'الوظيفة مطلوبة',
+            "branch_id.required" => 'الفرع مطلوب',
+        ]);
+
+        if ($validator->fails()) {
+            $err_msg = $validator->errors()->first();
+            return back()->with('error' , $err_msg)->withInput();
+         }
+
+        $data = $request->except(['password']);
+        $data['password'] = bcrypt($request->password);
+
         $user = User::create($data);
         // attach user role
         $user->attachRole($request->role_id);
@@ -53,14 +84,15 @@ class UserController extends Controller
     {
         $user = User::FindOrFail($id);
         // return $user->roles;
+        $branches = Branch::all();
 
         $roles = Role::all();
 
-        return view('users.edit', compact('user' , 'roles'));
+        return view('users.edit', compact('user' , 'roles', 'branches'));
     }
 
     public function update(Request $request, $id){
-        // try{    
+        // try{
             $user = User::findOrFail($id);
 
            //update in db
@@ -75,11 +107,11 @@ class UserController extends Controller
         //     return redirect()->route('users.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
 
         // }
-       
+
     }
 
     public function destroy($id){
-       
+
         try{
             $user = User::find($id);
 
@@ -99,6 +131,6 @@ class UserController extends Controller
             return redirect()->route('users.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
 
         }
-       
+
     }
 }

@@ -58,6 +58,15 @@
 
                 <li class="menu-title mt-2">Apps</li>
 
+                {{-- start of plans --}}
+                <li>
+                    <a href="{{ route('plans.index' , ['type' => 'table']) }}" >
+                        <i class="mdi mdi-office-building"></i>
+                        <span> Plans </span>
+                    </a>
+                </li>
+                {{-- end of plans --}}
+
                 {{-- start of branches --}}
                 <li>
                     <a href="{{ route('branches.index' , ['type' => 'table']) }}" >
