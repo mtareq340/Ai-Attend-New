@@ -29,7 +29,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permissions = $this->permessions_data();
+        // $permissions = $this->permessions_data();
+        $permissions = Permission::latest()->get();
         return view('roles.add' , compact('permissions'));
     }
 
@@ -42,13 +43,13 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         try {
-          $validator = Validator::make($request->all() , 
+          $validator = Validator::make($request->all() ,
             [
                 'name' => 'required',
                 "permissions" => "required",
             ],
             [
-                'name.required' => "يجب ادخال اسم الدور" , 
+                'name.required' => "يجب ادخال اسم الدور" ,
                 "permissions.required" => 'يجب اختيار على الاقل تصريح واحد'
             ]
         );
@@ -93,7 +94,7 @@ class RolesController extends Controller
     {
         //
         $role = Role::FindOrFail($id);
-        $permissions = $this->permessions_data();
+        $permissions = Permission::latest()->get();
         return view('roles.edit',compact('role' , 'permissions'));
     }
 
@@ -106,13 +107,13 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{    
+        try{
             $role = Role::findOrFail($id);
 
         //update in db
             $role->update($request->except('permissions'));
             $role->syncPermissions($request->permissions);
-            
+
             return redirect()->route('roles.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
 
         }catch(\Exception $ex){
@@ -128,7 +129,7 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        try{    
+        try{
             $role = Role::findOrFail($id);
             if($role->users->count() != 0){
                 return back()->with('error' , 'لا يمكن مسح هذا الدور لان هناك موظفين عليه');
