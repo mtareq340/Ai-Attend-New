@@ -24,7 +24,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -32,8 +32,8 @@
                     <h4 class="page-title">Edit "{{$role->name}}" role</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
 
 
@@ -43,7 +43,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                      
+
                         <form action="{{ route('roles.update' , $role->id)}}" method="post" autocomplete="off" class="needs-validation" novalidate>
                             @csrf
                             @method('PATCH')
@@ -62,26 +62,20 @@
 
 
                                 <div class="row gx-2 mt-4">
-                                    @foreach ($permissions as $collection)
-                                        <div class="col-md-6 mb-4 bg-white">
-                                            @foreach ($collection as $p)
-                                                <div class="">
-                                                    <div class="checkbox checkbox-primary mb-2">
-                                                        <input id="{{ $p->id }}" type="checkbox"
-                                                            {{ $role->hasPermission($p->name) ? 'checked' : '' }} 
-                                                            value="{{ $p->id }}" name="permissions[]">
-                                                        <label for="{{ $p->id }}">{{ $p->name }}</label>
-                                                    </div>
+                                    @foreach ($permissions as $permission)
+                                        <div class="col-md-4 bg-white">
+                                            <div class="">
+                                                <div class="checkbox checkbox-primary mb-2">
+                                                    <input id="{{ $permission->id }}" type="checkbox"
+                                                        {{ $role->hasPermission($permission->name) ? 'checked' : '' }}
+                                                        value="{{ $permission->id }}" name="permissions[]">
+                                                    <label for="{{ $permission->id }}">{{ $permission->display_name }}</label>
                                                 </div>
-                                            @endforeach
+                                            </div>
                                         </div> <!-- end col-->
-
-
                                     @endforeach
-
                                 </div>
                                 <!-- end row-->
-
                             </div>
 
                             <center><button type="submit" class="btn btn-success waves-effect waves-light">Update</button></center>
@@ -95,7 +89,7 @@
         <!-- end row -->
 
 
-        
+
     </div> <!-- container -->
 @endsection
 

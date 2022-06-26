@@ -68,25 +68,19 @@
 
 
                                 <div class="row gx-2 mt-4">
-                                    @foreach ($permissions as $collection)
-                                        <div class="col-md-6 mb-4 bg-white">
-                                            @foreach ($collection as $p)
+                                    @foreach ($permissions as $permission)
+                                        <div class="col-md-4 bg-white">
                                                 <div class="">
                                                     <div class="checkbox checkbox-primary mb-2">
-                                                        <input id="{{ $p->id }}" type="checkbox"
-                                                            value="{{ $p->id }}" name="permissions[]">
-                                                        <label for="{{ $p->id }}">{{ $p->name }}</label>
+                                                        <input id="{{ $permission->id }}" type="checkbox"
+                                                            value="{{ $permission->id }}" name="permissions[]">
+                                                        <label for="{{ $permission->id }}">{{ $permission->display_name }}</label>
                                                     </div>
                                                 </div>
-                                            @endforeach
                                         </div> <!-- end col-->
-
-
                                     @endforeach
-
                                 </div>
                                 <!-- end row-->
-
                             </div>
 
                             <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button>

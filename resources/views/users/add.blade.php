@@ -24,7 +24,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -39,8 +39,8 @@
                     <h4 class="page-title">Add User</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
 
 
@@ -51,37 +51,46 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Users</h4>
-                      
+
                         <form action="{{ route('users.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Name</label>
+                                <label for="name" class="col-form-label">Name *</label>
                                 <input type="name" name="name" class="form-control" id="name" placeholder="Name" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="inputEmail4" class="col-form-label">Email</label>
+                                <label for="inputEmail4" class="col-form-label">Email *</label>
                                 <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email" required>
                             </div>
-                          
+
                             <div class="form-group">
-                                <label for="inputAddress" class="col-form-label">Address</label>
-                                <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                <label for="inputAddress" class="col-form-label">Address *</label>
+                                <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="inputPhone" class="col-form-label">Phone</label>
+                                <label for="inputPhone" class="col-form-label">Phone *</label>
                                 <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="010" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="inputPassword4" class="col-form-label">Password</label>
+                                <label for="inputPassword4" class="col-form-label">Password *</label>
                                 <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputBranch" class="col-form-label">Branch *</label>
+                                <select name="branch_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a branch..." required>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="roleInput" class="col-form-label">Role</label>
+                                <label for="roleInput" class="col-form-label">Role *</label>
                                 <select name="role_id" id="roleInput" class="selectize-drop-header" placeholder="Select a role..." required>
                                     @foreach ($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
@@ -102,7 +111,7 @@
         <!-- end row -->
 
 
-        
+
     </div> <!-- container -->
 @endsection
 @section('script')
