@@ -27,7 +27,9 @@
         </div>     
         <!-- end page title --> 
 
-        
+        <button class="btn btn btn-primary">
+            <a href="{{ route('devices.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
+        </button>
         
 
         <div class="row">

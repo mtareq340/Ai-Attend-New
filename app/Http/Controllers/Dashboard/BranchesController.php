@@ -125,10 +125,15 @@ class BranchesController extends Controller
     {
         try{
             $branch = Branch::findOrFail($id);
-            //delete in db
-            $branch ->delete();
-            // Branch::fixTree();
-            return back()->with(['success' => 'تم حذف الفرع بنجاح']);
+            if($branch->can_delete){
+                //delete in db
+                $branch ->delete();
+                return back()->with(['success' => 'تم حذف الفرع بنجاح']);
+            }else{
+                return back()->with(['error' => 'هذا الفرع يوجد عليه موظفين لا يمكن مسحه']);
+            }
+                
+            
 
         }catch(\Exception $ex){
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
