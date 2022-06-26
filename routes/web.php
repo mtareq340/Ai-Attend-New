@@ -19,6 +19,8 @@ Route::group([ 'prefix' => 'dashboard'], function () {
         6- jobs.update   => Update The Request Into DataBase 
         5- jobs.destroy  => Delete The Data From Table Jobs
     */
+     // branches
+    Route::resource('plans', 'Dashboard\PlansController');
     Route::resource('jobs',               'Dashboard\JobController');
     Route::resource('attend_methods', 'Dashboard\AttendmethodsController');
     Route::resource('devices',             'Dashboard\DeviceController');
