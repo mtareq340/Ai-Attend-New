@@ -28,7 +28,9 @@
         <!-- end page title --> 
 
         
-        
+        <button class="btn btn btn-primary">
+            <a href="{{ route('attend_methods.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Attend Method</a>
+        </button>
 
         <div class="row">
             <div class="col-12">

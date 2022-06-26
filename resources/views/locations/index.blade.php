@@ -19,17 +19,21 @@
                                 <li class="breadcrumb-item active">Datatables</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Appointments</h4>
+                        <h4 class="page-title">Locations</h4>
                     </div>
                 </div>
             </div>     
             <!-- end page title --> 
 
+            <button class="btn btn btn-primary">
+                 <a href="{{ route('locations.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Location</a>
+            </button>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="header-title">Appointments</h4>
+                            <h4 class="header-title">locations</h4>
                             <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>

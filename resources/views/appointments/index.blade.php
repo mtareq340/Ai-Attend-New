@@ -24,6 +24,10 @@
             </div>     
             <!-- end page title --> 
 
+            <button class="btn btn btn-primary">
+                 <a href="{{ route('appointment.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Appointment</a>
+            </button>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">

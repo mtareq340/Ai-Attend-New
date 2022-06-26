@@ -17,6 +17,11 @@
             </div>     
             <!-- end page title --> 
 
+            <button class="btn btn btn-primary">
+            <a href="{{ route('roles.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Role</a>
+            </button>
+
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
