@@ -9,7 +9,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -17,18 +17,13 @@
                     <h4 class="page-title">Employees attend methods</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
-
-        
-        
+        </div>
+        <!-- end page title -->
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
-                      
                         <table id="datatable-buttons" class="table table-striped dt-responsive w-100">
                             <thead>
                                 <tr>
@@ -39,10 +34,7 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                        
-                        
                             <tbody>
-
                                 @foreach ($emps as $emp)
                                 <tr>
                                 <td>{{$emp->name}}</td>
@@ -56,24 +48,23 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <a href="/dashboard/employees-attend-methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light"><i class="fa fa-pen"></i></a>
+                                        @can('edit_employee_attend_method')
+                                        <a href="/dashboard/employees-attend-methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
+                                        @endcan
                                     </td>
                                 </tr>
-                                @endforeach 
+                                @endforeach
                             </tbody>
                         </table>
-                        
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
         <!-- end row-->
 
-
-
-
-
-        
     </div> <!-- container -->
 @endsection
 
