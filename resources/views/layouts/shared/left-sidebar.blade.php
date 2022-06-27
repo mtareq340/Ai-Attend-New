@@ -58,6 +58,16 @@
 
                 <li class="menu-title mt-2">Apps</li>
 
+
+                {{-- start of account settings --}}
+                <li>
+                    <a href="{{ route('settings.index') }}" >
+                        <i class="fe-settings noti-icon"></i>
+                        <span> Account settings </span>
+                    </a>
+                </li>
+                {{-- end of account settings --}}
+
                 {{-- start of plans --}}
                 <li>
                     <a href="{{ route('plans.index') }}" >
@@ -66,6 +76,8 @@
                     </a>
                 </li>
                 {{-- end of plans --}}
+
+
 
                 {{-- start of branches --}}
                 <li>
@@ -79,7 +91,7 @@
                 
                 {{-- start of employees requests --}}
                 <li>
-                    <a href="{{ route('employees_requests.index') }}" >
+                    <a href="{{ route('employee_requests.index') }}" >
                         <i class="mdi mdi-office-building"></i>
                         <span> Employees Requests </span>
                     </a>

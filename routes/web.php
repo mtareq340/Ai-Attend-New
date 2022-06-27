@@ -50,6 +50,16 @@ Route::group([ 'prefix' => 'dashboard'], function () {
     Route::get('employee_requests/info', 'EmployeeRequestsController@show_request_emp_info')->name("employee_requests.index.request");
     Route::get('employee_requests/info/{id}/data', 'EmployeeRequestsController@show_request_emp_info_data')->name('employee_requests.index.request.data');
     Route::resource('employee_requests' , 'Dashboard\EmployeeRequestsController');
+    
+    //account settings
+      // settings routes
+      Route::patch('settings/cover', 'Dashboard\AccountSettingsController@uploadCover')->name('changeCover');
+      Route::patch('settings/logo', 'Dashboard\AccountSettingsController@uploadLogo')->name('uploadLogo');
+      Route::put('settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
+      Route::resource('/settings', 'Dashboard\AccountSettingsController', [
+          'only' => ['index', 'update']
+      ]);
+    
     // roles routes
     Route::resource('roles', 'Dashboard\RolesController');
 });

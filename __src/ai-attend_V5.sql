@@ -735,6 +735,13 @@ COMMIT;
 ALTER TABLE `employee_requests` ADD `Action` INT(1) NOT NULL DEFAULT '0' AFTER `accepted`;
 
 
+
+INSERT INTO `settings` (`id`, `value`, `notes`, `created_at`, `updated_at`, `name`) VALUES
+(5, '', NULL, '2022-06-15 10:26:55', '2022-06-15 13:38:26', 'image'),
+(12, '', NULL, '2022-06-15 14:26:53', '2022-06-15 14:40:48', 'name'),
+(14, '', NULL, '2022-06-15 14:27:04', '2022-06-15 14:40:48', 'email'),
+(16, '', NULL, '2022-06-15 14:27:25', '2022-06-15 14:40:48', 'phone'),
+(18, '', NULL, '2022-06-15 14:44:10', '2022-06-15 14:57:26', 'logo');
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
