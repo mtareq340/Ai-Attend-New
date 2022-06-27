@@ -75,7 +75,16 @@
                     </a>
                 </li>
                 {{-- end of branches --}}
-
+                
+                
+                {{-- start of employees requests --}}
+                <li>
+                    <a href="{{ route('employees_requests.index') }}" >
+                        <i class="mdi mdi-office-building"></i>
+                        <span> Employees Requests </span>
+                    </a>
+                </li>
+                {{-- end of employees requests --}}
 
 
                 {{-- start of Employees --}}
