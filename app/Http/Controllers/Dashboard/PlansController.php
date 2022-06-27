@@ -27,8 +27,9 @@ class PlansController extends Controller
         if (! Gate::allows('show_plans')) {
             return abort(401);
         }
-        $plans  = Plan::get();
+        // $plans  = Plan::get();
         // return $plans;
+        $plans  = Plan::all();
         return view('plans.index', compact('plans'));
     }
 
