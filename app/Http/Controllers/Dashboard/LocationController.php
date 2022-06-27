@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\Gate;
 
 class LocationController extends Controller
 {
@@ -19,6 +20,9 @@ class LocationController extends Controller
     }
     public function index()
     {
+        if (! Gate::allows('show_locations')) {
+            return abort(401);
+        }
         $locations = Location::all();
         // dd($locations);
         return view('locations\index', compact('locations'));
@@ -26,6 +30,9 @@ class LocationController extends Controller
 
     public function create()
     {
+        if (! Gate::allows('add_location')) {
+            return abort(401);
+        }
         $devices = Device::all();
         return view('locations.create', compact('devices'));
     }
@@ -64,6 +71,9 @@ class LocationController extends Controller
 
     public function edit($id)
     {
+        if (! Gate::allows('edit_location')) {
+            return abort(401);
+        }
         $devices = Device::all();
         $location = Location::find($id);
         $devicename = Device::find($location->device_id);

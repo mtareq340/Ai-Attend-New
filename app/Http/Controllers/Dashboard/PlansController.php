@@ -7,6 +7,7 @@ use App\Plan;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PlansController extends Controller
 {
@@ -18,12 +19,16 @@ class PlansController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
     public function index(Request $request)
     {
+        if (! Gate::allows('show_plans')) {
+            return abort(401);
+        }
         $plans  = Plan::get();
-        return $plans;
+        // return $plans;
         return view('plans.index', compact('plans'));
     }
 
@@ -53,7 +58,7 @@ class PlansController extends Controller
             // 'long' => 'required|numeric',
             // 'lat' => 'required|numeric',
         ]);
-     
+
         $branch = new Branch($data);
         $branch->save();
         // return $request->parent_id;
@@ -62,7 +67,7 @@ class PlansController extends Controller
             $branch->parent_id = $request->parent_id;
             $branch->save();
         }
-   
+
         return back()->with('success' , 'تم الحفظ بنجاح' );
     }
 
@@ -85,6 +90,9 @@ class PlansController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_plan')) {
+            return abort(401);
+        }
         //
         $branch = Branch::find($id);
         return view('branches.edit' , ['branch' => $branch]);
@@ -99,7 +107,7 @@ class PlansController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{    
+        try{
             $branch = Branch::findOrFail($id);
             //update in db
             $branch->update($request->all());

@@ -6,6 +6,7 @@ use App\Device;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
+use Illuminate\Support\Facades\Gate;
 
 class DeviceController extends Controller
 {
@@ -16,8 +17,11 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        /* 
-            return view in path view/devices/index.blade.php        
+        if (! Gate::allows('show_devices')) {
+            return abort(401);
+        }
+        /*
+            return view in path view/devices/index.blade.php
         */
         $devices  = Device::all();
         return view('devices.index', compact('devices'));
@@ -30,6 +34,9 @@ class DeviceController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('add_device')) {
+            return abort(401);
+        }
         /*
             return view in path view/devices/create.blade.php
         */
@@ -44,7 +51,7 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        // Save The Request Into DataBase 
+        // Save The Request Into DataBase
         $data = $request->all();
         $devices = Device::create($data);
         return redirect()->route('devices.index')->with(['success' => 'تم الحفظ بنجاح']);
@@ -69,6 +76,9 @@ class DeviceController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_device')) {
+            return abort(401);
+        }
         $devices = Device::FindOrFail($id);
         return view('devices.update', compact('devices'));
     }
