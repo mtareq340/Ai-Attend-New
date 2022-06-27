@@ -35,9 +35,9 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                            <li class="breadcrumb-item active">Elements</li>
+                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('assign_appointment.index')}}">Assign Appointment</a></li>
+                            <li class="breadcrumb-item active">Add Assign Appointment</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Add Assign Appointment</h4>
@@ -94,7 +94,7 @@
                                 <select name="work_appointment_id" class="form-control" data-toggle="select2"  aria-hidden="true">
                                     <option >Select Appointmants</option>
                                       @foreach ($appointments as $a)
-                                        <option value="{{$a->id}}">{{$a->id}}</option>
+                                        <option value="{{$a->id}}">{{$a->branch->name}}-{{$a->location->name}}</option>
                                     @endforeach                              
                                 </select>
                             </div>

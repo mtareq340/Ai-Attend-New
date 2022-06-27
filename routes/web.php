@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Dashboard Routes
-Route::group([ 'prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard'], function () {
     Route::resource('users', 'Dashboard\UserController');
     /*
         the List Of route name 
@@ -19,32 +19,32 @@ Route::group([ 'prefix' => 'dashboard'], function () {
         6- jobs.update   => Update The Request Into DataBase 
         5- jobs.destroy  => Delete The Data From Table Jobs
     */
-     // branches
-    Route::resource('plans', 'Dashboard\PlansController');
+    // branches
+    Route::resource('plans', 'Dashboard\PlanController');
     Route::resource('jobs',               'Dashboard\JobController');
-    Route::resource('attend_methods', 'Dashboard\AttendmethodsController');
+    Route::resource('attend_methods', 'Dashboard\AttendmethodController');
     Route::resource('devices',             'Dashboard\DeviceController');
     Route::resource('locations', 'Dashboard\LocationController');
     // employees attend methods
-    Route::resource('employees-attend-methods', 'Dashboard\EmployeesAttendMethodsController');
+    Route::resource('employees_attend_methods', 'Dashboard\EmployeeAttendMethodController');
     // branches
-    Route::resource('branches', 'Dashboard\BranchesController');
+    Route::resource('branches', 'Dashboard\BrancheController');
     // employees (this order should remain the same)
-    Route::get('employees/add-from-excel', 'Dashboard\EmployeesController@excelPage')->name('employees.excelPage');
-    Route::patch('employees/activate', 'Dashboard\EmployeesController@toggleActiveAndLocked')->name('toggleActiveEmp');
-    Route::post('employees/import', 'Dashboard\EmployeesController@import')->name('import_employees');
-    Route::get('/employees/downloadexcel', 'Dashboard\EmployeesController@downloadExcelEmployees')->name('downloadExcelEmps');
-    Route::post('import', 'Dashboard\EmployeesController@import')->name('import_emp_post');
-    Route::resource('employees', 'Dashboard\EmployeesController');
+    Route::get('employees/add-from-excel', 'Dashboard\EmployeeController@excelPage')->name('employees.excelPage');
+    Route::patch('employees/activate', 'Dashboard\EmployeeController@toggleActiveAndLocked')->name('toggleActiveEmp');
+    Route::post('employees/import', 'Dashboard\EmployeeController@import')->name('import_employees');
+    Route::get('/employees/downloadexcel', 'Dashboard\EmployeeController@downloadExcelEmployees')->name('downloadExcelEmps');
+    Route::post('import', 'Dashboard\EmployeeController@import')->name('import_emp_post');
+    Route::resource('employees', 'Dashboard\EmployeeController');
     // assign appointment route
     Route::resource('assign_appointment', 'Dashboard\Assign_AppointmentController');
     // appointment //
-    Route::resource('appointment', 'Dashboard\AppointmentsController');
+    Route::resource('appointment', 'Dashboard\AppointmentController');
 
 
 
     // roles routes
-    Route::resource('roles', 'Dashboard\RolesController');
+    Route::resource('roles', 'Dashboard\RoleController');
 });
 
 Route::group(['prefix' => '/'], function () {

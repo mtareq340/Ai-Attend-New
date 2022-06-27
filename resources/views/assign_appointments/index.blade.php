@@ -15,9 +15,8 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                        <li class="breadcrumb-item active">Datatables</li>
+                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Assign Appointment</li>
                     </ol>
                 </div>
                 <h4 class="page-title">Datatables</h4>
@@ -51,7 +50,7 @@
                             <td>{{ $a->job->name }}</td>
                             <td>{{ $a->branch->name }}</td>
                             <td>{{ $a->location->name }}</td>
-                            <td>{{ $a->work_appointment_id}}</td>
+                            <td>{{$a->branch->name}}-{{$a->location->name}},</td>
                             <td> 
                                 <div class="row row-xs wd-xl-4p">
                                     <a href="{{ route('assign_appointment.edit', $a->id) }}" class="action-icon">

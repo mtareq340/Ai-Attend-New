@@ -93,9 +93,6 @@
                             <li>
                                 <a href="{{ route('employees.create') }}">Add employee</a>
                             </li>
-                            <li>
-                                <a href="{{ route('employees.excelPage') }}">upload employees from excel</a>
-                            </li>
                         </ul>
                     </div>
                 </li>
@@ -263,10 +260,10 @@
                     <div class="collapse" id="sidebarempatt">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('employees-attend-methods.index') }}">Employee Attemdance Methods</a>
+                                <a href="{{ route('employees_attend_methods.index') }}">Employee Attemdance Methods</a>
                             </li>
                             <li>
-                                <a href="{{ route('employees-attend-methods.create') }}">Add Employee Attemdance Methods</a>
+                                <a href="{{ route('employees_attend_methods.create') }}">Add Employee Attemdance Methods</a>
                             </li>
 
                         </ul>

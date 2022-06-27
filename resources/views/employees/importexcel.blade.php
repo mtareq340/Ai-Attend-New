@@ -24,7 +24,22 @@
     </div>
 @endif
     
-    
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('employees.index')}}">Employees</a></li>
+                    <li class="breadcrumb-item active">Upload Employees</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Upload Employee</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title -->    
 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 90vh">
 
 <form action="{{ route('import_emp_post') }}" method="POST" class="w-100 w-md-50 d-flex flex-column justify-content-center align-items-center h-100" enctype="multipart/form-data">
