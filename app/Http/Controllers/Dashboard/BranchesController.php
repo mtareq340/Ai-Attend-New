@@ -6,6 +6,7 @@ use App\Branch;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BranchesController extends Controller
 {
@@ -21,6 +22,9 @@ class BranchesController extends Controller
 
     public function index(Request $request)
     {
+        if (! Gate::allows('show_branches')) {
+            return abort(401);
+        }
         try {
             if($request->type == 'table'){
                 return view('branches.index_table', ['branches' => Branch::all()]);
@@ -59,7 +63,7 @@ class BranchesController extends Controller
             // 'long' => 'required|numeric',
             // 'lat' => 'required|numeric',
         ]);
-     
+
         $branch = new Branch($data);
         $branch->save();
         // return $request->parent_id;
@@ -68,7 +72,7 @@ class BranchesController extends Controller
             $branch->parent_id = $request->parent_id;
             $branch->save();
         }
-   
+
         return back()->with('success' , 'تم الحفظ بنجاح' );
     }
 
@@ -91,6 +95,9 @@ class BranchesController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_branch')) {
+            return abort(401);
+        }
         //
         $branch = Branch::find($id);
         return view('branches.edit' , ['branch' => $branch]);
@@ -105,7 +112,7 @@ class BranchesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{    
+        try{
             $branch = Branch::findOrFail($id);
             //update in db
             $branch->update($request->all());
@@ -132,8 +139,8 @@ class BranchesController extends Controller
             }else{
                 return back()->with(['error' => 'هذا الفرع يوجد عليه موظفين لا يمكن مسحه']);
             }
-                
-            
+
+
 
         }catch(\Exception $ex){
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);

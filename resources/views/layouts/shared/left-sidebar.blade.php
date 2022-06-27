@@ -60,7 +60,7 @@
 
                 {{-- start of plans --}}
                 <li>
-                    <a href="{{ route('plans.index' , ['type' => 'table']) }}" >
+                    <a href="{{ route('plans.index') }}" >
                         <i class="mdi mdi-office-building"></i>
                         <span> Plans </span>
                     </a>

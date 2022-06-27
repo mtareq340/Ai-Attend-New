@@ -9,7 +9,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -17,14 +17,20 @@
                     <h4 class="page-title">Branches</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
-        
+
         <!-- <a href="/dashboard/branches" class="btn btn-lg btn-info my-2">Show as a tree</a> -->
+        {{-- @php
+            dd(auth()->user()->name);
+        @endphp --}}
+        @can('add_branch')
         <button onclick="showAddFormRoot(event)" class="btn btn btn-primary">
             <i class="fa fa-plus"></i>
-            Add Branch</button>
+            Add Branch
+        </button>
+        @endcan
 
         <div class="row">
             <div class="col-12">
@@ -32,7 +38,7 @@
                     <div class="card-body">
                         <h4 class="header-title">Branches table</h4>
         <p class="font-weight-bold text-danger my-2">Important : Can't delete a branch when employees register on it</p>
-                      
+
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
@@ -43,8 +49,8 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                        
-                        
+
+
                             <tbody>
                                 @foreach($branches as $branch)
                                 <tr>
@@ -54,33 +60,37 @@
                                     <td>
                                         <ul>
                                         @foreach ($branch->children()->get() as $item)
-                                        <li>{{$item->name}}</li>    
+                                        <li>{{$item->name}}</li>
                                         @endforeach
                                         </ul>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <div class="row row-xs wd-xl-4p">
                                             <a href="#" onclick="showAddForm('{{$branch->id}}')" class="action-icon">
                                                 <i class="fa fa-plus"></i>
                                             </a>
+                                            @can('edit_branch')
                                             <a href="{{ route('branches.edit', $branch->id) }}" class="action-icon">
+                                            @endcan
                                             <i class="mdi mdi-square-edit-outline"></i> </a>
                                             <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+                                            @can('delete_branch')
                                             <form action="{{ route('branches.destroy', $branch->id)}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button style ="border-color:white; color:red; font-size: 0.8rem;" class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
                                             </form>
+                                            @endcan
                                         </div>
-                                    </td>	
+                                    </td>
                                 </tr>
-                               
+
                                 @endforeach
-                          
-           
+
+
                             </tbody>
                         </table>
-                        
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -130,7 +140,7 @@
                                 <input type="tel" name="notes" id="input-name"
                                     class="form-control form-control-alternative" />
                             </div>
-                
+
 
                             <div class="d-flex justify-content-between">
                                 <button type=" submit" class="btn btn-success mt-4">{{ __('insert') }}</button>
@@ -149,7 +159,7 @@
 
 
 
-        
+
     </div> <!-- container -->
 @endsection
 

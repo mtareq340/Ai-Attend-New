@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class JobController extends Controller
 {
@@ -15,8 +16,11 @@ class JobController extends Controller
      */
     public function index()
     {
-        /* 
-            return view in path view/jobs/index.blade.php        
+        if (! Gate::allows('show_jobs')) {
+            return abort(401);
+        }
+        /*
+            return view in path view/jobs/index.blade.php
         */
         $jobs = Job::all();
         return view('jobs.index', compact('jobs'));
@@ -29,6 +33,9 @@ class JobController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('add_job')) {
+            return abort(401);
+        }
         /*
             return view in path view/jobs/create.blade.php
         */
@@ -43,7 +50,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        // Save The Request Into DataBase 
+        // Save The Request Into DataBase
         $data = $request->all();
         $job = Job::create($data);
 
@@ -69,6 +76,9 @@ class JobController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_job')) {
+            return abort(401);
+        }
         $job = job::FindOrFail($id);
         return view('jobs.update', compact('job'));
     }

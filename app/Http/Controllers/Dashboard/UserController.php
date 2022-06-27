@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -30,12 +31,18 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show_users')) {
+            return abort(401);
+        }
         $users = User::all();
         return view('users/index', compact('users'));
     }
 
     public function create()
     {
+        if (! Gate::allows('add_user')) {
+            return abort(401);
+        }
         $roles = Role::all();
         $branches = Branch::all();
         return view('users.add' , compact('roles', 'branches'));
@@ -82,6 +89,9 @@ class UserController extends Controller
 
     public function edit(Request $resuest, $id)
     {
+        if (! Gate::allows('edit_user')) {
+            return abort(401);
+        }
         $user = User::FindOrFail($id);
         // return $user->roles;
         $branches = Branch::all();
