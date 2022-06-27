@@ -7,6 +7,7 @@ use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
 {
@@ -15,8 +16,18 @@ class RolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function __construct(){
+    //     $this->middleware(['permission:show_roles'])->only('index');
+    //     $this->middleware(['permission:create_role'])->only('create');
+    //     $this->middleware(['permission:update_role'])->only('edit');
+    //     $this->middleware(['permission:delete_role'])->only('destroy');
+
+    // }
     public function index()
     {
+        if (! Gate::allows('show_roles')) {
+            return abort(401);
+        }
         $roles = Role::all();
         $permissions = Permission::all();
         return view('roles.index', compact('roles'));
@@ -29,6 +40,9 @@ class RolesController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('add_role')) {
+            return abort(401);
+        }
         // $permissions = $this->permessions_data();
         $permissions = Permission::latest()->get();
         return view('roles.add' , compact('permissions'));
@@ -92,6 +106,9 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_role')) {
+            return abort(401);
+        }
         //
         $role = Role::FindOrFail($id);
         $permissions = Permission::latest()->get();

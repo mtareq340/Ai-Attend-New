@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Attendmethods;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AttendmethodsController extends Controller
 {
@@ -15,8 +16,11 @@ class AttendmethodsController extends Controller
      */
     public function index()
     {
-        /* 
-            return view in path view/attend_methods/index.blade.php        
+        if (! Gate::allows('show_attend_methods')) {
+            return abort(401);
+        }
+        /*
+            return view in path view/attend_methods/index.blade.php
         */
         $attend_methods  = Attendmethods::all();
         return view('attend_methods.index', compact('attend_methods'));
@@ -29,6 +33,9 @@ class AttendmethodsController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('add_attend_method')) {
+            return abort(401);
+        }
         /*
             return view in path view/jobs/create.blade.php
         */
@@ -43,7 +50,7 @@ class AttendmethodsController extends Controller
      */
     public function store(Request $request)
     {
-        // Save The Request Into DataBase 
+        // Save The Request Into DataBase
         $data = $request->all();
         $attend_methods = Attendmethods::create($data);
         return redirect()->route('attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
@@ -68,6 +75,9 @@ class AttendmethodsController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_attend_method')) {
+            return abort(401);
+        }
         $attend_methods = Attendmethods::FindOrFail($id);
         return view('attend_methods.update', compact('attend_methods'));
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class EmployeesAttendMethodsController extends Controller
 {
@@ -21,6 +22,9 @@ class EmployeesAttendMethodsController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show_employee_attend_methods')) {
+            return abort(401);
+        }
         $emps = Employee::all();
         return view("employees_attend_methods.index", compact('emps'));
     }
@@ -32,6 +36,9 @@ class EmployeesAttendMethodsController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('add_employee_attend_method')) {
+            return abort(401);
+        }
         //
         $employees = Employee::all();
         $jobs = Job::all();
@@ -89,6 +96,9 @@ class EmployeesAttendMethodsController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_employee_attend_method')) {
+            return abort(401);
+        }
         $emp = Employee::find($id);
         $allattendmethod = Attendmethods::all();
         $attend_methods = $emp->attend_methods;

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Gate;
 
 class EmployeesController extends Controller
 {
@@ -31,6 +32,9 @@ class EmployeesController extends Controller
 
     public function index()
     {
+        if (! Gate::allows('show_employees')) {
+            return abort(401);
+        }
         //
         $employees = Employee::all();
         return view('employees.index' , compact('employees'));
@@ -43,6 +47,9 @@ class EmployeesController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('add_employee')) {
+            return abort(401);
+        }
         //
         $branches = Branch::all();
         $jobs = Job::all();
@@ -71,7 +78,7 @@ class EmployeesController extends Controller
         $emp = Employee::create($data);
 
         return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
-        
+
      }
 
     /**
@@ -93,6 +100,9 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('edit_employee')) {
+            return abort(401);
+        }
         //
         $emp = Employee::FindOrFail($id);
         $branches = Branch::all();
@@ -110,7 +120,7 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         //
-        try{    
+        try{
             $emp = Employee::findOrFail($id);
 
         //update in db
@@ -139,7 +149,7 @@ class EmployeesController extends Controller
             ],
             [
                 'file.required' => "يجب اختيار ملف اكسيل اولا" ,
-                
+
             ]
 
         );
@@ -165,7 +175,7 @@ class EmployeesController extends Controller
             return back()->with('error' , 'من فضلك قم بتحميل و استخدام ملف الايكسيل الموفر أسفل الصفحة')->withInput();
         }
         // if($data[0])
-        
+
         $emps = [];
         for ($i = 0; $i < count($data[0]); $i++) {
             $row = $data[0][$i];
@@ -213,7 +223,7 @@ class EmployeesController extends Controller
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
 
         }
-       
+
     }
 
     public function toggleActiveAndLocked(Request $req)
