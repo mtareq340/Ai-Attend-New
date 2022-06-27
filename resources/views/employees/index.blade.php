@@ -9,6 +9,8 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
+
+    
         
         <!-- start page title -->
         <div class="row">
@@ -19,6 +21,11 @@
             </div>
         </div>     
         <!-- end page title --> 
+
+        <button class="btn btn btn-primary">
+            <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
+        </button>
+
 
         <div class="row">
             <div class="col-12">

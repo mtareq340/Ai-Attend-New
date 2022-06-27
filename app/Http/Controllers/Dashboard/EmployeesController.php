@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Branch;
 use App\Employee;
+use App\Setting;
+use App\Plan;
 use App\Http\Controllers\Controller;
 use App\Imports\EmployeeImport;
 use App\Job;
@@ -55,6 +57,15 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
+        $plan_id = Setting::find(1)->value;
+        $plan = Plan::find($plan_id);
+        $employees_count = Employee::count();
+        
+        if($plan->count_employees <= $employees_count)
+            return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
+        
+
+        
         $data = $request->except('_token');
         $data['password'] = Hash::make($data['password']);
         $emp = Employee::create($data);

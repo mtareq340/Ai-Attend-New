@@ -21,17 +21,17 @@
         <!-- end page title --> 
 
         
-        <a href="/dashboard/branches" class="btn btn-lg btn-info my-2">Show as a tree</a>
-        <button onclick="showAddFormRoot(event)" class="btn btn-lg btn-primary">
+        <!-- <a href="/dashboard/branches" class="btn btn-lg btn-info my-2">Show as a tree</a> -->
+        <button onclick="showAddFormRoot(event)" class="btn btn btn-primary">
             <i class="fa fa-plus"></i>
-            Add to root</button>
+            Add Branch</button>
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Branches table</h4>
-        <p class="font-weight-bold text-danger my-2">Important : Deleting a branch will also delete its children , be aware of that</p>
+        <p class="font-weight-bold text-danger my-2">Important : Can't delete a branch when employees register on it</p>
                       
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>

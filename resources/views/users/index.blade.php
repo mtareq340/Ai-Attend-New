@@ -27,6 +27,10 @@
         </div>     
         <!-- end page title --> 
 
+        <button class="btn btn btn-primary">
+            <a href="{{ route('users.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Users</a>
+        </button>
+
         
         
 
