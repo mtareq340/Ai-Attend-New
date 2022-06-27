@@ -22,8 +22,7 @@ class PlansController extends Controller
 
     public function index(Request $request)
     {
-        $plans  = Plan::get();
-        return $plans;
+        $plans  = Plan::all();
         return view('plans.index', compact('plans'));
     }
 
