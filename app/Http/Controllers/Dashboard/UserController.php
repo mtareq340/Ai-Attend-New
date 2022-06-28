@@ -34,7 +34,7 @@ class UserController extends Controller
         if (! Gate::allows('show_users')) {
             return abort(401);
         }
-        $users = User::all();
+        $users = User::where('branch_id', auth()->user()->branch_id)->get();
         return view('users/index', compact('users'));
     }
 
@@ -78,6 +78,8 @@ class UserController extends Controller
 
         $data = $request->except(['password']);
         $data['password'] = bcrypt($request->password);
+        $role = Role::where('id', $request->role_id)->first();
+        $data['user_type'] = $role->name;
 
         $user = User::create($data);
         // attach user role

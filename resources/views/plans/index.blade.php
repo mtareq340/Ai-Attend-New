@@ -9,7 +9,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -24,19 +24,14 @@
                     <h4 class="page-title">Datatables</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
-
-        
-        
+        </div>
+        <!-- end page title -->
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
                         <h4 class="header-title">Plans</h4>
-                      
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
@@ -48,8 +43,6 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                        
-                        
                             <tbody>
                                 @foreach($plans  as $plan)
                                     <tr>
@@ -65,14 +58,11 @@
                                                 <span class="badge bg-soft-danger text-danger">Not Active</span>
                                             @endif
                                         </td>
-                                        
                                     </tr>
                                 @endforeach
-                          
-           
                             </tbody>
                         </table>
-                        
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -83,7 +73,7 @@
 
 
 
-        
+
     </div> <!-- container -->
 @endsection
 
