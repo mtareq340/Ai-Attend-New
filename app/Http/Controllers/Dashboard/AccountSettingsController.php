@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\AttendenceSettings;
 use App\CompanySettings;
 use App\Http\Controllers\Controller;
-use App\Setting;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AccountSettingsController extends Controller
 {
@@ -17,18 +17,18 @@ class AccountSettingsController extends Controller
     public function index()
     {
 
-        $settings = CompanySettings::first();
+        $company_settings = CompanySettings::first();
         $user = Auth::user();
-
-        return view('settings.index', compact('settings' , 'user'));
+        $attendece_settings = AttendenceSettings::first();
+        return view('settings.index', compact('company_settings', 'user' , 'attendece_settings'));
     }
 
     public function uploadCover(Request $request)
     {
 
-        if($request->cover){
+        if ($request->cover) {
 
-            
+
             $img = $request->cover;
             $folderPath = "assets/images/"; //path location
             $imageName = 'cover.jpg';
@@ -36,17 +36,17 @@ class AccountSettingsController extends Controller
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
-            file_put_contents($folderPath.$imageName, $image_base64);
+            file_put_contents($folderPath . $imageName, $image_base64);
 
-            $settings= CompanySettings::first();
+            $settings = CompanySettings::first();
             $settings->background = $imageName;
             $settings->save();
             return response()->json(['msg' => 'تم تعديل صورة الخلفية']);
-
         }
     }
-    
-    public function uploadLogo(Request $request){
+
+    public function uploadLogo(Request $request)
+    {
         $request->validate([
             'logo' => 'mimes:jpeg,jpg,png|required|max:2048'
         ], [
@@ -55,33 +55,31 @@ class AccountSettingsController extends Controller
 
         $imageName = 'logo.jpg';
         request()->logo->move(public_path('assets/images'), $imageName);
-        $settings= CompanySettings::first();
+        $settings = CompanySettings::first();
         $settings->logo = $imageName;
         $settings->save();
 
-        return back()->with('success' , 'تم تعديل اللوجو بنجاح');
-
-
+        return back()->with('success', 'تم تعديل اللوجو بنجاح');
     }
 
-    public function updateAll(Request $request){
-    $data = $request->validate(
-        [
-            'name' => 'required',
-            'address' => '',
-            "email" => "required|email",
-            "phone" => "required",
-        ]
-    );
-    $id = Auth::id();
-    $user = User::find($id);
-    $user->update($data);
-    // Auth::user()->updateAll($data);
+    public function updateAll(Request $request)
+    {
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'address' => '',
+                "email" => "required|email",
+                "phone" => "required",
+            ]
+        );
+        $id = Auth::id();
+        $user = User::find($id);
+        $user->update($data);
+        // Auth::user()->updateAll($data);
 
-    
 
-    return back()->with('success' , 'تم تحديث البيانات بنجاح');
 
+        return back()->with('success', 'تم تحديث البيانات بنجاح');
     }
     public function changePassword(Request $req)
     {
@@ -104,12 +102,39 @@ class AccountSettingsController extends Controller
         // change password
         $user->password = Hash::make($validated['new_password']);
         $user->save();
-        return back()->with('success' , 'تم تحديث كلمة السر بنجاح');
-    
+        return back()->with('success', 'تم تحديث كلمة السر بنجاح');
     }
 
 
     public function update(Request $request, $id)
     {
+    }
+
+
+    public function updateCompanySettings(Request $req)
+    {
+        try {
+            $data = $req->all();
+            $settings = CompanySettings::first();
+            $settings->update($data);
+
+            return back()->with('success' , 'تم نحديث البيانات بنجاح');
+        } catch (Exception $e) {
+            return back()->with('error' , 'حدث خطأ ما قم بالمحاولة لاحقا');
+        }
+    }
+
+    public function toggleAttendenceSettings(Request $req)
+    {
+        $checked = $req->checked;
+        $settings = AttendenceSettings::first();
+        if ($checked) {
+            $settings[$req->type] = true;
+        } else {
+            $settings[$req->type] = false;
+        }
+        $settings->save();
+
+        return response()->json(['msg' => "تم التعديل بنجاح"]);
     }
 }

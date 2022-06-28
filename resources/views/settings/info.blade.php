@@ -30,28 +30,50 @@ novalidate>
 </form>
 
 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">
+    Change password
+</button>
 
-<form action="{{ route('change_auth_user_password') }}" method="POST">
-    @csrf
-    @method('patch')        
-    <h1 class="text-2xl my-7">change password</h1>
 
-    <div class="form-group">
-        <label for="i_password" class="col-form-label">old password</label>
-        <input type="password" name="old_password" class="form-control" id="i_password" required>
+<!-- Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePasswordModalLabel">change password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('change_auth_user_password') }}" method="POST">
+                @csrf
+                @method('patch')        
+                <div class="form-group">
+                    <label for="i_password" class="col-form-label">old password</label>
+                    <input type="password" name="old_password" class="form-control" id="i_password" required>
+                </div>
+            
+            
+                <div class="form-group">
+                    <label for="i_new_password" class="col-form-label">new password</label>
+                    <input type="password" name="new_password" class="form-control" id="i_new_password" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="i_c_new_password" class="col-form-label">confirm new password</label>
+                    <input type="password" name="confirm_new_password" class="form-control" id="i_c_new_password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-success">change password</button>
+            
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-
-    <div class="form-group">
-        <label for="i_new_password" class="col-form-label">new password</label>
-        <input type="password" name="new_password" class="form-control" id="i_new_password" required>
-    </div>
-
-    <div class="form-group">
-        <label for="i_c_new_password" class="col-form-label">confirm new password</label>
-        <input type="password" name="confirm_new_password" class="form-control" id="i_c_new_password" required>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">change password</button>
-
-</form>
