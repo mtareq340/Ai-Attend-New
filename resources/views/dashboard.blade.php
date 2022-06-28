@@ -46,13 +46,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
-                                <i class="fe-heart font-22 avatar-title text-primary"></i>
+                                <i class="fe-user font-22 avatar-title text-primary"></i>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="mt-1">$<span data-plugin="counterup">58,947</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Total Revenue</p>
+                                <h3 class="mt-1"><span data-plugin="counterup">{{$users_count}}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Users</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -64,13 +64,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                <i class="fe-shopping-cart font-22 avatar-title text-success"></i>
+                                <i class="fas fa-user-tie font-22 avatar-title text-success"></i>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Today's Sales</p>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$employess_count}}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Employees</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -82,13 +82,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="avatar-lg rounded-circle bg-soft-info border-info border">
-                                <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
+                                <i class="fas fa-building font-22 avatar-title text-info"></i>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
-                                <p class="text-muted mb-1 text-truncate">Conversion</p>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$branches_count}}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Branches</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -100,13 +100,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
-                                <i class="fe-eye font-22 avatar-title text-warning"></i>
+                                <i class="icon-briefcase font-22 avatar-title text-warning"></i>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">78.41</span>k</h3>
-                                <p class="text-muted mb-1 text-truncate">Today's Visits</p>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$jobs_count}}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Jobs</p>
                             </div>
                         </div>
                     </div> <!-- end row-->

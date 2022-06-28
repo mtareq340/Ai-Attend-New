@@ -8,15 +8,19 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Dashboard Routes
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group([ 'prefix' => 'dashboard'], function () {
+
+    // home
+    Route::get('/' , 'Dashboard\HomeController@index');
+
     Route::resource('users', 'Dashboard\UserController');
     /*
-        the List Of route name 
+        the List Of route name
         1- jobs.index    => return The View Path => Jobs/index.blade.php
-        2- jobs.create   => return The View Path => Jobs/create.blade.php 
+        2- jobs.create   => return The View Path => Jobs/create.blade.php
         3- jobs.edit     => return The view Path => Jobs/Update.blade.php
-        4- jobs.store    => Save   The Request Into DataBase 
-        6- jobs.update   => Update The Request Into DataBase 
+        4- jobs.store    => Save   The Request Into DataBase
+        6- jobs.update   => Update The Request Into DataBase
         5- jobs.destroy  => Delete The Data From Table Jobs
     */
     // branches
@@ -41,7 +45,20 @@ Route::group(['prefix' => 'dashboard'], function () {
     // appointment //
     Route::resource('appointment', 'Dashboard\AppointmentController');
 
+    // employees request
+    Route::patch('employee_requests/activate', 'EmployeeRequestsController@toggleActivationAccept')->name('toggleActiveReqEmp');
+    Route::get('employee_requests/info', 'EmployeeRequestsController@show_request_emp_info')->name("employee_requests.index.request");
+    Route::get('employee_requests/info/{id}/data', 'EmployeeRequestsController@show_request_emp_info_data')->name('employee_requests.index.request.data');
+    Route::resource('employee_requests' , 'Dashboard\EmployeeRequestsController');
 
+    //account settings
+      // settings routes
+      Route::patch('settings/cover', 'Dashboard\AccountSettingsController@uploadCover')->name('changeCover');
+      Route::patch('settings/logo', 'Dashboard\AccountSettingsController@uploadLogo')->name('uploadLogo');
+      Route::put('settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
+      Route::resource('/settings', 'Dashboard\AccountSettingsController', [
+          'only' => ['index', 'update']
+      ]);
 
     // roles routes
     Route::resource('roles', 'Dashboard\RoleController');

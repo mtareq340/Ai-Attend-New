@@ -37,7 +37,7 @@ class EmployeeController extends Controller
             return abort(401);
         }
         //
-        $employees = Employee::all();
+        $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
         return view('employees.index', compact('employees'));
     }
 
@@ -72,7 +72,6 @@ class EmployeeController extends Controller
                 'gender' => 'required',
                 'branch_id' => 'required',
                 'job_id' => 'required',
-                'password' => 'required',
             ]);
             $plan_id = Setting::find(1)->value;
             $plan = Plan::find($plan_id);

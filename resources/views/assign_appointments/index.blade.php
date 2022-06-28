@@ -22,8 +22,8 @@
                 <h4 class="page-title">Datatables</h4>
             </div>
         </div>
-    </div>     
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
 
 
     <div class="row">
@@ -32,7 +32,7 @@
                 <div class="card-body">
 
                     <h4 class="header-title">Attend Methods</h4>
-                  
+
                     <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
@@ -51,25 +51,32 @@
                             <td>{{ $a->branch->name }}</td>
                             <td>{{ $a->location->name }}</td>
                             <td>{{$a->branch->name}}-{{$a->location->name}},</td>
-                            <td> 
+                            <td>
+                            <td>{{ $a->work_appointment_id}}</td>
+                            <td>
                                 <div class="row row-xs wd-xl-4p">
+                                    @can('edit_assign_appointment')
                                     <a href="{{ route('assign_appointment.edit', $a->id) }}" class="action-icon">
-                                    <i class="mdi mdi-square-edit-outline"></i> </a>
+                                        <i class="mdi mdi-square-edit-outline"></i>
+                                    </a>
+                                    @endcan
                                     <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+                                    @can('delete_assign_appointment')
                                     <form action="{{ route('assign_appointment.destroy', $a->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button style ="border-color:white; color:red; font-size: 0.8rem;" class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
                                     </form>
+                                    @endcan
                                 </div>
-                            </td>	
+                            </td>
                         </tr>
                         @endforeach
                         <tbody>
-                           
+
                         </tbody>
                     </table>
-                    
+
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->
