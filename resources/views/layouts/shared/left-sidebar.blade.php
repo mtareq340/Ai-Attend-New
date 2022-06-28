@@ -363,7 +363,7 @@
                             <li>
                                 <a href="{{ route('assign_appointment.create') }}">Add Assign Appointments</a>
                             </li>
-                            @enctype
+                            @endcan
                         </ul>
                     </div>
                 </li>
