@@ -102,7 +102,7 @@
         <div class="p-md-4 tab-content">
             {{-- account settings --}}
             <div class="tab-pane p-1 active" id="account_settings">
-                @include('settings.info')
+                @include('settings.account-settings')
             </div>
 
             {{-- company settings --}}
