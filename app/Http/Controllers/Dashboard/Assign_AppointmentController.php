@@ -18,7 +18,7 @@ class Assign_AppointmentController extends Controller
     //
     public function index()
     {
-        if (! Gate::allows('show_assign_appointments')) {
+        if (!Gate::allows('show_assign_appointments')) {
             return abort(401);
         }
         $appoints = Assign_Appointment::all();
@@ -28,7 +28,7 @@ class Assign_AppointmentController extends Controller
 
     public function create()
     {
-        if (! Gate::allows('add_assign_appointment')) {
+        if (!Gate::allows('add_assign_appointment')) {
             return abort(401);
         }
         $employees = Employee::all();
@@ -86,7 +86,7 @@ class Assign_AppointmentController extends Controller
     }
     public function edit($id)
     {
-        if (! Gate::allows('edit_assign_appointment')) {
+        if (!Gate::allows('edit_assign_appointment')) {
             return abort(401);
         }
         $employees = Employee::all();

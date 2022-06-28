@@ -10,12 +10,12 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class AppointmentsController extends Controller
+class AppointmentController extends Controller
 {
     //
     public function index()
     {
-        if (! Gate::allows('show_appointments')) {
+        if (!Gate::allows('show_appointments')) {
             return abort(401);
         }
         $appointments = Appointment::all();
@@ -24,7 +24,7 @@ class AppointmentsController extends Controller
 
     public function create()
     {
-        if (! Gate::allows('add_appointment')) {
+        if (!Gate::allows('add_appointment')) {
             return abort(401);
         }
         $branches = Branch::all();
@@ -67,7 +67,7 @@ class AppointmentsController extends Controller
 
     public function edit($id)
     {
-        if (! Gate::allows('edit_appointment')) {
+        if (!Gate::allows('edit_appointment')) {
             return abort(401);
         }
         $appointment = Appointment::find($id);

@@ -13,7 +13,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
-class EmployeesAttendMethodsController extends Controller
+class EmployeeAttendMethodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class EmployeesAttendMethodsController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('show_employee_attend_methods')) {
+        if (!Gate::allows('show_employee_attend_methods')) {
             return abort(401);
         }
         $emps = Employee::all();
@@ -36,7 +36,7 @@ class EmployeesAttendMethodsController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('add_employee_attend_method')) {
+        if (!Gate::allows('add_employee_attend_method')) {
             return abort(401);
         }
         //
@@ -96,7 +96,7 @@ class EmployeesAttendMethodsController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_employee_attend_method')) {
+        if (!Gate::allows('edit_employee_attend_method')) {
             return abort(401);
         }
         $emp = Employee::find($id);

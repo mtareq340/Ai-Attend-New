@@ -7,12 +7,12 @@
     <link href="{{asset('assets/libs/selectize/selectize.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/dropify/dropify.min.css')}}" rel="stylesheet" type="text/css" />
-   
+
    <style>
         .selectize-dropdown-header{
             display : none !important
         }
-       
+
     </style>
 @endsection
 
@@ -23,8 +23,25 @@
         {{ session()->get('message') }}
     </div>
 @endif
-    
-    
+
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('employees.index')}}">Employees</a></li>
+                    <li class="breadcrumb-item active">Upload Employees</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Upload Employee</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
 <div class="d-flex flex-column justify-content-center align-items-center" style="height: 90vh">
 
 <form action="{{ route('import_emp_post') }}" method="POST" class="w-100 w-md-50 d-flex flex-column justify-content-center align-items-center h-100" enctype="multipart/form-data">
@@ -51,9 +68,9 @@
 </div>
 
 
-
+@can('add_employee')
 <input type="file" name="file" class="dropify" data-plugins="dropify" data-height="300" />
-
+@endcan
 {{-- <div class="dz-preview dz-file-preview" id="preview-template">
     <div class="dz-message needsclick">
         <i class="h4 text-muted dripicons-cloud-upload"></i>
@@ -62,9 +79,9 @@
 </div> --}}
 
 
-
+@can('add_employee')
 <button type="submit" class="btn btn-success my-2">Upload</button>
-
+@endcan
 </form>
 
 <a href="{{ route('downloadExcelEmps') }}" target="_blank"

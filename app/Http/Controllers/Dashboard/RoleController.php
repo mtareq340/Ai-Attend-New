@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class RolesController extends Controller
     // }
     public function index()
     {
-        if (! Gate::allows('show_roles')) {
+        if (!Gate::allows('show_roles')) {
             return abort(401);
         }
         $roles = Role::all();
@@ -40,12 +40,12 @@ class RolesController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('add_role')) {
+        if (!Gate::allows('add_role')) {
             return abort(401);
         }
         // $permissions = $this->permessions_data();
         $permissions = Permission::latest()->get();
-        return view('roles.add' , compact('permissions'));
+        return view('roles.add', compact('permissions'));
     }
 
     /**
@@ -57,19 +57,20 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         try {
-          $validator = Validator::make($request->all() ,
-            [
-                'name' => 'required',
-                "permissions" => "required",
-            ],
-            [
-                'name.required' => "يجب ادخال اسم الدور" ,
-                "permissions.required" => 'يجب اختيار على الاقل تصريح واحد'
-            ]
-        );
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    "permissions" => "required",
+                ],
+                [
+                    'name.required' => "يجب ادخال اسم الدور",
+                    "permissions.required" => 'يجب اختيار على الاقل تصريح واحد'
+                ]
+            );
             if ($validator->fails()) {
                 $err_msg = $validator->errors()->first();
-                return back()->with('error' , $err_msg)->withInput();
+                return back()->with('error', $err_msg)->withInput();
             }
 
 
@@ -106,13 +107,13 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_role')) {
+        if (!Gate::allows('edit_role')) {
             return abort(401);
         }
         //
         $role = Role::FindOrFail($id);
         $permissions = Permission::latest()->get();
-        return view('roles.edit',compact('role' , 'permissions'));
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -124,16 +125,15 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $role = Role::findOrFail($id);
 
-        //update in db
+            //update in db
             $role->update($request->except('permissions'));
             $role->syncPermissions($request->permissions);
 
             return redirect()->route('roles.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('roles.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
@@ -146,23 +146,23 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             $role = Role::findOrFail($id);
-            if($role->users->count() != 0){
-                return back()->with('error' , 'لا يمكن مسح هذا الدور لان هناك موظفين عليه');
+            if ($role->users->count() != 0) {
+                return back()->with('error', 'لا يمكن مسح هذا الدور لان هناك موظفين عليه');
             }
 
-        $role->permissions()->sync([]); // Delete relationship data
-        $role->delete();
+            $role->permissions()->sync([]); // Delete relationship data
+            $role->delete();
 
-        return redirect()->route('roles.index')->with(['success' => 'تم حذف الدور بنجاح']);
-
-        }catch(\Exception $ex){
+            return redirect()->route('roles.index')->with(['success' => 'تم حذف الدور بنجاح']);
+        } catch (\Exception $ex) {
             return redirect()->route('roles.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
 
-    public function permessions_data(){
+    public function permessions_data()
+    {
         $permissions_data = [];
 
         $permissions = Permission::all();

@@ -11,15 +11,22 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Roles</li>
+                            </ol>
+                        </div>
                         <h4 class="page-title">Roles</h4>
                     </div>
                 </div>
-            </div>     
-            <!-- end page title --> 
-
+            </div>
+            <!-- end page title -->
+            @can('add_role')
             <button class="btn btn btn-primary">
             <a href="{{ route('roles.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Role</a>
             </button>
+            @endcan
 
 
             <div class="row">
@@ -34,29 +41,34 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                            
-                            
+
+
                                 <tbody>
                                     @foreach($roles as $role)
                                     <tr>
                                         <td>{{$role->name}}</td>
                                         <td>
                                             <div class="row row-xs wd-xl-4p">
+                                                @can('edit_role')
                                                 <a href="{{ route('roles.edit', $role->id) }}" class="action-icon">
-                                                <i class="mdi mdi-square-edit-outline"></i> </a>
+                                                    <i class="mdi mdi-square-edit-outline"></i>
+                                                </a>
+                                                @endcan
                                                 <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+                                                @can('delete_role')
                                                 <form action="{{ route('roles.destroy', $role->id)}}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button style ="border-color:white; color:red; font-size: 0.8rem;" class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            
+
                         </div> <!-- end card body-->
                     </div> <!-- end card -->
                 </div><!-- end col-->
