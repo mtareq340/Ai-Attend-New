@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->integer('role')->default(1);
             $table->boolean('status')->default(1);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
