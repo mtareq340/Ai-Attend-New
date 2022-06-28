@@ -84,7 +84,7 @@
                 {{-- start of branches --}}
                 @can('show_branches')
                 <li>
-                    <a href="{{ route('branches.index' , ['type' => 'table']) }}" >
+                    <a href="{{ route('branches.index') }}" >
                         <i class="mdi mdi-office-building"></i>
                         <span> Branches </span>
                     </a>
