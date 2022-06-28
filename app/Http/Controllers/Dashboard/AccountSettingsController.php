@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AccountSettingsController extends Controller
@@ -15,12 +16,13 @@ class AccountSettingsController extends Controller
 
         // get settings as key-value pair from the database
         $raw_settings = Setting::all();
+        $user = Auth::user();
         $settings = [];
         foreach ($raw_settings as $setting) {
             $settings[$setting->name] = $setting->value;
         }
 
-        return view('settings.index', compact('settings'));
+        return view('settings.index', compact('settings' , 'user'));
     }
 
     public function uploadCover(Request $request)

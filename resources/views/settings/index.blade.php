@@ -183,6 +183,7 @@
         const enableEditing = () => {
             $("#c_name").removeAttr('disabled');
             $("#c_email").removeAttr('disabled');
+            $("#c_address").removeAttr('disabled');
             $("#c_phone").removeAttr('disabled');
             $('#edit-info-btn').removeClass('d-none')
         }

@@ -26,7 +26,7 @@
             dd(auth()->user()->name);
         @endphp --}}
         @can('add_branch')
-        <button onclick="showAddFormRoot(event)" class="btn btn btn-primary">
+        <button onclick="showAddFormRoot(event)" class="btn btn btn-primary my-2">
             <i class="fa fa-plus"></i>
             Add Branch
         </button>
@@ -37,7 +37,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Branches table</h4>
-        <p class="font-weight-bold text-danger my-2">Important : Can't delete a branch when employees register on it</p>
 
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
@@ -45,7 +44,7 @@
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>sub branches</th>
+                                    {{-- <th>sub branches</th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -57,13 +56,13 @@
                                     <td>{{ $branch->name }}</td>
                                     <td>{{ $branch->phone }}</td>
                                     <td>{{ $branch->address }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <ul>
                                         @foreach ($branch->children()->get() as $item)
                                         <li>{{$item->name}}</li>
                                         @endforeach
                                         </ul>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <div class="row row-xs wd-xl-4p">
                                             <a href="#" onclick="showAddForm('{{$branch->id}}')" class="action-icon">
