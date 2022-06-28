@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Branch;
+use App\Plan;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class BranchesController extends Controller
+class PlanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,19 +23,13 @@ class BranchesController extends Controller
 
     public function index(Request $request)
     {
-        if (! Gate::allows('show_branches')) {
+        if (!Gate::allows('show_plans')) {
             return abort(401);
         }
-        try {
-            if($request->type == 'table'){
-                return view('branches.index_table', ['branches' => Branch::all()]);
-            }
-            $branches = Branch::withDepth()->with('ancestors')->get()->toTree();
-            return view('branches.index', compact('branches'));
-
-        } catch (Exception $exp) {
-            Branch::fixTree();
-        }
+        // $plans  = Plan::get();
+        // return $plans;
+        $plans  = Plan::all();
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -67,13 +62,13 @@ class BranchesController extends Controller
         $branch = new Branch($data);
         $branch->save();
         // return $request->parent_id;
-        if($request->parent_id ){
+        if ($request->parent_id) {
             // $parent = Branch::find($request->parent_id);
             $branch->parent_id = $request->parent_id;
             $branch->save();
         }
 
-        return back()->with('success' , 'تم الحفظ بنجاح' );
+        return back()->with('success', 'تم الحفظ بنجاح');
     }
 
     /**
@@ -95,12 +90,12 @@ class BranchesController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_branch')) {
+        if (!Gate::allows('edit_plan')) {
             return abort(401);
         }
         //
         $branch = Branch::find($id);
-        return view('branches.edit' , ['branch' => $branch]);
+        return view('branches.edit', ['branch' => $branch]);
     }
 
     /**
@@ -112,12 +107,12 @@ class BranchesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $branch = Branch::findOrFail($id);
             //update in db
             $branch->update($request->all());
-            return redirect()->route('branches.index',['type' => 'table'])->with(['success' => 'تم تحديث الفرع بنجاح']);
-        }catch(\Exception $ex){
+            return redirect()->route('branches.index', ['type' => 'table'])->with(['success' => 'تم تحديث الفرع بنجاح']);
+        } catch (\Exception $ex) {
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
@@ -130,19 +125,13 @@ class BranchesController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             $branch = Branch::findOrFail($id);
-            if($branch->can_delete){
-                //delete in db
-                $branch ->delete();
-                return back()->with(['success' => 'تم حذف الفرع بنجاح']);
-            }else{
-                return back()->with(['error' => 'هذا الفرع يوجد عليه موظفين لا يمكن مسحه']);
-            }
-
-
-
-        }catch(\Exception $ex){
+            //delete in db
+            $branch->delete();
+            // Branch::fixTree();
+            return back()->with(['success' => 'تم حذف الفرع بنجاح']);
+        } catch (\Exception $ex) {
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }

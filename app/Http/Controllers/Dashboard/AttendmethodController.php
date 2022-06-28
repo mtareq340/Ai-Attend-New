@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Attendmethods;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class AttendmethodsController extends Controller
+class AttendmethodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class AttendmethodsController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('show_attend_methods')) {
+        if (!Gate::allows('show_attend_methods')) {
             return abort(401);
         }
         /*
@@ -33,7 +34,7 @@ class AttendmethodsController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('add_attend_method')) {
+        if (!Gate::allows('add_attend_method')) {
             return abort(401);
         }
         /*
@@ -51,9 +52,16 @@ class AttendmethodsController extends Controller
     public function store(Request $request)
     {
         // Save The Request Into DataBase
-        $data = $request->all();
-        $attend_methods = Attendmethods::create($data);
-        return redirect()->route('attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
+        try {
+            $request->validate([
+                'name' => 'required',
+            ]);
+            $data = $request->all();
+            $attend_methods = Attendmethods::create($data);
+            return redirect()->route('attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
+        } catch (Exception $e) {
+            return redirect()->route('attend_methods.index')->with(['error' => 'حدثت مشكله برجاء المحاوله']);
+        }
     }
 
     /**
@@ -75,7 +83,7 @@ class AttendmethodsController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_attend_method')) {
+        if (!Gate::allows('edit_attend_method')) {
             return abort(401);
         }
         $attend_methods = Attendmethods::FindOrFail($id);
@@ -92,8 +100,7 @@ class AttendmethodsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $attend_methods= Attendmethods::findOrFail($id);
-
+            $attend_methods = Attendmethods::findOrFail($id);
             //update in db
             $attend_methods->update($request->all());
             return redirect()->route('attend_methods.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);

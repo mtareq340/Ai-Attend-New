@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <form action="/dashboard/employees-attend-methods/{{$emp->id}}" method="POST">
+                        <form action="/dashboard/employees_attend_methods/{{$emp->id}}" method="POST">
                             @csrf
                             @method('PATCH')
 

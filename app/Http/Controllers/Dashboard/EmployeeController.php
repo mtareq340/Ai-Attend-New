@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class EmployeesController extends Controller
 
     public function index()
     {
-        if (! Gate::allows('show_employees')) {
+        if (!Gate::allows('show_employees')) {
             return abort(401);
         }
         //
@@ -47,13 +47,13 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('add_employee')) {
+        if (!Gate::allows('add_employee')) {
             return abort(401);
         }
         //
         $branches = Branch::all();
         $jobs = Job::all();
-        return view('employees.add' , compact('branches' , 'jobs'));
+        return view('employees.add', compact('branches', 'jobs'));
     }
 
     /**
@@ -78,8 +78,7 @@ class EmployeesController extends Controller
         $emp = Employee::create($data);
 
         return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
-
-     }
+    }
 
     /**
      * Display the specified resource.
@@ -100,14 +99,14 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_employee')) {
+        if (!Gate::allows('edit_employee')) {
             return abort(401);
         }
         //
         $emp = Employee::FindOrFail($id);
         $branches = Branch::all();
         $jobs = Job::all();
-        return view('employees.edit' , compact('emp' , 'branches' , 'jobs'));
+        return view('employees.edit', compact('emp', 'branches', 'jobs'));
     }
 
     /**
@@ -120,59 +119,61 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         //
-        try{
+        try {
             $emp = Employee::findOrFail($id);
 
-        //update in db
+            //update in db
             $emp->update($request->all());
             return redirect()->route('employees.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-
         }
     }
 
-    public function excelPage(){
+    public function excelPage()
+    {
         $branches = Branch::all();
         $jobs = Job::all();
-        return view('employees.importexcel' , compact('branches' , 'jobs'));
+        return view('employees.importexcel', compact('branches', 'jobs'));
     }
 
 
     public function import(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(),
+            [
                 'file' => 'required',
                 'job_id' => 'required',
                 'branch_id' => 'required',
             ],
             [
-                'file.required' => "يجب اختيار ملف اكسيل اولا" ,
+                'file.required' => "يجب اختيار ملف اكسيل اولا",
 
             ]
 
         );
         if ($validator->fails()) {
             $err_msg = $validator->errors()->first();
-            return back()->with('error' , $err_msg)->withInput();
+            return back()->with('error', $err_msg)->withInput();
         }
 
-        if($request->file('file')->getClientOriginalExtension() != 'xlsx'){
-            return back()->with('error' , '(xlsx) يجب ان يكون الملف  من نوع اكسيل')->withInput();
+        if ($request->file('file')->getClientOriginalExtension() != 'xlsx') {
+            return back()->with('error', '(xlsx) يجب ان يكون الملف  من نوع اكسيل')->withInput();
         }
         $data =  Excel::toArray(new EmployeeImport, $request->file('file'));
         // ckeck if file is right
         $first_row = $data[0][0];
-        if($first_row[0] != 'name' ||
+        if (
+            $first_row[0] != 'name' ||
             $first_row[1] != 'email' ||
             $first_row[2] != 'address' ||
             $first_row[3] != 'phone' ||
             $first_row[4] != 'password' ||
             $first_row[5] != 'gender (male - female)' ||
             $first_row[6] != 'age'
-        ){
-            return back()->with('error' , 'من فضلك قم بتحميل و استخدام ملف الايكسيل الموفر أسفل الصفحة')->withInput();
+        ) {
+            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الموفر أسفل الصفحة')->withInput();
         }
         // if($data[0])
 
@@ -197,10 +198,10 @@ class EmployeesController extends Controller
         try {
             Employee::insert($emps);
         } catch (\Exception $e) {
-            return response()->json(['msg' => "حدث خطا ما"] , 400);
+            return response()->json(['msg' => "حدث خطا ما"], 400);
         }
         // return back();
-        return redirect()->route('employees.index')->with('success' , "تم اضافة الموظفين بنجاح");
+        return redirect()->route('employees.index')->with('success', "تم اضافة الموظفين بنجاح");
     }
 
 
@@ -213,17 +214,14 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             $emp = Employee::findOrFail($id);
             //delete in db
             $emp->delete();
             return redirect()->route('employees.index')->with(['success' => 'تم حذف الموظف بنجاح']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-
         }
-
     }
 
     public function toggleActiveAndLocked(Request $req)
@@ -251,9 +249,10 @@ class EmployeesController extends Controller
         return response()->json(['msg' => "تم التعديل بنجاح"]);
     }
 
-    public function downloadExcelEmployees(){
+    public function downloadExcelEmployees()
+    {
         $filepath = public_path('excel\Employees.xlsx');
-        return Response()->download($filepath,'employees.xlsx',[
+        return Response()->download($filepath, 'employees.xlsx', [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ]);
     }

@@ -14,9 +14,8 @@
                     <div class="page-title-box">
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                <li class="breadcrumb-item active">Datatables</li>
+                                <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Locations</li>
                             </ol>
                         </div>
                         <h4 class="page-title">Locations</h4>
@@ -25,7 +24,7 @@
             </div>     
             <!-- end page title --> 
 
-            <button class="btn btn btn-primary">
+            <button class="btn btn btn-primary mb-3">
                  <a href="{{ route('locations.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Location</a>
             </button>
 

@@ -16,6 +16,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Employees</li>
+                        </ol>
+                    </div>
                     <h4 class="page-title">Employees</h4>
                 </div>
             </div>
@@ -24,6 +30,10 @@
         @can('add_employee')
         <button class="btn btn btn-primary">
             <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
+        </button>
+        <button class="btn btn-success">
+            <a href="{{ route('employees.excelPage')}}" style="color:white"><i class="fa fa-plus"></i> Upload Excel Sheet</a>
+
         </button>
         @endcan
 

@@ -91,8 +91,8 @@
                 </li>
                 @endcan
                 {{-- end of branches --}}
-                
-                
+
+
                 {{-- start of employees requests --}}
                 <li>
                     <a href="{{ route('employee_requests.index') }}" >
@@ -330,12 +330,12 @@
                         <ul class="nav-second-level">
                             @can('show_employee_attend_methods')
                             <li>
-                                <a href="{{ route('employees-attend-methods.index') }}">Employee Attemdance Methods</a>
+                                <a href="{{ route('employees_attend_methods.index') }}">Employee Attemdance Methods</a>
                             </li>
                             @endcan
                             @can('add_employee_attend_method')
                             <li>
-                                <a href="{{ route('employees-attend-methods.create') }}">Add Employee Attemdance Methods</a>
+                                <a href="{{ route('employees_attend_methods.create') }}">Add Employee Attemdance Methods</a>
                             </li>
                             @endcan
                         </ul>
