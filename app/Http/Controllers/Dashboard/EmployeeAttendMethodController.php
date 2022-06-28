@@ -40,7 +40,7 @@ class EmployeeAttendMethodController extends Controller
             return abort(401);
         }
         //
-        $employees = Employee::all();
+        $employees = Employee::whereDoesntHave('attend_methods')->get();
         $jobs = Job::all();
         $branchs = Branch::all();
         $attendmethod = Attendmethods::all();
@@ -71,9 +71,9 @@ class EmployeeAttendMethodController extends Controller
                 ]);
             }
             EmpAttendMethods::insert($list);
-            return redirect()->route('employees-attend-methods.create')->with(['success' => 'تم الحفظ بنجاح']);
+            return redirect()->route('employees_attend_methods.create')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
-            return redirect()->route('employees-attend-methods.create')->with(['error' => 'حدث خطا برجاء المحاوله']);
+            return redirect()->route('employees_attend_methods.create')->with(['error' => 'حدث خطا برجاء المحاوله']);
         }
     }
 
@@ -143,9 +143,9 @@ class EmployeeAttendMethodController extends Controller
                 ]);
             }
             EmpAttendMethods::insert($newlist);
-            return redirect()->route('employees-attend-methods.index')->with(['success' => 'تم التحديث بنجاح']);
+            return redirect()->route('employees_attend_methods.index')->with(['success' => 'تم التحديث بنجاح']);
         } catch (Exception $e) {
-            return redirect()->route('employees-attend-methods.edit', $id)->with(['error' => 'حدث خطا برجاء المحاوله']);
+            return redirect()->back()->with(['error' => 'حدث خطا برجاء المحاوله']);
         }
     }
 

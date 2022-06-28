@@ -82,9 +82,6 @@
 
 </form>
 
-<a href="{{ route('downloadExcelEmps') }}" target="_blank"
-class="btn d-block btn-primary my-2 ">Download
-excel file</a>
 </div>
 
 
