@@ -9,7 +9,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -23,22 +23,20 @@
                     <h4 class="page-title">Datatables</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
-        
+        @can('add_job')
         <button class="btn btn btn-primary">
             <a href="{{ route('jobs.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Job</a>
         </button>
-
+        @endcan
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
                         <h4 class="header-title">Jobs</h4>
-                      
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
@@ -46,33 +44,38 @@
                                     <th>Note</th>
                                 </tr>
                             </thead>
-                        
-                        
+
+
                             <tbody>
                                 @foreach($jobs as $job)
                                 <tr>
                                     <td>{{ $job->name }}</td>
                                     <td>{{ $job->notes }}</td>
-                                    <td> 
+                                    <td>
                                         <div class="row row-xs wd-xl-4p">
+                                            @can('edit_job')
                                             <a href="{{ route('jobs.edit', $job->id) }}" class="action-icon">
-                                            <i class="mdi mdi-square-edit-outline"></i> </a>
+                                                <i class="mdi mdi-square-edit-outline"></i>
+                                            </a>
+                                            @endcan
                                             <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+                                            @can('delete_job')
                                             <form action="{{ route('jobs.destroy', $job->id)}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button style ="border-color:white; color:red; font-size: 0.8rem;" class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
                                             </form>
+                                            @endcan
                                         </div>
-                                    </td>	
+                                    </td>
                                 </tr>
-                               
+
                                 @endforeach
-                          
-           
+
+
                             </tbody>
                         </table>
-                        
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -83,7 +86,7 @@
 
 
 
-        
+
     </div> <!-- container -->
 @endsection
 

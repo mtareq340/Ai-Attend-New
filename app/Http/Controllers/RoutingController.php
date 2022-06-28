@@ -32,6 +32,7 @@ class RoutingController extends Controller
     {
         if ($first != 'assets')
             return view($first);
+
         return view('index');
     }
 

@@ -36,8 +36,8 @@ class EmployeeController extends Controller
             return abort(401);
         }
         //
-        $employees = Employee::all();
-        return view('employees.index', compact('employees'));
+        $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+        return view('employees.index' , compact('employees'));
     }
 
     /**
@@ -68,7 +68,7 @@ class EmployeeController extends Controller
         $plan = Plan::find($plan_id);
         $employees_count = Employee::count();
 
-        if ($plan->count_employees <= $employees_count)
+        if($plan->count_employees <= $employees_count)
             return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
 
 

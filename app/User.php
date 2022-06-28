@@ -30,9 +30,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function roles()
+    public function branch()
     {
-        return $this->belongsToMany(Role::class, 'role_user');
+        return $this->belongsTo(Branch::class);
     }
 
 

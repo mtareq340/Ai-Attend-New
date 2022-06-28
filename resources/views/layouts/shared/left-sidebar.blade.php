@@ -53,32 +53,58 @@
                         <i data-feather="airplay"></i>
                         <span> Dashboard</span>
                     </a>
-                   
+
                 </li>
 
                 <li class="menu-title mt-2">Apps</li>
 
+
+                {{-- start of account settings --}}
+                <li>
+                    <a href="{{ route('settings.index') }}" >
+                        <i class="fe-settings noti-icon"></i>
+                        <span> Account settings </span>
+                    </a>
+                </li>
+                {{-- end of account settings --}}
+
                 {{-- start of plans --}}
+                @can('show_plans')
                 <li>
                     <a href="{{ route('plans.index') }}" >
                         <i class="mdi mdi-office-building"></i>
                         <span> Plans </span>
                     </a>
                 </li>
+                @endcan
                 {{-- end of plans --}}
 
+
+
                 {{-- start of branches --}}
+                @can('show_branches')
                 <li>
                     <a href="{{ route('branches.index' , ['type' => 'table']) }}" >
                         <i class="mdi mdi-office-building"></i>
                         <span> Branches </span>
                     </a>
                 </li>
+                @endcan
                 {{-- end of branches --}}
 
 
+                {{-- start of employees requests --}}
+                <li>
+                    <a href="{{ route('employee_requests.index') }}" >
+                        <i class="mdi mdi-office-building"></i>
+                        <span> Employees Requests </span>
+                    </a>
+                </li>
+                {{-- end of employees requests --}}
+
 
                 {{-- start of Employees --}}
+                @can('show_employees')
                 <li>
                     <a href="#sidebaremp" data-toggle="collapse">
                         <i class="fas fa-user-tie"></i>
@@ -87,19 +113,28 @@
                     </a>
                     <div class="collapse" id="sidebaremp">
                         <ul class="nav-second-level">
+                            @can('show_employees')
                             <li>
                                 <a href="{{ route('employees.index') }}">Employees</a>
                             </li>
+                            @endcan
+                            @can('add_employee')
                             <li>
                                 <a href="{{ route('employees.create') }}">Add employee</a>
                             </li>
+                            <li>
+                                <a href="{{ route('employees.excelPage') }}">upload employees from excel</a>
+                            </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- end of Employees --}}
 
 
                 {{-- start of users --}}
+                @can('show_users')
                 <li>
                     <a href="#sidebarCrm" data-toggle="collapse">
                         <i data-feather="users"></i>
@@ -108,19 +143,24 @@
                     </a>
                     <div class="collapse" id="sidebarCrm">
                         <ul class="nav-second-level">
+                            @can('show_users')
                             <li>
                                 <a href="{{ route('users.index') }}">Users</a>
                             </li>
+                            @endcan
+                            @can('add_user')
                             <li>
                                 <a href="{{ route('users.create') }}">Add User</a>
                             </li>
-
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- end of users --}}
 
                 {{-- start of roles --}}
+                @can('show_roles')
                 <li>
                     <a href="#sidebar_roles" data-toggle="collapse">
                         <i data-feather="lock"></i>
@@ -129,18 +169,23 @@
                     </a>
                     <div class="collapse" id="sidebar_roles">
                         <ul class="nav-second-level">
+                            @can('show_roles')
                             <li>
                                 <a href="{{ route('roles.index') }}">Roles</a>
                             </li>
+                            @endcan
+                            @can('add_role')
                             <li>
                                 <a href="{{ route('roles.create') }}">Add role</a>
                             </li>
-
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- end of roles --}}
                 {{-- start of locations --}}
+                @can('show_locations')
                 <li>
                     <a href="#sidebarlocation" data-toggle="collapse">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -155,60 +200,75 @@
                     </a>
                     <div class="collapse" id="sidebarlocation">
                         <ul class="nav-second-level">
+                            @can('show_locations')
                             <li>
                                 <a href="{{route('locations.index')}}">Location</a>
                             </li>
+                            @endcan
+                            @can('add_location')
                             <li>
                                 <a href="{{route('locations.create')}}">Add Location</a>
                             </li>
-
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                     {{-- end of locations --}}
 
                     {{-- Appointment --}}
+                    @can('show_appointments')
                     <li>
                         <a href="#sidebarappointment" data-toggle="collapse">
-                            <i class="fe-check-square"></i>. 
+                            <i class="fe-check-square"></i>.
                             <span> Appointment </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarappointment">
                             <ul class="nav-second-level">
+                                @can('show_appointments')
                                 <li>
                                     <a href="{{route('appointment.index')}}">Appointments</a>
                                 </li>
+                                @endcan
+                                @can('add_appointment')
                                 <li>
                                     <a href="{{route('appointment.create')}}">Add Appointments</a>
                                 </li>
-                            
+                                @endcan
                             </ul>
                         </div>
                     </li>
+                    @endcan
                     {{-- end of appointment --}}
                 {{-- Here Jobs Sidebar  --}}
+                    @can('show_jobs')
                     <li>
                         <a href="#sidebarjob" data-toggle="collapse">
-                            <i class="icon-briefcase"></i>. 
+                            <i class="icon-briefcase"></i>.
                             <span> Jobs </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarjob">
                             <ul class="nav-second-level">
+                                @can('show_jobs')
                                 <li>
                                     <a href="{{route('jobs.index')}}">Jobs</a>
                                 </li>
+                                @endcan
+                                @can('add_job')
                                 <li>
                                     <a href="{{route('jobs.create')}}">Add Jobs</a>
                                 </li>
-                            
+                                @endcan
                             </ul>
                         </div>
                     </li>
+                    @endcan
                 {{-- EndSidebar Jobs --}}
 
                 {{-- Here attend_methods  Sidebar --}}
+                @can('show_attend_methods')
                 <li>
                     <a href="#sidebarmethod" data-toggle="collapse">
                         <i class=" icon-clock"></i>.
@@ -217,19 +277,24 @@
                     </a>
                     <div class="collapse" id="sidebarmethod">
                         <ul class="nav-second-level">
+                            @can('show_attend_methods')
                             <li>
                                 <a href="{{ route('attend_methods.index') }}">Attend Methods</a>
                             </li>
+                            @endcan
+                            @can('add_attend_method')
                             <li>
                                 <a href="{{ route('attend_methods.create') }}">Add Attend Methods</a>
                             </li>
-
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- EndSidebar attend_methods --}}
 
                 {{-- Here devices  Sidebar --}}
+                @can('show_devices')
                 <li>
                     <a href="#sidebardevices" data-toggle="collapse">
                         <i class="icon-mouse"></i>.
@@ -238,40 +303,49 @@
                     </a>
                     <div class="collapse" id="sidebardevices">
                         <ul class="nav-second-level">
+                            @can('show_devices')
                             <li>
                                 <a href="{{ route('devices.index') }}">Devices</a>
                             </li>
+                            @endcan
+                            @can('add_device')
                             <li>
                                 <a href="{{ route('devices.create') }}">Add Devices</a>
                             </li>
-
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- EndSidebar devices --}}
                 {{-- start of employee - attend methods --}}
-
+                @can('show_employee_attend_methods')
                 <li>
                     <a href="#sidebarempatt" data-toggle="collapse">
-                        <i class="fa fa-users"></i>. 
+                        <i class="fa fa-users"></i>.
                         <span>Emp Attendance (M)</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarempatt">
                         <ul class="nav-second-level">
+                            @can('show_employee_attend_methods')
                             <li>
                                 <a href="{{ route('employees_attend_methods.index') }}">Employee Attemdance Methods</a>
                             </li>
+                            @endcan
+                            @can('add_employee_attend_method')
                             <li>
                                 <a href="{{ route('employees_attend_methods.create') }}">Add Employee Attemdance Methods</a>
                             </li>
-
+                            @endcan
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- end of employee - attend methods --}}
 
                 {{-- start of Assign Appointment --}}
+                @can('show_assign_appointments')
                 <li>
                     <a href="#sidebarassign" data-toggle="collapse">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard icon-dual"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -280,18 +354,22 @@
                     </a>
                     <div class="collapse" id="sidebarassign">
                         <ul class="nav-second-level">
+                            @can('show_assign_appointments')
                             <li>
                                 <a href="{{ route('assign_appointment.index') }}">Assign Appointments</a>
                             </li>
+                            @endcan
+                            @can('add_assign_appointment')
                             <li>
                                 <a href="{{ route('assign_appointment.create') }}">Add Assign Appointments</a>
                             </li>
-
+                            @enctype
                         </ul>
                     </div>
                 </li>
+                @endcan
                 {{-- End of Assign Appointment --}}
-                
+
                 <li class="menu-title">Some Pages For Design</li>
 
                 <li>
