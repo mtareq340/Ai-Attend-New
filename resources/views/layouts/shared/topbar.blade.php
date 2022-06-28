@@ -379,28 +379,23 @@
                 </a>
                 <div class="dropdown-menu">
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <i class="fe-briefcase mr-1"></i>
-                        <span>New Projects</span>
-                    </a>
-    
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
+                    <a href="{{route('users.create')}}" class="dropdown-item">
                         <i class="fe-user mr-1"></i>
-                        <span>Create Users</span>
+                        <span class="ml-1">Create a new User</span>
                     </a>
     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <i class="fe-bar-chart-line- mr-1"></i>
-                        <span>Revenue Report</span>
+                    <a href="{{route('employees.create')}}" class="dropdown-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="ml-1">Create a new Employee</span>
                     </a>
     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <i class="fe-settings mr-1"></i>
-                        <span>Settings</span>
+                    <a href="{{route('appointment.create')}}" class="dropdown-item">
+                        <i class="icon-clock"></i>
+                        <span class="ml-1">Create a new Appointment</span>
                     </a>
+    
     
                     <div class="dropdown-divider"></div>
     

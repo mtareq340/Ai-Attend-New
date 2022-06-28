@@ -3,6 +3,12 @@ novalidate>
     @csrf
     @method('PUT')
     <button type="button" onclick="enableCompanySettingsEditing()" class="border-0 outline-0 btn btn-outline-secondary waves-effect waves-light"><i class="fa fa-pen"></i></button>
+    
+    <div class="form-group">
+        <label class="col-form-label">Regestration Number</label>
+        <input disabled readonly type="text" class="form-control" value="will be gotten from the api (can't be edited)">
+    </div>
+    
     <div class="form-group">
         <label for="ssid_input" class="col-form-label">SSID</label>
         <input disabled type="text" name="ssid" class="form-control" id="ssid_input" value="{{$company_settings->ssid}}">
