@@ -9,6 +9,10 @@ Auth::routes();
 
 // Dashboard Routes
 Route::group([ 'prefix' => 'dashboard'], function () {
+
+    // home
+    Route::get('/' , 'Dashboard\HomeController@index');
+
     Route::resource('users', 'Dashboard\UserController');
     /*
         the List Of route name 
@@ -41,8 +45,21 @@ Route::group([ 'prefix' => 'dashboard'], function () {
     // appointment //
     Route::resource('appointment', 'Dashboard\AppointmentsController');
 
-
-
+    // employees request
+    Route::patch('employee_requests/activate', 'EmployeeRequestsController@toggleActivationAccept')->name('toggleActiveReqEmp');
+    Route::get('employee_requests/info', 'EmployeeRequestsController@show_request_emp_info')->name("employee_requests.index.request");
+    Route::get('employee_requests/info/{id}/data', 'EmployeeRequestsController@show_request_emp_info_data')->name('employee_requests.index.request.data');
+    Route::resource('employee_requests' , 'Dashboard\EmployeeRequestsController');
+    
+    //account settings
+      // settings routes
+      Route::patch('settings/cover', 'Dashboard\AccountSettingsController@uploadCover')->name('changeCover');
+      Route::patch('settings/logo', 'Dashboard\AccountSettingsController@uploadLogo')->name('uploadLogo');
+      Route::put('settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
+      Route::resource('/settings', 'Dashboard\AccountSettingsController', [
+          'only' => ['index', 'update']
+      ]);
+    
     // roles routes
     Route::resource('roles', 'Dashboard\RolesController');
 });
