@@ -55,7 +55,7 @@
                                     </td>
                                     <td>
                                         @can('edit_employee_attend_method')
-                                        <a href="/dashboard/employees-attend-methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light">
+                                        <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light">
                                             <i class="fa fa-pen"></i>
                                         </a>
                                         @endcan

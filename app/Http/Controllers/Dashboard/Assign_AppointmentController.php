@@ -115,4 +115,14 @@ class Assign_AppointmentController extends Controller
             return redirect()->route('assign_appointment.edit')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
+
+
+    //function to get employees filtering from branch and job
+    public function getemployees(Request $req)
+    {
+
+        $branch_id = $req->branch_id;
+        $emps =  Employee::where('branch_id', '=', $branch_id)->get();
+        return response()->json($emps);
+    }
 }

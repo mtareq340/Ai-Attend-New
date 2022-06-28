@@ -85,6 +85,7 @@ class EmployeeController extends Controller
             return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            // return $e;
         }
     }
 

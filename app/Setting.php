@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $table = "settings";
-    
-    protected $fillable = [
-        'id', 'name',	'value'
-    ];
+    protected $table = "company_settings";
 
-    
+    protected $fillable = [
+        'id', 'name',    'value'
+    ];
 }

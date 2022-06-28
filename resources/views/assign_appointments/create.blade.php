@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="branch">Branch *</label>
-                                <select name="branch_id" class="form-control " data-toggle="select2" >
+                                <select id="branch" onchange="handleBranchSelect(event)" name="branch_id" class="form-control " data-toggle="select2" >
                                     <option >Select Branch</option>
                                     @foreach ( $branchs as $b )
                                     <option value="{{$b->id}}" >{{$b->name}}</option>
@@ -101,10 +101,8 @@
 
                             <div class="form-group">
                                 <label for="location">Employees *</label>
-                                <select name="employee_id[]" id="select2-multiple" class="form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
-                                    @foreach ( $employees as $e )
-                                    <option value="{{$e->id}}">{{$e->name}}</option>
-                                    @endforeach    
+                                <select name="employee_id[]" id="select2-multiple" class="selectemp form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
+                                    <option value=""></option>  
                                     </select>
                                 </div>
                             <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
@@ -116,8 +114,6 @@
             </div> <!-- end col -->
         </div>
         <!-- end row -->
-
-
         
     </div> <!-- container -->
 @endsection
@@ -140,9 +136,35 @@
     <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
     <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
     <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
-    <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
-
+    
     <!-- Page js-->
     <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+    <script>
+        const handleBranchSelect = (event) => {
+
+            let branch_id =  event.target.value;
+            $.ajax(
+                {
+                    "type":"GET",
+                    'url':`{{ route('getEmpsByBranch') }}`,
+                    dataType: 'json', // added data type
+                    data : {"branch_id" : branch_id},
+                    success:function(response){
+                        response.forEach(employee => {
+                            $('.selectemp').append($('<option>', {
+                                value: employee.id,
+                                text: employee.name
+                            }));
+                        });
+                    },
+                    error:function(error){
+                        console.log(error);
+                    },
+
+                });            
+        }
+
+        
+    </script>
  
 @endsection
