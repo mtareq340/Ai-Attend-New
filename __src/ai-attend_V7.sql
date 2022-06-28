@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2022 at 02:38 PM
+-- Generation Time: Jun 28, 2022 at 04:49 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -154,6 +154,7 @@ INSERT INTO `company_settings` (`id`, `name`, `email`, `registeration_num`, `pho
 CREATE TABLE `devices` (
   `id` bigint(20) NOT NULL,
   `name` varchar(191) NOT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   `notes` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -163,8 +164,8 @@ CREATE TABLE `devices` (
 -- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`id`, `name`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'Mohamed Tarek', 'dfbgnhm', '2022-06-21 05:15:14', '2022-06-21 05:15:14');
+INSERT INTO `devices` (`id`, `name`, `active`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 'Mohamed Tarek', NULL, 'dfbgnhm', '2022-06-21 05:15:14', '2022-06-21 05:15:14');
 
 -- --------------------------------------------------------
 

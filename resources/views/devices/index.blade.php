@@ -58,6 +58,7 @@
                                                 <a href="{{ route('devices.edit', $device->id) }}" class="action-icon">
                                                     <i class="mdi mdi-square-edit-outline"></i>
                                                 </a>
+                                                @endcan
                                                 <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
                                                 @can('delete_device')
                                                 <form action="{{ route('devices.destroy', $device->id)}}" method="post">
