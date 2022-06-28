@@ -16,9 +16,10 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                            <li class="breadcrumb-item active">Elements</li>
+                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('locations.index')}}">Locations</a></li>
+                            <li class="breadcrumb-item active">Edit Location</li>
+
                         </ol>
                     </div>
                     <h4 class="page-title">Update Locations</h4>

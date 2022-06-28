@@ -9,41 +9,24 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-
-
-
+        
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Employees</li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">Employees</h4>
+                    <h4 class="page-title">Employees Requests</h4>
                 </div>
             </div>
-        </div>
-        <!-- end page title -->
-        @can('add_employee')
-        <button class="btn btn btn-primary">
-            <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
-        </button>
-        <button class="btn btn-success">
-            <a href="{{ route('employees.excelPage')}}" style="color:white"><i class="fa fa-plus"></i> Upload Excel Sheet</a>
-
-        </button>
-        @endcan
+        </div>     
+        <!-- end page title --> 
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="header-title">Employees table</h4>
-
+                        
+                      
                         <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100">
                             <div class="dt-buttons"></div>
                             <thead>
@@ -54,13 +37,11 @@
                                     <th>Address</th>
                                     <th>Branch</th>
                                     <th>Job</th>
-                                    <th>Active</th>
-                                    <th>Locked</th>
-                                    <th>Action</th>
+                                    <th>Show Info Requests</th>
                                 </tr>
                             </thead>
-
-
+                        
+                        
                             <tbody>
                                 @foreach($employees as $emp)
                                 <tr>
@@ -70,40 +51,21 @@
                                     <td>{{ $emp->address }}</td>
                                     <td>{{ $emp->branch->name }}</td>
                                     <td>{{ $emp->job->name }}</td>
-                                    <td>
-                                        @can('edit_employee')
-                                        <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')" class="js-switch" {{$emp->active?'checked':''}} data-plugin="switchery" />
-                                        @endcan
-                                    </td>
-                                    <td>
-                                        @can('edit_employee')
-                                        <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')" class="js-switch" {{$emp->locked?'checked':''}} data-plugin="switchery" />
-                                        @endcan
-                                    </td>
-                                    <td>
+                                    <td> 
                                         <div class="row row-xs wd-xl-4p">
-                                            @can('edit_employee')
-                                            <a href="{{ route('employees.edit', $emp->id) }}" class="action-icon">
-                                                <i class="mdi mdi-square-edit-outline"></i>
+                                            <a href="{{ route('employee_requests.index.request.data', $emp->id) }}" class="action-icon">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
-                                            @endcan
                                             <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
-                                            @can('delete_employee')
-                                            <form action="{{ route('employees.destroy', $emp->id)}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button style ="border-color:white; color:red; font-size: 0.8rem;" class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
-                                            </form>
-                                            @endcan
                                         </div>
-                                    </td>
+                                    </td>	
                                 </tr>
-
+                               
                                 @endforeach
-
+                          
                             </tbody>
                         </table>
-
+                        
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -114,7 +76,7 @@
 
 
 
-
+        
     </div> <!-- container -->
 @endsection
 
@@ -137,7 +99,7 @@
 
         // toggle active with ajax
         const toggleActivationAndLocked = (e, id , type) => {
-
+        
             (async () => {
                     try {
                         let checked = e.target.checked;
@@ -170,6 +132,6 @@
                 ();
 
             }
-
+   
     </script>
 @endsection

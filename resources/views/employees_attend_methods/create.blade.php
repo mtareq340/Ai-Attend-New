@@ -29,6 +29,13 @@
      <div class="row">
         <div class="col-12">
             <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('attend_methods.index')}}">Attend Methods</a></li>
+                        <li class="breadcrumb-item active">Add Attend Method</li>
+                    </ol>
+                </div>
                 <h4 class="page-title">Add Employees Attends Method</h4>
             </div>
         </div>
@@ -40,7 +47,7 @@
             <div class="card">
                 <div class="card-body">
                   
-                    <form action="{{ route('employees-attend-methods.store') }}" method="post" autocomplete="off" class="needs-validation" novalidate>
+                    <form action="{{ route('employees_attend_methods.store') }}" method="post" autocomplete="off" class="needs-validation" novalidate>
                         @csrf
                         
                         <div class="form-group">

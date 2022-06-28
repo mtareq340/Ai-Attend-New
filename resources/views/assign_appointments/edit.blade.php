@@ -18,9 +18,9 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                            <li class="breadcrumb-item active">Elements</li>
+                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('assign_appointment.index')}}">Assign Appointment</a></li>
+                            <li class="breadcrumb-item active">Edit Assign Appointment</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Edit attend_methods</h4>
