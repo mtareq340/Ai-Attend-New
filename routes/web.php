@@ -13,6 +13,7 @@ Route::group([ 'prefix' => 'dashboard'], function () {
     // home
     Route::get('/' , 'Dashboard\HomeController@index');
 
+    Route::patch('/auth/changepass' , 'Dashboard\AccountSettingsController@changePassword')->name('change_auth_user_password');
     Route::resource('users', 'Dashboard\UserController');
     /*
         the List Of route name

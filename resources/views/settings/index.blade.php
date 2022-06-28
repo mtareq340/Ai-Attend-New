@@ -82,6 +82,15 @@
             </li>
 
             <li class="nav-item">
+                <a href="#company-settings" data-toggle="tab" aria-expanded="false"
+                    class="nav-link font-weight-bold">
+                    Company settings
+                </a>
+            </li>
+
+
+
+            <li class="nav-item">
                 <a href="" data-toggle="tab" aria-expanded="false"
                     class="nav-link font-weight-bold">
                     Attendence settings
@@ -91,9 +100,12 @@
         </ul>
         <div class="p-md-4 tab-content">
             <div class="tab-pane active" id="account_settings">
+                @include('settings.info')
+            </div>
+
+            <div class="tab-pane" id="company-settings">
                 @include('settings.cover')
                 @include('settings.logo')
-                @include('settings.info')
             </div>
 
         </div>

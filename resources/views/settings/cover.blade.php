@@ -1,6 +1,6 @@
      {{-- logo --}}
      <div class="bg-banner"
-     style="background-image: url('/assets/images/{{ $settings['image'] ? $settings['image'] : 'default-cover.jpg' }}')">
+     style="background-image: url('/assets/images/{{ $settings['background'] ? $settings['background'] : 'default-cover.jpg' }}')">
      <form method="POST" action="{{ route('changeCover') }}" enctype="multipart/form-data">
          @csrf
          @method('patch')

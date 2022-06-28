@@ -63,7 +63,7 @@
                 <li>
                     <a href="{{ route('settings.index') }}" >
                         <i class="fe-settings noti-icon"></i>
-                        <span> Account settings </span>
+                        <span> settings </span>
                     </a>
                 </li>
                 {{-- end of account settings --}}

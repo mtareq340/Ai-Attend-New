@@ -1,4 +1,4 @@
-<form action="{{route('updateAccountSettings')}}" method="POST" class="p-3 my-4 border col-md-6 position-relative needs-validation"
+<form action="{{route('updateAccountSettings')}}" method="POST" class="p-3 my-4 border position-relative needs-validation"
 novalidate>
     @csrf
     @method('PUT')
@@ -10,7 +10,7 @@ novalidate>
 
     <div class="form-group">
         <label for="c_address" class="col-form-label">Address</label>
-        <input type="email" name="address" class="form-control" id="c_address" value="{{$user->address}}" disabled>
+        <input type="text" name="address" class="form-control" id="c_address" value="{{$user->address}}" disabled>
     </div>
 
 
@@ -27,4 +27,31 @@ novalidate>
 
 
     <button type="submit" class="my-2 btn btn-primary waves-effect d-none" id="edit-info-btn">save</button>
+</form>
+
+
+
+<form action="{{ route('change_auth_user_password') }}" method="POST">
+    @csrf
+    @method('patch')        
+    <h1 class="text-2xl my-7">change password</h1>
+
+    <div class="form-group">
+        <label for="i_password" class="col-form-label">old password</label>
+        <input type="password" name="old_password" class="form-control" id="i_password" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="i_new_password" class="col-form-label">new password</label>
+        <input type="password" name="new_password" class="form-control" id="i_new_password" required>
+    </div>
+
+    <div class="form-group">
+        <label for="i_c_new_password" class="col-form-label">confirm new password</label>
+        <input type="password" name="confirm_new_password" class="form-control" id="i_c_new_password" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">change password</button>
+
 </form>
