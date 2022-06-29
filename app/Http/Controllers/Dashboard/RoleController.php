@@ -82,7 +82,7 @@ class RoleController extends Controller
             foreach ($permissions as $p) {
                 $role->attachPermission($p);
             }
-            return redirect()->route('roles.create')->with('success', 'تم الحفظ بنجاح');
+            return redirect()->route('roles.index')->with('success', 'تم الحفظ بنجاح');
         } catch (\Exception $exp) {
             return back()->with('error', 'هناك خطأ برجاء المحاولة ثانيا');
         }
