@@ -94,12 +94,34 @@
 
 
                 {{-- start of employees requests --}}
+                @can('show_employees')
                 <li>
-                    <a href="{{ route('employee_requests.index') }}" >
-                        <i class="mdi mdi-office-building"></i>
-                        <span> Employees Requests </span>
+                    <a href="#sidebarempreq" data-toggle="collapse">
+                        <i class="fas fa-user-tie"></i>
+                        <span> Employees Request </span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <div class="collapse" id="sidebarempreq">
+                        <ul class="nav-second-level">
+                            @can('show_employees')
+                            <li>
+                                <a href="{{ route('employee_request_review') }}">Employees Request Review</a>
+                            </li>
+                            @endcan
+                            @can('show_employees')
+                            <li>
+                                <a href="{{ route('employee_requests.index') }}">Employees Requests</a>
+                            </li>
+                            @endcan
+                            @can('add_employee')
+                            <li>
+                                <a href="{{route('employee_request_type.index')}}">Request Type</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </div>
                 </li>
+                @endcan
                 {{-- end of employees requests --}}
 
 

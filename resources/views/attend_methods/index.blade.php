@@ -44,6 +44,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Note</th>
+                                    <th>Actions</th>
+
                                 </tr>
                             </thead>
 

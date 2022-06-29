@@ -37,12 +37,12 @@ class EmployeeController extends Controller
             return abort(401);
         }
         //
-        if(auth()->user()->hasRole('super_admin')){
+        if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::latest()->get();
-        }else{
+        } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
         }
-        return view('employees.index' , compact('employees'));
+        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -101,8 +101,8 @@ class EmployeeController extends Controller
 
             return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
-            return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-            // return $e;
+            // return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            return $e;
         }
     }
 

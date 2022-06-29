@@ -18,14 +18,11 @@
         </div>
     </div>
 
-
-
     <div class="row mb-3">
         <div class="col-6 col-lg-3">
             <span>Extra time</span>
         </div>
-        <div class="col-6 col-lg-4">
-            
+        <div class="col-6 col-lg-4">          
         </div>
     </div>
 

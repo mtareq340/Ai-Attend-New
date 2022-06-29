@@ -20,7 +20,7 @@ class AccountSettingsController extends Controller
         $company_settings = CompanySettings::first();
         $user = Auth::user();
         $attendece_settings = AttendenceSettings::first();
-        return view('settings.index', compact('company_settings', 'user' , 'attendece_settings'));
+        return view('settings.index', compact('company_settings', 'user', 'attendece_settings'));
     }
 
     public function uploadCover(Request $request)
@@ -118,9 +118,9 @@ class AccountSettingsController extends Controller
             $settings = CompanySettings::first();
             $settings->update($data);
 
-            return back()->with('success' , 'تم نحديث البيانات بنجاح');
+            return back()->with('success', 'تم نحديث البيانات بنجاح');
         } catch (Exception $e) {
-            return back()->with('error' , 'حدث خطأ ما قم بالمحاولة لاحقا');
+            return back()->with('error', 'حدث خطأ ما قم بالمحاولة لاحقا');
         }
     }
 

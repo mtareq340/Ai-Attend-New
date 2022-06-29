@@ -52,10 +52,10 @@ class AppointmentController extends Controller
                     'location_id.required' => 'برجاء اختيار الموقع',
                     'branch_id.required' => 'برجاء اختيار الفرع',
                     'start_from.required' => 'برجاء ادخال موعد بدء الدوام',
-                    'end_to' => 'برجاءادخال موعد اتتهاء الدوام ',
-                    'delay' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
-                    'overtime' => 'برجاء تحديد عدد الساعات و الدقاءق للوفت العمل الاضافي',
-                    'date' => ""
+                    'end_to.required' => 'برجاءادخال موعد اتتهاء الدوام ',
+                    'delay.required' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
+                    'overtime.required' => 'برجاء تحديد عدد الساعات و الدقاءق للوفت العمل الاضافي',
+                    'date.required' => ""
                 ]
             );
             if ($validator->fails()) {
@@ -63,15 +63,8 @@ class AppointmentController extends Controller
                 return back()->with('error', $err_msg)->withInput();
             }
 
-            //split time first
             $delay = $request->delay;
-            $delay_arr = explode(':', $delay);
-            $delayhour = $delay_arr[0];
-            $delaymin = $delay_arr[1];
             $overtime = $request->overtime;
-            $overtime_arr = explode(":", $overtime);
-            $overtimehour = $overtime_arr[0];
-            $overtimemin = $overtime_arr[1];
 
             //save in appointment //
             $name = $request->name;
@@ -79,25 +72,13 @@ class AppointmentController extends Controller
             $branch = $request->branch_id;
             $start_date = $request->start_from;
             $end_date = $request->end_to;
-            $delay_min = $delaymin;
-            $delay_hour = $delayhour;
-            $overtime_hour = $overtimehour;
-            $overtime_min = $overtimemin;
-            $date = $request->date;
+
+            $data = $request->all();
             // dd($location);
-            $appoint = Appointment::create([
-                'location_id' => $location,
-                'name' => $name,
-                'start_from' => $start_date,
-                'end_to' => $end_date,
-                'branch_id' => $branch,
-                'delay_min' => $delay_min,
-                'delay_hour' => $delay_hour,
-                'overtime_hour' => $overtime_hour,
-                'overtime_min' => $overtime_min,
-                'date' => $date
-            ]);
-            return redirect()->route('appointment.create')->with(['success' => 'تم الحفظ بنجاح']);
+            // return $request->all();
+            // dd($request->delay, $request->overtime);
+            $appoint = Appointment::create($data);
+            return redirect()->route('appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             return $e;
             // return redirect()->route('appointment.create')->with(['error' => 'حدث خطا برجاء المحاوله مره اخري']);

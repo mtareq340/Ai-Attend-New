@@ -12,6 +12,7 @@ use App\Location;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class Assign_AppointmentController extends Controller
 {
@@ -44,13 +45,28 @@ class Assign_AppointmentController extends Controller
     public function store(Request $req)
     {
         try {
-            $req->validate([
-                'location_id' => 'required',
-                'job_id' => 'required',
-                'branch_id' => 'required',
-                'work_appointment_id' => 'required',
-                'employee_id' => 'required',
-            ]);
+            $validator = Validator::make(
+                $req->all(),
+                [
+                    'location_id' => 'required',
+                    'job_id' => 'required',
+                    'branch_id' => 'required',
+                    'work_appointment_id' => 'required',
+                    'employee_id' => 'required',
+                ],
+                [
+                    'location_id.required' => 'برجاء ادخال الموقع',
+                    'job_id.required' => 'برجاء ادخال المسمي الوظيفي',
+                    'branch_id.required' => 'برجاء ادخال الفرع',
+                    'work_appointment_id.required' => 'برجاء ادخال خظه الحضور',
+                    'employee_id.required' => 'برجاء ادخال اسم الموظف',
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
             $employees = $req->employee_id;
             $location = $req->location_id;
             $job = $req->job_id;
@@ -71,7 +87,7 @@ class Assign_AppointmentController extends Controller
             Assign_Appointment::insert($emplist);
             return redirect()->route('assign_appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
-            return redirect()->route('assign_appointment.create')->with(['error' => 'تم جدث خطا']);
+            return redirect()->route('assign_appointment.create')->with(['error' => 'حدث خطا']);
         }
     }
     public function destroy($id)
@@ -90,17 +106,32 @@ class Assign_AppointmentController extends Controller
             return abort(401);
         }
         $employees = Employee::all();
-        $appointments = Appointment::all();
+
         $assign = Assign_Appointment::find($id);
+        // get appointment from branch and location //
+        $appointments = Appointment::where([['location_id', '=', $assign->location_id], ['branch_id', '=', $assign->branch_id]])->get();
         return view('assign_appointments.edit', compact('employees', 'appointments', 'assign'));
     }
 
     public function update(Request $req, $id)
     {
         try {
-            $req->validate([
-                'work_appointment_id' => 'required',
-            ]);
+            $validator = Validator::make(
+                $req->all(),
+                [
+                    'work_appointment_id' => 'required',
+
+                ],
+                [
+                    'work_appointment_id.required' => 'برجاء ادخال خظه الحضور',
+
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
             $assigns = Assign_Appointment::find($id);
             $data = [
                 'employee_id' => $assigns->employee_id,

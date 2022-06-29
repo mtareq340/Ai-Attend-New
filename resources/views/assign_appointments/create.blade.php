@@ -57,7 +57,7 @@
                         <h4 class="header-title">Assign Appointment</h4>
                         <p class="text-warning font-weight-bold">Note* Employee Input Will Appear After Select Branch and Job </p>
                         <p class="text-warning font-weight-bold">Note* Appointment Input Will Appear After Select Branch and Location</p>
-                        <form action="{{ route('assign_appointment.store')}}" method="post">
+                        <form action="{{ route('assign_appointment.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
                                 <label for="job">Job Name *</label>

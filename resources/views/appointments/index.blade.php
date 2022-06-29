@@ -40,10 +40,8 @@
                                         <th>Branch Name</th>
                                         <th>Start from</th>
                                         <th>End to</th>
-                                        <th>Daley min</th>
-                                        <th>Daly hour</th>
-                                        <th>Overtime hour</th>
-                                        <th>Overtime min</th>
+                                        <th>Daley hour & min</th>
+                                        <th>Overtime hour & min</th>
                                         <th>Date</th>
                                         <th>Action</th>
                                         <th>Created At</th>
@@ -61,10 +59,8 @@
                                     <td>{{$appoint->location->name}}</td>
                                     <td>{{$appoint->start_from}}</td>
                                     <td>{{$appoint->end_to}}</td>
-                                    <td>{{$appoint->delay_min}}</td>
-                                    <td>{{$appoint->delay_hour}}</td>
-                                    <td>{{$appoint->overtime_hour}}</td>
-                                    <td>{{$appoint->overtime_min}}</td>
+                                    <td>{{$appoint->delay}}</td>
+                                    <td>{{$appoint->overtime}}</td>
                                     <td>{{$appoint->date}}</td>
                                     <td>{{ $appoint->created_at }}</td>
                                     <td>{{ $appoint->updated_at }}</td>
