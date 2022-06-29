@@ -17,7 +17,7 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('show_devices')) {
+        if (!Gate::allows('show_devices')) {
             return abort(401);
         }
         /*
@@ -34,7 +34,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('add_device')) {
+        if (!Gate::allows('add_device')) {
             return abort(401);
         }
         /*
@@ -51,6 +51,9 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
         // Save The Request Into DataBase
         $data = $request->all();
         $devices = Device::create($data);
@@ -76,7 +79,7 @@ class DeviceController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_device')) {
+        if (!Gate::allows('edit_device')) {
             return abort(401);
         }
         $devices = Device::FindOrFail($id);
@@ -93,7 +96,10 @@ class DeviceController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $devices= Device::findOrFail($id);
+            $request->validate([
+                'name' => 'required'
+            ]);
+            $devices = Device::findOrFail($id);
 
             //update in db
             $devices->update($request->all());

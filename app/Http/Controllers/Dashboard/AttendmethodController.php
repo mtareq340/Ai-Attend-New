@@ -100,6 +100,9 @@ class AttendmethodController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $request->vlaidate([
+                'name' => 'required'
+            ]);
             $attend_methods = Attendmethods::findOrFail($id);
             //update in db
             $attend_methods->update($request->all());
@@ -119,7 +122,6 @@ class AttendmethodController extends Controller
     {
         try {
             $attend_methods = Attendmethods::find($id);
-
             $attend_methods->delete();
             return redirect()->route('attend_methods.index')->with(['success' => 'تم حذف الحضور بنجاح']);
         } catch (\Exception $ex) {
