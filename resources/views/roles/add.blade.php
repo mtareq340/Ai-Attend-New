@@ -72,7 +72,12 @@
                             <div class="form-group">
 
                                 <label class="col-form-label">Permissions</label>
-
+                                <div class="col-md-4">
+                                    <div class="checkbox checkbox-primary mb-2">
+                                        <input type="checkbox" name="select-all" id="select-all" >
+                                        <label for="select-all">check all</label>
+                                    </div>
+                                </div>
 
                                 <div class="row gx-2 mt-4">
                                     @foreach ($permissions as $permission)
@@ -120,4 +125,18 @@
 
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+    <script>
+        $('#select-all').click(function(event) {
+        if(this.checked) {
+            // Iterate each checkbox
+            $(':checkbox').each(function() {
+                this.checked = true;
+            });
+        } else {
+            $(':checkbox').each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    </script>
 @endsection

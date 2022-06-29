@@ -31,50 +31,56 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('show_users')) {
+        if (!Gate::allows('show_users')) {
             return abort(401);
         }
-        $users = User::where('branch_id', auth()->user()->branch_id)->get();
+        if(auth()->user()->hasRole('super_admin')){
+            $users = User::latest()->get();
+        }else{
+            $users = User::where('branch_id', auth()->user()->branch_id)->get();
+        }
         return view('users/index', compact('users'));
     }
 
     public function create()
     {
-        if (! Gate::allows('add_user')) {
+        if (!Gate::allows('add_user')) {
             return abort(401);
         }
         $roles = Role::all();
         $branches = Branch::all();
-        return view('users.add' , compact('roles', 'branches'));
+        return view('users.add', compact('roles', 'branches'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all() ,
-        [
-            'name' => 'required',
-            "email" => "required|email|unique:users",
-            "address" => "required",
-            "phone" => "required",
-            "password" => "required",
-            "role_id" => "required",
-            "branch_id" => "required",
-        ],
-        [
-            'name.required' => "يجب ادخال اسم المستخدم" ,
-            "email.required" => 'يجب ادخال الايميل',
-            "email.email" => 'الايميل يجب ان يكون ايميل',
-            "address.required" => 'العنوان مطلوب',
-            "phone.required" => 'الهاتف مطلوب',
-            "password.required" => 'كلمة المرور مطلوبة',
-            "role_id.required" => 'الوظيفة مطلوبة',
-            "branch_id.required" => 'الفرع مطلوب',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                "email" => "required|email|unique:users",
+                "address" => "required",
+                "phone" => "required",
+                "password" => "required",
+                "role_id" => "required",
+                "branch_id" => "required",
+            ],
+            [
+                'name.required' => "يجب ادخال اسم المستخدم",
+                "email.required" => 'يجب ادخال الايميل',
+                "email.email" => 'الايميل يجب ان يكون ايميل',
+                "address.required" => 'العنوان مطلوب',
+                "phone.required" => 'الهاتف مطلوب',
+                "password.required" => 'كلمة المرور مطلوبة',
+                "role_id.required" => 'الوظيفة مطلوبة',
+                "branch_id.required" => 'الفرع مطلوب',
+            ]
+        );
 
         if ($validator->fails()) {
             $err_msg = $validator->errors()->first();
-            return back()->with('error' , $err_msg)->withInput();
-         }
+            return back()->with('error', $err_msg)->withInput();
+        }
 
         $data = $request->except(['password']);
         $data['password'] = bcrypt($request->password);
@@ -85,13 +91,11 @@ class UserController extends Controller
         // attach user role
         $user->attachRole($request->role_id);
         return redirect()->route('users.index')->with(['success' => 'تم الحفظ بنجاح']);
-
-        return view('users.add');
     }
 
     public function edit(Request $resuest, $id)
     {
-        if (! Gate::allows('edit_user')) {
+        if (!Gate::allows('edit_user')) {
             return abort(401);
         }
         $user = User::FindOrFail($id);
@@ -100,20 +104,21 @@ class UserController extends Controller
 
         $roles = Role::all();
 
-        return view('users.edit', compact('user' , 'roles', 'branches'));
+        return view('users.edit', compact('user', 'roles', 'branches'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         // try{
-            $user = User::findOrFail($id);
 
-           //update in db
-            $user->update($request->all());
+        $user = User::findOrFail($id);
+        //update in db
+        $user->update($request->all());
 
-            // sync roles
-            $user->syncRoles([$request->role_id]);
+        // sync roles
+        $user->syncRoles([$request->role_id]);
 
-            return redirect()->route('users.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
+        return redirect()->route('users.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
 
         // }catch(\Exception $ex){
         //     return redirect()->route('users.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
@@ -122,13 +127,14 @@ class UserController extends Controller
 
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
-        try{
+        try {
             $user = User::find($id);
 
-            if(Auth::id() == $user->id){
-                return back()->with('error' , "لا يمكن ان تمسح حسابك");
+            if (Auth::id() == $user->id) {
+                return back()->with('error', "لا يمكن ان تمسح حسابك");
             }
             $user->syncRoles([]); //delete relations in user_role table
 
@@ -138,11 +144,8 @@ class UserController extends Controller
             DB::table('users')->delete($user->id);
 
             return redirect()->route('users.index')->with(['success' => 'تم حذف الموظف بنجاح']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('users.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-
         }
-
     }
 }

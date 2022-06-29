@@ -14,7 +14,7 @@ class User extends Authenticatable
     use Notifiable;
     protected $table = "users";
     protected $fillable = [
-        'name', 'email', 'address','phone','branch_id', 'role_id','password','created_at','updated_at'
+        'name', 'email', 'address', 'phone', 'branch_id', 'role_id', 'password', 'created_at', 'updated_at'
     ];
 
     protected $hidden = [
@@ -34,6 +34,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Branch::class);
     }
-
-
 }

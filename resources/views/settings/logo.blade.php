@@ -8,7 +8,7 @@
                     onchange="form.submit()">
             </label>
             <img id="logo"
-                src="{{ $settings['logo'] ? '/assets/images/'.$settings['logo'] : '/assets/images/default-logo.jpg' }}"
+                src="{{ $company_settings['logo'] ? '/assets/images/'.$company_settings['logo'] : '/assets/images/default-logo.jpg' }}"
                 alt="logo" />
         </div>
     </form>

@@ -16,7 +16,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('show_jobs')) {
+        if (!Gate::allows('show_jobs')) {
             return abort(401);
         }
         /*
@@ -33,7 +33,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('add_job')) {
+        if (!Gate::allows('add_job')) {
             return abort(401);
         }
         /*
@@ -50,6 +50,9 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required'
+        ]);
         // Save The Request Into DataBase
         $data = $request->all();
         $job = Job::create($data);
@@ -76,7 +79,7 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('edit_job')) {
+        if (!Gate::allows('edit_job')) {
             return abort(401);
         }
         $job = job::FindOrFail($id);
@@ -93,6 +96,9 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $request->validate([
+                'name' => 'required'
+            ]);
             $job = Job::findOrFail($id);
 
             //update in db

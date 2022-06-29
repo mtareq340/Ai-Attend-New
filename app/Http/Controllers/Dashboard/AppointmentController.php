@@ -39,18 +39,46 @@ class AppointmentController extends Controller
                 'branch_id' => 'required',
                 'start_from' => 'required',
                 'end_to' => 'required',
-                'delay_min' => 'required',
-                'delay_hour' => 'required',
-                'overtime_min' => 'required',
-                'overtime_hour' => 'required',
+                'delay' => 'required',
+                'overtime' => 'required',
                 'date' => 'required',
             ]);
-            // return ($request->all());
-            $data = $request->all();
-            $appoint = Appointment::create($data);
+
+            //split time first
+            $delay = $request->delay;
+            $delay_arr = explode(':', $delay);
+            $delayhour = $delay_arr[0];
+            $delaymin = $delay_arr[1];
+            $overtime = $request->overtime;
+            $overtime_arr = explode(":", $overtime);
+            $overtimehour = $overtime_arr[0];
+            $overtimemin = $overtime_arr[1];
+
+            //save in appointment //
+            $location = $request->location_id;
+            $branch = $request->branch_id;
+            $start_date = $request->start_from;
+            $end_date = $request->end_to;
+            $delay_min = $delaymin;
+            $delay_hour = $delayhour;
+            $overtime_hour = $overtimehour;
+            $overtime_min = $overtimemin;
+            $date = $request->date;
+            // dd($location);
+            $appoint = Appointment::create([
+                'location_id' => $location,
+                'start_from' => $start_date,
+                'end_to' => $end_date,
+                'branch_id' => $branch,
+                'delay_min' => $delay_min,
+                'delay_hour' => $delay_hour,
+                'overtime_hour' => $overtime_hour,
+                'overtime_min' => $overtime_min,
+                'date' => $date
+            ]);
             return redirect()->route('appointment.create')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
-            return redirect()->route('appointment.create')->with(['error' => 'حذث خطا برجاء المحاوله مره اخري']);
+            return $e;
         }
     }
 
@@ -84,16 +112,41 @@ class AppointmentController extends Controller
                 'branch_id' => 'required',
                 'start_from' => 'required',
                 'end_to' => 'required',
-                'delay_min' => 'required',
-                'delay_hour' => 'required',
-                'overtime_min' => 'required',
-                'overtime_hour' => 'required',
+                'delay' => 'required',
+                'overtime' => 'required',
                 'date' => 'required',
             ]);
             // return ($request->all());
-            $data = $request->all();
+            $delay = $request->delay;
+            $delay_arr = explode(':', $delay);
+            $delayhour = $delay_arr[0];
+            $delaymin = $delay_arr[1];
+            $overtime = $request->overtime;
+            $overtime_arr = explode(":", $overtime);
+            $overtimehour = $overtime_arr[0];
+            $overtimemin = $overtime_arr[1];
+
+            $location = $request->location_id;
+            $branch = $request->branch_id;
+            $start_date = $request->start_from;
+            $end_date = $request->end_to;
+            $delay_min = $delaymin;
+            $delay_hour = $delayhour;
+            $overtime_hour = $overtimehour;
+            $overtime_min = $overtimemin;
+            $date = $request->date;
             $appoint = Appointment::find($id);
-            $appoint->update($data);
+            $appoint->update([
+                'location_id' => $location,
+                'start_from' => $start_date,
+                'end_to' => $end_date,
+                'branch_id' => $branch,
+                'delay_min' => $delay_min,
+                'delay_hour' => $delay_hour,
+                'overtime_hour' => $overtime_hour,
+                'overtime_min' => $overtime_min,
+                'date' => $date
+            ]);
             return redirect()->route('appointment.index')->with(['success' => 'تم التحديث بنجاح']);
         } catch (Exception $e) {
             return redirect()->route('appointment.edit')->with(['error' => 'حذث خطا برجاء المحاوله مره اخري']);

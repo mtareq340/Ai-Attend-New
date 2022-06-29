@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+class CompanySettings extends Model
 {
     protected $table = "company_settings";
-
+    
     protected $fillable = [
-        'id', 'name',    'value'
+        'name' , 'email' , 'logo' , 'background' , 'phone' , 'ssid' , 'mac_address' , 'notes' 
     ];
+
+    
 }

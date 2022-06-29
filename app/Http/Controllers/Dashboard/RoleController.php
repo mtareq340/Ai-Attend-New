@@ -82,7 +82,7 @@ class RoleController extends Controller
             foreach ($permissions as $p) {
                 $role->attachPermission($p);
             }
-            return redirect()->route('roles.create')->with('success', 'تم الحفظ بنجاح');
+            return redirect()->route('roles.index')->with('success', 'تم الحفظ بنجاح');
         } catch (\Exception $exp) {
             return back()->with('error', 'هناك خطأ برجاء المحاولة ثانيا');
         }
@@ -127,7 +127,10 @@ class RoleController extends Controller
     {
         try {
             $role = Role::findOrFail($id);
-
+            $request->validate([
+                'name' => 'required',
+                "permissions" => "required",
+            ]);
             //update in db
             $role->update($request->except('permissions'));
             $role->syncPermissions($request->permissions);

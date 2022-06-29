@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Dashboard Routes
-Route::group([ 'prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard'], function () {
 
     // home
-    Route::get('/' , 'Dashboard\HomeController@index');
+    Route::get('/', 'Dashboard\HomeController@index');
 
+    Route::patch('/auth/changepass' , 'Dashboard\AccountSettingsController@changePassword')->name('change_auth_user_password');
     Route::resource('users', 'Dashboard\UserController');
     /*
         the List Of route name
@@ -42,6 +43,7 @@ Route::group([ 'prefix' => 'dashboard'], function () {
     Route::resource('employees', 'Dashboard\EmployeeController');
     // assign appointment route
     Route::resource('assign_appointment', 'Dashboard\Assign_AppointmentController');
+    Route::get('getemployees', 'Dashboard\Assign_AppointmentController@getemployees')->name('getEmpsByBranch');
     // appointment //
     Route::resource('appointment', 'Dashboard\AppointmentController');
 
@@ -49,13 +51,18 @@ Route::group([ 'prefix' => 'dashboard'], function () {
     Route::patch('employee_requests/activate', 'EmployeeRequestsController@toggleActivationAccept')->name('toggleActiveReqEmp');
     Route::get('employee_requests/info', 'EmployeeRequestsController@show_request_emp_info')->name("employee_requests.index.request");
     Route::get('employee_requests/info/{id}/data', 'EmployeeRequestsController@show_request_emp_info_data')->name('employee_requests.index.request.data');
-    Route::resource('employee_requests' , 'Dashboard\EmployeeRequestsController');
+    Route::resource('employee_requests', 'Dashboard\EmployeeRequestsController');
 
     //account settings
       // settings routes
       Route::patch('settings/cover', 'Dashboard\AccountSettingsController@uploadCover')->name('changeCover');
       Route::patch('settings/logo', 'Dashboard\AccountSettingsController@uploadLogo')->name('uploadLogo');
       Route::put('settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
+      Route::put('settings/company/updateAll', 'Dashboard\AccountSettingsController@updateCompanySettings')->name('updateCompanySettings');
+
+        //  toggle attendence settings
+      Route::patch('attendence_settings/toggle', 'Dashboard\AccountSettingsController@toggleAttendenceSettings')->name('toggleAttendenceSettings');
+
       Route::resource('/settings', 'Dashboard\AccountSettingsController', [
           'only' => ['index', 'update']
       ]);

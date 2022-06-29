@@ -25,15 +25,8 @@ class BrancheController extends Controller
         if (!Gate::allows('show_branches')) {
             return abort(401);
         }
-        try {
-            if ($request->type == 'table') {
-                return view('branches.index_table', ['branches' => Branch::all()]);
-            }
-            $branches = Branch::withDepth()->with('ancestors')->get()->toTree();
-            return view('branches.index', compact('branches'));
-        } catch (Exception $exp) {
-            Branch::fixTree();
-        }
+        return view('branches.index_table', ['branches' => Branch::all()]);
+       
     }
 
     /**
@@ -112,6 +105,11 @@ class BrancheController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $request->validate([
+                'name' => 'required',
+                'phone' => 'required|numeric',
+                'address' => 'required'
+            ]);
             $branch = Branch::findOrFail($id);
             //update in db
             $branch->update($request->all());

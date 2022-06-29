@@ -28,6 +28,7 @@
         </div>
         <!-- end page title -->
         @can('add_employee')
+        <div class="mb-2">
         <button class="btn btn btn-primary">
             <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
         </button>
@@ -35,6 +36,11 @@
             <a href="{{ route('employees.excelPage')}}" style="color:white"><i class="fa fa-plus"></i> Upload Excel Sheet</a>
 
         </button>
+        <button class="btn btn-dark">
+            <a href="{{route('downloadExcelEmps')}}" style="color:white"><i class="fa fa-plus"></i> Download
+                excel file</a>
+        </button>
+    </div>
         @endcan
 
         <div class="row">

@@ -82,6 +82,15 @@
                                     id="inputPhone" placeholder="010" required>
                             </div>
                             <div class="form-group">
+                                <label for="branchInput" class="col-form-label">Branch *</label>
+                                <select name="branch_id" id="branchInput" class="selectize-drop-header"
+                                    placeholder="Select a branch..." required>
+                                    @foreach ($branches as $branch)
+                                            <option value="{{ $branch->id }}" {{$branch->id==$user->branch_id? 'selected' : ''}}>{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="roleInput" class="col-form-label">Role *</label>
                                 <select name="role_id" id="roleInput" class="selectize-drop-header"
                                     placeholder="Select a role..." required>

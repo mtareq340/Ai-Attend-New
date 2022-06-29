@@ -63,7 +63,7 @@
                 <li>
                     <a href="{{ route('settings.index') }}" >
                         <i class="fe-settings noti-icon"></i>
-                        <span> Account settings </span>
+                        <span> settings </span>
                     </a>
                 </li>
                 {{-- end of account settings --}}
@@ -84,7 +84,7 @@
                 {{-- start of branches --}}
                 @can('show_branches')
                 <li>
-                    <a href="{{ route('branches.index' , ['type' => 'table']) }}" >
+                    <a href="{{ route('branches.index') }}" >
                         <i class="mdi mdi-office-building"></i>
                         <span> Branches </span>
                     </a>
@@ -121,9 +121,6 @@
                             @can('add_employee')
                             <li>
                                 <a href="{{ route('employees.create') }}">Add employee</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('employees.excelPage') }}">upload employees from excel</a>
                             </li>
                             @endcan
                         </ul>
