@@ -70,9 +70,13 @@
                     <div class="card-body">
                         <h4 class="header-title">Edit Appointments</h4>
                       
-                        <form action="{{ route('appointment.update',$appointment->id)}}" method="post">
+                        <form action="{{ route('appointment.update',$appointment->id)}}" method="post"  class="needs-validation" novalidate>
                             @csrf
 							{{ method_field('PATCH') }}
+                            <div class="form-group">
+                                <label for="name"></label>
+                                    <input type="text" class="form-control" name="name" value="{{$appointment->name}}" placeholder="Enter Name" required>
+                            </div>
                             <div class="form-group">
                                 <label for="inputLocation" class="col-form-label">location *</label>
                                 <select  name="location_id" id="inputlocation" class="selectize-drop-header" placeholder="Select a location..." required>
@@ -84,17 +88,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputBranch" class="col-form-label">Branch *</label>
-                                <select name="branch_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a branch..." required>
-                                   <option selected value="{{$appointment->branch_id}}">{{$appointment->branch->name}}</option>
-                                    @foreach ($branches as $branch)
-                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control bg-light" value="{{$branch->name}}" disabled>
                             </div>
                             <div class="form-group mb-3">
                                 <label>Start From</label>
                                 <div class="input-group ">
-                                    <input type="datetime-local" value="{{$appointment->start_from}}" class="form-control" name ="start_from" >
+                                    <input type="datetime-local" value="{{$appointment->start_from}}" class="form-control" name ="start_from" required >
                                     {{-- <div class="input-group-append">
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div> --}}
@@ -103,7 +102,7 @@
                             <div class="form-group mb-3">
                                 <label>End To</label>
                                 <div class="input-group ">
-                                    <input type="datetime-local"  class="form-control" name ="end_to" value="{{$appointment->end_to}}">
+                                    <input type="datetime-local"  class="form-control" name ="end_to" value="{{$appointment->end_to}}" required>
                                     {{-- <div class="input-group-append">
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div> --}}
@@ -112,21 +111,21 @@
                             <div class="row">
                                 <div class="form-group mb-3 col-md-12">
                                     <label>Delay hours & minutes</label>
-                                    <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" placeholder="{{$appointment->delay_hour}}:{{$appointment->delay_min}}" readonly="readonly">
+                                    <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" value="{{$appointment->delay}}" required readonly="readonly">
                                 </div>
                                 </div>
                                <div class="row">
                                 <div class="form-group mb-3 col-md-12">
                                     <label>overtime hours & minutes</label>
-                                    <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" placeholder="{{$appointment->overtime_hour}}:{{$appointment->overtime_min}}" readonly="readonly">
+                                    <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" value="{{$appointment->overtime}}" required readonly="readonly">
                                 </div>
                                </div>
                            
                            <div class="form-group mb-3">
                             <label>Date Picker</label>
-                            <input type="date" class="form-control" value="{{$appointment->date}}" name ="date">
+                            <input type="date" class="form-control" value="{{$appointment->date}}" required name ="date">
                         </div>
-                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
+                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Update</button></center>
 
                         </form>
 

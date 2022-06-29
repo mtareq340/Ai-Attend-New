@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class AttendmethodController extends Controller
 {
@@ -53,9 +54,21 @@ class AttendmethodController extends Controller
     {
         // Save The Request Into DataBase
         try {
-            $request->validate([
-                'name' => 'required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+
+                ],
+                [
+                    'name.required' => 'برجاء ادخال الاسم طريقه التحضير ',
+
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
             $data = $request->all();
             $attend_methods = Attendmethods::create($data);
             return redirect()->route('attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
@@ -100,9 +113,21 @@ class AttendmethodController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->vlaidate([
-                'name' => 'required'
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+
+                ],
+                [
+                    'name.required' => 'برجاء ادخال الاسم طريقه التحضير ',
+
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
             $attend_methods = Attendmethods::findOrFail($id);
             //update in db
             $attend_methods->update($request->all());

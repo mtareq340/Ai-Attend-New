@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Employee;
 use App\employee_requests;
+use App\EmployeeRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -17,8 +18,8 @@ class EmployeeRequestsController extends Controller
     public function index()
     {
         // Return view in path EmployeeRequests/index
-        $employee_requests = employee_requests::where('Action', '=', '0')->get();
-        return view('EmployeeRequests.index', compact(
+        $employee_requests = EmployeeRequest::all();
+        return view('EmployeeRequestReview.EmployeeRequest.index', compact(
             'employee_requests'
         ));
     }
@@ -66,7 +67,7 @@ class EmployeeRequestsController extends Controller
         //
         $request_emp = employee_requests::FindOrFail($id);
         $emp         = Employee::FindOrFail($id);
-        return view('EmployeeRequests.Accept' , compact('request_emp', 'emp'));
+        return view('EmployeeRequests.Accept', compact('request_emp', 'emp'));
     }
 
     /**
@@ -79,20 +80,18 @@ class EmployeeRequestsController extends Controller
     public function update(Request $request, $id)
     {
 
-        try{    
+        try {
             $emp = employee_requests::findOrFail($id);
 
-        //update in db
+            //update in db
             $emp->accepted = $request->accept;
             $emp->Action = 1;
-            
+
             $emp->save();
             // $emp->update($request->accept);
             return redirect()->route('employee_requests.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('employee_requests.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-
         }
     }
 
@@ -115,7 +114,6 @@ class EmployeeRequestsController extends Controller
         $emp = employee_requests::find($id);
         if ($checked) {
             $emp[$req->type] = true;
-            
         } else {
             $emp[$req->type] = false;
         }
@@ -130,7 +128,7 @@ class EmployeeRequestsController extends Controller
         return view("EmployeeRequests.Employee.index", compact('employees'));
     }
 
-    public function get_new_request ()
+    public function get_new_request()
     {
         // Return view in path EmployeeRequests/index
         $employee_requests = employee_requests::where('Action', '=', '0')->get();
@@ -139,7 +137,7 @@ class EmployeeRequestsController extends Controller
         ));
     }
 
-    public function get_accept_request ()
+    public function get_accept_request()
     {
         $employee_requests = employee_requests::where('accepted', '=', '1')->get();
         return view('EmployeeRequests.Accept_Request', compact(
@@ -161,29 +159,28 @@ class EmployeeRequestsController extends Controller
 
         $employees     = Employee::where('id', '=', $id)->first();
         $employee_request_reject = employee_requests::where('employee_id', '=', $id)
-        ->where('accepted', '=', 0)
-        ->get();
-        
+            ->where('accepted', '=', 0)
+            ->get();
+
         $employee_request_accepted = employee_requests::where('employee_id', '=', $id)
-        ->where('accepted', '=', 1)
-        ->get();
-        
+            ->where('accepted', '=', 1)
+            ->get();
+
         $count_request = employee_requests::where('employee_id', '=', $id)->count();
         $count_reject  = employee_requests::where('employee_id', '=', $id)
-        ->where('accepted', '=', 0)
-        ->count();
-        
+            ->where('accepted', '=', 0)
+            ->count();
+
         $count_accepted  = employee_requests::where('employee_id', '=', $id)
-        ->where('accepted', '=', 1)
-        ->count();
+            ->where('accepted', '=', 1)
+            ->count();
         return view("EmployeeRequests.Employee.info_employee_req", compact(
-            'employees', 'employee_request_reject',
-            'employee_request_accepted','count_request','count_reject',
+            'employees',
+            'employee_request_reject',
+            'employee_request_accepted',
+            'count_request',
+            'count_reject',
             'count_accepted'
         ));
     }
-
-    
-    
-
 }

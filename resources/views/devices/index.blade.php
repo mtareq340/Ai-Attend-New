@@ -2,8 +2,8 @@
 
 @section('css')
     <!-- Plugins css -->
+    <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-
 @endsection
 
 @section('content')
@@ -43,6 +43,9 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Note</th>
+                                    <th>Activate</th>
+                                    <th>Action</th>
+                                    
                                 </tr>
                             </thead>
 
@@ -52,6 +55,9 @@
                                     <tr>
                                         <td>{{ $device->name }}</td>
                                         <td>{{ $device->notes }}</td>
+                                        <td>
+                                            <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $device->id }}' , 'active')" class="js-switch" {{$device->active?'checked':''}} data-plugin="switchery" />
+                                        </td>
                                         <td>
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_device')
@@ -92,9 +98,57 @@
 
 @section('script')
     <!-- Plugins js-->
+    <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
+    <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
-
-    <!-- Page js-->
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
+    <!-- Page js-->
+    <script>
+  const toggleActivationAndLocked = (e, id , type) => {
+
+(async () => {
+        try {
+            let checked = e.target.checked;
+            const rawResponse = await fetch('{{ route('active_device') }}', {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    id,
+                    checked,
+                    type
+                })
+            });
+            const content = await rawResponse.json();
+            console.log(content);
+
+            if (content.error) {
+                // notify error
+            } else {
+                // notify success
+
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    })
+    ();
+
+}
+
+ </script>
+    <script>
+            var elem = document.querySelectorAll('.js-switch');
+        elem.forEach(element => {
+            new Switchery(element , {
+                size : 'small',
+                color : '#64b0f2'
+            });
+        });
+    </script>
+  
 @endsection

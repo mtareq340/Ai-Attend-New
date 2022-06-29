@@ -49,11 +49,11 @@
                     <div class="card-body">
                         <h4 class="header-title">Attend Methods</h4>
                       
-                        <form action="{{ route('attend_methods.store')}}" method="post">
+                        <form action="{{ route('attend_methods.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name</label>
-                                <input type="name" name="name" class="form-control" id="name" placeholder="Name">
+                                <input type="name" name="name" class="form-control" id="name" placeholder="Name" required>
                             </div>
 
                             <div class="form-group shadow-textarea">

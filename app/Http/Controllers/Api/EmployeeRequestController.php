@@ -6,6 +6,7 @@ use App\Branch;
 use App\Employee;
 use App\EmployeeRequest;
 use App\Attendmethods;
+use App\Employee_Request_Review;
 use App\Http\Controllers\Controller;
 use App\Job;
 use Illuminate\Http\Request;
@@ -14,16 +15,17 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployeeRequestController extends Controller
 {
-    public function getData(Request $request){
+    public function getData(Request $request)
+    {
         $employee =  Employee::where('id', $request->id)->get();
 
-        $data =  EmployeeRequest::where('employee_id', $request->id)->get();
+        $data =  Employee_Request_Review::where('employee_id', $request->id)->get();
 
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);
-
     }
 
-    function store (Request $request){
+    function store(Request $request)
+    {
 
         $rules = array(
             'id' => 'required',
@@ -36,17 +38,15 @@ class EmployeeRequestController extends Controller
         $request_data = $request->all();
         $employee = Employee::FindOrFail($request->id);
 
-        if($employee){
+        if ($employee) {
             $request_data['employee_id'] = $employee->id;
             $request_data['request'] = $request->title;
             $request_data['date'] = date('y-m-d');
 
-            $employeeRequest = EmployeeRequest::create($request_data);
-            return Response()->json(['status' => 1, 'message' => 'Data added successfuly', 'data'=> $employeeRequest]);
-        }else{
+            $employeeRequest = Employee_Request_Review::create($request_data);
+            return Response()->json(['status' => 1, 'message' => 'Data added successfuly', 'data' => $employeeRequest]);
+        } else {
             return Response()->json(['status' => 0, 'message' => 'there is no data']);
         }
-
     }
-
 }

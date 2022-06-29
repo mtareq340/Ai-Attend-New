@@ -11,7 +11,7 @@ class Appointment extends Model
     use Notifiable;
     protected $table = 'work_appointments';
     protected $fillable = [
-        'location_id', 'start_from', 'end_to', 'delaytime', 'branch_id', 'overtime', 'date', 'created_at', 'updated_at'
+        'name', 'location_id', 'start_from', 'end_to', 'delay', 'branch_id', 'overtime', 'date', 'created_at', 'updated_at'
     ];
 
     public function location()

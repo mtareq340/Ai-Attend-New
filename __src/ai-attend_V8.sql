@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2022 at 08:29 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.13
+-- Generation Time: Jun 29, 2022 at 09:57 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ai_attend`
+-- Database: `ai-attend`
 --
 
 -- --------------------------------------------------------
@@ -38,6 +38,13 @@ CREATE TABLE `assign_appointments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `assign_appointments`
+--
+
+INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `job_id`, `branch_id`, `location_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 2, 2, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +53,7 @@ CREATE TABLE `assign_appointments` (
 
 CREATE TABLE `attendance_settings` (
   `id` bigint(20) NOT NULL,
+  `branch_id` int DEFAULT NULL,
   `allow_delay` tinyint(1) DEFAULT NULL,
   `automatic_leave` tinyint(1) DEFAULT NULL,
   `over_time_count` tinyint(1) DEFAULT NULL,
@@ -59,7 +67,7 @@ CREATE TABLE `attendance_settings` (
 --
 
 INSERT INTO `attendance_settings` (`id`, `allow_delay`, `automatic_leave`, `over_time_count`, `validate_finger`, `created_at`, `updated_at`) VALUES
-(1, 0, 1, NULL, NULL, NULL, NULL);
+(1, 0, 1, NULL, NULL, NULL, '2022-06-29 17:42:08');
 
 -- --------------------------------------------------------
 
@@ -75,6 +83,13 @@ CREATE TABLE `attend_methods` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attend_methods`
+--
+
+INSERT INTO `attend_methods` (`id`, `name`, `active`, `notes`, `created_at`, `updated_at`) VALUES
+(2, 'WIFI', 1, NULL, '2022-06-29 08:37:35', '2022-06-29 08:37:35');
 
 -- --------------------------------------------------------
 
@@ -168,7 +183,7 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`id`, `name`, `active`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'Mohamed Tarek', NULL, 'dfbgnhm', '2022-06-21 05:15:14', '2022-06-21 05:15:14');
+(1, 'Mohamed Tarek', 1, 'dfbgnhm', '2022-06-21 05:15:14', '2022-06-29 08:13:30');
 
 -- --------------------------------------------------------
 
@@ -199,7 +214,8 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `name`, `email`, `password`, `phone`, `address`, `gender`, `age`, `branch_id`, `job_id`, `active`, `locked`, `otp`, `created_at`, `updated_at`) VALUES
-(1, 'mohamed', 'mtareq340@gmail.com', '123456789', '01011305995', 'abo sleem', 'male', 25, 2, 1, 1, 1, NULL, NULL, '2022-06-25 12:07:36');
+(1, 'mohamed', 'mtareq340@gmail.com', '123456789', '01011305995', 'abo sleem', 'male', 25, 2, 1, 1, 1, NULL, NULL, '2022-06-25 12:07:36'),
+(3, 'moahamed magdy', 'magdy@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '01066018340', '1234 main ST', 'male', 20, 7, 1, 1, 1, NULL, '2022-06-29 06:33:01', '2022-06-29 07:52:41');
 
 -- --------------------------------------------------------
 
@@ -224,14 +240,38 @@ CREATE TABLE `employee_attend_methods` (
 CREATE TABLE `employee_requests` (
   `id` bigint(20) NOT NULL,
   `employee_id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `request_type_id` int(11) NOT NULL,
   `request` varchar(191) NOT NULL,
   `date` date NOT NULL,
-  `accepted` int(11) NOT NULL DEFAULT 0,
-  `Action` int(1) NOT NULL DEFAULT 0,
-  `accept_date` date DEFAULT NULL,
-  `attachment` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_requests`
+--
+
+INSERT INTO `employee_requests` (`id`, `employee_id`, `user_id`, `request_type_id`, `request`, `date`, `created_at`, `updated_at`) VALUES
+(1, 1, 30, 3, 'Your trusted resource for learning new technologies.\r\n\r\n', '2022-06-29', '2022-06-29 16:03:45', '2022-06-29 16:03:45'),
+(2, 1, 30, 3, 'test', '2022-06-29', '2022-06-29 16:08:20', '2022-06-29 16:08:20'),
+(3, 1, 30, 2, 'test 3', '2022-06-29', '2022-06-29 16:09:24', '2022-06-29 16:09:24'),
+(4, 1, 30, 3, 'test4', '2022-06-29', '2022-06-29 16:12:22', '2022-06-29 16:12:22'),
+(5, 1, 30, 3, 'test5', '2022-06-29', '2022-06-29 17:38:21', '2022-06-29 17:38:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_request_review`
+--
+
+CREATE TABLE `employee_request_review` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `request` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -273,6 +313,14 @@ CREATE TABLE `locations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `device_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `name`, `location_address`, `distance`, `location_latitude`, `location_longituide`, `notes`, `created_at`, `updated_at`, `device_id`) VALUES
+(1, 'Giza location', '123 main AT', '100', '30.014082', '31.482892', NULL, '2022-06-29 06:56:21', '2022-06-29 06:56:21', 1),
+(2, 'water fall', '1234 main ST', '150', '29.934973', '30.921903', NULL, '2022-06-29 06:57:08', '2022-06-29 06:57:08', 1);
 
 -- --------------------------------------------------------
 
@@ -341,8 +389,8 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `notes`, `created_at`, 
 (124, 'add_plan', 'Add Plan', NULL, NULL, NULL),
 (125, 'edit_plan', 'Edit Plan', NULL, NULL, NULL),
 (126, 'delete_plan', 'Delete Plan', NULL, NULL, NULL),
-(127, 'show_plans', 'Show Plans', NULL, NULL, NULL);
-
+(127, 'show_plans', 'Show Plans', NULL, NULL, NULL),
+(128,'make_response','Make Response to Employees',NULL, NULL, NULL);
 -- --------------------------------------------------------
 
 --
@@ -522,6 +570,28 @@ INSERT INTO `plans` (`id`, `name`, `count_employees`, `price`, `number_days`, `d
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `request_type`
+--
+
+CREATE TABLE `request_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `note` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `request_type`
+--
+
+INSERT INTO `request_type` (`id`, `name`, `note`, `created_at`, `updated_at`) VALUES
+(2, 'Reject', 'Reject Request', '2022-06-29 17:06:40', '2022-06-29 17:06:40'),
+(3, 'accepting', NULL, '2022-06-29 15:07:09', '2022-06-29 15:07:09');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -605,15 +675,21 @@ CREATE TABLE `work_appointments` (
   `location_id` bigint(20) NOT NULL,
   `start_from` timestamp NULL DEFAULT NULL,
   `end_to` timestamp NULL DEFAULT NULL,
-  `delay_min` int(11) NOT NULL,
-  `delay_hour` int(11) NOT NULL,
+  `delay` varchar(50) DEFAULT NULL,
   `branch_id` bigint(20) NOT NULL,
-  `overtime_hour` int(11) DEFAULT NULL,
-  `overtime_min` int(11) DEFAULT NULL,
+  `overtime` varchar(50) DEFAULT NULL,
   `date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `work_appointments`
+--
+
+INSERT INTO `work_appointments` (`id`, `name`, `location_id`, `start_from`, `end_to`, `delay`, `branch_id`, `overtime`, `date`, `created_at`, `updated_at`) VALUES
+(9, 'test9999', 2, '2022-06-29 19:40:00', '2022-06-29 19:39:00', NULL, 5, NULL, '2022-06-15', '2022-06-29 17:35:19', '2022-06-29 17:35:19'),
+(10, 'Testupdated', 2, '2022-06-29 11:36:00', '2022-06-29 19:39:00', '14:10', 6, '14:15', '2022-06-21', '2022-06-29 17:37:05', '2022-06-29 17:37:05');
 
 --
 -- Indexes for dumped tables
@@ -630,7 +706,6 @@ ALTER TABLE `assign_appointments`
 --
 ALTER TABLE `attendance_settings`
   ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `attend_methods`
 --
@@ -680,6 +755,12 @@ ALTER TABLE `employee_requests`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `employee_request_review`
+--
+ALTER TABLE `employee_request_review`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -701,6 +782,12 @@ ALTER TABLE `permissions`
 -- Indexes for table `plans`
 --
 ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `request_type`
+--
+ALTER TABLE `request_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -736,7 +823,7 @@ ALTER TABLE `work_appointments`
 -- AUTO_INCREMENT for table `assign_appointments`
 --
 ALTER TABLE `assign_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `attendance_settings`
@@ -748,7 +835,7 @@ ALTER TABLE `attendance_settings`
 -- AUTO_INCREMENT for table `attend_methods`
 --
 ALTER TABLE `attend_methods`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `branches`
@@ -778,7 +865,7 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `employee_attend_methods`
@@ -790,7 +877,13 @@ ALTER TABLE `employee_attend_methods`
 -- AUTO_INCREMENT for table `employee_requests`
 --
 ALTER TABLE `employee_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `employee_request_review`
+--
+ALTER TABLE `employee_request_review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -802,7 +895,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -815,6 +908,12 @@ ALTER TABLE `permissions`
 --
 ALTER TABLE `plans`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `request_type`
+--
+ALTER TABLE `request_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -832,7 +931,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `work_appointments`
 --
 ALTER TABLE `work_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

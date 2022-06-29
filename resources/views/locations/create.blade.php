@@ -34,16 +34,16 @@
                     <div class="card-body">
                         <h4 class="header-title">Locations</h4>
                       
-                        <form action="{{ route('locations.store')}}" method="post">
+                        <form action="{{ route('locations.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name</label>
-                                <input type="name" name="name" class="form-control" id="name" placeholder="Name">
+                                <input type="name" name="name" class="form-control" id="name" placeholder="Name" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputEmail4" class="col-form-label">Device Name</label>
-                                <select name="device_id" class="form-control" id="">
+                                <select name="device_id" class="form-control" id="" required>
                                     @foreach ( $devices as $dev )
                                         <option value="{{$dev->id}}">{{$dev->name}}</option>
                                     @endforeach
@@ -52,18 +52,18 @@
                           
                             <div class="form-group">
                                 <label for="inputAddress" class="col-form-label">Locations Address</label>
-                                <input type="text" name="location_address" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                <input type="text" name="location_address" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="distance" class="col-form-label">Distance</label>
-                                <input type="text" name="distance" class="form-control" id="distance" placeholder="Distance">
+                                <input type="text" name="distance" class="form-control" id="distance" placeholder="Distance" required>
                             </div>
 
                             
-                            <input hidden type="text" name="location_latitude" class="form-control" id="lat" placeholder="Latitude">
+                            <input hidden type="text" name="location_latitude" class="form-control" id="lat" placeholder="Latitude" required>
 
-                            <input hidden type="text" name="location_longituide" class="form-control" id="lng" placeholder="Longituide">
+                            <input hidden type="text" name="location_longituide" class="form-control" id="lng" placeholder="Longituide" required>
 
                             <div class="my-4">
                                 <div id="map" style="height: 500px"></div>

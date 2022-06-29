@@ -55,25 +55,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Assign Appointment</h4>
-                      
-                        <form action="{{ route('assign_appointment.store')}}" method="post">
+                        <p class="text-warning font-weight-bold">Note* Employee Input Will Appear After Selecting Branch and Job </p>
+                        <p class="text-warning font-weight-bold">Note* Appointment Input Will Appear After Selecting Branch and Location</p>
+                        <form action="{{ route('assign_appointment.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
-                                <label for="location">Location *</label>
-                                <select name="location_id" class="form-control " data-toggle="select2" >
-                                    {{-- <option data-select2-id="1">Select Location</option> --}}
-                                    @foreach ($locations as $l )
-                                    <option value="{{$l->id}}" >{{$l->name}}</option>
-                                    @endforeach
-                                       
-                                    
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="location">Job Name *</label>
-                                <select name="job_id" class="form-control " data-toggle="select2">
-                                    {{-- <option data-select2-id="2">Select Job Name</option> --}}
+                                <label for="job">Job Name *</label>
+                                <select name="job_id" id="inputjob" class="selectize-drop-header">
+                                    <option selected disabled value="" >Select Job</option>
                                     @foreach (  $jobs as $j )
                                     <option value="{{$j->id}}" >{{$j->name}}</option>                                    
                                     @endforeach                                    
@@ -81,25 +70,31 @@
                             </div>
                             <div class="form-group">
                                 <label for="branch">Branch *</label>
-                                <select id="branch" onchange="handleBranchSelect(event)" name="branch_id" class="form-control " data-toggle="select2" >
-                                    <option >Select Branch</option>
+                                <select id="branch" onchange="getemployess()" name="branch_id" class="form-control " data-toggle="select2" >
+                                    <option selected disabled value="" >Select Branch</option>
                                     @foreach ( $branchs as $b )
                                     <option value="{{$b->id}}" >{{$b->name}}</option>
                                     @endforeach                                    
                                 </select>
                             </div>
-
                             <div class="form-group">
-                                <label for="location">Appointments *</label>
-                                <select name="work_appointment_id" class="form-control" data-toggle="select2"  aria-hidden="true">
-                                    <option >Select Appointmants</option>
-                                      @foreach ($appointments as $a)
-                                        <option value="{{$a->id}}">{{$a->branch->name}}-{{$a->location->name}}</option>
-                                    @endforeach                              
+                                <label for="location">Location *</label>
+                                <select id="location_id" onchange="getappointments()" name="location_id" class="form-control " data-toggle="select2" >
+                                    <option selected disabled value="" >Select Location</option>
+                                    @foreach ($locations as $l )
+                                    <option value="{{$l->id}}" >{{$l->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="appointment" style="display: none">
+                                <label for="location">Appointments *</label>
+                                <select name="work_appointment_id" id="appoint" class="form-control" data-toggle="select2"  aria-hidden="true">
+                                    <option value=""></option>                            
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="employee" style="display: none">
                                 <label for="location">Employees *</label>
                                 <select name="employee_id[]" id="select2-multiple" class="selectemp form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
                                     <option value=""></option>  
@@ -138,33 +133,77 @@
     <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
     
     <!-- Page js-->
-    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script> 
     <script>
-        const handleBranchSelect = (event) => {
-
-            let branch_id =  event.target.value;
+        function getemployess(){
+            let branch_id = $('#branch').val();
+            let job_id = $('#inputjob').val();
+            // console.log(branch_id);
+            // console.log(job_id);
             $.ajax(
                 {
-                    "type":"GET",
+                    "type":"get",
                     'url':`{{ route('getEmpsByBranch') }}`,
-                    dataType: 'json', // added data type
-                    data : {"branch_id" : branch_id},
-                    success:function(response){
-                        response.forEach(employee => {
-                            $('.selectemp').append($('<option>', {
-                                value: employee.id,
-                                text: employee.name
-                            }));
-                        });
+                    'data':{branch_id : branch_id , job_id:job_id},
+                    "success":function(data){
+                        console.log(data);
+                        $('#employee').css("display","block");
+                        $('.selectemp').html(data);
                     },
-                    error:function(error){
-                        console.log(error);
+                    "error":function(){
+                        
                     },
 
-                });            
+                });
         }
-
-        
     </script>
- 
+    <script>
+            function getappointments(){
+                 let branch_id = $('#branch').val();
+                 let location_id = $('#location_id').val();
+                //  console.log(branch_id);
+                //  console.log(job_id);
+                 $.ajax(
+                     {
+                         "type":"get",
+                         'url':`{{ route('getappointment') }}`,
+                         'data':{location_id : location_id , branch_id:branch_id},
+                         "success":function(data){
+                             console.log(data);
+                             $('#appointment').css("display","block");
+                             $('#appoint').html(data);
+                         },
+                         "error":function(){
+
+                         },
+                     
+                     });
+        }
+        // const handleBranchSelect = (event) => {
+        //     let job_id = $("#inputjob").val();
+        //     let branch_id =  event.target.value;
+        //     $.ajax(
+        //         {
+        //             "type":"GET",
+        //             'url':`{{ route('getEmpsByBranch') }}`,
+        //             dataType: 'json', // added data type
+        //             data : {branch_id : branch_id , job_id:job_id},
+        //             success:function(response){
+        //                 console.log(response);
+        //                 $('#employee').css("display","block");
+        //                 response.forEach(employee => {
+        //                     $('.selectemp').append($('<option>', {
+        //                         value: employee.id,
+        //                         text: employee.name
+        //                     }));
+
+        //                 });
+        //             },
+        //             error:function(error){
+        //                 console.log(error);
+        //             },
+
+        //         });            
+        // }
+    </script>
 @endsection
