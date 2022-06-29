@@ -34,7 +34,11 @@ class UserController extends Controller
         if (! Gate::allows('show_users')) {
             return abort(401);
         }
-        $users = User::where('branch_id', auth()->user()->branch_id)->get();
+        if(auth()->user()->hasRole('super_admin')){
+            $users = User::latest()->get();
+        }else{
+            $users = User::where('branch_id', auth()->user()->branch_id)->get();
+        }
         return view('users/index', compact('users'));
     }
 
@@ -85,8 +89,6 @@ class UserController extends Controller
         // attach user role
         $user->attachRole($request->role_id);
         return redirect()->route('users.index')->with(['success' => 'تم الحفظ بنجاح']);
-
-        return view('users.add');
     }
 
     public function edit(Request $resuest, $id)
