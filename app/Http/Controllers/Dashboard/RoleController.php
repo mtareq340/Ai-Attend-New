@@ -127,7 +127,10 @@ class RoleController extends Controller
     {
         try {
             $role = Role::findOrFail($id);
-
+            $request->validate([
+                'name' => 'required',
+                "permissions" => "required",
+            ]);
             //update in db
             $role->update($request->except('permissions'));
             $role->syncPermissions($request->permissions);

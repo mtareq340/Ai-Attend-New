@@ -122,9 +122,6 @@
                             <li>
                                 <a href="{{ route('employees.create') }}">Add employee</a>
                             </li>
-                            <li>
-                                <a href="{{ route('employees.excelPage') }}">upload employees from excel</a>
-                            </li>
                             @endcan
                         </ul>
                     </div>

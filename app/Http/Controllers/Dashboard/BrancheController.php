@@ -105,6 +105,11 @@ class BrancheController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $request->validate([
+                'name' => 'required',
+                'phone' => 'required|numeric',
+                'address' => 'required'
+            ]);
             $branch = Branch::findOrFail($id);
             //update in db
             $branch->update($request->all());

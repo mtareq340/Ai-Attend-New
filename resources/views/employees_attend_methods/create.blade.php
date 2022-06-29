@@ -63,7 +63,7 @@
                             <label for="location">Employees *</label>
                             <select name="employee_id[]" id="select2-multiple" class="form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
                                 @foreach ( $employees as $e )
-                                <option value="{{$e->id}}">{{$e->name}}</option>
+                                    <option value="{{$e->id}}">{{$e->name}}</option>
                                 @endforeach    
                                 </select>
                         </div>

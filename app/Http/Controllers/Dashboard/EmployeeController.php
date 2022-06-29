@@ -9,6 +9,7 @@ use App\Plan;
 use App\Http\Controllers\Controller;
 use App\Imports\EmployeeImport;
 use App\Job;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -76,11 +77,33 @@ class EmployeeController extends Controller
         //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
 
 
-        $data = $request->except('_token');
-        $data['password'] = Hash::make($data['password']);
-        $emp = Employee::create($data);
+        // $data = $request->except('_token');
+        // $data['password'] = Hash::make($data['password']);
+        // $emp = Employee::create($data);
 
-        return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
+        // return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
+        try {
+            $request->validate([
+                'name' => 'required',
+                'phone' => 'required|numeric',
+                'gender' => 'required',
+                'branch_id' => 'required',
+                'job_id' => 'required',
+            ]);
+            $plan_id = Setting::find(1)->value;
+            $plan = Plan::find($plan_id);
+            $employees_count = Employee::count();
+            if ($plan->count_employees <= $employees_count)
+                return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
+            $data = $request->except('_token');
+            $data['password'] = Hash::make($data['password']);
+            $emp = Employee::create($data);
+
+            return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            // return $e;
+        }
     }
 
     /**
@@ -123,6 +146,13 @@ class EmployeeController extends Controller
     {
         //
         try {
+            $request->validate([
+                'name' => 'required',
+                'phone' => 'required|numeric',
+                'gender' => 'required',
+                'branch_id' => 'required',
+                'job_id' => 'required',
+            ]);
             $emp = Employee::findOrFail($id);
 
             //update in db
