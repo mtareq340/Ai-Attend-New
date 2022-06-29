@@ -56,7 +56,7 @@
                                 @foreach ($appointments as $appoint)
                                 <tr>
 
-                                    <td>{{$appoint->branch->name}}-{{$appoint->location->name}}</td>
+                                    <td>{{$appoint->name}}</td>
                                     <td>{{$appoint->branch->name}}</td>
                                     <td>{{$appoint->location->name}}</td>
                                     <td>{{$appoint->start_from}}</td>

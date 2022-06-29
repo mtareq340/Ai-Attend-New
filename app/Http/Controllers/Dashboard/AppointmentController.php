@@ -9,6 +9,7 @@ use App\Location;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
 {
@@ -34,15 +35,33 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate([
-                'location_id' => 'required',
-                'branch_id' => 'required',
-                'start_from' => 'required',
-                'end_to' => 'required',
-                'delay' => 'required',
-                'overtime' => 'required',
-                'date' => 'required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'location_id' => 'required',
+                    'branch_id' => 'required',
+                    'start_from' => 'required',
+                    'end_to' => 'required',
+                    'delay' => 'required',
+                    'overtime' => 'required',
+                    'date' => 'required',
+                ],
+                [
+                    'name.required' => 'برجاء ادخال اسم الحضور',
+                    'location_id.required' => 'برجاء اختيار الموقع',
+                    'branch_id.required' => 'برجاء اختيار الفرع',
+                    'start_from.required' => 'برجاء ادخال موعد بدء الدوام',
+                    'end_to' => 'برجاءادخال موعد اتتهاء الدوام ',
+                    'delay' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
+                    'overtime' => 'برجاء تحديد عدد الساعات و الدقاءق للوفت العمل الاضافي',
+                    'date' => ""
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
 
             //split time first
             $delay = $request->delay;
@@ -55,6 +74,7 @@ class AppointmentController extends Controller
             $overtimemin = $overtime_arr[1];
 
             //save in appointment //
+            $name = $request->name;
             $location = $request->location_id;
             $branch = $request->branch_id;
             $start_date = $request->start_from;
@@ -67,6 +87,7 @@ class AppointmentController extends Controller
             // dd($location);
             $appoint = Appointment::create([
                 'location_id' => $location,
+                'name' => $name,
                 'start_from' => $start_date,
                 'end_to' => $end_date,
                 'branch_id' => $branch,
@@ -79,6 +100,7 @@ class AppointmentController extends Controller
             return redirect()->route('appointment.create')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             return $e;
+            // return redirect()->route('appointment.create')->with(['error' => 'حدث خطا برجاء المحاوله مره اخري']);
         }
     }
 
@@ -107,15 +129,33 @@ class AppointmentController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'location_id' => 'required',
-                'branch_id' => 'required',
-                'start_from' => 'required',
-                'end_to' => 'required',
-                'delay' => 'required',
-                'overtime' => 'required',
-                'date' => 'required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'location_id' => 'required',
+                    'branch_id' => 'required',
+                    'start_from' => 'required',
+                    'end_to' => 'required',
+                    'delay' => 'required',
+                    'overtime' => 'required',
+                    'date' => 'required',
+                ],
+                [
+                    'name.required' => 'برجاء ادخال اسم الحضور',
+                    'location_id.required' => 'برجاء اختيار الموقع',
+                    'branch_id.required' => 'برجاء اختيار الفرع',
+                    'start_from.required' => 'برجاء ادخال موعد بدء الدوام',
+                    'end_to' => 'برجاءادخال موعد اتتهاء الدوام ',
+                    'delay' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
+                    'overtime' => 'برجاء تحديد عدد الساعات و الدقاءق للوفت العمل الاضافي',
+                    'date' => ""
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
             // return ($request->all());
             $delay = $request->delay;
             $delay_arr = explode(':', $delay);
@@ -126,6 +166,7 @@ class AppointmentController extends Controller
             $overtimehour = $overtime_arr[0];
             $overtimemin = $overtime_arr[1];
 
+            $name = $request->name;
             $location = $request->location_id;
             $branch = $request->branch_id;
             $start_date = $request->start_from;
@@ -137,6 +178,7 @@ class AppointmentController extends Controller
             $date = $request->date;
             $appoint = Appointment::find($id);
             $appoint->update([
+                'name' => $name,
                 'location_id' => $location,
                 'start_from' => $start_date,
                 'end_to' => $end_date,

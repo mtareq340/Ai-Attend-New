@@ -70,8 +70,12 @@
                     <div class="card-body">
                         <h4 class="header-title">Add Appointments</h4>
                       
-                        <form action="{{ route('appointment.store')}}" method="post">
+                        <form action="{{ route('appointment.store')}}" method="post"  class="needs-validation" novalidate>
                             @csrf
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                    <input name="name" type="text" class="form-control" placeholder="Enter Name" required>
+                            </div>
                             <div class="form-group">
                                 <label for="inputLocation" class="col-form-label">location *</label>
                                 <select name="location_id" id="inputlocation" class="selectize-drop-header" placeholder="Select a location..." required>
@@ -91,7 +95,7 @@
                             <div class="form-group mb-3">
                                 <label>Start From</label>
                                 <div class="input-group ">
-                                    <input type="datetime-local" class="form-control" name ="start_from" value="00:00">
+                                    <input type="datetime-local" class="form-control" name ="start_from" value="00:00" required>
                                     {{-- <div class="input-group-append">
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div> --}}
@@ -100,7 +104,7 @@
                             <div class="form-group mb-3">
                                 <label>End To</label>
                                 <div class="input-group ">
-                                    <input type="datetime-local" class="form-control" name ="end_to" value="">
+                                    <input type="datetime-local" class="form-control" name ="end_to" value="" required>
                                     {{-- <div class="input-group-append">
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div> --}}
@@ -110,18 +114,18 @@
                            <div class="row">
                             <div class="form-group mb-3 col-md-12">
                                 <label>Delay hours & minutes</label>
-                                <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly">
+                                <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly" required>
                             </div>
                             </div>
                            <div class="row">
                             <div class="form-group mb-3 col-md-12">
                                 <label>overtime hours & minutes</label>
-                                <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly">
+                                <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly" required>
                             </div>
                            </div>
                            <div class="form-group mb-3">
                             <label>Date Picker</label>
-                            <input type="date" class="form-control" name ="date">
+                            <input type="date" class="form-control" name ="date" required>
                         </div>
 
                             <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>

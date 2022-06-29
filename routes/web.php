@@ -43,6 +43,7 @@ Route::group(['prefix' => 'dashboard'], function () {
     // assign appointment route
     Route::resource('assign_appointment', 'Dashboard\Assign_AppointmentController');
     Route::get('getemployees', 'Dashboard\Assign_AppointmentController@getemployees')->name('getEmpsByBranch');
+    Route::get('getappointment', 'Dashboard\Assign_AppointmentController@getappointment')->name('getappointment');
     // appointment //
     Route::resource('appointment', 'Dashboard\AppointmentController');
 

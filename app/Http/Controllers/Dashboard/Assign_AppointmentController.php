@@ -90,39 +90,55 @@ class Assign_AppointmentController extends Controller
             return abort(401);
         }
         $employees = Employee::all();
-        $locations = Location::all();
-        $branchs = Branch::all();
         $appointments = Appointment::all();
-        $jobs = Job::all();
         $assign = Assign_Appointment::find($id);
-        return view('assign_appointments.edit', compact('employees', 'locations', 'branchs', 'appointments', 'jobs', 'assign'));
+        return view('assign_appointments.edit', compact('employees', 'appointments', 'assign'));
     }
 
     public function update(Request $req, $id)
     {
         try {
             $req->validate([
-                'location_id' => 'required',
-                'job_id' => 'required',
-                'branch_id' => 'required',
                 'work_appointment_id' => 'required',
-                'employee_id' => 'required',
             ]);
             $assigns = Assign_Appointment::find($id);
-            $assigns->update($req->all());
-            return redirect()->route('assign_appointment.index')->with(['success' => 'تم تحديث الموقع بنجاح']);
+            $data = [
+                'employee_id' => $assigns->employee_id,
+                'work_appointment_id' => $req->work_appointment_id,
+                'job_id' => $assigns->job_id,
+                'branch_id' => $assigns->branch_id,
+                'location_id' => $assigns->location_id
+            ];
+            $assigns->update($data);
+            return redirect()->route('assign_appointment.index')->with(['success' => 'تم تحديث خطه الحضور بنجاح']);
         } catch (Exception $e) {
-            return redirect()->route('assign_appointment.edit')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            // return $e;
         }
     }
 
 
     //function to get employees filtering from branch and job
+
     public function getemployees(Request $req)
     {
 
         $branch_id = $req->branch_id;
-        $emps =  Employee::where('branch_id', '=', $branch_id)->get();
+        $job_id  = $req->job_id;
+        $emps =  Employee::where([['job_id', '=', $job_id], ['branch_id', '=', $branch_id]])->get();
         return response()->json($emps);
+    }
+
+    //function to get appointment filtering from location
+    public function getappointment(Request $req)
+    {
+        try {
+            $location_id = $req->location_id;
+            $branch_id = $req->branch_id;
+            $appointment = Appointment::where([['location_id', '=', $location_id], ['branch_id', '=', $branch_id]])->get();
+            return response()->json($appointment);
+        } catch (Exception $e) {
+            return $e;
+        }
     }
 }
