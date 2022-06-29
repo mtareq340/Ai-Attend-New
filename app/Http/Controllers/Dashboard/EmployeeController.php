@@ -37,8 +37,12 @@ class EmployeeController extends Controller
             return abort(401);
         }
         //
-        $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
-        return view('employees.index', compact('employees'));
+        if(auth()->user()->hasRole('super_admin')){
+            $employees = Employee::latest()->get();
+        }else{
+            $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+        }
+        return view('employees.index' , compact('employees'));
     }
 
     /**
