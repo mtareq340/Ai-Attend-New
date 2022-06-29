@@ -13,6 +13,7 @@ Route::group([ 'prefix' => 'dashboard'], function () {
     // home
     Route::get('/' , 'Dashboard\HomeController@index');
 
+    Route::patch('/auth/changepass' , 'Dashboard\AccountSettingsController@changePassword')->name('change_auth_user_password');
     Route::resource('users', 'Dashboard\UserController');
     /*
         the List Of route name
@@ -56,6 +57,11 @@ Route::group([ 'prefix' => 'dashboard'], function () {
       Route::patch('settings/cover', 'Dashboard\AccountSettingsController@uploadCover')->name('changeCover');
       Route::patch('settings/logo', 'Dashboard\AccountSettingsController@uploadLogo')->name('uploadLogo');
       Route::put('settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
+      Route::put('settings/company/updateAll', 'Dashboard\AccountSettingsController@updateCompanySettings')->name('updateCompanySettings');
+
+        //  toggle attendence settings
+      Route::patch('attendence_settings/toggle', 'Dashboard\AccountSettingsController@toggleAttendenceSettings')->name('toggleAttendenceSettings');
+
       Route::resource('/settings', 'Dashboard\AccountSettingsController', [
           'only' => ['index', 'update']
       ]);

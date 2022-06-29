@@ -267,7 +267,9 @@
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="{{asset('assets/images/users/user-1.jpg')}}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
+                        @if (auth()->user())
                         {{auth()->user()->name}} <i class="mdi mdi-chevron-down"></i> 
+                        @endif
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -277,22 +279,17 @@
                     </div>
     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{route('settings.index')}}" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>My Account</span>
                     </a>
     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{route('settings.index')}}" class="dropdown-item notify-item">
                         <i class="fe-settings"></i>
                         <span>Settings</span>
                     </a>
     
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-lock"></i>
-                        <span>Lock Screen</span>
-                    </a>
     
                     <div class="dropdown-divider"></div>
     
@@ -332,21 +329,21 @@
         <div class="logo-box">
             <a href="{{route('any', ['dashboard'])}}" class="logo logo-dark text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/logo-sm.png')}}"alt="" height="22">
+                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="22">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/logo-dark.png')}}"alt="" height="20">
+                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="20">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
             </a>
     
             <a href="{{route('any', ['dashboard'])}}" class="logo logo-light text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/logo-sm.png')}}"alt="" height="22">
+                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="22">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/logo-light.png')}}"alt="" height="20">
+                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="20">
                 </span>
             </a>
         </div>
@@ -377,28 +374,23 @@
                 </a>
                 <div class="dropdown-menu">
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <i class="fe-briefcase mr-1"></i>
-                        <span>New Projects</span>
-                    </a>
-    
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
+                    <a href="{{route('users.create')}}" class="dropdown-item">
                         <i class="fe-user mr-1"></i>
-                        <span>Create Users</span>
+                        <span class="ml-1">Create a new User</span>
                     </a>
     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <i class="fe-bar-chart-line- mr-1"></i>
-                        <span>Revenue Report</span>
+                    <a href="{{route('employees.create')}}" class="dropdown-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="ml-1">Create a new Employee</span>
                     </a>
     
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <i class="fe-settings mr-1"></i>
-                        <span>Settings</span>
+                    <a href="{{route('appointment.create')}}" class="dropdown-item">
+                        <i class="icon-clock"></i>
+                        <span class="ml-1">Create a new Appointment</span>
                     </a>
+    
     
                     <div class="dropdown-divider"></div>
     
