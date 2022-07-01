@@ -55,8 +55,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Assign Appointment</h4>
-                        <p class="text-warning font-weight-bold">Note* Employee Input Will Appear After Select Branch and Job </p>
-                        <p class="text-warning font-weight-bold">Note* Appointment Input Will Appear After Select Branch and Location</p>
+                        <p class="text-warning font-weight-bold">Note* Employee Input Will Appear After Selecting Branch and Job </p>
+                        <p class="text-warning font-weight-bold">Note* Appointment Input Will Appear After Selecting Branch and Location</p>
                         <form action="{{ route('assign_appointment.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="branch">Branch *</label>
-                                <select id="branch" onchange="handleBranchSelect(event)" name="branch_id" class="form-control " data-toggle="select2" >
+                                <select id="branch" onchange="getemployess()" name="branch_id" class="form-control " data-toggle="select2" >
                                     <option selected disabled value="" >Select Branch</option>
                                     @foreach ( $branchs as $b )
                                     <option value="{{$b->id}}" >{{$b->name}}</option>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="location">Location *</label>
-                                <select id="location_id" onchange="filterappointment(event)" name="location_id" class="form-control " data-toggle="select2" >
+                                <select id="location_id" onchange="getappointments()" name="location_id" class="form-control " data-toggle="select2" >
                                     <option selected disabled value="" >Select Location</option>
                                     @foreach ($locations as $l )
                                     <option value="{{$l->id}}" >{{$l->name}}</option>
@@ -133,66 +133,77 @@
     <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
     
     <!-- Page js-->
-    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script> 
     <script>
-         const filterappointment = (event) =>{
-            // alert('hii');
-            let location_id = event.target.value;
-            let branch_id = $("#branch").val();
+        function getemployess(){
+            let branch_id = $('#branch').val();
+            let job_id = $('#inputjob').val();
+            // console.log(branch_id);
+            // console.log(job_id);
             $.ajax(
                 {
-                    "type":"GET",
-                    'url':`{{ route('getappointment') }}`,
-                    dataType: 'json', // added data type
-                    data : {location_id : location_id , branch_id:branch_id},
-                    success:function(response){
-                        console.log(response);
-                        $('#appointment').css("display","block");
-                        if(Array.isArray(response)){
-                        response.forEach(appointment => {
-                            $('#appoint').append($('<option>', {
-                                value: appointment.id,
-                                text: appointment.name
-                            }));
-
-                        });
-                    }else{
-                        console.log('error');
-                    }
+                    "type":"get",
+                    'url':`{{ route('getEmpsByBranch') }}`,
+                    'data':{branch_id : branch_id , job_id:job_id},
+                    "success":function(data){
+                        console.log(data);
+                        $('#employee').css("display","block");
+                        $('.selectemp').html(data);
                     },
-                    error:function(error){
-                        console.log(error);
+                    "error":function(){
+                        
                     },
 
                 });
         }
     </script>
     <script>
-        const handleBranchSelect = (event) => {
-            let job_id = $("#inputjob").val();
-            let branch_id =  event.target.value;
-            $.ajax(
-                {
-                    "type":"GET",
-                    'url':`{{ route('getEmpsByBranch') }}`,
-                    dataType: 'json', // added data type
-                    data : {branch_id : branch_id , job_id:job_id},
-                    success:function(response){
-                        console.log(response);
-                        $('#employee').css("display","block");
-                        response.forEach(employee => {
-                            $('.selectemp').append($('<option>', {
-                                value: employee.id,
-                                text: employee.name
-                            }));
+            function getappointments(){
+                 let branch_id = $('#branch').val();
+                 let location_id = $('#location_id').val();
+                //  console.log(branch_id);
+                //  console.log(job_id);
+                 $.ajax(
+                     {
+                         "type":"get",
+                         'url':`{{ route('getappointment') }}`,
+                         'data':{location_id : location_id , branch_id:branch_id},
+                         "success":function(data){
+                             console.log(data);
+                             $('#appointment').css("display","block");
+                             $('#appoint').html(data);
+                         },
+                         "error":function(){
 
-                        });
-                    },
-                    error:function(error){
-                        console.log(error);
-                    },
-
-                });            
+                         },
+                     
+                     });
         }
+        // const handleBranchSelect = (event) => {
+        //     let job_id = $("#inputjob").val();
+        //     let branch_id =  event.target.value;
+        //     $.ajax(
+        //         {
+        //             "type":"GET",
+        //             'url':`{{ route('getEmpsByBranch') }}`,
+        //             dataType: 'json', // added data type
+        //             data : {branch_id : branch_id , job_id:job_id},
+        //             success:function(response){
+        //                 console.log(response);
+        //                 $('#employee').css("display","block");
+        //                 response.forEach(employee => {
+        //                     $('.selectemp').append($('<option>', {
+        //                         value: employee.id,
+        //                         text: employee.name
+        //                     }));
+
+        //                 });
+        //             },
+        //             error:function(error){
+        //                 console.log(error);
+        //             },
+
+        //         });            
+        // }
     </script>
 @endsection

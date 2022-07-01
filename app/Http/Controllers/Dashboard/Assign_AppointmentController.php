@@ -153,11 +153,14 @@ class Assign_AppointmentController extends Controller
 
     public function getemployees(Request $req)
     {
-
+        $text = '';
         $branch_id = $req->branch_id;
         $job_id  = $req->job_id;
         $emps =  Employee::where([['job_id', '=', $job_id], ['branch_id', '=', $branch_id]])->get();
-        return response()->json($emps);
+        foreach ($emps as $e) {
+            $text  .= "<option value = '$e->id'>" . $e->name . "</option>";
+        }
+        return $text;
     }
 
     //function to get appointment filtering from location
@@ -166,8 +169,12 @@ class Assign_AppointmentController extends Controller
         try {
             $location_id = $req->location_id;
             $branch_id = $req->branch_id;
+            $option = '';
             $appointment = Appointment::where([['location_id', '=', $location_id], ['branch_id', '=', $branch_id]])->get();
-            return response()->json($appointment);
+            foreach ($appointment as $a) {
+                $option  .= "<option value = '$a->id'>" . $a->name . "</option>";
+            }
+            return $option;
         } catch (Exception $e) {
             return $e;
         }
