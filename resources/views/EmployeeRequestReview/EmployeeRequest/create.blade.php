@@ -36,11 +36,11 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{route('employee_request_review')}}">Employees Request Reviews</a></li>
-                            <li class="breadcrumb-item active">Employee Request</li>
+                            <li class="breadcrumb-item active">Employee Response</li>
 
                         </ol>
                     </div>
-                    <h4 class="page-title">Make Employee Request</h4>
+                    <h4 class="page-title">Make Employee Response</h4>
                 </div>
             </div>
         </div>     
@@ -54,18 +54,18 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Make Employee Request</h4>
+                        <h4 class="header-title">Make Employee Response</h4>
                       
                         <form action="{{ route('store_employee_request')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <input type="hidden" name="id" value="{{$request_review->id}}">
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Employee Name</label>
-                                <input type="text"  class="form-control"  disabled value="{{$request_review->employee->name}}">
+                                <input type="text"  class="form-control bg-light"  disabled value="{{$request_review->employee->name}}">
                             </div>
                             <div class="form-group shadow-textarea">
                                 <label for="exampleFormControlTextarea6">Request</label>
-                                <input type="text"class="form-control"  disabled value="{{$request_review->request}}">
+                                <input type="text"class="form-control bg-light"  disabled value="{{$request_review->request}}">
                             </div>
 
                             <div class="form-group">
@@ -77,7 +77,7 @@
                                 </select>
                             </div>
 
-                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
+                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add Response</button></center>
 
                         </form>
 

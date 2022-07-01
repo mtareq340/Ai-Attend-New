@@ -88,12 +88,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputBranch" class="col-form-label">Branch *</label>
-                                <select name="branch_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a branch..." required>
-                                   <option selected value="{{$appointment->branch_id}}">{{$appointment->branch->name}}</option>
-                                    @foreach ($branches as $branch)
-                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control bg-light" value="{{$branch->name}}" disabled>
                             </div>
                             <div class="form-group mb-3">
                                 <label>Start From</label>

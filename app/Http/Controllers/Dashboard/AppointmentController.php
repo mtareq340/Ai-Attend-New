@@ -19,7 +19,11 @@ class AppointmentController extends Controller
         if (!Gate::allows('show_appointments')) {
             return abort(401);
         }
-        $appointments = Appointment::all();
+        if (auth()->user()->hasRole('super_admin')) {
+            $appointments = Appointment::latest()->get();
+        } else {
+            $appointments = Appointment::where('branch_id', '=', auth()->user()->branch_id)->get();
+        }
         return view('appointments.index', compact('appointments'));
     }
 
@@ -28,9 +32,11 @@ class AppointmentController extends Controller
         if (!Gate::allows('add_appointment')) {
             return abort(401);
         }
-        $branches = Branch::all();
+        // $branches = Branch::all();
+        $branch = Branch::find(auth()->user()->branch_id);
+        // dd($branch);
         $locations = Location::all();
-        return view('appointments.create', compact('branches', 'locations'));
+        return view('appointments.create', compact('branch', 'locations'));
     }
     public function store(Request $request)
     {
@@ -40,7 +46,6 @@ class AppointmentController extends Controller
                 [
                     'name' => 'required',
                     'location_id' => 'required',
-                    'branch_id' => 'required',
                     'start_from' => 'required',
                     'end_to' => 'required',
                     'delay' => 'required',
@@ -50,7 +55,6 @@ class AppointmentController extends Controller
                 [
                     'name.required' => 'برجاء ادخال اسم الحضور',
                     'location_id.required' => 'برجاء اختيار الموقع',
-                    'branch_id.required' => 'برجاء اختيار الفرع',
                     'start_from.required' => 'برجاء ادخال موعد بدء الدوام',
                     'end_to.required' => 'برجاءادخال موعد اتتهاء الدوام ',
                     'delay.required' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
@@ -69,11 +73,20 @@ class AppointmentController extends Controller
             //save in appointment //
             $name = $request->name;
             $location = $request->location_id;
-            $branch = $request->branch_id;
+            $branch = auth()->user()->branch_id;
             $start_date = $request->start_from;
             $end_date = $request->end_to;
-
-            $data = $request->all();
+            $date = $request->date;
+            $data = [
+                'name' => $name,
+                'location_id' => $location,
+                'branch_id' => $branch,
+                'start_from' => $start_date,
+                'end_to' => $end_date,
+                'delay' => $delay,
+                'overtime' => $overtime,
+                'date' => $date
+            ];
             // dd($location);
             // return $request->all();
             // dd($request->delay, $request->overtime);
@@ -103,9 +116,9 @@ class AppointmentController extends Controller
             return abort(401);
         }
         $appointment = Appointment::find($id);
-        $branches = Branch::all();
+        $branch = Branch::find(auth()->user()->branch_id);
         $locations = Location::all();
-        return view('appointments.edit', compact('appointment', 'branches', 'locations'));
+        return view('appointments.edit', compact('appointment', 'branch', 'locations'));
     }
 
     public function update(Request $request, $id)
@@ -116,7 +129,6 @@ class AppointmentController extends Controller
                 [
                     'name' => 'required',
                     'location_id' => 'required',
-                    'branch_id' => 'required',
                     'start_from' => 'required',
                     'end_to' => 'required',
                     'delay' => 'required',
@@ -126,7 +138,6 @@ class AppointmentController extends Controller
                 [
                     'name.required' => 'برجاء ادخال اسم الحضور',
                     'location_id.required' => 'برجاء اختيار الموقع',
-                    'branch_id.required' => 'برجاء اختيار الفرع',
                     'start_from.required' => 'برجاء ادخال موعد بدء الدوام',
                     'end_to' => 'برجاءادخال موعد اتتهاء الدوام ',
                     'delay' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
@@ -140,23 +151,12 @@ class AppointmentController extends Controller
             }
             // return ($request->all());
             $delay = $request->delay;
-            $delay_arr = explode(':', $delay);
-            $delayhour = $delay_arr[0];
-            $delaymin = $delay_arr[1];
             $overtime = $request->overtime;
-            $overtime_arr = explode(":", $overtime);
-            $overtimehour = $overtime_arr[0];
-            $overtimemin = $overtime_arr[1];
-
             $name = $request->name;
             $location = $request->location_id;
-            $branch = $request->branch_id;
+            $branch = auth()->user()->branch_id;
             $start_date = $request->start_from;
             $end_date = $request->end_to;
-            $delay_min = $delaymin;
-            $delay_hour = $delayhour;
-            $overtime_hour = $overtimehour;
-            $overtime_min = $overtimemin;
             $date = $request->date;
             $appoint = Appointment::find($id);
             $appoint->update([
@@ -165,10 +165,8 @@ class AppointmentController extends Controller
                 'start_from' => $start_date,
                 'end_to' => $end_date,
                 'branch_id' => $branch,
-                'delay_min' => $delay_min,
-                'delay_hour' => $delay_hour,
-                'overtime_hour' => $overtime_hour,
-                'overtime_min' => $overtime_min,
+                'delay' => $delay,
+                'overtime' => $overtime,
                 'date' => $date
             ]);
             return redirect()->route('appointment.index')->with(['success' => 'تم التحديث بنجاح']);

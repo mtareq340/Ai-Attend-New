@@ -53,6 +53,7 @@ INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `
 
 CREATE TABLE `attendance_settings` (
   `id` bigint(20) NOT NULL,
+  `branch_id` int DEFAULT NULL,
   `allow_delay` tinyint(1) DEFAULT NULL,
   `automatic_leave` tinyint(1) DEFAULT NULL,
   `over_time_count` tinyint(1) DEFAULT NULL,
@@ -705,7 +706,6 @@ ALTER TABLE `assign_appointments`
 --
 ALTER TABLE `attendance_settings`
   ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `attend_methods`
 --

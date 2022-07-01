@@ -342,19 +342,19 @@
                 <li>
                     <a href="#sidebarempatt" data-toggle="collapse">
                         <i class="fa fa-users"></i>.
-                        <span>Emp Attendance (M)</span>
+                        <span>Employees Attendance</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarempatt">
                         <ul class="nav-second-level">
                             @can('show_employee_attend_methods')
                             <li>
-                                <a href="{{ route('employees_attend_methods.index') }}">Employee Attemdance Methods</a>
+                                <a href="{{ route('employees_attend_methods.index') }}">Employee Attendance</a>
                             </li>
                             @endcan
                             @can('add_employee_attend_method')
                             <li>
-                                <a href="{{ route('employees_attend_methods.create') }}">Add Employee Attemdance Methods</a>
+                                <a href="{{ route('employees_attend_methods.create') }}">Add Employee Attemdance</a>
                             </li>
                             @endcan
                         </ul>
@@ -388,7 +388,7 @@
                 </li>
                 @endcan
                 {{-- End of Assign Appointment --}}
-
+{{-- 
                 <li class="menu-title">Some Pages For Design</li>
 
                 <li>
@@ -1084,7 +1084,7 @@
                         </ul>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
 
         </div>
         <!-- End Sidebar -->

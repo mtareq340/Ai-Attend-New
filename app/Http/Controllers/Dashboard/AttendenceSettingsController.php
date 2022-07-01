@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\AttendenceSettings;
+use App\User;
 
 class AttendenceSettingsController extends Controller
 {
@@ -88,7 +89,8 @@ class AttendenceSettingsController extends Controller
     public function toggleAttendenceSettings(Request $req)
     {
         $checked = $req->checked;
-        $settings = AttendenceSettings::first();
+        $branch_id = auth()->user()->branch_id;
+        $settings = AttendenceSettings::where('branch_id', '=', $branch_id)->first();
         if ($checked) {
             $settings[$req->type] = true;
         } else {
