@@ -61,7 +61,7 @@
 
                 {{-- start of account settings --}}
                 <li>
-                    <a href="{{ route('settings.index') }}" >
+                    <a href="{{ route('company-settings.index') }}" >
                         <i class="fe-settings noti-icon"></i>
                         <span> settings </span>
                     </a>

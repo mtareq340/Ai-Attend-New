@@ -92,7 +92,8 @@ class AppointmentController extends Controller
             $appointment->delete();
             return redirect()->route('appointment.edit')->with(['success' => 'تم حذف الحضور بنجاح']);
         } catch (\Exception $ex) {
-            return redirect()->route('appointment.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            return $ex;
+            // return redirect()->route('appointment.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
 

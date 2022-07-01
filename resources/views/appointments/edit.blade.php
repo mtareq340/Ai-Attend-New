@@ -116,13 +116,13 @@
                             <div class="row">
                                 <div class="form-group mb-3 col-md-12">
                                     <label>Delay hours & minutes</label>
-                                    <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" value="{{$appointment->delay_hour}}:{{$appointment->delay_min}}" required readonly="readonly">
+                                    <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" value="{{$appointment->delay}}" required readonly="readonly">
                                 </div>
                                 </div>
                                <div class="row">
                                 <div class="form-group mb-3 col-md-12">
                                     <label>overtime hours & minutes</label>
-                                    <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" value="{{$appointment->overtime_hour}}:{{$appointment->overtime_min}}" required readonly="readonly">
+                                    <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" value="{{$appointment->overtime}}" required readonly="readonly">
                                 </div>
                                </div>
                            

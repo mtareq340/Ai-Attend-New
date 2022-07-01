@@ -13,7 +13,6 @@ Route::group(['prefix' => 'dashboard'], function () {
   // home
   Route::get('/', 'Dashboard\HomeController@index');
 
-  Route::patch('/auth/changepass', 'Dashboard\AccountSettingsController@changePassword')->name('change_auth_user_password');
   Route::resource('users', 'Dashboard\UserController');
   /*
         the List Of route name
@@ -59,19 +58,23 @@ Route::group(['prefix' => 'dashboard'], function () {
   Route::post('store_employee_request', 'Dashboard\EmployeeRequestReviewController@store_reponse')->name('store_employee_request');
   //Request Type
   Route::resource('employee_request_type', 'Dashboard\RequestTypeController');
-  //account settings
-  // settings routes
-  Route::patch('settings/cover', 'Dashboard\AccountSettingsController@uploadCover')->name('changeCover');
-  Route::patch('settings/logo', 'Dashboard\AccountSettingsController@uploadLogo')->name('uploadLogo');
-  Route::put('settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
-  Route::put('settings/company/updateAll', 'Dashboard\AccountSettingsController@updateCompanySettings')->name('updateCompanySettings');
 
-  //  toggle attendence settings
-  Route::patch('attendence_settings/toggle', 'Dashboard\AccountSettingsController@toggleAttendenceSettings')->name('toggleAttendenceSettings');
 
-  Route::resource('/settings', 'Dashboard\AccountSettingsController', [
-    'only' => ['index', 'update']
-  ]);
+  // start settings
+
+  Route::patch('settings/cover', 'Dashboard\CompanySettingsController@uploadCover')->name('changeCover');
+  Route::patch('settings/logo', 'Dashboard\CompanySettingsController@uploadLogo')->name('uploadLogo');
+  Route::resource("company-settings", 'Dashboard\CompanySettingsController');
+
+  Route::patch('attendence_settings/toggle', 'Dashboard\AttendenceSettingsController@toggleAttendenceSettings')->name('toggleAttendenceSettings');
+  Route::resource("attendence-settings", 'Dashboard\AttendenceSettingsController');
+
+
+  Route::put('/account-settings/updateAll', 'Dashboard\AccountSettingsController@updateAll')->name('updateAccountSettings');
+  Route::patch('/account-settings/changepass', 'Dashboard\AccountSettingsController@changePassword')->name('change_auth_user_password');
+  Route::resource("account-settings", 'Dashboard\AccountSettingsController');
+  // end settings
+
   //active devices
   Route::patch('active_device', 'Dashboard\DeviceController@changeStatus')->name('active_device');
 

@@ -100,4 +100,7 @@
     <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
     <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
     <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+
+    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+
 @endsection
