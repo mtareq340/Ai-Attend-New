@@ -389,8 +389,8 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `notes`, `created_at`, 
 (124, 'add_plan', 'Add Plan', NULL, NULL, NULL),
 (125, 'edit_plan', 'Edit Plan', NULL, NULL, NULL),
 (126, 'delete_plan', 'Delete Plan', NULL, NULL, NULL),
-(127, 'show_plans', 'Show Plans', NULL, NULL, NULL);
-
+(127, 'show_plans', 'Show Plans', NULL, NULL, NULL),
+(128,'make_response','Make Response to Employees',NULL, NULL, NULL);
 -- --------------------------------------------------------
 
 --

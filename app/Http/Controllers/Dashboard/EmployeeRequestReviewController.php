@@ -26,15 +26,15 @@ class EmployeeRequestReviewController extends Controller
         // if (!Gate::allows('show_employees_request_review')) {
         //     return abort(401);
         // }
-        if (auth()->user()->hasRole('super_admin')) {
-            $requestreviews = Employee_Request_Review::all();
-        } else {
-            $requestreviews = DB::table('employees')->select('employee_request_review.id as reqid', 'employees.name as empname', 'request', 'employee_request_review.date as date')
-                ->join('branches', 'branches.id', '=', 'employees.branch_id')
-                ->join('employee_request_review', 'employee_request_review.employee_id', '=', 'employees.id')
-                ->where('branches.id', auth()->user()->branch_id)->get();
-            // dd($requestreviews);
-        }
+        // if (auth()->user()->hasRole('super_admin')) {
+        $requestreviews = Employee_Request_Review::all();
+        // } else {
+        //     $requestreviews = DB::table('employees')->select('employee_request_review.id as reqid', 'employees.name as empname', 'request', 'employee_request_review.date as date')
+        //         ->join('branches', 'branches.id', '=', 'employees.branch_id')
+        //         ->join('employee_request_review', 'employee_request_review.employee_id', '=', 'employees.id')
+        //         ->where('branches.id', auth()->user()->branch_id)->get();
+        //     // dd($requestreviews);
+        // }
         return view('EmployeeRequestReview.index', compact('requestreviews'));
     }
     //apply Employee request

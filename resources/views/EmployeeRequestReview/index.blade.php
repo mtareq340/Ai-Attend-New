@@ -42,12 +42,17 @@
                             <tbody>
                                 @foreach($requestreviews as $emp)
                                 <tr>
-                                    <td>{{ $emp->empname }}</td>
+                                    <td>{{ $emp->employee->name }}</td>
                                     <td>{{ $emp->request }}</td>
                                     <td>{{ $emp->date }}</td>
+                                   
                                     <td>
-                                        <a href="{{route('employee_request',$emp->reqid)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
-                                    </td>
+                                        @can('make_response')
+                                        <a href="{{route('employee_request',$emp->id)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
+                                        @endcan
+
+                                    </td>    
+                                    
                                 </tr>
                                
                                 @endforeach
