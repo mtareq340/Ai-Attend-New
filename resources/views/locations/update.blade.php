@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <h4 class="header-title">Locations</h4>
                       
-                        <form action="{{ route('locations.update',$location->id)}}" method="post">
+                        <form action="{{ route('locations.update',$location->id)}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             {{ method_field('PATCH') }}
                             {{-- <input type="hidden" name="id" value="{{$location->id}}"> --}}

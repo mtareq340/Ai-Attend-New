@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Device;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class DeviceController extends Controller
 {
@@ -51,9 +53,21 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+
+            ],
+            [
+                'name.required' => 'برجاء ادخال الاسم الجهاز',
+
+            ]
+        );
+        if ($validator->fails()) {
+            $err_msg = $validator->errors()->first();
+            return back()->with('error', $err_msg)->withInput();
+        }
         // Save The Request Into DataBase
         $data = $request->all();
         $devices = Device::create($data);
@@ -124,6 +138,23 @@ class DeviceController extends Controller
             return redirect()->route('devices.index')->with(['success' => 'تم حذف الحضور بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('devices.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+        }
+    }
+
+    public function changeStatus(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $checked = $req->checked;
+            $device = Device::find($id);
+            if ($checked) {
+                $device[$req->type] = true;
+            } else {
+                $device[$req->type] = false;
+            }
+            $device->save();
+            return response()->json(['msg' => "تم تحديث الجهاز بنجاح"]);
+        } catch (Exception $e) {
         }
     }
 }

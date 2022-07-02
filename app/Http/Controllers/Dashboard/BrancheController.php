@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\AttendenceSettings;
 use App\Branch;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -26,7 +27,6 @@ class BrancheController extends Controller
             return abort(401);
         }
         return view('branches.index_table', ['branches' => Branch::all()]);
-       
     }
 
     /**
@@ -56,8 +56,11 @@ class BrancheController extends Controller
             // 'lat' => 'required|numeric',
         ]);
 
+
         $branch = new Branch($data);
         $branch->save();
+        $data['branch_id'] = $branch->id;
+        $AttendenceSettings = AttendenceSettings::create($data);
         // return $request->parent_id;
         if ($request->parent_id) {
             // $parent = Branch::find($request->parent_id);

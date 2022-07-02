@@ -40,13 +40,13 @@
                     <div class="card-body">
                         <h4 class="header-title">Attend Methodss</h4>
                       
-                        <form action="{{ route('attend_methods.update', $attend_methods->id)}}" method="post">
+                        <form action="{{ route('attend_methods.update', $attend_methods->id)}}" method="post" class="needs-validation" novalidate>
                             {{ csrf_field() }}
 							{{ method_field('PATCH') }}
 
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name</label>
-                                <input type="name" value="{{ $attend_methods->name }}" name="name" class="form-control" id="name" placeholder="Name">
+                                <input type="name" value="{{ $attend_methods->name }}" name="name" class="form-control" id="name" placeholder="Name" required>
                             </div>
                             
                             <div class="form-group shadow-textarea">

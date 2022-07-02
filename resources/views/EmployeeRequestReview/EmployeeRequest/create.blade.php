@@ -1,11 +1,20 @@
 @extends('layouts.vertical', ['title' => 'Form Components'])
+@section('textArea')
+<style>
+    .shadow-textarea textarea.form-control::placeholder {
+        font-weight: 300;
+    }
+    .shadow-textarea textarea.form-control {
+        padding-left: 0.8rem;
+    }
+</style>
+@endsection
 @section('css')
 <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/selectize/selectize.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 
@@ -26,11 +35,12 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('assign_appointment.index')}}">Assign Appointment</a></li>
-                            <li class="breadcrumb-item active">Edit Assign Appointment</li>
+                            <li class="breadcrumb-item"><a href="{{route('employee_request_review')}}">Employees Request Reviews</a></li>
+                            <li class="breadcrumb-item active">Employee Response</li>
+
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit Assign Appointment</h4>
+                    <h4 class="page-title">Make Employee Response</h4>
                 </div>
             </div>
         </div>     
@@ -44,33 +54,30 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Assign Appointment</h4>
+                        <h4 class="header-title">Make Employee Response</h4>
                       
-                        <form action="{{route('assign_appointment.update',$assign->id)}}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('store_employee_request')}}" method="post" class="needs-validation" novalidate>
                             @csrf
-							{{ method_field('PATCH') }}
+                            <input type="hidden" name="id" value="{{$request_review->id}}">
                             <div class="form-group">
-                                {{-- <input type="text" value="{{$assign->id}}" name="" id=""> --}}
-                                <label for="location">Employees *</label>
-                                <select name="employee_id" class="form-control" data-toggle="select2" disabled  aria-hidden="true">
-                                    <option value="{{$assign->employees->id}}" disabled >{{$assign->employees->name}}</option>
-                                      @foreach ($employees as $a)
-                                        <option value="{{$a->id}}">{{$a->name}}</option>
-                                    @endforeach                              
-                                </select>
+                                <label for="name" class="col-form-label">Employee Name</label>
+                                <input type="text"  class="form-control bg-light"  disabled value="{{$request_review->employee->name}}">
                             </div>
-                            <div class="form-group">
-                                <label for="location">Appointments *</label>
-                                <select name="work_appointment_id"  class="form-control" data-toggle="select2"  aria-hidden="true">
-                                    <option selected disabled value="" >Select Appointment</option>
-                                    @foreach ($appointments as $a)
-                                        <option value="{{$a->id}}">{{$a->name}}</option>
-                                    @endforeach                              
+                            <div class="form-group shadow-textarea">
+                                <label for="exampleFormControlTextarea6">Request</label>
+                                <input type="text"class="form-control bg-light"  disabled value="{{$request_review->request}}">
+                            </div>
 
+                            <div class="form-group">
+                                <label for="inputtype" class="col-form-label">Request Type *</label>
+                                <select name="type" id="inputtype" class="selectize-drop-header" placeholder="Select a branch..." required>
+                                    @foreach ($request_types as $t)
+                                        <option value="{{$t->id}}">{{$t->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
-                            <center> <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button> </center>
+                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add Response</button></center>
 
                         </form>
 
@@ -85,24 +92,15 @@
     </div> <!-- container -->
 @endsection
 @section('script')
-<script>
-    $(document).ready(function() {
-      $("#select2-multiple").select2({
-        closeOnSelect: false
-      });
-    });
-    </script>
-    <!-- Plugins js-->
-    <script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
+<script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
     <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
-    <script src="{{asset('assets/libs/multiselect/multiselect.min.js')}}"></script>
     <script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
     <script src="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
     <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
     <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
-    
-    <!-- Page js-->
+    <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+
     <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
-   
+
 @endsection

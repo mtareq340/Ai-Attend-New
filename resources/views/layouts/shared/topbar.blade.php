@@ -279,13 +279,13 @@
                     </div>
     
                     <!-- item-->
-                    <a href="{{route('settings.index')}}" class="dropdown-item notify-item">
+                    <a href="{{route('account-settings.index')}}" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>My Account</span>
                     </a>
     
                     <!-- item-->
-                    <a href="{{route('settings.index')}}" class="dropdown-item notify-item">
+                    <a href="{{route('company-settings.index')}}" class="dropdown-item notify-item">
                         <i class="fe-settings"></i>
                         <span>Settings</span>
                     </a>

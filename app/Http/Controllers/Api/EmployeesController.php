@@ -16,7 +16,8 @@ use Auth;
 class EmployeesController extends Controller
 {
 
-    function employeeLogin (Request $request){
+    function employeeLogin(Request $request)
+    {
 
         $rules = array(
             'email' => 'required',
@@ -30,26 +31,27 @@ class EmployeesController extends Controller
         $password = $request->password;
 
         if (Employee::attempt(array('email' => $email, 'password' => $password))) {
-                $userDetails = array(
-                    // 'user_id' => Auth::id(),
-                    // 'name' => Auth::User()->name,
-                    // 'email' => Auth::User()->email,
-                    // 'mobile_number' => Auth::User()->phone,
-                );
+            $userDetails = array(
+                // 'user_id' => Auth::id(),
+                // 'name' => Auth::User()->name,
+                // 'email' => Auth::User()->email,
+                // 'mobile_number' => Auth::User()->phone,
+            );
             return Response()->json(['status' => 1, 'message' => 'Successful..!', 'data' => $userDetails]);
-        }else{
+        } else {
             return Response()->json(['status' => 0, 'message' => 'Invalid username or password']);
         }
     }
 
-    public function getData(Request $request){
+    public function getData(Request $request)
+    {
         $data =  Employee::latest()->get();
 
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);
-
     }
 
-    function isEmployeePhoneExist (Request $request){
+    function isEmployeePhoneExist(Request $request)
+    {
 
         $rules = array(
             'phone' => 'required',
@@ -64,12 +66,13 @@ class EmployeesController extends Controller
 
         if ($employee) {
             return Response()->json(['status' => 1, 'message' => 'Successful..! Your Phone is Exist']);
-        }else{
+        } else {
             return Response()->json(['status' => 0, 'message' => 'Invalid phone']);
         }
     }
 
-    function isOtpTrue (Request $request){
+    function isOtpTrue(Request $request)
+    {
 
         $rules = array(
             'otp' => 'required',
@@ -84,11 +87,12 @@ class EmployeesController extends Controller
 
         if ($employee) {
             return Response()->json(['status' => 1, 'message' => 'Successful..! Your OTP is Exist']);
-        }else{
+        } else {
             return Response()->json(['status' => 0, 'message' => 'Invalid OTP']);
         }
     }
-    function resetPassword (Request $request){
+    function resetPassword(Request $request)
+    {
 
         $rules = array(
             'id' => 'required',
@@ -99,18 +103,18 @@ class EmployeesController extends Controller
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
-        if($request->password == $request->re_password){
+        if ($request->password == $request->re_password) {
             $employee = Employee::FindOrFail($request->id);
             $employee->update([
                 'password' => $request->password
             ]);
             return Response()->json(['status' => 1, 'message' => 'Successful..! Your password is changed']);
-        }else{
+        } else {
             return Response()->json(['status' => 0, 'message' => 'password not equal Re-Password']);
         }
-
     }
-    function changePassword (Request $request){
+    function changePassword(Request $request)
+    {
 
         $rules = array(
             'id' => 'required',
@@ -121,19 +125,19 @@ class EmployeesController extends Controller
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
-        try{
+        try {
             $employee = Employee::FindOrFail($request->id);
             $employee->update([
                 'password' => $request->new_password
             ]);
             return Response()->json(['status' => 1, 'message' => 'Successful..! Your password is changed']);
-        }catch(exception $e){
+        } catch (exception $e) {
             return Response()->json(['status' => 0, 'message' => $e->getMessage()]);
         }
-           
     }
 
-    function employeeUpdate (Request $request){
+    function employeeUpdate(Request $request)
+    {
 
         $rules = array(
             'id' => 'required',
@@ -145,12 +149,11 @@ class EmployeesController extends Controller
         $request_data = $request->all();
         $employee = Employee::FindOrFail($request->id);
 
-        if($employee){
+        if ($employee) {
             $employee->update($request_data);
-            return Response()->json(['status' => 1, 'message' => 'Data updated successfuly', 'data'=> $employee]);
-        }else{
+            return Response()->json(['status' => 1, 'message' => 'Data updated successfuly', 'data' => $employee]);
+        } else {
             return Response()->json(['status' => 0, 'message' => 'there is no data']);
         }
-
     }
 }
