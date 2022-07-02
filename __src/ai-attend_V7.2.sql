@@ -601,6 +601,7 @@ INSERT INTO `users` (`id`, `name`, `address`, `email`, `phone`, `password`, `rol
 
 CREATE TABLE `work_appointments` (
   `id` bigint(20) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `location_id` bigint(20) NOT NULL,
   `start_from` timestamp NULL DEFAULT NULL,
   `end_to` timestamp NULL DEFAULT NULL,

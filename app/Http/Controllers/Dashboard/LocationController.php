@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
@@ -20,7 +21,7 @@ class LocationController extends Controller
     }
     public function index()
     {
-        if (! Gate::allows('show_locations')) {
+        if (!Gate::allows('show_locations')) {
             return abort(401);
         }
         $locations = Location::all();
@@ -30,7 +31,7 @@ class LocationController extends Controller
 
     public function create()
     {
-        if (! Gate::allows('add_location')) {
+        if (!Gate::allows('add_location')) {
             return abort(401);
         }
         $devices = Device::all();
@@ -40,7 +41,8 @@ class LocationController extends Controller
     public function store(Request $req)
     {
         try {
-            $req->validate(
+            $validator = Validator::make(
+                $req->all(),
                 [
                     'name' => 'required',
                     'device_id' => 'required',
@@ -48,8 +50,22 @@ class LocationController extends Controller
                     'distance' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
                     'location_longituide' => 'required|numeric',
+                ],
+                [
+                    'name.required' => 'برجاء ادخال الاسم',
+                    'device_id.required' => 'برجاء تحديد الجهاز',
+                    'location_address.required' => 'برجاء ادخال العنوان',
+                    'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
+                    'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
+                    'location_longituide.required' => 'برجاء ادخال الاحدثيات الطول',
+
                 ]
             );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
             $data = $req->all();
             // dd($data);
             Location::create($data);
@@ -71,7 +87,7 @@ class LocationController extends Controller
 
     public function edit($id)
     {
-        if (! Gate::allows('edit_location')) {
+        if (!Gate::allows('edit_location')) {
             return abort(401);
         }
         $devices = Device::all();
@@ -83,8 +99,8 @@ class LocationController extends Controller
     public function update(Request $req, $id)
     {
         try {
-
-            $req->validate(
+            $validator = Validator::make(
+                $req->all(),
                 [
                     'name' => 'required',
                     'device_id' => 'required',
@@ -92,8 +108,23 @@ class LocationController extends Controller
                     'distance' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
                     'location_longituide' => 'required|numeric',
+                ],
+                [
+                    'name.required' => 'برجاء ادخال الاسم',
+                    'device_id.required' => 'برجاء تحديد الجهاز',
+                    'location_address.required' => 'برجاء ادخال العنوان',
+                    'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
+                    'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
+                    'location_longituide.required' => 'برجاء ادخال الاحدثيات الطول',
+
                 ]
             );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
+
             $data = $req->all();
             $location = Location::findOrFail($id);
             $location->update($data);

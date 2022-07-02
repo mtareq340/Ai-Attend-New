@@ -28,12 +28,12 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('devices.index')}}">Devices</a></li>
-                            <li class="breadcrumb-item active">Add Devices</li>
-    
+                            <li class="breadcrumb-item"><a href="{{route('employee_request_type.index')}}">Request Type</a></li>
+                            <li class="breadcrumb-item active">Edit Request Type</li>
+
                         </ol>
                     </div>
-                    <h4 class="page-title">Add Device</h4>
+                    <h4 class="page-title">Edit Request Type</h4>
                 </div>
             </div>
         </div>     
@@ -47,22 +47,22 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Device</h4>
+                        <h4 class="header-title">Request Type</h4>
                       
-                        <form action="{{ route('devices.store')}}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('employee_request_type.update',$types->id)}}" method="post" class="needs-validation" novalidate>
                             @csrf
+                            @method('PATCH')
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name</label>
-                                <input type="name" name="name" class="form-control" id="name" placeholder="Name" required>
+                                <input type="name" name="name" class="form-control" value="{{$types->name}}" id="name"required>
                             </div>
 
                             <div class="form-group shadow-textarea">
                                 <label for="exampleFormControlTextarea6">Note</label>
-                                <textarea class="form-control z-depth-1" name="notes" id="exampleFormControlTextarea6" rows="3" placeholder="Write note Here ..."></textarea>
+                                <textarea class="form-control z-depth-1" name="note" id="exampleFormControlTextarea6" rows="3" placeholder="{{$types->note}}"></textarea>
                             </div>
 
-
-                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
+                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Update</button></center>
 
                         </form>
 

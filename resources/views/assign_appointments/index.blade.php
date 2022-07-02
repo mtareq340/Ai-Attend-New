@@ -19,7 +19,7 @@
                         <li class="breadcrumb-item active">Assign Appointment</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Datatables</h4>
+                <h4 class="page-title">Assign Appointment</h4>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="header-title">Attend Methods</h4>
+                    <h4 class="header-title">Assign Appointment</h4>
 
                     <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
@@ -50,9 +50,7 @@
                             <td>{{ $a->job->name }}</td>
                             <td>{{ $a->branch->name }}</td>
                             <td>{{ $a->location->name }}</td>
-                            <td>{{$a->branch->name}}-{{$a->location->name}},</td>
-                            <td>
-                            <td>{{ $a->work_appointment_id}}</td>
+                            <td>{{ $a->appointment->name }}</td>
                             <td>
                                 <div class="row row-xs wd-xl-4p">
                                     @can('edit_assign_appointment')

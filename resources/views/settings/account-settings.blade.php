@@ -1,3 +1,9 @@
+
+@extends('layouts.vertical', ['title' => 'Datatables'])
+@section('content')
+<div class="p-4">
+@include('settings.tabs')
+
 <form action="{{route('updateAccountSettings')}}" method="POST" class="p-3 my-4 border position-relative needs-validation"
 novalidate>
     @csrf
@@ -75,4 +81,29 @@ novalidate>
       </div>
     </div>
   </div>
+</div>
+  @endsection
 
+  
+@section('script')
+<!-- Plugins js-->
+<script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
+<script src="{{ asset('assets/libs/cropper/cropper.min.js') }}"></script>
+
+
+<script>
+
+            
+    const enableEditing = () => {
+        $("#c_name").removeAttr('disabled');
+        $("#c_email").removeAttr('disabled');
+        $("#c_address").removeAttr('disabled');
+        $("#c_phone").removeAttr('disabled');
+        $('#edit-info-btn').removeClass('d-none')
+    }
+
+
+</script>
+
+
+@endsection

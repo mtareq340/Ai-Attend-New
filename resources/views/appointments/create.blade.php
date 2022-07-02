@@ -14,7 +14,7 @@
     <link href="{{asset('assets/libs/clockpicker/clockpicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
-    
+
     <style>
         .selectize-dropdown-header{
             display : none !important
@@ -42,7 +42,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -57,8 +57,8 @@
                     <h4 class="page-title">Add Appointment</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
 
 
@@ -69,9 +69,13 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Add Appointments</h4>
-                      
-                        <form action="{{ route('appointment.store')}}" method="post">
+
+                        <form action="{{ route('appointment.store')}}" method="post"  class="needs-validation" novalidate>
                             @csrf
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                    <input name="name" type="text" class="form-control" placeholder="Enter Name" required>
+                            </div>
                             <div class="form-group">
                                 <label for="inputLocation" class="col-form-label">location *</label>
                                 <select name="location_id" id="inputlocation" class="selectize-drop-header" placeholder="Select a location..." required>
@@ -82,16 +86,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputBranch" class="col-form-label">Branch *</label>
-                                <select name="branch_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a branch..." required>
-                                    @foreach ($branches as $branch)
-                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control bg-light" value="{{$branch->name}}" disabled>
                             </div>
                             <div class="form-group mb-3">
                                 <label>Start From</label>
                                 <div class="input-group ">
-                                    <input type="datetime-local" class="form-control" name ="start_from" value="00:00">
+                                    <input type="datetime-local" class="form-control" name ="start_from" value="00:00" required>
                                     {{-- <div class="input-group-append">
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div> --}}
@@ -100,7 +100,7 @@
                             <div class="form-group mb-3">
                                 <label>End To</label>
                                 <div class="input-group ">
-                                    <input type="datetime-local" class="form-control" name ="end_to" value="">
+                                    <input type="datetime-local" class="form-control" name ="end_to" value="" required>
                                     {{-- <div class="input-group-append">
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div> --}}
@@ -110,17 +110,17 @@
                            <div class="row">
                             <div class="form-group mb-3 col-md-12">
                                 <label>Delay hours & minutes</label>
-                                <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly">
+                                <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly" required>
                             </div>
                             </div>
                            <div class="row">
                             <div class="form-group mb-3 col-md-12">
                                 <label>overtime hours & minutes</label>
-                                <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly">
+                                <input type="text"  name="overtime" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly" required>
                             </div>
                            </div>
                            <div class="form-group mb-3">
-                            <label>Date Picker</label>
+                            <label>Date</label>
                             <input type="date" class="form-control" name ="date">
                         </div>
 
@@ -135,7 +135,7 @@
         <!-- end row -->
 
 
-        
+
     </div> <!-- container -->
 @endsection
 @section('script')
@@ -172,7 +172,7 @@
 
         var defaultOptions = {
                 };
-        
+
                 // touchspin
                 $('[data-toggle="touchspin"]').each(function (idx, obj) {
                     var objOptions = $.extend({}, defaultOptions, $(obj).data());
