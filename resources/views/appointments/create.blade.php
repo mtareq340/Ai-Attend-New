@@ -109,7 +109,7 @@
 
                            <div class="row">
                             <div class="form-group mb-3 col-md-12">
-                                <label>Delay hours & minutes</label>
+                                <label>Delay Time</label>
                                 <input type="text"  name="delay" class="form-control flatpickr-input active 24hours-timepicker" placeholder="00:00" readonly="readonly">
                             </div>
                             </div>
@@ -120,7 +120,7 @@
                             </div>
                            </div>
                            <div class="form-group mb-3">
-                            <label>Date Picker</label>
+                            <label>Date</label>
                             <input type="date" class="form-control" name ="date">
                         </div>
 

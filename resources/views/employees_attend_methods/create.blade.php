@@ -52,7 +52,7 @@
                         
                         <div class="form-group">
                             <label for="inputJob" class="col-form-label">Attendance Methods *</label>
-                            <select name="att_id" id="inputatt" class="selectize-drop-header" placeholder="Select a job..." required>
+                            <select name="att_id" id="inputatt" class="selectize-drop-header" placeholder="Select a Attendance Methods..." required>
                                 @foreach ($attendmethod as $a)
                                     <option value="{{$a->id}}">{{$a->name}}</option>
                                 @endforeach
