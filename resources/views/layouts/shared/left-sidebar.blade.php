@@ -65,7 +65,7 @@
                         <i class="fe-settings noti-icon"></i>
                         <span> settings </span>
                     </a>
-                </li>
+                </li> -->
                 {{-- end of account settings --}}
 
                 {{-- start of plans --}}
@@ -388,7 +388,7 @@
                 </li>
                 @endcan
                 {{-- End of Assign Appointment --}}
-{{-- 
+{{--
                 <li class="menu-title">Some Pages For Design</li>
 
                 <li>

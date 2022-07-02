@@ -14,7 +14,7 @@
     <link href="{{asset('assets/libs/clockpicker/clockpicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
-    
+
     <style>
         .selectize-dropdown-header{
             display : none !important
@@ -42,7 +42,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -57,8 +57,8 @@
                     <h4 class="page-title">Add Appointment</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
 
 
@@ -69,7 +69,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Add Appointments</h4>
-                      
+
                         <form action="{{ route('appointment.store')}}" method="post"  class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
@@ -120,8 +120,8 @@
                             </div>
                            </div>
                            <div class="form-group mb-3">
-                            <label>Date Picker</label>
-                            <input type="date" class="form-control" name ="date" required>
+                            <label>Date</label>
+                            <input type="date" class="form-control" name ="date">
                         </div>
 
                             <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
@@ -135,7 +135,7 @@
         <!-- end row -->
 
 
-        
+
     </div> <!-- container -->
 @endsection
 @section('script')
@@ -172,7 +172,7 @@
 
         var defaultOptions = {
                 };
-        
+
                 // touchspin
                 $('[data-toggle="touchspin"]').each(function (idx, obj) {
                     var objOptions = $.extend({}, defaultOptions, $(obj).data());
