@@ -1,22 +1,25 @@
 @extends('layouts.vertical', ['title' => 'Form Components'])
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/selectize/selectize.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <style>
-        .selectize-dropdown-header{
-            display : none !important
+        .selectize-dropdown-header {
+            display: none !important
         }
+
     </style>
 @endsection
 @section('content')
 
-    @if(session()->has('message'))
-    {{dd('vbnm')}}
+    @if (session()->has('message'))
+        {{ dd('vbnm') }}
         <div class="alert alert-success">
             {{ session()->get('message') }}
         </div>
@@ -24,23 +27,23 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('employees.index')}}">Employees</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('employees.index') }}">Employees</a></li>
                             <li class="breadcrumb-item active">Add Employees</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Add Employee</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
 
 
@@ -50,8 +53,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                      
-                        <form action="{{ route('employees.store')}}" method="post" autocomplete="off" class="needs-validation" novalidate>
+
+                        <form action="{{ route('employees.store') }}" method="post" autocomplete="off"
+                            class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name *</label>
@@ -59,20 +63,30 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputEmail4" class="col-form-label">Email <span class="text-muted font-weight-light">(optional)</span></label>
+                                <label for="job_number_input" class="col-form-label">job number *</label>
+                                <input type="name" name="job_number" class="form-control" id="job_number_input"
+                                    placeholder="Name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail4" class="col-form-label">Email <span
+                                        class="text-muted font-weight-light">(optional)</span></label>
                                 <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email">
                             </div>
 
                             <div class="form-group">
                                 <label for="inputPhone" class="col-form-label">Phone *</label>
-                                <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="phone number" required>
+                                <input type="text" name="phone" class="form-control" id="inputPhone"
+                                    placeholder="phone number" required>
                             </div>
-                          
+
                             <div class="form-group">
-                                <label for="inputAddress" class="col-form-label">Address <span class="text-muted font-weight-light">(optional)</span></label>
-                                <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                <label for="inputAddress" class="col-form-label">Address <span
+                                        class="text-muted font-weight-light">(optional)</span></label>
+                                <input type="text" name="address" class="form-control" id="inputAddress"
+                                    placeholder="1234 Main St">
                             </div>
- 
+
 
                             <div class="form-group">
                                 <label>Gender *</label>
@@ -91,45 +105,45 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="form-group">
                                 <label for="inputBranch" class="col-form-label">Branch *</label>
-                                <select name="branch_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a branch..." required>
+                                <select name="branch_id" id="inputBranch" class="selectize-drop-header"
+                                    placeholder="Select a branch..." required>
                                     @foreach ($branches as $branch)
-                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputJob" class="col-form-label">Job *</label>
-                                <select name="job_id" id="inputJob" class="selectize-drop-header" placeholder="Select a job..." required>
+                                <select name="job_id" id="inputJob" class="selectize-drop-header"
+                                    placeholder="Select a job..." required>
                                     @foreach ($jobs as $job)
-                                        <option value="{{$job->id}}">{{$job->name}}</option>
+                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
 
-                        
+
                             <div class="form-group">
-                                <label for="input-age" class="col-form-label">Age <span class="text-muted font-weight-light">(optional)</span></label>
+                                <label for="input-age" class="col-form-label">Age <span
+                                        class="text-muted font-weight-light">(optional)</span></label>
                                 <input type="number" name="age" class="form-control" id="input-age" placeholder="age">
                             </div>
 
 
 
-                            <div class="form-group">
-                                <label for="inputPassword4" class="col-form-label">Password *</label>
-                                <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" required>
-                            </div>
 
 
 
 
 
-                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
+                            <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button>
+                            </center>
 
                         </form>
 
@@ -140,22 +154,22 @@
         <!-- end row -->
 
 
-        
+
     </div> <!-- container -->
 @endsection
 
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
-    <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
-    <script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
-    <script src="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.js')}}"></script>
-    <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
-    <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
-    <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
-    <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js') }}"></script>
 
     <!-- Page js-->
-    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
 @endsection
