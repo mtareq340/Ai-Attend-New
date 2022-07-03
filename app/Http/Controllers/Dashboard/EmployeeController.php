@@ -96,7 +96,9 @@ class EmployeeController extends Controller
             // if ($plan->count_employees <= $employees_count)
             //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
             $data = $request->except('_token');
-            $data['password'] = Hash::make($data['password']);
+            // if($data['password']){
+            // $data['password'] = Hash::make($data['password']);
+            // }
             $emp = Employee::create($data);
 
             return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
@@ -207,7 +209,7 @@ class EmployeeController extends Controller
             $first_row[6] != 'gender (male - female)' ||
             $first_row[7] != 'age'
         ) {
-            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الموفر أسفل الصفحة')->withInput();
+            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الخاص بالموظفين')->withInput();
         }
         // if($data[0])
 

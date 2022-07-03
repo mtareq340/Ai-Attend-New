@@ -50,8 +50,6 @@ class CompanySettingsController extends Controller
     {
 
         if ($request->cover) {
-
-
             $img = $request->cover;
             $folderPath = "assets/images/"; //path location
             $imageName = 'cover.jpg';
@@ -70,18 +68,28 @@ class CompanySettingsController extends Controller
 
     public function uploadLogo(Request $request)
     {
-        $request->validate([
-            'logo' => 'mimes:jpeg,jpg,png|required|max:2048'
-        ], [
-            'logo.max:2048' => "يجب ان لا يكون حجم اللوجو اكبر من 2 ميجا"
-        ]);
-
+        $img = $request->logo;
+        $folderPath = "assets/images/"; //path location
         $imageName = 'logo.jpg';
-        request()->logo->move(public_path('assets/images'), $imageName);
+        $image_parts = explode(";base64,", $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        file_put_contents($folderPath . $imageName, $image_base64);
+
         $settings = CompanySettings::first();
         $settings->logo = $imageName;
         $settings->save();
 
         return back()->with('success', 'تم تعديل اللوجو بنجاح');
     }
+
+
+    public function resetLogo(Request $req){
+        $settings = CompanySettings::first();
+        $settings['logo'] = null;
+        $settings->save();
+        return back()->with('success', 'تم اعادة ضبط اللوجو بنجاح');
+    }
+
 }

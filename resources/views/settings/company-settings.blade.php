@@ -1,11 +1,10 @@
 @extends('layouts.vertical', ['title' => 'Datatables'])
 
 @section('css')
-    <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/cropper/cropper.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
- 
-
         .bg-banner {
             background-repeat: no-repeat;
             background-size: cover;
@@ -27,7 +26,7 @@
             justify-content: center
         }
 
-        #logo {
+        .logo {
             height: 230px;
             width: 230px;
             object-fit: cover;
@@ -35,7 +34,7 @@
         }
 
         @media only screen and (max-width: 600px) {
-            #logo {
+            .logo {
                 height: 140px;
                 width: 140px;
             }
@@ -69,61 +68,68 @@
     </style>
 @endsection
 @section('content')
-<div class="p-4">
-@include('settings.tabs')
+    <div class="p-4">
+        @include('settings.tabs')
 
-@include('settings.cover')
-@include('settings.logo')
-<form action="{{route('company-settings.update' , $company_settings->id)}}" method="POST" class="p-3 my-4 border position-relative needs-validation"
-novalidate>
-    @csrf
-    @method('PUT')
-    <button type="button" onclick="enableCompanySettingsEditing()" class="border-0 outline-0 btn btn-outline-secondary waves-effect waves-light"><i class="fa fa-pen"></i></button>
-    
-    <div class="form-group">
-        <label class="col-form-label">Regestration Number</label>
-        <input disabled readonly type="text" class="form-control" value="will be gotten from the api (can't be edited)">
-    </div>
-    
-    <div class="form-group">
-        <label for="ssid_input" class="col-form-label">SSID</label>
-        <input disabled type="text" name="ssid" class="form-control" id="ssid_input" value="{{$company_settings->ssid}}">
-    </div>
+        @include('settings.cover')
+        @include('settings.logo')
+        <form action="{{ route('company-settings.update', $company_settings->id) }}" method="POST"
+            class="p-3 my-4 border position-relative needs-validation" novalidate>
+            @csrf
+            @method('PUT')
+            <button type="button" onclick="enableCompanySettingsEditing()"
+                class="border-0 outline-0 btn btn-outline-secondary waves-effect waves-light"><i
+                    class="fa fa-pen"></i></button>
 
-    <div class="form-group">
-        <label for="mac_address_input" class="col-form-label">Mac address</label>
-        <input disabled type="text" name="mac_address" class="form-control" id="mac_address_input" value="{{$company_settings->mac_address}}">
-    </div>
+            <div class="form-group">
+                <label class="col-form-label">Regestration Number</label>
+                <input disabled readonly type="text" class="form-control"
+                    value="will be gotten from the api (can't be edited)">
+            </div>
 
-    <div class="form-group">
-        <label for="email_input" class="col-form-label">Company Email</label>
-        <input disabled type="email" name="email" class="form-control" id="email_input" value="{{$company_settings->email}}">
-    </div>
+            <div class="form-group">
+                <label for="ssid_input" class="col-form-label">SSID</label>
+                <input disabled type="text" name="ssid" class="form-control" id="ssid_input"
+                    value="{{ $company_settings->ssid }}">
+            </div>
 
-    <div class="form-group">
-        <label for="phone_input" class="col-form-label">Company Phone</label>
-        <input disabled type="text" name="phone" class="form-control" id="phone_input" value="{{$company_settings->phone}}">
-    </div>
+            <div class="form-group">
+                <label for="mac_address_input" class="col-form-label">Mac address</label>
+                <input disabled type="text" name="mac_address" class="form-control" id="mac_address_input"
+                    value="{{ $company_settings->mac_address }}">
+            </div>
 
-    
-    <div class="form-group">
-        <label for="notes_input" class="col-form-label">Notes <span class="text-muted">(optional)</span></label>
-        <textarea style="background: #E1E1E1" disabled name="notes" class="form-control" id="notes_input">{{$company_settings->notes}}</textarea>
-    </div>
+            <div class="form-group">
+                <label for="email_input" class="col-form-label">Company Email</label>
+                <input disabled type="email" name="email" class="form-control" id="email_input"
+                    value="{{ $company_settings->email }}">
+            </div>
 
-    <button type="submit" class="my-2 btn btn-primary waves-effect d-none" id="edit-company-info-btn">save</button>
-</form>
-</div>
+            <div class="form-group">
+                <label for="phone_input" class="col-form-label">Company Phone</label>
+                <input disabled type="text" name="phone" class="form-control" id="phone_input"
+                    value="{{ $company_settings->phone }}">
+            </div>
+
+
+            <div class="form-group">
+                <label for="notes_input" class="col-form-label">Notes <span class="text-muted">(optional)</span></label>
+                <textarea style="background: #E1E1E1" disabled name="notes" class="form-control"
+                    id="notes_input">{{ $company_settings->notes }}</textarea>
+            </div>
+
+            <button type="submit" class="my-2 btn btn-primary waves-effect d-none" id="edit-company-info-btn">save</button>
+        </form>
+    </div>
 @endsection
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/cropper/cropper.min.js') }}"></script>
 
 
     <script>
-
         const enableCompanySettingsEditing = () => {
             $("#ssid_input").removeAttr('disabled');
             $("#mac_address_input").removeAttr('disabled');
@@ -132,7 +138,6 @@ novalidate>
             $("#notes_input").removeAttr('disabled');
             $("#notes_input").removeAttr('style');
             $('#edit-company-info-btn').removeClass('d-none')
-            
         }
 
 
@@ -208,6 +213,79 @@ novalidate>
         const clearInput = () => {
             $('#cover').val('')
         }
+
+
+
+
+
+        var $modalLogo = $('#modal-logo');
+        var imageLogo = $('#image-logo');
+        var optionsLogo = {
+            aspectRatio: 1,
+            preview: '.preview-logo',
+
+        };
+        $("#logo").on("change", function(e) {
+            var files = e.target.files;
+            var done = function(url) {
+                imageLogo.attr('src', url)
+                $modalLogo.modal('show');
+            };
+
+            var reader;
+            var file;
+            var url;
+
+            if (files && files.length > 0) {
+                file = files[0];
+                done(URL.createObjectURL(file));
+            }
+        });
+
+        $modalLogo.on('shown.bs.modal', function() {
+            imageLogo = $('#image-logo').cropper(optionsLogo)
+
+        }).on('hidden.bs.modal', function() {
+            imageLogo.cropper('destroy');
+        });
+
+        $("#crop-logo").click(function() {
+            var canvas = imageLogo.cropper('getCroppedCanvas');
+
+            // canvas = cropper.getCroppedCanvas();
+
+            canvas.toBlob(function(blob) {
+                $('#loader').removeClass('d-none')
+                var url = URL.createObjectURL(blob);
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    var base64data = reader.result;
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "{{ route('changeLogo') }}",
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            '_method': 'patch',
+                            'logo': base64data
+                        },
+                        success: function(data) {
+                            $modalLogo.modal('hide');
+                            window.location.reload()
+                            $('#loader-logo').addClass('d-none')
+
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            $('#loader-logo').addClass('d-none')
+                            window.location.reload()
+                        }
+                    });
+                }
+            });
+        })
+
     </script>
 
 

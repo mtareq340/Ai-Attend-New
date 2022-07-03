@@ -96,8 +96,8 @@ class DeviceController extends Controller
         if (!Gate::allows('edit_device')) {
             return abort(401);
         }
-        $devices = Device::FindOrFail($id);
-        return view('devices.update', compact('devices'));
+        $device = Device::FindOrFail($id);
+        return view('devices.update', compact('device'));
     }
 
     /**
