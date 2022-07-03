@@ -1,12 +1,12 @@
-<ul class="nav nav-pills  navtab-bg nav-justified mb-4">
-    
-    <li class="nav-item mx-0">
+<ul class="nav nav-pills navtab-bg nav-justified mb-4">
+
+    <li class="nav-item">
         <a href="{{ route ('account-settings.index') }}" aria-expanded="false" class="nav-link {{ Request::path() == 'dashboard/account-settings' ? 'active' : '' }}">
             Account settings
         </a>
     </li>
-
-    <li class="nav-item mx-0">
+    @if (auth()->user()->hasRole('super_admin'))
+    <li class="nav-item">
         <a href="{{ route ('company-settings.index') }}" aria-expanded="false" class="nav-link {{ Request::path() == 'dashboard/company-settings' ? 'active' : '' }} ">
             Company settings
         </a>
@@ -17,5 +17,7 @@
             Attendence settings
         </a>
     </li>
+    @endif
+
 
 </ul>

@@ -63,7 +63,8 @@ Route::group(['prefix' => 'dashboard'], function () {
   // start settings
 
   Route::patch('settings/cover', 'Dashboard\CompanySettingsController@uploadCover')->name('changeCover');
-  Route::patch('settings/logo', 'Dashboard\CompanySettingsController@uploadLogo')->name('uploadLogo');
+  Route::delete('settings/logo/reset' ,'Dashboard\CompanySettingsController@resetLogo')->name('resetLogo');
+  Route::patch('settings/logo', 'Dashboard\CompanySettingsController@uploadLogo')->name('changeLogo');
   Route::resource("company-settings", 'Dashboard\CompanySettingsController');
 
   Route::patch('attendence_settings/toggle', 'Dashboard\AttendenceSettingsController@toggleAttendenceSettings')->name('toggleAttendenceSettings');

@@ -9,6 +9,8 @@ class CompanySettings extends Model
     protected $table = "company_settings";
 
     protected $fillable = [
-        'name', 'email', 'vication_days', 'logo', 'background', 'phone', 'ssid', 'mac_address', 'notes'
+        'name' ,'plan_id' ,'vication_days','registeration_date' , 'email' , 'logo' , 'background' , 'phone' , 'ssid' , 'mac_address' , 'notes'
     ];
+
+
 }

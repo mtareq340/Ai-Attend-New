@@ -11,7 +11,7 @@ class Employee extends Model
 {
 
     protected $fillable = [
-        'name', 'email', 'address', 'phone', 'password', 'age', 'branch_id', 'gender', 'job_id', 'otp', 'created_at', 'updated_at'
+        'name', 'email', 'address', 'phone', 'password', 'age', 'branch_id', 'gender', 'job_id','job_number', 'otp', 'created_at', 'updated_at'
     ];
     //
     public function branch()

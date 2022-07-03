@@ -11,13 +11,19 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class CompanySettingsController extends Controller
 {
     public function index()
     {
-        $company_settings = CompanySettings::first();
-        return view('settings.company-settings', compact('company_settings'));
+        if(auth()->user()->hasRole('super_admin')){
+            $company_settings = CompanySettings::first();
+            return view('settings.company-settings', compact('company_settings'));
+        }else{
+            return abort(401);
+        }
+
     }
 
     public function update(Request $req, $id)
@@ -60,8 +66,6 @@ class CompanySettingsController extends Controller
     {
 
         if ($request->cover) {
-
-
             $img = $request->cover;
             $folderPath = "assets/images/"; //path location
             $imageName = 'cover.jpg';
@@ -80,14 +84,15 @@ class CompanySettingsController extends Controller
 
     public function uploadLogo(Request $request)
     {
-        $request->validate([
-            'logo' => 'mimes:jpeg,jpg,png|required|max:2048'
-        ], [
-            'logo.max:2048' => "يجب ان لا يكون حجم اللوجو اكبر من 2 ميجا"
-        ]);
-
+        $img = $request->logo;
+        $folderPath = "assets/images/"; //path location
         $imageName = 'logo.jpg';
-        request()->logo->move(public_path('assets/images'), $imageName);
+        $image_parts = explode(";base64,", $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        file_put_contents($folderPath . $imageName, $image_base64);
+
         $settings = CompanySettings::first();
         $settings->logo = $imageName;
         $settings->save();
@@ -111,4 +116,12 @@ class CompanySettingsController extends Controller
             return $e;
         }
     }
+
+    public function resetLogo(Request $req){
+        $settings = CompanySettings::first();
+        $settings['logo'] = null;
+        $settings->save();
+        return back()->with('success', 'تم اعادة ضبط اللوجو بنجاح');
+    }
+
 }

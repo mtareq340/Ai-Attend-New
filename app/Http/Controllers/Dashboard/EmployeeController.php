@@ -100,6 +100,9 @@ class EmployeeController extends Controller
             //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
             $data = $request->except('_token');
             // $data['password'] = Hash::make($data['password']);
+            // if($data['password']){
+            // $data['password'] = Hash::make($data['password']);
+            // }
             $emp = Employee::create($data);
 
             return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
@@ -201,15 +204,16 @@ class EmployeeController extends Controller
         // ckeck if file is right
         $first_row = $data[0][0];
         if (
-            $first_row[0] != 'name' ||
-            $first_row[1] != 'email' ||
-            $first_row[2] != 'address' ||
-            $first_row[3] != 'phone' ||
-            $first_row[4] != 'password' ||
-            $first_row[5] != 'gender (male - female)' ||
-            $first_row[6] != 'age'
+            $first_row[0] != 'job number' ||
+            $first_row[1] != 'name' ||
+            $first_row[2] != 'email' ||
+            $first_row[3] != 'address' ||
+            $first_row[4] != 'phone' ||
+            $first_row[5] != 'password' ||
+            $first_row[6] != 'gender (male - female)' ||
+            $first_row[7] != 'age'
         ) {
-            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الموفر أسفل الصفحة')->withInput();
+            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الخاص بالموظفين')->withInput();
         }
         // if($data[0])
 
@@ -219,13 +223,14 @@ class EmployeeController extends Controller
             // skip first row
             if ($i == 0) continue;
             $emp = [
-                'name' => $row[0],
-                'email' => $row[1],
-                'address' => $row[2],
-                'phone' => $row[3],
-                'password' => $row[4],
-                'gender' => $row[5],
-                'age' => $row[6],
+                'job_number' => $row[0],
+                'name' => $row[1],
+                'email' => $row[2],
+                'address' => $row[3],
+                'phone' => $row[4],
+                'password' => $row[5],
+                'gender' => $row[6],
+                'age' => $row[7],
                 'branch_id' => $request->branch_id,
                 'job_id' => $request->job_id,
             ];
