@@ -336,6 +336,7 @@
                     <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="20">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
+            
             </a>
     
             <a href="{{route('any', ['dashboard'])}}" class="logo logo-light text-center">

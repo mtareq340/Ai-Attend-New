@@ -4,6 +4,17 @@
     <!-- Plugins css -->
     <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/multiselect/multiselect.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/selectize/selectize.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        .selectize-dropdown-header{
+            display : none !important
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -27,11 +38,13 @@
             </div>
         </div>
         <!-- end page title -->
-        @can('add_employee')
+        {{-- <div class="col-4"> --}}
+            @can('add_employee')
         <div class="mb-2">
-        <button class="btn btn btn-primary">
+        {{-- <button class="btn btn btn-primary">
             <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
-        </button>
+        </button> --}}
+        <button type="button" class="btn  btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
         <button class="btn btn-success">
             <a href="{{ route('employees.excelPage')}}" style="color:white"><i class="fa fa-plus"></i> Upload Excel Sheet</a>
 
@@ -40,15 +53,17 @@
             <a href="{{route('downloadExcelEmps')}}" style="color:white"><i class="fa fa-plus"></i> Download
                 excel file</a>
         </button>
-    </div>
+    {{-- </div> --}}
         @endcan
 
+        </div>
+        
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="header-title">Employees table</h4>
+                        {{-- <h4 class="header-title">Employees table</h4> --}}
 
                         <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100">
                             <div class="dt-buttons"></div>
@@ -89,7 +104,7 @@
                                     <td>
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_employee')
-                                            <a href="{{ route('employees.edit', $emp->id) }}" class="action-icon">
+                                            <a href="{{ route('employees.edit', $emp->id) }}" id="updatesubmit" class="action-icon">
                                                 <i class="mdi mdi-square-edit-outline"></i>
                                             </a>
                                             @endcan
@@ -116,7 +131,212 @@
         </div>
         <!-- end row-->
 
+        
+        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Employees</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <form action="{{ route('employees.store')}}" method="post" autocomplete="off" class="needs-validation">
+                        @csrf
+                    <div class="modal-body p-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="control-label">Name</label>
+                                    <input type="text" name="name" class="form-control" id="field-1" placeholder="Jone Doe" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="control-label">Email</label>
+                                    <input type="email" name="email" class="form-control" id="field-2" placeholder="Ex@ex.com">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-3" class="control-label">Phone num 1 *</label>
+                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="010..." required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-3" class="control-label">Phone num 2 </label>
+                                    <input type="text" name="phone_num2" class="form-control" id="phone_num2" placeholder="phone num 2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputAddress" class="col-form-label">Address <span class="text-muted font-weight-light">(optional)</span></label>
+                                    <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Gender *</label>
+                                    <div class="d-flex">
+                                        <div class="radio mx-1">
+                                            <input type="radio" name="gender" id="genderM" value="male" required="" checked>
+                                            <label for="genderM">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="radio mx-1">
+                                            <input type="radio" name="gender" id="genderF" value="female">
+                                            <label for="genderF">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputBranch" class="col-form-label">Branch *</label>
+                                    <select name="branch_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a branch..." required>
+                                        @foreach ($branches as $branch)
+                                            <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputJob" class="col-form-label">Job *</label>
+                                    <select name="job_id" id="inputJob" class="selectize-drop-header" placeholder="Select a job..." required>
+                                        @foreach ($jobs as $job)
+                                            <option value="{{$job->id}}">{{$job->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="input-age" class="col-form-label">Age <span class="text-muted font-weight-light">(optional)</span></label>
+                                    <input type="number" name="age" class="form-control" id="input-age" placeholder="age">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href=""  class="btn btn-secondary waves-effect" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div><!-- /.modal -->
 
+        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Employees</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <form  autocomplete="off" class="needs-validation">
+                        @csrf
+                    <div class="modal-body p-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="control-label">Name</label>
+                                    <input type="text" name="name" value="" class="form-control" id="name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="control-label">Email</label>
+                                    <input type="email" name="email" value="" class="form-control" id="email" placeholder="Ex@ex.com">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-3" class="control-label">Phone num 1 *</label>
+                                    <input type="text" name="phone" value="" class="form-control" id="phone" placeholder="010..." required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-3" class="control-label">Phone num 2 </label>
+                                    <input type="text" name="phone_num2" value="" class="form-control" id="phone_num2" placeholder="phone num 2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputAddress" class="col-form-label">Address <span class="text-muted font-weight-light">(optional)</span></label>
+                                    <input type="text" name="address" value="" class="form-control" id="address" placeholder="1234 Main St">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Gender *</label>
+                                    <div class="d-flex">
+                                        <div class="radio mx-1">
+                                            <input type="radio" name="gender" id="male" value="" required="" checked>
+                                            <label for="genderM">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="radio mx-1">
+                                            <input type="radio" name="gender" id="female" value="">
+                                            <label for="genderF">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputBranch" class="col-form-label">Branch *</label>
+                                    <select name="branch_id" id="branch" class="selectize-drop-header"  required>
+                                        @foreach ($branches as $branch)
+                                            <option {{$emp->branch_id == $branch->id?'selected':''}} value="{{$branch->id}}">{{$branch->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputJob" class="col-form-label">Job *</label>
+                                    <select name="job_id" id="inputJob" class="selectize-drop-header" placeholder="Select a job..." required>
+                                        @foreach ($jobs as $job)
+                                            <option {{$emp->branch_id == $branch->id?'selected':''}} value="{{$job->id}}">{{$job->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="input-age" class="col-form-label">Age <span class="text-muted font-weight-light">(optional)</span></label>
+                                    <input type="number" name="age" value="" class="form-control" id="age" placeholder="age">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href=""  class="btn btn-secondary waves-effect" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div><!-- /.modal -->
 
 
 
@@ -131,6 +351,15 @@
     <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
     <!-- Page js-->
+    <script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
+    <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
+    <script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
+    <script src="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
+    <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
+    <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
+    <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
     <script>
         var elem = document.querySelectorAll('.js-switch');
@@ -140,6 +369,17 @@
                 color : '#64b0f2'
             });
         });
+
+        $('.selectize-drop-header').selectize({
+            sortField: 'text',
+            hideSelected: false,
+            plugins: {
+                'dropdown_header': {
+                    title: 'Language'
+                }
+            }
+        })
+
 
         // toggle active with ajax
         const toggleActivationAndLocked = (e, id , type) => {
@@ -177,5 +417,80 @@
 
             }
 
+    </script>
+    <script>
+        $(document).ready(function() {
+            // ////////////////////////////
+            $('body').on('click', '#updatesubmit', function (event) {
+                   event.preventDefault();
+                   var id = $(this).data('id');
+                   console.log(id)
+                   $.get('employees/'+id+'/edit', function (data) {
+                  //  $('#userCrudModal').html("Edit category");
+                   $('#submit').val("Edit category");
+                   $('#updateModalLong').modal('show');
+                   $('#id').val(data.data.id);
+                   $('#name').val(data.data.name_en);
+                   $('#jobnum').val(data.data.jobNum);
+                   $("#email").val(data.data.email);
+                   $("#pass").val(data.data.password);
+                   $("#tel1").val(data.data.tel_1);
+                   $("#dob").val(data.data.Dob);
+                   $("#address").val(data.data.address);
+                })
+             });
+
+            $('body').on('click', '#submit', function (event) {
+                const notyf = new Notyf();
+                event.preventDefault()
+                var id = $("#id").val();
+                var name_en = $("#name").val();
+                var email = $("#email").val();
+                var password =$("#pass").val();
+                var jobNum = $("#jobnum").val();
+                var tel_1 = $("#tel1").val();
+                var address = $("#address").val();
+                var Dob = $("#dob").val();
+                var Branch = $("#brach").val();
+                var deaprtment = $("#department").val();
+                // console.log(name_en);
+                // console.log(jobNum);
+                // console.log(Dob);
+                // console.log(tel_1);
+                console.log(deaprtment);
+                $.ajax({
+                  url: 'employee/edit/'+ id,
+                  headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                  type: "POST",
+                  data: {
+                    id: id,
+                    name_en : name_en,
+                    email : email,
+                    password : password,
+                    jobNum : jobNum,
+                    tel_1 : tel_1,
+                    Dob : Dob,
+                    address : address,
+                    Branch:Branch,
+                    deaprtment:deaprtment,
+                  },
+                  dataType: 'json',
+                  success: function (data) {
+                      console.log(data);
+                      let msg = data.msg;
+                        notyf.success(msg);
+                      //   $('.update-form').trigger("reset");
+                    //   $('#updateModalLong').modal('hide');
+                    //   window.location.reload(true);
+                  },
+                  error: function(data){
+                      console.log(data);
+                  }
+              });
+            });
+
+        });
     </script>
 @endsection

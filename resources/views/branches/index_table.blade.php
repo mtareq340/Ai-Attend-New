@@ -11,18 +11,30 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
+        <div class="row align-items-center py-1">
+            {{-- <div class="col-12"> --}}
+                <div class="col-4">
+                    <h4 class="page-title">Branches</h4>
+                </div>
+                <div class="col-4">
+                    @can('add_branch')
+                    <button onclick="showAddFormRoot(event)" class="btn btn btn-primary  ">
+                        <i class="fa fa-plus"></i>
+                        Add Branch
+                    </button>
+                    @endcan
+                </div>
+                <div class="page-title-box col-4">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Branch</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Branches</h4>
                 </div>
-            </div>
+                
+          
+            {{-- </div> --}}
         </div>
         <!-- end page title -->
 
@@ -31,18 +43,12 @@
         {{-- @php
             dd(auth()->user()->name);
         @endphp --}}
-        @can('add_branch')
-        <button onclick="showAddFormRoot(event)" class="btn btn btn-primary my-2">
-            <i class="fa fa-plus"></i>
-            Add Branch
-        </button>
-        @endcan
 
-        <div class="row">
+        <div class="row ">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Branches table</h4>
+                        {{-- <h4 class="header-title">Branches table</h4> --}}
 
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
