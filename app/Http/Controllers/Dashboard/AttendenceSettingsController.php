@@ -16,8 +16,13 @@ class AttendenceSettingsController extends Controller
      */
     public function index()
     {
-        $attendence_settings = AttendenceSettings::first();
-        return view('settings.attendence-settings', compact('attendence_settings'));
+        if(auth()->user()->hasRole('super_admin')){
+            $attendence_settings = AttendenceSettings::first();
+            return view('settings.attendence-settings', compact('attendence_settings'));
+        }else{
+            return abort(401);
+        }
+
     }
 
     /**
