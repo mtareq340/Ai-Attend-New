@@ -12,7 +12,7 @@
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item mx-0">
         <a href="{{ route ('attendence-settings.index') }}" aria-expanded="false" class="nav-link {{ Request::path() == 'dashboard/attendence-settings' ? 'active' : '' }}">
             Attendence settings
         </a>

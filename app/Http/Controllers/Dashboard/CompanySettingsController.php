@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\AttendenceSettings;
 use App\CompanySettings;
 use App\Http\Controllers\Controller;
+use App\Vication;
+use App\Week_Day;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 
 class CompanySettingsController extends Controller
@@ -25,6 +30,17 @@ class CompanySettingsController extends Controller
     {
         //
         try {
+            $validator = Validator::make(
+                $req->all(),
+                [
+                    'phone' => 'required',
+
+                ],
+                [
+                    'phone.required' => 'برجاء ادخال رقم جوال الشركه',
+
+                ]
+            );
             $data = $req->all();
             $settings = CompanySettings::first();
             $settings->update($data);
@@ -84,6 +100,22 @@ class CompanySettingsController extends Controller
         return back()->with('success', 'تم تعديل اللوجو بنجاح');
     }
 
+    public function addvication(Request $request)
+    {
+        try {
+            $input['days'] = $request->input('days');
+            $list_of_days = implode(',', $input['days']);
+            // dd($list_of_days);
+            $data = CompanySettings::first();
+            // dd($data);
+            $data->update([
+                'vication_days' => $list_of_days
+            ]);
+            return back()->with('success', 'تم اضافه اجازه');
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
 
     public function resetLogo(Request $req){
         $settings = CompanySettings::first();

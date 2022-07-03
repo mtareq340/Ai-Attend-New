@@ -106,9 +106,14 @@
             </div>
 
             <div class="form-group">
-                <label for="phone_input" class="col-form-label">Company Phone</label>
-                <input disabled type="text" name="phone" class="form-control" id="phone_input"
-                    value="{{ $company_settings->phone }}">
+                <label for="phone_input" class="col-form-label">Company Phone num 1</label>
+                <input disabled type="text" name="phone" class="form-control" id="phone_input" required value="{{$company_settings->phone}}" >
+            </div>
+
+
+            <div class="form-group">
+                <label for="phone_input" class="col-form-label">Company Phone num 2</label>
+                <input disabled type="text" name="phone" class="form-control" id="phone2_input" value="{{$company_settings->phone_num2}}">
             </div>
 
 
@@ -135,6 +140,7 @@
             $("#mac_address_input").removeAttr('disabled');
             $("#email_input").removeAttr('disabled');
             $("#phone_input").removeAttr('disabled');
+            $('#phone2_input').removeAttr('disabled');
             $("#notes_input").removeAttr('disabled');
             $("#notes_input").removeAttr('style');
             $('#edit-company-info-btn').removeClass('d-none')

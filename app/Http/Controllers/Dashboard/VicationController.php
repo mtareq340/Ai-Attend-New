@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\AttendenceSettings;
-use App\CompanySettings;
-use App\User;
-use App\Week_Day;
 
-class AttendenceSettingsController extends Controller
+class VicationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +14,7 @@ class AttendenceSettingsController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->hasRole('super_admin')){
-            $attendence_settings = AttendenceSettings::first();
-            return view('settings.attendence-settings', compact('attendence_settings'));
-        }else{
-            return abort(401);
-        }
-
+        //
     }
 
     /**
@@ -91,20 +81,5 @@ class AttendenceSettingsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function toggleAttendenceSettings(Request $req)
-    {
-        $checked = $req->checked;
-        $branch_id = auth()->user()->branch_id;
-        $settings = AttendenceSettings::where('branch_id', '=', $branch_id)->first();
-        if ($checked) {
-            $settings[$req->type] = true;
-        } else {
-            $settings[$req->type] = false;
-        }
-        $settings->save();
-
-        return response()->json(['msg' => "تم التعديل بنجاح"]);
     }
 }

@@ -26,4 +26,8 @@ class Employee extends Model
     {
         return $this->belongsToMany(Attendmethods::class, 'employee_attend_methods', null, 'attend_method_id');
     }
+    public function extra_time()
+    {
+        return $this->hasMany(ExtraTime::class, 'employee_id');
+    }
 }

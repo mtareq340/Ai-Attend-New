@@ -12,18 +12,29 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
+        <div class="row align-items-center my-2">
+            {{-- <div class="col-12"> --}}
+                <div class="col-4">
+                    <h4 class="page-title">Devices</h4>
+                </div>
+                <div class="col-4">
+                    @can('add_device')
+                    <button class="btn btn btn-primary">
+                        <a href="{{ route('devices.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
+                    </button>
+                    @endcan
+
+                </div>
+                <div class="page-title-box col-4">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Devices</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Datatables</h4>
+
                 </div>
-            </div>
+            {{-- </div> --}}
         </div>
         <!-- end page title -->
         @can('add_device')
@@ -37,7 +48,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="header-title">Devices</h4>
+                        {{-- <h4 class="header-title">Devices</h4> --}}
 
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
@@ -112,6 +123,34 @@
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <!-- Page js-->
     <script>
+<<<<<<< HEAD
+
+  const toggleActivationAndLocked = (e, id , type) => {
+
+(async () => {
+        try {
+            let checked = e.target.checked;
+            const rawResponse = await fetch('{{ route('active_device') }}', {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    id,
+                    checked,
+                    type
+                })
+            });
+            const content = await rawResponse.json();
+            console.log(content);
+
+            if (content.error) {
+                // notify error
+            } else {
+                // notify success
+=======
         const toggleActivationAndLocked = (e, id, type) => {
 
             (async () => {
@@ -144,6 +183,7 @@
                 }
             })
             ();
+>>>>>>> ddfa7034f93bf251b5db0c2f5631e9024d538929
 
         }
 
