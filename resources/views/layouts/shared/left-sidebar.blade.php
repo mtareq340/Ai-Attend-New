@@ -388,7 +388,7 @@
                 </li>
                 @endcan
                 {{-- End of Assign Appointment --}}
-{{--
+
                 <li class="menu-title">Some Pages For Design</li>
 
                 <li>
@@ -1084,7 +1084,7 @@
                         </ul>
                     </div>
                 </li>
-            </ul> --}}
+            </ul> 
 
         </div>
         <!-- End Sidebar -->

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Appointment;
 use App\Branch;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Location;
+use App\Device;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -36,7 +38,9 @@ class AppointmentController extends Controller
         $branch = Branch::find(auth()->user()->branch_id);
         // dd($branch);
         $locations = Location::all();
-        return view('appointments.create', compact('branch', 'locations'));
+        $devices = Device::all();
+        $employees = Employee::all();
+        return view('appointments.create', compact('branch', 'locations','employees'));
     }
     public function store(Request $request)
     {
