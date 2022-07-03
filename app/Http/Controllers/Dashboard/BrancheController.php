@@ -60,7 +60,7 @@ class BrancheController extends Controller
         $branch = new Branch($data);
         $branch->save();
         $data['branch_id'] = $branch->id;
-        $AttendenceSettings = AttendenceSettings::create($data);
+        // $AttendenceSettings = AttendenceSettings::create($data);
         // return $request->parent_id;
         if ($request->parent_id) {
             // $parent = Branch::find($request->parent_id);
