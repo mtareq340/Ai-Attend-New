@@ -78,9 +78,17 @@ Route::group(['prefix' => 'dashboard'], function () {
   //active devices
   Route::patch('active_device', 'Dashboard\DeviceController@changeStatus')->name('active_device');
 
+  //active attendace method //
+  Route::patch('active_attendance_method', 'Dashboard\AttendmethodController@toggleactivate')->name('active_attendance_method');
+  //
+
+  //extra time
+  Route::resource('extra_time', 'Dashboard\ExtraTimeController');
 
   // roles routes
   Route::resource('roles', 'Dashboard\RoleController');
+
+  Route::post('/addvication', 'Dashboard\CompanySettingsController@addvication')->name('addvication');
 });
 
 Route::group(['prefix' => '/'], function () {

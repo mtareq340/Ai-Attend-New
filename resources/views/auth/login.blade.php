@@ -20,13 +20,13 @@
                                     <div class="auth-logo">
                                         <a href="{{route('index')}}" class="logo logo-dark text-center">
                                             <span class="logo-lg">
-                                                <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="22">
+                                                <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="22">
                                             </span>
                                         </a>
                     
                                         <a href="{{route('index')}}" class="logo logo-light text-center">
                                             <span class="logo-lg">
-                                                <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="22">
+                                                <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="22">
                                             </span>
                                         </a>
                                     </div>
@@ -82,7 +82,7 @@
                                     </div>
 
                                 </form>
-
+{{-- 
                                 <div class="text-center">
                                     <h5 class="mt-3 text-muted">Sign in with</h5>
                                     <ul class="social-list list-inline mt-3 mb-0">
@@ -99,7 +99,7 @@
                                             <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
 
                             </div> <!-- end card-body -->
                         </div>

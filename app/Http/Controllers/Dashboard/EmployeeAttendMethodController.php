@@ -25,7 +25,11 @@ class EmployeeAttendMethodController extends Controller
         if (!Gate::allows('show_employee_attend_methods')) {
             return abort(401);
         }
-        $emps = Employee::all();
+        if (auth()->user()->hasRole('super_admin')) {
+            $emps = Employee::where('locked', '=', '0')->where('active', '1')->get();
+        } else {
+            $emps = Employee::where('branch_id', auth()->user()->branch_id)->where('active', '1')->where('locked', '=', '0')->get();
+        }
         return view("employees_attend_methods.index", compact('emps'));
     }
 
