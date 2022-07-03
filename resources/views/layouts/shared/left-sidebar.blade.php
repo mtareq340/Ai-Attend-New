@@ -60,12 +60,7 @@
 
 
                 {{-- start of account settings --}}
-                <li>
-                    <a href="{{ route('company-settings.index') }}" >
-                        <i class="fe-settings noti-icon"></i>
-                        <span> settings </span>
-                    </a>
-                </li> -->
+
                 {{-- end of account settings --}}
 
                 {{-- start of plans --}}

@@ -6,13 +6,19 @@ use App\CompanySettings;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CompanySettingsController extends Controller
 {
     public function index()
     {
-        $company_settings = CompanySettings::first();
-        return view('settings.company-settings', compact('company_settings'));
+        if(auth()->user()->hasRole('super_admin')){
+            $company_settings = CompanySettings::first();
+            return view('settings.company-settings', compact('company_settings'));
+        }else{
+            return abort(401);
+        }
+
     }
 
     public function update(Request $req, $id)
