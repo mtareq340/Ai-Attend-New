@@ -34,18 +34,18 @@ class LocationController extends Controller
         if (!Gate::allows('add_location')) {
             return abort(401);
         }
-        $devices = Device::all();
+        $devices = Device::where('active' , 1)->get();
         return view('locations.create', compact('devices'));
     }
 
     public function store(Request $req)
     {
-        try {
+        // try {
             $validator = Validator::make(
                 $req->all(),
                 [
                     'name' => 'required',
-                    'device_id' => 'required',
+                    'devices' => 'required',
                     'location_address' => 'required',
                     'distance' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
@@ -53,7 +53,7 @@ class LocationController extends Controller
                 ],
                 [
                     'name.required' => 'برجاء ادخال الاسم',
-                    'device_id.required' => 'برجاء تحديد الجهاز',
+                    'devices.required' => 'برجاء تحديد الجهاز/الأجهزة',
                     'location_address.required' => 'برجاء ادخال العنوان',
                     'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
                     'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
@@ -68,11 +68,15 @@ class LocationController extends Controller
 
             $data = $req->all();
             // dd($data);
-            Location::create($data);
+            $location = new Location();
+            $location->fill($data);
+            $location->save();
+            $location->devices()->attach($req->devices);
+            
             return redirect()->route('locations.index')->with(['success' => 'تم الحفظ بنجاح']);
-        } catch (Exception $e) {
-            return redirect()->route('locations.create')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-        }
+        // } catch (Exception $e) {
+        //     return redirect()->route('locations.create')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+        // }
     }
     public function destroy($id)
     {
@@ -90,7 +94,7 @@ class LocationController extends Controller
         if (!Gate::allows('edit_location')) {
             return abort(401);
         }
-        $devices = Device::all();
+        $devices = Device::where('active' , 1)->get();
         $location = Location::find($id);
         $devicename = Device::find($location->device_id);
 
@@ -99,11 +103,12 @@ class LocationController extends Controller
     public function update(Request $req, $id)
     {
         try {
+     
             $validator = Validator::make(
                 $req->all(),
                 [
                     'name' => 'required',
-                    'device_id' => 'required',
+                    'devices' => 'required',
                     'location_address' => 'required',
                     'distance' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
@@ -111,7 +116,7 @@ class LocationController extends Controller
                 ],
                 [
                     'name.required' => 'برجاء ادخال الاسم',
-                    'device_id.required' => 'برجاء تحديد الجهاز',
+                    'devices.required' => 'برجاء تحديد الجهاز/الأجهزة',
                     'location_address.required' => 'برجاء ادخال العنوان',
                     'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
                     'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
@@ -125,9 +130,10 @@ class LocationController extends Controller
             }
 
 
-            $data = $req->all();
+            $data = $req->except('devices');
             $location = Location::findOrFail($id);
             $location->update($data);
+            $location->devices()->sync($req->devices);
             return redirect()->route('locations.index')->with(['success' => 'تم تحديث الموقع بنجاح']);
         } catch (Exception $e) {
             return redirect()->route('locations.edit')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);

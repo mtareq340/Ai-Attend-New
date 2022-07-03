@@ -50,7 +50,7 @@ class BrancheController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'phone' => 'required',
-            'address' => 'required',
+            'address' => '',
             'notes' => '',
             // 'long' => 'required|numeric',
             // 'lat' => 'required|numeric',
@@ -60,7 +60,7 @@ class BrancheController extends Controller
         $branch = new Branch($data);
         $branch->save();
         $data['branch_id'] = $branch->id;
-        $AttendenceSettings = AttendenceSettings::create($data);
+        // $AttendenceSettings = AttendenceSettings::create($data);
         // return $request->parent_id;
         if ($request->parent_id) {
             // $parent = Branch::find($request->parent_id);
@@ -111,7 +111,7 @@ class BrancheController extends Controller
             $request->validate([
                 'name' => 'required',
                 'phone' => 'required|numeric',
-                'address' => 'required'
+                'address' => ''
             ]);
             $branch = Branch::findOrFail($id);
             //update in db

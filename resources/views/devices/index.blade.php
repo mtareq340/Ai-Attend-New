@@ -2,8 +2,9 @@
 
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -11,24 +12,35 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
+        <div class="row align-items-center my-2">
+            {{-- <div class="col-12"> --}}
+                <div class="col-4">
+                    <h4 class="page-title">Devices</h4>
+                </div>
+                <div class="col-4">
+                    @can('add_device')
+                    <button class="btn btn btn-primary">
+                        <a href="{{ route('devices.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
+                    </button>
+                    @endcan
+
+                </div>
+                <div class="page-title-box col-4">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Devices</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Datatables</h4>
+
                 </div>
-            </div>
+            {{-- </div> --}}
         </div>
         <!-- end page title -->
         @can('add_device')
-        <button class="btn btn btn-primary">
-            <a href="{{ route('devices.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
-        </button>
+            <button class="btn btn btn-primary">
+                <a href="{{ route('devices.create') }}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
+            </button>
         @endcan
 
         <div class="row">
@@ -36,42 +48,48 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="header-title">Devices</h4>
+                        {{-- <h4 class="header-title">Devices</h4> --}}
 
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Code</th>
                                     <th>Note</th>
                                     <th>Activate</th>
                                     <th>Action</th>
-                                    
                                 </tr>
                             </thead>
 
 
                             <tbody>
-                                @foreach($devices  as $device)
+                                @foreach ($devices as $device)
                                     <tr>
                                         <td>{{ $device->name }}</td>
+                                        <td>{{ $device->code }}</td>
                                         <td>{{ $device->notes }}</td>
                                         <td>
-                                            <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $device->id }}' , 'active')" class="js-switch" {{$device->active?'checked':''}} data-plugin="switchery" />
+                                            <input type="checkbox"
+                                                onchange="toggleActivationAndLocked(event,'{{ $device->id }}' , 'active')"
+                                                class="js-switch" {{ $device->active ? 'checked' : '' }}
+                                                data-plugin="switchery" />
                                         </td>
                                         <td>
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_device')
-                                                <a href="{{ route('devices.edit', $device->id) }}" class="action-icon">
-                                                    <i class="mdi mdi-square-edit-outline"></i>
-                                                </a>
+                                                    <a href="{{ route('devices.edit', $device->id) }}" class="action-icon">
+                                                        <i class="mdi mdi-square-edit-outline"></i>
+                                                    </a>
                                                 @endcan
                                                 <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
                                                 @can('delete_device')
-                                                <form action="{{ route('devices.destroy', $device->id)}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button style ="border-color:white; color:red; font-size: 0.8rem;" class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
-                                                </form>
+                                                    <form action="{{ route('devices.destroy', $device->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button style="border-color:white; color:red; font-size: 0.8rem;"
+                                                            class="action-icon delete" type="submit"> <i
+                                                                class="mdi mdi-delete"></i></button>
+                                                    </form>
                                                 @endcan
                                             </div>
                                         </td>
@@ -98,13 +116,15 @@
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
-    <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
-    <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
+    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <!-- Page js-->
     <script>
+<<<<<<< HEAD
+
   const toggleActivationAndLocked = (e, id , type) => {
 
 (async () => {
@@ -130,25 +150,53 @@
                 // notify error
             } else {
                 // notify success
+=======
+        const toggleActivationAndLocked = (e, id, type) => {
 
-            }
-        } catch (err) {
-            console.log(err);
+            (async () => {
+                try {
+                    let checked = e.target.checked;
+                    const rawResponse = await fetch('{{ route('active_device') }}', {
+                        method: 'PATCH',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            id,
+                            checked,
+                            type
+                        })
+                    });
+                    const content = await rawResponse.json();
+                    console.log(content);
+
+                    if (content.error) {
+                        // notify error
+                    } else {
+                        // notify success
+
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            })
+            ();
+>>>>>>> ddfa7034f93bf251b5db0c2f5631e9024d538929
+
         }
-    })
-    ();
 
-}
-
- </script>
+    </script>
     <script>
-            var elem = document.querySelectorAll('.js-switch');
+        var elem = document.querySelectorAll('.js-switch');
         elem.forEach(element => {
-            new Switchery(element , {
-                size : 'small',
-                color : '#64b0f2'
+            new Switchery(element, {
+                size: 'small',
+                color: '#64b0f2'
             });
         });
+
     </script>
-  
+
 @endsection

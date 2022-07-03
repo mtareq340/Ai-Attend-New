@@ -22,4 +22,8 @@ class Location extends Model
     {
         return $this->hasOne(Appointment::class);
     }
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class,'devices_to_locations');
+    }
 }

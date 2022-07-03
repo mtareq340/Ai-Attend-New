@@ -153,4 +153,22 @@ class AttendmethodController extends Controller
             return redirect()->route('attend_methods.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
+
+    public function toggleactivate(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $checked = $req->checked;
+            $attend_methods = Attendmethods::find($id);
+            if ($checked) {
+                $attend_methods[$req->active] = true;
+            } else {
+                $attend_methods[$req->active] = false;
+            }
+            $$attend_methods->save();
+            return response()->json(['msg' => "تم تحديث  طريقه الحضور"]);
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
 }
