@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Carbon\Carbon;
+use Jenssegers\Agent\Agent;
+use DB;
 
 class LoginController extends Controller
 {
@@ -33,8 +36,36 @@ class LoginController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // $user->update([
+        //     'last_login_at' => Carbon::now()->toDateTimeString(),
+        //     'last_login_ip' => $request->getClientIp()
+        // ]);
+
+        $agent = new Agent();
+        $details = [
+            "device" => $agent->device(),
+            "platform" => $agent->platform(),
+            "browser" => $agent->browser(),
+        ];
+        $activity_log = [
+            'user_id' => auth()->user()->id ,
+            'ip' => request()->getClientIp(),
+            'datetime' =>  Carbon::now()->toDateTimeString(),
+            'created_at' =>  Carbon::now()->toDateTimeString(),
+            'updated_at' =>  Carbon::now()->toDateTimeString(),
+            'details' => json_encode($details)
+        ];
+
+        DB::table('login_histories')->insert($activity_log);
+
+        
     }
 }
