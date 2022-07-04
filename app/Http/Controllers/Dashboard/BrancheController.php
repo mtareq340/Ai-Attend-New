@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\AttendenceSettings;
 use App\Branch;
+use App\Branch_Setting;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -60,6 +61,13 @@ class BrancheController extends Controller
         $branch = new Branch($data);
         $branch->save();
         $data['branch_id'] = $branch->id;
+
+        //add brnach_id in branch settings//
+        Branch_Setting::create([
+            'branch_id' => $data['branch_id'],
+            'over_time_count' => '0'
+        ]);
+        ///////////////////////////////////
         // $AttendenceSettings = AttendenceSettings::create($data);
         // return $request->parent_id;
         if ($request->parent_id) {
