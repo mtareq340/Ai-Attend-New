@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2022 at 09:48 PM
+-- Generation Time: Jul 04, 2022 at 08:08 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -62,8 +62,7 @@ CREATE TABLE `attendance_settings` (
 --
 
 INSERT INTO `attendance_settings` (`id`, `branch_id`, `allow_delay`, `automatic_leave`, `over_time_count`, `validate_finger`, `created_at`, `updated_at`) VALUES
-(1, 2, 0, 1, NULL, NULL, NULL, '2022-06-29 17:42:08'),
-(19, 8, NULL, NULL, NULL, NULL, '2022-07-03 09:37:05', '2022-07-03 09:37:05');
+(1, 2, 0, 0, NULL, 0, NULL, '2022-07-03 12:33:25');
 
 -- --------------------------------------------------------
 
@@ -114,8 +113,20 @@ INSERT INTO `branches` (`id`, `name`, `phone`, `address`, `notes`, `created_at`,
 (2, 'smart village', '01011305995', '6 october', 'no', '2022-06-22 10:27:14', '2022-06-22 10:27:14', 1, 2, NULL),
 (5, 'Giza', '01215487555', 'Giza', NULL, '2022-06-28 18:27:38', '2022-06-28 18:27:38', 3, 4, NULL),
 (6, 'October', '012365985', 'October', NULL, '2022-06-28 18:28:02', '2022-06-28 18:28:02', 5, 6, NULL),
-(7, 'Cairo', '0123212324', 'Cairo', NULL, '2022-06-28 18:28:28', '2022-06-28 18:28:28', 7, 8, NULL),
-(8, 'branch test', '021246347', NULL, NULL, '2022-07-03 09:37:05', '2022-07-03 09:39:07', 9, 10, NULL);
+(7, 'Cairo', '0123212324', 'Cairo', NULL, '2022-06-28 18:28:28', '2022-06-28 18:28:28', 7, 8, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `branch_setting`
+--
+
+CREATE TABLE `branch_setting` (
+  `id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
+  `over_time_count` int(11) NOT NULL,
+  `vication_days` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -146,6 +157,8 @@ CREATE TABLE `company_settings` (
   `email` varchar(191) DEFAULT NULL,
   `registeration_num` int(11) DEFAULT NULL,
   `phone` varchar(191) DEFAULT NULL,
+  `phone_num2` varchar(11) DEFAULT NULL,
+  `vication_days` varchar(255) DEFAULT NULL,
   `logo` varchar(250) DEFAULT NULL,
   `background` varchar(250) DEFAULT NULL,
   `ssid` varchar(191) CHARACTER SET utf8 DEFAULT NULL,
@@ -159,8 +172,8 @@ CREATE TABLE `company_settings` (
 -- Dumping data for table `company_settings`
 --
 
-INSERT INTO `company_settings` (`id`, `name`, `plan_id`, `registeration_date`, `email`, `registeration_num`, `phone`, `logo`, `background`, `ssid`, `mac_address`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'atis company', 1, '2022-06-20', NULL, NULL, NULL, 'logo.jpg', 'cover.jpg', '12354dd', 'fvhhbf4fv4Gngjbjnbg5', 'atis', '2022-06-22 09:20:28', '2022-07-03 17:46:23');
+INSERT INTO `company_settings` (`id`, `name`, `plan_id`, `registeration_date`, `email`, `registeration_num`, `phone`, `phone_num2`, `vication_days`, `logo`, `background`, `ssid`, `mac_address`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 'atis company', 1, '2022-06-20', NULL, NULL, NULL, 'nu', '1,2', NULL, NULL, '12354dd', 'fvhhbf4fv4Gngjbjnbg5', 'atis', '2022-06-22 09:20:28', '2022-07-03 19:36:56');
 
 -- --------------------------------------------------------
 
@@ -171,7 +184,6 @@ INSERT INTO `company_settings` (`id`, `name`, `plan_id`, `registeration_date`, `
 CREATE TABLE `devices` (
   `id` bigint(20) NOT NULL,
   `name` varchar(191) NOT NULL,
-  `code` varchar(50) NOT NULL,
   `active` tinyint(1) DEFAULT NULL,
   `notes` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -182,10 +194,8 @@ CREATE TABLE `devices` (
 -- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`id`, `name`, `code`, `active`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'Mohamed Tarek', '', 1, 'dfbgnhm', '2022-06-21 05:15:14', '2022-06-29 08:13:30'),
-(3, 'test device 1', '', 1, NULL, '2022-07-03 11:19:21', '2022-07-03 11:20:44'),
-(4, 'test device 2', '', 1, NULL, '2022-07-03 11:19:31', '2022-07-03 11:20:44');
+INSERT INTO `devices` (`id`, `name`, `active`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 'Mohamed Tarek', 1, 'dfbgnhm', '2022-06-21 05:15:14', '2022-06-29 08:13:30');
 
 -- --------------------------------------------------------
 
@@ -194,17 +204,10 @@ INSERT INTO `devices` (`id`, `name`, `code`, `active`, `notes`, `created_at`, `u
 --
 
 CREATE TABLE `devices_to_locations` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `device_id` bigint(20) NOT NULL,
   `location_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `devices_to_locations`
---
-
-INSERT INTO `devices_to_locations` (`id`, `device_id`, `location_id`) VALUES
-(1, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -214,12 +217,14 @@ INSERT INTO `devices_to_locations` (`id`, `device_id`, `location_id`) VALUES
 
 CREATE TABLE `employees` (
   `id` bigint(20) NOT NULL,
-  `name` varchar(191) DEFAULT NULL,
+  `name` varchar(191) NOT NULL,
+  `job_number` varchar(100) NOT NULL,
   `email` varchar(191) DEFAULT NULL,
   `password` varchar(191) DEFAULT NULL,
-  `phone` varchar(191) DEFAULT NULL,
+  `phone` varchar(191) NOT NULL,
+  `phone_num2` varchar(11) DEFAULT NULL,
   `address` varchar(191) DEFAULT NULL,
-  `gender` enum('male','female') DEFAULT 'male',
+  `gender` enum('male','female') NOT NULL DEFAULT 'male',
   `age` bigint(20) DEFAULT NULL,
   `branch_id` bigint(20) DEFAULT NULL,
   `job_id` bigint(20) DEFAULT NULL,
@@ -227,18 +232,20 @@ CREATE TABLE `employees` (
   `locked` int(11) NOT NULL DEFAULT '1',
   `otp` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `job_number` varchar(50) NOT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `name`, `email`, `password`, `phone`, `address`, `gender`, `age`, `branch_id`, `job_id`, `active`, `locked`, `otp`, `created_at`, `updated_at`, `job_number`) VALUES
-(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-03 16:48:23', '543634'),
-(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-03 16:48:25', '634634'),
-(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-03 16:48:25', '436346');
+INSERT INTO `employees` (`id`, `name`, `job_number`, `email`, `password`, `phone`, `phone_num2`, `address`, `gender`, `age`, `branch_id`, `job_id`, `active`, `locked`, `otp`, `created_at`, `updated_at`) VALUES
+(1, 'mohamed', '', 'mtareq340@gmail.com', '123456789', '01011305995', NULL, 'abo sleem', 'male', 25, 2, 1, 1, 1, NULL, NULL, '2022-06-25 12:07:36'),
+(3, 'moahamed magdy', '', 'magdy@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '01066018340', NULL, '1234 main ST', 'male', 20, 7, 1, 1, 0, NULL, '2022-06-29 06:33:01', '2022-07-03 10:02:56'),
+(4, 'moahamed salah', '', 'salah@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '012154785522222', NULL, '1234 main ST', 'male', 25, 7, 1, 1, 1, NULL, '2022-06-29 06:33:01', '2022-06-29 07:52:41'),
+(5, 'john doe', '', 'ex@ex.com', NULL, '0106601834', NULL, '1234 main st', 'male', 15, 5, 1, 1, 1, NULL, '2022-07-03 07:37:11', '2022-07-03 10:05:56'),
+(6, 'join doe', '', 'ex@gmail.com', NULL, '05102', NULL, '1234 main st', 'male', 20, 5, 1, 1, 0, NULL, '2022-07-03 07:40:06', '2022-07-03 10:02:54'),
+(7, 'moahmed', '', NULL, NULL, '01066018340', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, '2022-07-03 09:40:37', '2022-07-03 09:40:37');
 
 -- --------------------------------------------------------
 
@@ -253,13 +260,6 @@ CREATE TABLE `employee_attend_methods` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `employee_attend_methods`
---
-
-INSERT INTO `employee_attend_methods` (`id`, `employee_id`, `attend_method_id`, `created_at`, `updated_at`) VALUES
-(1, 5, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -278,6 +278,18 @@ CREATE TABLE `employee_requests` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `employee_requests`
+--
+
+INSERT INTO `employee_requests` (`id`, `employee_id`, `user_id`, `request_type_id`, `request`, `date`, `created_at`, `updated_at`) VALUES
+(1, 1, 30, 3, 'Your trusted resource for learning new technologies.\r\n\r\n', '2022-06-29', '2022-06-29 16:03:45', '2022-06-29 16:03:45'),
+(2, 1, 30, 3, 'test', '2022-06-29', '2022-06-29 16:08:20', '2022-06-29 16:08:20'),
+(3, 1, 30, 2, 'test 3', '2022-06-29', '2022-06-29 16:09:24', '2022-06-29 16:09:24'),
+(4, 1, 30, 3, 'test4', '2022-06-29', '2022-06-29 16:12:22', '2022-06-29 16:12:22'),
+(5, 1, 30, 3, 'test5', '2022-06-29', '2022-06-29 17:38:21', '2022-06-29 17:38:21'),
+(6, 3, 30, 2, 'ldfjie dldoeok ', '2022-07-15', '2022-07-03 18:41:40', '2022-07-03 18:41:40');
+
 -- --------------------------------------------------------
 
 --
@@ -292,6 +304,15 @@ CREATE TABLE `employee_request_review` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_request_review`
+--
+
+INSERT INTO `employee_request_review` (`id`, `employee_id`, `request`, `date`, `created_at`, `updated_at`) VALUES
+(6, 1, 'dkdld dkldkdld ', '2022-07-13 08:05:43', '2022-07-03 06:08:25', '2022-07-03 06:08:25'),
+(8, 3, 'adkaflk adfdjk ', '2022-07-13 08:05:43', '2022-07-03 06:08:25', '2022-07-03 06:08:25'),
+(9, 4, 'addfkld da jdkl ', '2022-07-15 08:05:43', '2022-07-03 06:08:25', '2022-07-03 06:08:25');
 
 -- --------------------------------------------------------
 
@@ -329,17 +350,17 @@ CREATE TABLE `locations` (
   `location_longituide` decimal(9,6) NOT NULL,
   `notes` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `device_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` (`id`, `name`, `location_address`, `distance`, `location_latitude`, `location_longituide`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'Giza location', '123 main AT', '100', '30.014082', '31.482892', NULL, '2022-06-29 06:56:21', '2022-06-29 06:56:21'),
-(2, 'water fall', '1234 main ST', '150', '29.934973', '30.921903', NULL, '2022-06-29 06:57:08', '2022-06-29 06:57:08'),
-(3, 'mohammed ali', 'address', '150', '30.044400', '31.235700', NULL, '2022-07-03 12:13:46', '2022-07-03 12:13:46');
+INSERT INTO `locations` (`id`, `name`, `location_address`, `distance`, `location_latitude`, `location_longituide`, `notes`, `created_at`, `updated_at`, `device_id`) VALUES
+(1, 'Giza location', '123 main AT', '100', '30.014082', '31.482892', NULL, '2022-06-29 06:56:21', '2022-06-29 06:56:21', 1),
+(2, 'water fall', '1234 main ST', '150', '29.934973', '30.921903', NULL, '2022-06-29 06:57:08', '2022-06-29 06:57:08', 1);
 
 -- --------------------------------------------------------
 
@@ -686,6 +707,52 @@ INSERT INTO `users` (`id`, `name`, `address`, `email`, `phone`, `password`, `rol
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `vications`
+--
+
+CREATE TABLE `vications` (
+  `id` int(11) NOT NULL,
+  `week_day_id` int(11) NOT NULL,
+  `attendance_setting_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `vications`
+--
+
+INSERT INTO `vications` (`id`, `week_day_id`, `attendance_setting_id`) VALUES
+(8, 1, 1),
+(9, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `week_days`
+--
+
+CREATE TABLE `week_days` (
+  `id` int(11) NOT NULL,
+  `days` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_At` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `week_days`
+--
+
+INSERT INTO `week_days` (`id`, `days`, `created_at`, `updated_At`) VALUES
+(1, 'Saturday', '2022-07-03 12:58:17', '2022-07-03 12:58:17'),
+(2, 'Sunday', '2022-07-03 12:58:17', '2022-07-03 12:58:17'),
+(3, 'Monday', '2022-07-03 12:59:53', '2022-07-03 12:59:53'),
+(4, 'Tuesday ', '2022-07-03 12:59:53', '2022-07-03 12:59:53'),
+(5, 'Wednesday', '2022-07-03 13:00:26', '2022-07-03 13:00:26'),
+(6, 'Thursday', '2022-07-03 13:00:26', '2022-07-03 13:00:26'),
+(7, 'Friday', '2022-07-03 13:00:40', '2022-07-03 13:00:40');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `work_appointments`
 --
 
@@ -737,6 +804,12 @@ ALTER TABLE `attend_methods`
 -- Indexes for table `branches`
 --
 ALTER TABLE `branches`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `branch_setting`
+--
+ALTER TABLE `branch_setting`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -837,6 +910,18 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vications`
+--
+ALTER TABLE `vications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `week_days`
+--
+ALTER TABLE `week_days`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `work_appointments`
 --
 ALTER TABLE `work_appointments`
@@ -856,7 +941,7 @@ ALTER TABLE `assign_appointments`
 -- AUTO_INCREMENT for table `attendance_settings`
 --
 ALTER TABLE `attendance_settings`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `attend_methods`
@@ -868,7 +953,13 @@ ALTER TABLE `attend_methods`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `branch_setting`
+--
+ALTER TABLE `branch_setting`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `company_plans`
@@ -886,13 +977,13 @@ ALTER TABLE `company_settings`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `devices_to_locations`
 --
 ALTER TABLE `devices_to_locations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -904,31 +995,31 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `employee_attend_methods`
 --
 ALTER TABLE `employee_attend_methods`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employee_requests`
 --
 ALTER TABLE `employee_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `employee_request_review`
 --
 ALTER TABLE `employee_request_review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -946,7 +1037,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `request_type`
 --
 ALTER TABLE `request_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -959,6 +1050,18 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `vications`
+--
+ALTER TABLE `vications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `week_days`
+--
+ALTER TABLE `week_days`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `work_appointments`
