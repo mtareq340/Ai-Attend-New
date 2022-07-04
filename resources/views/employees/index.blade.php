@@ -109,16 +109,10 @@
                                         <td>{{ $emp->job->name }}</td>
                                         <td>
                                             @can('edit_employee')
-                                                <<<<<<< HEAD <a href="{{ route('employees.edit', $emp->id) }}"
-                                                    id="updatesubmit" class="action-icon">
-                                                    <i class="mdi mdi-square-edit-outline"></i>
-                                                    </a>
-                                                    =======
                                                     <input type="checkbox"
                                                         onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')"
                                                         class="js-switch" {{ $emp->active ? 'checked' : '' }}
                                                         data-plugin="switchery" />
-                                                    >>>>>>> ddfa7034f93bf251b5db0c2f5631e9024d538929
                                                 @endcan
                                         </td>
                                         <td>
@@ -406,7 +400,7 @@
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Page js-->
-    <<<<<<< HEAD <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+   <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
     <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
@@ -436,12 +430,9 @@
             })
 
 
-            ===
-            === = <
-            script src = "{{ asset('assets/js/pages/datatables.init.js') }}" >
-    </script>
+
+    <script src = "{{ asset('assets/js/pages/datatables.init.js') }}" ></script>
     <script>
-        >>> >>> > ddfa7034f93bf251b5db0c2f5631e9024d538929
         // toggle active with ajax
         const toggleActivationAndLocked = (e, id, type) => {
 

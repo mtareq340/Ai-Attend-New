@@ -158,14 +158,17 @@
                                 <div class="tab-pane fade" id="second">
                                     <form id="profileForm" method="post" action="#" class="form-horizontal">
                                         <div class="row">
-                                            <div class="form-group">
-                                                <label for="inputBranch" class="col-form-label">Location *</label>
-                                                <select name="location_id" id="inputBranch" class="selectize-drop-header" placeholder="Select a location..." required>
+
+                                            <div class="form-group col-12">
+                                                <label for="inputLocation" class="col-form-label">Location *</label>
+                                                <select name="location_id" id="inputLocation" class="selectize-drop-header"
+                                                    placeholder="Select a alocation..." required>
                                                     @foreach ($locations as $location)
-                                                        <option value="{{$location->id}}">{{$location->name}}</option>
+                                                    <option value="{{$location->id}}">{{$location->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
+
                                         </div>
                                         <!-- end row -->
                                     </form>
@@ -224,6 +227,9 @@
 @endsection
 
 @section('script')
+    <script>
+        
+    </script>
     <!-- Plugins js-->
     <script src="{{asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js')}}"></script>
 
@@ -243,7 +249,14 @@
     <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
     <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
     <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>  --}}
 
     <!-- Page js-->
-    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script> 
+    <script>
+         $('.selectize-drop-header').selectize({
+            sortField: 'text',
+            hideSelected: false,
+          
+        })
+    </script>
 @endsection

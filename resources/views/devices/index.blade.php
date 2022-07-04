@@ -123,34 +123,7 @@
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <!-- Page js-->
     <script>
-<<<<<<< HEAD
 
-  const toggleActivationAndLocked = (e, id , type) => {
-
-(async () => {
-        try {
-            let checked = e.target.checked;
-            const rawResponse = await fetch('{{ route('active_device') }}', {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    id,
-                    checked,
-                    type
-                })
-            });
-            const content = await rawResponse.json();
-            console.log(content);
-
-            if (content.error) {
-                // notify error
-            } else {
-                // notify success
-=======
         const toggleActivationAndLocked = (e, id, type) => {
 
             (async () => {
@@ -183,19 +156,8 @@
                 }
             })
             ();
->>>>>>> ddfa7034f93bf251b5db0c2f5631e9024d538929
 
         }
-
-    </script>
-    <script>
-        var elem = document.querySelectorAll('.js-switch');
-        elem.forEach(element => {
-            new Switchery(element, {
-                size: 'small',
-                color: '#64b0f2'
-            });
-        });
 
     </script>
 
