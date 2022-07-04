@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,18 +39,13 @@ class LoginController extends Controller
      * @return void
      */
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request)
     {
-        // $user->update([
-        //     'last_login_at' => Carbon::now()->toDateTimeString(),
-        //     'last_login_ip' => $request->getClientIp()
-        // ]);
-
         $agent = new Agent();
         $details = [
             "device" => $agent->device(),
@@ -56,7 +53,7 @@ class LoginController extends Controller
             "browser" => $agent->browser(),
         ];
         $activity_log = [
-            'user_id' => auth()->user()->id ,
+            'user_id' => Auth::user()->id ,
             'ip' => request()->getClientIp(),
             'datetime' =>  Carbon::now()->toDateTimeString(),
             'created_at' =>  Carbon::now()->toDateTimeString(),
@@ -66,6 +63,6 @@ class LoginController extends Controller
 
         DB::table('login_histories')->insert($activity_log);
 
-        
+
     }
 }
