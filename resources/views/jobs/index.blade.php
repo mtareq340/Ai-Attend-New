@@ -19,9 +19,7 @@
                 </div>
                 <div class="col-4">
                     @can('add_job')
-                    <button class="btn btn btn-primary">
-                        <a href="{{ route('jobs.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Job</a>
-                    </button>
+                        <a href="{{ route('jobs.create')}}" class="btn btn btn-primary"><i class="fa fa-plus"></i> Add Job</a>
                     @endcan
                 </div>
                 <div class="page-title-box col-4">

@@ -15,9 +15,7 @@
                     </div>
                     <div class="col-4">
                         @can('add_appointment')
-                        <button class="btn btn btn-primary">
-                             <a href="{{ route('appointment.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Appointment</a>
-                        </button>
+                             <a href="{{ route('appointment.create')}}" class="btn btn btn-primary waves-effect waves-light"><i class="fa fa-plus"></i> Add Appointment</a>
                         @endcan
                     </div>
                     <div class="page-title-box col-4">

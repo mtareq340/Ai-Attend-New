@@ -18,9 +18,7 @@
                 </div>
                 <div class="col-4">
                     @can('add_user')
-                    <button class="btn btn btn-primary">
-                        <a href="{{ route('users.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Users</a>
-                    </button>
+                        <a href="{{ route('users.create')}}" class="btn btn btn-primary waves-effect waves-light" style="color:white"><i class="fa fa-plus"></i> Add Users</a>
                     @endcan
                 </div>
                 <div class="col-4">
