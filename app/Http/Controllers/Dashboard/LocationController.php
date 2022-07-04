@@ -139,4 +139,11 @@ class LocationController extends Controller
             return redirect()->route('locations.edit')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
+    // will be called with ajax
+    public function getLocationDevices(Request $req){
+        $id = $req->location_id;
+        if(! $id) return 'no id provided';
+
+        return Location::find($id)->devices;
+    }
 }

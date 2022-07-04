@@ -18,15 +18,21 @@
                             <li class="breadcrumb-item active">Locations</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Locations</h4>
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h4 class="page-title">Locations</h4>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ route('locations.create') }}"
+                                class="btn btn btn-primary waves-effect waves-light"><i class="fa fa-plus"></i> Add
+                                Location</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- end page title -->
 
-        <button class="btn btn btn-primary mb-3">
-            <a href="{{ route('locations.create') }}" style="color:white"><i class="fa fa-plus"></i> Add Location</a>
-        </button>
 
         <div class="row">
             <div class="col-12">

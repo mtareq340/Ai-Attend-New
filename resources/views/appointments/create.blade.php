@@ -1,9 +1,22 @@
 @extends('layouts.vertical', ['title' => 'Form Wizard'])
+@section('css')
+    <!-- Plugins css -->
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+        type="text/css" />
+@endsection
 
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        
+        <form id="profileForm" method="post" action="{{route('appointment.store')}}" class="form-horizontal">
+            @csrf
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -18,13 +31,13 @@
                     <h4 class="page-title">Form Wizard</h4>
                 </div>
             </div>
-        </div>     
+        </div>
         <!-- end page title -->
-  
+
 
 
         <div class="row">
-           
+
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
@@ -54,165 +67,243 @@
                             </ul>
 
                             <div class="tab-content mb-0 b-0 pt-0">
+                         
 
-                                <div class="tab-pane" id="first">
-                                    <form id="accountForm" method="post" action="#" class="form-horizontal">
+                                    <div class="tab-pane" id="first">
                                         <div class="row">
                                             <div class="col-12">
-                                               
+
                                                 <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label" for="userName3">Periods</label>
                                                     <div class="col-md-9">
                                                         <div class="form-group mb-3">
-                                                           
+
                                                             <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
+                                                                <input type="radio" onchange="handlePeriodChange(event)" id="inlineRadio1" value="1"
+                                                                    name="radioInline" checked="">
                                                                 <label for="inlineRadio1"> One </label>
                                                             </div>
                                                             <div class="radio form-check-inline">
-                                                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                                                <input type="radio" onchange="handlePeriodChange(event)" id="inlineRadio2" value="2"
+                                                                    name="radioInline">
                                                                 <label for="inlineRadio2"> Two </label>
                                                             </div>
-                                                          
+
                                                         </div>
-                                                       
+
                                                     </div>
                                                 </div>
-                                                <div class="form-group row mb-3">
-                                                    <label class="col-md-3 col-form-label" for="userName3">the first period</label>
+                                                {{-- first period --}}
+                                                <div class="form-group row mb-3 bg-light py-3" id="first-period">
+                                                    <label class="col-md-3 col-form-label" for="userName3">the first
+                                                        period</label>
                                                     <div class="col-md-9">
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <label for="billing-town-city">Start Time</label>
-                                                                    <input type="time" id="preloading-timepicker" class="form-control" placeholder="Pick a time">
+                                                                    <input type="time" id="preloading-timepicker"
+                                                                        class="form-control" placeholder="Pick a time">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <label for="billing-state"> End Time</label>
-                                                                    <input class="form-control" type="time" placeholder="Enter your End Time" id="billing-state" />
+                                                                    <input class="form-control" type="time"
+                                                                        placeholder="Enter your End Time"
+                                                                        id="billing-state" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <label for="billing-zip-postal">Delay Period</label>
-                                                                    <input class="form-control" type="time" placeholder="Enter your Delay Period" id="billing-zip-postal" />
+                                                                    <input class="form-control" type="time"
+                                                                        placeholder="Enter your Delay Period"
+                                                                        id="billing-zip-postal" />
                                                                 </div>
                                                             </div>
                                                         </div> <!-- end row -->
                                                     </div>
                                                 </div>
-                                                <div class="form-group row mb-3">
-                                                    <label class="col-md-3 col-form-label" for="password3"> Attendance Days</label>
+                                                {{-- second period --}}
+                                                <div class="form-group row mb-3 bg-light py-3 d-none" id="second-period">
+                                                    <label class="col-md-3 col-form-label" for="userName3">the second
+                                                        period</label>
                                                     <div class="col-md-9">
-                                                   
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="billing-town-city">Start Time</label>
+                                                                    <input type="time" id="preloading-timepicker"
+                                                                        class="form-control" placeholder="Pick a time">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="billing-state"> End Time</label>
+                                                                    <input class="form-control" type="time"
+                                                                        placeholder="Enter your End Time"
+                                                                        id="billing-state" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="billing-zip-postal">Delay Period</label>
+                                                                    <input class="form-control" type="time"
+                                                                        placeholder="Enter your Delay Period"
+                                                                        id="billing-zip-postal" />
+                                                                </div>
+                                                            </div>
+                                                        </div> <!-- end row -->
+                                                    </div>
+                                                </div>
+                                                {{-- /////////////////// --}}
+
+
+
+                                                <div class="form-group row mb-3">
+                                                    <label class="col-md-3 col-form-label" for="password3"> Attendance
+                                                        Days</label>
+                                                    <div class="col-md-9">
+
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="" value="option1" >
+                                                            <input type="checkbox" id="" value="option1">
                                                             <label for="inlineCheckbox2"> Saturday </label>
                                                         </div>
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="" value="option1" >
+                                                            <input type="checkbox" id="" value="option1">
                                                             <label for="inlineCheckbox2"> Sunday </label>
                                                         </div>
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1" >
+                                                            <input type="checkbox" id="inlineCheckbox2" value="option1">
                                                             <label for="inlineCheckbox2"> Monday </label>
                                                         </div>
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1" >
+                                                            <input type="checkbox" id="inlineCheckbox2" value="option1">
                                                             <label for="inlineCheckbox2"> Tuesday </label>
                                                         </div>
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1" checked>
+                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
+                                                                checked>
                                                             <label for="inlineCheckbox2"> Wednesday </label>
                                                         </div>
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1" checked>
+                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
+                                                                checked>
                                                             <label for="inlineCheckbox2"> Thursday </label>
                                                         </div>
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1" checked>
+                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
+                                                                checked>
                                                             <label for="inlineCheckbox2"> Friday </label>
                                                         </div>
-                                                 
-                                                        
-                                                 
+
+
+
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label" for="confirm3">repeat</label>
                                                     <div class="col-md-9">
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1" checked>
+                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
+                                                                checked>
                                                             <label for="inlineCheckbox2"> repeat </label>
-                                                        </div>                                                  
-                                                  </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
-                                    </form>
-                                </div>
+                                    </div>
 
-                                <div class="tab-pane fade" id="second">
-                                    <form id="profileForm" method="post" action="#" class="form-horizontal">
-                                        <div class="row">
+                                    <div class="tab-pane fade" id="second">
+                                            <div class="row">
 
-                                            <div class="form-group col-12">
-                                                <label for="inputLocation" class="col-form-label">Location *</label>
-                                                <select name="location_id" id="inputLocation" class="selectize-drop-header"
-                                                    placeholder="Select a alocation..." required>
-                                                    @foreach ($locations as $location)
-                                                    <option value="{{$location->id}}">{{$location->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <div class="form-group mb-2 w-100">
+                                                    <label for="inputLocation">Location *</label>
+                                                    <select id="inputLocation" onchange="getLocationDevices(event)"
+                                                        class="selectize-drop-header" name="location_id"
+                                                        placeholder="Select a location...">
+                                                        @foreach ($locations as $location)
+                                                            <option value="{{ $location->id }}">{{ $location->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div id="form-group-devices" class="form-group w-100 d-none">
+
+                                                    <label for="devices_input">Devices</label>
+                                                    <select name="devices[]" id="devices_input"
+                                                        class="form-control select2-multiple" data-toggle="select2"
+                                                        multiple="multiple" data-placeholder="Choose ...">
+
+                                                    </select>
+
+                                                </div>
+
+
                                             </div>
+                                            <!-- end row -->
+                                    </div>
 
-                                        </div>
-                                        <!-- end row -->
-                                    </form>
-                                </div>
-
-                                <div class="tab-pane fade" id="third">
-                                         <div class="row">
+                                    <div class="tab-pane fade" id="third">
+                                        <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card-box">
-                                                   
-                                                    <table id="demo-custom-toolbar"  data-toggle="table"
-                                                            data-search="true"
-                                                            data-sort-name="id"
-                                                            data-page-size="1000"
-                                                            >
+
+                                                    <table id="demo-custom-toolbar" data-toggle="table" data-search="true"
+                                                        data-sort-name="id" data-page-size="1000">
                                                         <thead class="thead-light">
-                                                        <tr>
-                                                            <th></th>
-                                                            <th data-field="id" data-sortable="true" data-formatter="invoiceFormatter"> Employee ID</th>
-                                                            <th data-field="name" data-sortable="true">Name</th>
-                                                        
-                                                        </tr>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th data-field="id" data-sortable="true"> Employee job
+                                                                    number
+                                                                </th>
+                                                                <th data-field="name" data-sortable="true">Name</th>
+
+                                                            </tr>
                                                         </thead>
 
                                                         <tbody>
-                                                        <tr>
-                                                            <td><input type="checkbox" name="emp_ids"></td>
-                                                            <td>UB-1609</td>
-                                                            <td>Boudreaux</td>
-                                                        
-                                                        </tr>
-                                                        
+                                                            @foreach ($employees as $emp)
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="checkbox checkbox-success form-check-inline">
+                                                                            <input type="checkbox" id="checkbox-{{$emp->id}}" name="emp_ids[]" value="{{$emp->id}}">
+                                                                            <label for="checkbox-{{$emp->id}}" class="w-100"></label>
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td>{{ $emp->job_number }}</td>
+                                                                    <td>{{ $emp->name }}</td>
+
+                                                                </tr>
+                                                            @endforeach
+
                                                         </tbody>
                                                     </table>
                                                 </div> <!-- end card-box-->
                                             </div> <!-- end col-->
                                         </div>
-                                </div>
+                                    </div>
 
-                                <ul class="list-inline wizard mb-0">
-                                    <li class="previous list-inline-item"><a href="javascript: void(0);" class="btn btn-secondary">Previous</a>
-                                    </li>
-                                    <li class="next list-inline-item float-right"><a href="javascript: void(0);" class="btn btn-secondary">Next</a></li>
-                                </ul>
+                                    <ul class="list-inline wizard mb-0">
+                                        <li d="prev" class="previous list-inline-item"><a href="javascript: void(0);"
+                                                class="btn btn-secondary">Previous</a>
+                                        </li>
+
+                                        <li id="next" class="next list-inline-item float-right"><a
+                                                href="javascript: void(0);" class="btn btn-secondary">Next</a></li>
+                                        <li id="submit-btn" class="list-inline-item float-right d-none">
+                                            <input type="submit" value="Add appointment" class="btn btn-success waves-light waves-effect" />
+                                        </li>
+
+                                    </ul>
+
+
+                                {{-- end form --}}
 
                             </div> <!-- tab-content -->
                         </div> <!-- end #rootwizard-->
@@ -220,43 +311,92 @@
                     </div> <!-- end card-body -->
                 </div> <!-- end card-->
             </div> <!-- end col -->
-        </div> 
+        </div>
         <!-- end row -->
-        
+    </form>
     </div> <!-- container -->
 @endsection
 
 @section('script')
+
+
     <script>
-        
+        const getLocationDevices = (event) => {
+            const id = event.target.value
+            $.ajax({
+                url: "{{ route('getLocationDevices') }}",
+                type: 'GET',
+                data: {
+                    location_id: id
+                },
+                success: (res) => {
+                    $('#form-group-devices').removeClass('d-none')
+                    $devices_select = $('#devices_input')
+                    res.forEach(device => {
+                        $devices_select.append(
+                            new Option(
+                                device.name,
+                                device.id
+                            )
+                        )
+                    });
+
+                },
+                error: () => {
+
+                }
+            });
+
+        }
+
     </script>
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js')}}"></script>
-
-    <!-- Page js-->
-    <script src="{{asset('assets/js/pages/form-wizard.init.js')}}"></script>
-    <script src="{{asset('assets/js/pages/jquery.todo.js')}}"></script>
-       <!-- Plugins js-->
-       <script src="{{asset('assets/libs/bootstrap-table/bootstrap-table.min.js')}}"></script>
-
-<!-- Page js-->
-<script src="{{asset('assets/js/pages/bootstrap-tables.init.js')}}"></script>
-<script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
-    <script src="{{asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js')}}"></script>
-    <script src="{{asset('assets/libs/select2/select2.min.js')}}"></script>
-    <script src="{{asset('assets/libs/bootstrap-select/bootstrap-select.min.js')}}"></script>
-    <script src="{{asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js')}}"></script>
-    <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
-    <script src="{{asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js')}}"></script>
-    <script src="{{asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js')}}"></script>
-    {{-- <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>  --}}
-
-    <!-- Page js-->
+    <script src="{{ asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
+    {{-- init the wizard --}}
     <script>
-         $('.selectize-drop-header').selectize({
-            sortField: 'text',
-            hideSelected: false,
-          
-        })
+        $('#rootwizard').bootstrapWizard({
+            onTabShow: function(tab, navigation, index) {
+                var $total = navigation.find('li').length;
+                var $current = index + 1;
+
+                if ($total == $current) {
+                    // last tab
+                    $('#next').addClass('d-none')
+                    $('#submit-btn').removeClass('d-none')
+                } else {
+                    // other tabs
+                    $('#next').removeClass('d-none')
+                    $('#submit-btn').addClass('d-none')
+                }
+            }
+        });
+
     </script>
+    <!-- Page js-->
+    <script src="{{ asset('assets/js/pages/jquery.todo.js') }}"></script>
+    <!-- Plugins js-->
+    <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
+
+    <!-- Page js-->
+    <script src="{{ asset('assets/js/pages/bootstrap-tables.init.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+    <script>
+
+        const handlePeriodChange = (event) => {
+            if(event.target.value == 2){
+                $('#second-period').removeClass('d-none')
+                return
+            }
+            $('#second-period').addClass('d-none')
+        }
+
+    </script>
+
 @endsection
