@@ -3,11 +3,13 @@
     <!-- Plugins css -->
     <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
         type="text/css" />
+    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
@@ -76,19 +78,29 @@
                                             <div class="col-12">
 
                                                 <div class="form-group row mb-3">
+                                                    <label for="name_input">Appointment name</label>
+                                                    <input type="text" name="name" id="name_input"  class="form-control"/>
+                                                </div>
+
+                                                <div class="form-group row mb-3">
+                                                    <label for="date_input">Date</label>
+                                                    <input type="text" name="date" id="date_input"  class="form-control" data-provide="datepicker">
+                                                </div>
+
+                                                <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label" for="userName3">Periods</label>
                                                     <div class="col-md-9">
                                                         <div class="form-group mb-3">
 
                                                             <div class="radio form-check-inline">
                                                                 <input type="radio" onchange="handlePeriodChange(event)"
-                                                                    id="inlineRadio1" value="1" name="radioInline"
+                                                                    id="inlineRadio1" value="1" name="period_count"
                                                                     checked="">
                                                                 <label for="inlineRadio1"> One </label>
                                                             </div>
                                                             <div class="radio form-check-inline">
                                                                 <input type="radio" onchange="handlePeriodChange(event)"
-                                                                    id="inlineRadio2" value="2" name="radioInline">
+                                                                    id="inlineRadio2" value="2" name="period_count">
                                                                 <label for="inlineRadio2"> Two </label>
                                                             </div>
 
@@ -104,27 +116,29 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-town-city">Start Time</label>
-                                                                    <input type="time" id="preloading-timepicker"
-                                                                        class="form-control" placeholder="Pick a time">
+                                                                    <label for="start_from_period_1_input">Start Time</label>
+                                                                    <input type="time" id="start_from_period_1_input"
+                                                                        class="form-control" name="start_from_period_1" placeholder="Pick a time">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-state"> End Time</label>
+                                                                    <label for="end_to_period_1_input"> End Time</label>
                                                                     <input class="form-control" type="time"
                                                                         placeholder="Enter your End Time"
-                                                                        id="billing-state" />
+                                                                        name="end_to_period_1"
+                                                                        id="end_to_period_1_input" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-zip-postal">Delay Period</label>
-                                                                    <input class="form-control" type="time"
-                                                                        placeholder="Enter your Delay Period"
-                                                                        id="billing-zip-postal" />
+                                                                    <label for="delay_period_1_input">Delay Period</label>
+                                                                    <input type="text" id="delay_period_1_input" name="delay_period_1" class="24hours-timepicker form-control" placeholder="00:00">
                                                                 </div>
                                                             </div>
+                                                            
+                                                            
+
                                                         </div> <!-- end row -->
                                                     </div>
                                                 </div>
@@ -136,83 +150,59 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-town-city">Start Time</label>
-                                                                    <input type="time" id="preloading-timepicker"
-                                                                        class="form-control" placeholder="Pick a time">
+                                                                    <label for="start_from_period_2_input">Start Time</label>
+                                                                    <input type="time" id="start_from_period_2_input"
+                                                                        class="form-control" name="start_from_period_2" placeholder="Pick a time">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-state"> End Time</label>
+                                                                    <label for="end_to_period_2_input"> End Time</label>
                                                                     <input class="form-control" type="time"
                                                                         placeholder="Enter your End Time"
-                                                                        id="billing-state" />
+                                                                        name="end_to_period_2"
+                                                                        id="end_to_period_2_input" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-zip-postal">Delay Period</label>
-                                                                    <input class="form-control" type="time"
-                                                                        placeholder="Enter your Delay Period"
-                                                                        id="billing-zip-postal" />
+                                                                    <label for="delay_period_2_input">Delay Period</label>
+                                                                    <input type="text" id="delay_period_2_input" name="delay_period_2" class="24hours-timepicker form-control" placeholder="00:00">
                                                                 </div>
                                                             </div>
+
+                                                   
                                                         </div> <!-- end row -->
                                                     </div>
                                                 </div>
                                                 {{-- /////////////////// --}}
 
 
+                                                    <div class="form-group mb-3">
+                                                        <label for="overtime_input">overtime</label>
+                                                        <input type="text" id="overtime_input" name="overtime" class="24hours-timepicker form-control" placeholder="00:00">
+                                                    </div>
 
                                                 <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label" for="password3"> Attendance
                                                         Days</label>
                                                     <div class="col-md-9">
-
+                                                        @foreach ($days as $day)
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="" value="option1">
-                                                            <label for="inlineCheckbox2"> Saturday </label>
+                                                            <input {{$day->id == 7 ? '' : 'checked'}} name="attendence_days[]" type="checkbox" id="day-{{$day->id}}" value="{{$day->id}}">
+                                                            <label for="day-{{$day->id}}">{{$day->days}}</label>
                                                         </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="" value="option1">
-                                                            <label for="inlineCheckbox2"> Sunday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1">
-                                                            <label for="inlineCheckbox2"> Monday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1">
-                                                            <label for="inlineCheckbox2"> Tuesday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
-                                                                checked>
-                                                            <label for="inlineCheckbox2"> Wednesday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
-                                                                checked>
-                                                            <label for="inlineCheckbox2"> Thursday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
-                                                                checked>
-                                                            <label for="inlineCheckbox2"> Friday </label>
-                                                        </div>
-
-
-
+                                                        @endforeach
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row mb-3">
-                                                    <label class="col-md-3 col-form-label" for="confirm3">repeat</label>
+                                                    <label class="col-md-3 col-form-label">repeat</label>
                                                     <div class="col-md-9">
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
+                                                            <input type="checkbox" id="repeat-checkbox" value="1" name="attendance_repeat"
                                                                 checked>
-                                                            <label for="inlineCheckbox2"> repeat </label>
+                                                            <label for="repeat-checkbox"> repeat </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -269,7 +259,7 @@
 
                                                     </div>
 
-
+                                                    <label class="mt-2 h4">Employees</label>
                                                     <table id="state-saving-datatable"
                                                         class="table appointments-emp-table activate-select dt-responsive nowrap w-100">
                                                         <thead>
@@ -291,13 +281,13 @@
                                                         <tbody>
                                                             @foreach ($employees as $emp)
                                                                 <tr>
-                                                                    <td>
+                                                                    <td style="width:10%">
                                                                         <div
                                                                             class="checkbox checkbox-success form-check-inline">
                                                                             <input type="checkbox"
                                                                                 id="checkbox-{{ $emp->id }}"
-                                                                                name="emp_ids[]"
-                                                                                value="{{ $emp->id }}">
+                                                                                name="emps[]"
+                                                                                value="{{ json_encode(['id' => $emp->id , 'job_id' => $emp->job_id])  }}">
                                                                             <label for="checkbox-{{ $emp->id }}"
                                                                                 class="w-100"></label>
                                                                         </div>
@@ -378,17 +368,17 @@
                     alert('something went wrong try again later')
                 }
             });
-
         }
+
 
     </script>
     <!-- Plugins js-->
     <script src="{{ asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
-
-
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/bootstrap-tables.init.js') }}"></script>
+    <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+
     <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
     <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
@@ -397,8 +387,16 @@
     <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
     <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+    <script src="{{asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
 
     <script>
+        // init 24 hours , minutes
+        $('.24hours-timepicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
         // handl moving forward and backward
         $('#rootwizard').bootstrapWizard({
             onTabShow: function(tab, navigation, index) {

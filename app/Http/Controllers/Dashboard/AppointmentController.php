@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Location;
 use App\Device;
 use App\Job;
+use App\Week_Day;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -38,32 +40,50 @@ class AppointmentController extends Controller
         $locations = Location::all();
         $jobs = Job::all();
         $devices = Device::all();
-        $employees = Employee::all();
-        return view('appointments.create', compact('locations','employees' , 'jobs'));
+        if(auth()->user()->hasRole('super_admin')){
+            $employees = Employee::all();
+        }else{
+            $employees = Employee::where('branch_id' , auth()->user()->branch_id)->get();
+        }
+        $days = Week_Day::all();
+        return view('appointments.create', compact('locations','employees' , 'jobs' , 'days'));
     }
     public function store(Request $request)
     {
-        return $request->all();
         try {
+            $data = $request->all(); 
+
             $validator = Validator::make(
-                $request->all(),
+                $data,
                 [
                     'name' => 'required',
-                    'location_id' => 'required',
-                    'start_from' => 'required',
-                    'end_to' => 'required',
-                    'delay' => 'required',
-                    'overtime' => 'required',
                     'date' => 'required',
+                    'period_count' => 'required|in:1,2',
+                    'start_from_period_1' => 'required',
+                    'end_to_period_1' => 'required',
+                    'delay_period_1' => 'required',
+
+                    'overtime' => 'required',
+                    'location_id' => 'required',
+
+                    'attendence_days' => 'required',
+                    'devices' => 'required',
+                    'emps' => 'required',
                 ],
                 [
                     'name.required' => 'برجاء ادخال اسم الحضور',
+                    'date.required' => "برجاء ادخال تاريخ بداية تطبيق الدوام",
+                    'start_from_period_1.required' => 'برجاء اختيار وقت بداية الفترة الأولى',
+                    'end_to_period_1.required' => 'برجاء اختيار وقت نهاية الفترة الأولى',
+                    'delay_period_1.required' => 'برجاء اختيار الفترة المرنة للفترة الأولى',
+
+                    'overtime.required' => 'برجاء اختيار الوقت الاضافي',
                     'location_id.required' => 'برجاء اختيار الموقع',
-                    'start_from.required' => 'برجاء ادخال موعد بدء الدوام',
-                    'end_to.required' => 'برجاءادخال موعد اتتهاء الدوام ',
-                    'delay.required' => ' برجاء تحديد  عدد الساعات و الدقاءق للدوام',
-                    'overtime.required' => 'برجاء تحديد عدد الساعات و الدقاءق للوفت العمل الاضافي',
-                    'date.required' => ""
+
+                    'attendence_days.required' => 'يجب اختيار على الاقل يوم عمل واحد',
+                    'devices.required' => 'يجب اختيار على الاقل جهاز واحد',
+                    'emps.required' => 'يجب اختيار على الاقل موظف واحد',
+
                 ]
             );
             if ($validator->fails()) {
@@ -71,31 +91,84 @@ class AppointmentController extends Controller
                 return back()->with('error', $err_msg)->withInput();
             }
 
-            $delay = $request->delay;
-            $overtime = $request->overtime;
+            // handle validation for selecting old Date
 
-            //save in appointment //
-            $name = $request->name;
-            $location = $request->location_id;
-            $branch = auth()->user()->branch_id;
-            $start_date = $request->start_from;
-            $end_date = $request->end_to;
-            $date = $request->date;
-            $data = [
-                'name' => $name,
-                'location_id' => $location,
-                'branch_id' => $branch,
-                'start_from' => $start_date,
-                'end_to' => $end_date,
-                'delay' => $delay,
-                'overtime' => $overtime,
-                'date' => $date
-            ];
-            // dd($location);
-            // return $request->all();
-            // dd($request->delay, $request->overtime);
-            $appoint = Appointment::create($data);
-            return redirect()->route('appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
+            if(Carbon::parse($request->date)->isPast()){
+            return back()->with('error', 'هذا التاريخ غير مسموح')->withInput();
+        }
+    
+
+        $start_1 = Carbon::parse($request->start_from_period_1); 
+        $end_1 = Carbon::parse($request->end_to_period_1); 
+    
+
+        // handle validation for selecting 2 periods
+            if( $request->period_count == '2' ){
+
+                $start_2 = Carbon::parse($request->start_from_period_2); 
+                $end_2 = Carbon::parse($request->end_to_period_2); 
+
+               if(!$request->start_from_period_2){
+                    return back()->with('error', 'برجاء اختيار وقت بداية الفترة الثانية')->withInput();
+                }
+                if(!$request->end_to_period_2){
+                    return back()->with('error', 'برجاء اختيار وقت نهاية الفترة الثانية')->withInput();
+                }
+                if(!$request->delay_period_2){
+                    return back()->with('error', 'برجاء اختيار الفترة المرنة للفترة الثانية')->withInput();
+                }
+            
+
+                if($end_1->gt($start_2)){
+                    return back()->with('error', 'يجب ان يكون وقت بدأ الفترة الثانية بعد وقت انتهاء الفترة الأولى')->withInput();
+                }
+    
+                if($end_1->gt($start_2)){
+                    return back()->with('error', 'يجب ان يكون وقت بداية الفترة الثانية بعد وقت نهاية الفترة الأولى')->withInput();
+    
+                }
+                if($start_2->gt($end_2)){
+                    return back()->with('error', 'يجب ان يكون وقت نهاية الفترة الثانية بعد وقت بداية الفترة الثانية')->withInput();
+                }
+            
+            }
+
+     
+            // handle validation for selecting time
+
+
+          
+            if($start_1->gt($end_1)){
+                return back()->with('error', 'يجب ان يكون وقت انتهاء الفترة الأولى بعد وقت بدأ الفترة الأولى')->withInput();
+            }
+          
+            
+
+            $appointment = new Appointment($request->except(['period_count' , 'attendence_days' , 'devices' , 'emps']));
+            $appointment->fill([
+                'attendence_days' => implode(',', $request->attendence_days)
+            ]);
+            $appointment->save();
+
+            // fill appointments devices
+            $appointment->devices()->attach($request->devices);
+            $employees = [];
+            foreach ($request->emps as $emp) {
+                $emp = json_decode($emp);
+                array_push($employees,[
+                    'employee_id' => $emp->id,
+                    'work_appointment_id' =>  $appointment->id,
+                    'branch_id' => auth()->id(),
+                    'location_id' => $request->location_id,
+                    'job_id' => $emp->job_id
+                ]);
+            }
+            return $employees;
+            // fill appointments employees
+
+
+            // return redirect()->route('appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
+
         } catch (Exception $e) {
             return $e;
             // return redirect()->route('appointment.create')->with(['error' => 'حدث خطا برجاء المحاوله مره اخري']);
