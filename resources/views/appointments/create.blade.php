@@ -14,7 +14,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        <form id="profileForm" method="post" action="{{route('appointment.store')}}" class="form-horizontal">
+        <form id="profileForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
             @csrf
 
         <!-- start page title -->
@@ -66,7 +66,7 @@
                             </ul>
 
                             <div class="tab-content mb-0 b-0 pt-0">
-                         
+
 
                                     <div class="tab-pane" id="first">
                                         <div class="row">
@@ -78,13 +78,14 @@
                                                         <div class="form-group mb-3">
 
                                                             <div class="radio form-check-inline">
-                                                                <input type="radio" onchange="handlePeriodChange(event)" id="inlineRadio1" value="1"
-                                                                    name="radioInline" checked="">
+                                                                <input type="radio" onchange="handlePeriodChange(event)"
+                                                                    id="inlineRadio1" value="1" name="radioInline"
+                                                                    checked="">
                                                                 <label for="inlineRadio1"> One </label>
                                                             </div>
                                                             <div class="radio form-check-inline">
-                                                                <input type="radio" onchange="handlePeriodChange(event)" id="inlineRadio2" value="2"
-                                                                    name="radioInline">
+                                                                <input type="radio" onchange="handlePeriodChange(event)"
+                                                                    id="inlineRadio2" value="2" name="radioInline">
                                                                 <label for="inlineRadio2"> Two </label>
                                                             </div>
 
@@ -217,51 +218,61 @@
                                     </div>
 
                                     <div class="tab-pane fade" id="second">
-                                            <div class="row">
+                                        <div class="row">
 
-                                                <div class="form-group mb-2 w-100">
-                                                    <label for="inputLocation">Location *</label>
-                                                    <select id="inputLocation" onchange="getLocationDevices(event)"
-                                                        class="selectize-drop-header" name="location_id"
-                                                        placeholder="Select a location...">
-                                                        @foreach ($locations as $location)
-                                                            <option value="{{ $location->id }}">{{ $location->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                            <div class="form-group mb-2 w-100">
+                                                <label for="inputLocation">Location *</label>
+                                                <select id="inputLocation" onchange="getLocationDevices(event)"
+                                                    data-toggle="select2" class="select2" name="location_id">
+                                                    @foreach ($locations as $location)
+                                                        <option value="{{ $location->id }}">{{ $location->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
-                                                <div id="form-group-devices" class="form-group w-100 d-none">
-
-                                                    <label for="devices_input">Devices</label>
-                                                    <select name="devices[]" id="devices_input"
-                                                        class="form-control select2-multiple" data-toggle="select2"
-                                                        multiple="multiple" data-placeholder="Choose ...">
-
-                                                    </select>
-
-                                                </div>
-
+                                            <div class="form-group w-100">
+                                                <label for="devices_input">Devices</label>
+                                                <select name="devices[]" id="devices_input"
+                                                    class="form-control select2-multiple" data-toggle="select2"
+                                                    multiple="multiple" data-placeholder="Choose ...">
+                                                </select>
 
                                             </div>
-                                            <!-- end row -->
+
+
+                                        </div>
+                                        <!-- end row -->
                                     </div>
 
                                     <div class="tab-pane fade" id="third">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card-box">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-5">
+                                                            <label for="job_id_input">Job</label>
+                                                            <select id="job_id_input" data-toggle="select2"
+                                                                onchange="getJobEmployees(event)" class="select2">
+                                                                @foreach ($jobs as $job)
+                                                                    <option value="{{ $job->id }}">{{ $job->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
 
-                                                    <table id="demo-custom-toolbar" data-toggle="table" data-search="true"
+                                                    </div>
+
+                                                    <table id="demo-custom-toolbar" class="appointments-emp-table" data-toggle="table" data-search="true"
                                                         data-sort-name="id" data-page-size="1000">
                                                         <thead class="thead-light">
                                                             <tr>
                                                                 <th></th>
-                                                                <th data-field="id" data-sortable="true"> Employee job
+                                                                <th data-field="id" data-sortable="true">Job
                                                                     number
                                                                 </th>
+                                                                <th data-field="job" data-sortable="true">Job</th>
                                                                 <th data-field="name" data-sortable="true">Name</th>
-
                                                             </tr>
                                                         </thead>
 
@@ -269,13 +280,20 @@
                                                             @foreach ($employees as $emp)
                                                                 <tr>
                                                                     <td>
-                                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                                            <input type="checkbox" id="checkbox-{{$emp->id}}" name="emp_ids[]" value="{{$emp->id}}">
-                                                                            <label for="checkbox-{{$emp->id}}" class="w-100"></label>
+                                                                        <div
+                                                                            class="checkbox checkbox-success form-check-inline">
+                                                                            <input type="checkbox"
+                                                                                id="checkbox-{{ $emp->id }}"
+                                                                                name="emp_ids[]"
+                                                                                value="{{ $emp->id }}">
+                                                                            <label for="checkbox-{{ $emp->id }}"
+                                                                                class="w-100"></label>
                                                                         </div>
 
                                                                     </td>
                                                                     <td>{{ $emp->job_number }}</td>
+                                                                    <td>{{ $emp->job->name }}</td>
+
                                                                     <td>{{ $emp->name }}</td>
 
                                                                 </tr>
@@ -296,30 +314,34 @@
                                         <li id="next" class="next list-inline-item float-right"><a
                                                 href="javascript: void(0);" class="btn btn-secondary">Next</a></li>
                                         <li id="submit-btn" class="list-inline-item float-right d-none">
-                                            <input type="submit" value="Add appointment" class="btn btn-success waves-light waves-effect" />
+                                            <input type="submit" value="Add appointment"
+                                                class="btn btn-success waves-light waves-effect" />
                                         </li>
 
                                     </ul>
 
 
-                                {{-- end form --}}
+                                    {{-- end form --}}
 
-                            </div> <!-- tab-content -->
-                        </div> <!-- end #rootwizard-->
+                                </div> <!-- tab-content -->
+                            </div> <!-- end #rootwizard-->
 
-                    </div> <!-- end card-body -->
-                </div> <!-- end card-->
-            </div> <!-- end col -->
-        </div>
-        <!-- end row -->
-    </form>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </form>
     </div> <!-- container -->
 @endsection
 
 @section('script')
 
-
     <script>
+        const clearDevices = () => {
+            $('#devices_input').val([])
+        }
+        $('#inputLocation').val('')
         const getLocationDevices = (event) => {
             const id = event.target.value
             $.ajax({
@@ -329,23 +351,69 @@
                     location_id: id
                 },
                 success: (res) => {
-                    $('#form-group-devices').removeClass('d-none')
-                    $devices_select = $('#devices_input')
+                    const $devices_select = $('#devices_input')
+                    $devices_select.empty()
                     res.forEach(device => {
                         $devices_select.append(
                             new Option(
                                 device.name,
-                                device.id
+                                device.id,
+                                false,
+                                false
                             )
                         )
                     });
 
+
                 },
                 error: () => {
-
+                    alert('something went wrong try again later')
                 }
             });
 
+        }
+
+
+        // handle filter employee
+        $('#job_id_input').val('')
+        const getJobEmployees = (event) => {
+            const job_id = event.target.value
+            $.ajax({
+                url: "{{ route('getEmployeesByJob') }}",
+                type: 'GET',
+                data: {
+                    job_id
+                },
+                success: (res) => {
+                    $('.appointments-emp-table tbody').empty()
+
+                    res.forEach((emp) => {
+                        const row = `
+                            <tr>
+                                <td>
+                                    <div
+                                        class="checkbox checkbox-success form-check-inline">
+                                        <input type="checkbox"
+                                            id="checkbox-${emp.id}"
+                                            name="emp_ids[]"
+                                            value="${emp.id}">
+                                        <label for="checkbox-${emp.id}"
+                                            class="w-100"></label>
+                                    </div>
+                                </td>
+                                <td>${emp.job_number}</td>
+                                <td>${emp.job.name}</td>
+                                <td>${emp.name}</td>
+                            </tr>
+                            `
+                        $('.appointments-emp-table tbody').append(row)
+
+                    })
+                },
+                error: () => {
+                    alert('something went wrong try again later')
+                }
+            });
         }
 
     </script>
@@ -372,7 +440,6 @@
 
     </script>
     <!-- Page js-->
-    <script src="{{ asset('assets/js/pages/jquery.todo.js') }}"></script>
     <!-- Plugins js-->
     <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
 
@@ -387,9 +454,8 @@
     <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
     <script>
-
         const handlePeriodChange = (event) => {
-            if(event.target.value == 2){
+            if (event.target.value == 2) {
                 $('#second-period').removeClass('d-none')
                 return
             }

@@ -8,6 +8,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Device;
+use App\Job;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -29,18 +30,20 @@ class AppointmentController extends Controller
         return view('appointments.index', compact('appointments'));
     }
 
-    public function create()
+    public function create(Request $req)
     {
         if (!Gate::allows('add_appointment')) {
             return abort(401);
         }
-        // $branches = Branch::all();
-        $branch = Branch::find(auth()->user()->branch_id);
-        // dd($branch);
         $locations = Location::all();
+        $jobs = Job::all();
         $devices = Device::all();
-        $employees = Employee::all();
-        return view('appointments.create', compact('branch', 'locations','employees'));
+        if($req->job_id){
+            $employees = Employee::where('job_id' , $req->job_id)->get();
+        }else{
+            $employees = Employee::all();
+        }
+        return view('appointments.create', compact('locations','employees' , 'jobs'));
     }
     public function store(Request $request)
     {

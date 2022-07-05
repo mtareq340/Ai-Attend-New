@@ -292,4 +292,10 @@ class EmployeeController extends Controller
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ]);
     }
+
+    public function getEmployeesByJob(Request $req){
+        $job_id = $req->job_id;
+        $employees = Employee::with('job')->where('job_id' , $job_id)->get();
+        return $employees;
+    }
 }

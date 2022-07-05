@@ -40,6 +40,7 @@ Route::group(['prefix' => 'dashboard'], function () {
   Route::patch('employees/activate', 'Dashboard\EmployeeController@toggleActiveAndLocked')->name('toggleActiveEmp');
   Route::post('employees/import', 'Dashboard\EmployeeController@import')->name('import_employees');
   Route::get('/employees/downloadexcel', 'Dashboard\EmployeeController@downloadExcelEmployees')->name('downloadExcelEmps');
+  Route::get('/job_employees/get' , 'Dashboard\EmployeeController@getEmployeesByJob')->name('getEmployeesByJob');
   Route::post('import', 'Dashboard\EmployeeController@import')->name('import_emp_post');
   Route::resource('employees', 'Dashboard\EmployeeController');
   // assign appointment route
