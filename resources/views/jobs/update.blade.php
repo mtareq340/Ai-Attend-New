@@ -37,7 +37,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Jobs</h4>
+                        {{-- <h4 class="header-title">Jobs</h4> --}}
                       
                         <form action="{{ route('jobs.update', $job->id)}}" method="post">
                             {{ csrf_field() }}

@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label for="job_number_input" class="col-form-label">job number *</label>
                                 <input type="name" name="job_number" class="form-control" id="job_number_input"
-                                    value="{{ $emp->job_number }}" placeholder="Name" required>
+                                    value="{{ $emp->job_number }}" placeholder="Job Number" required>
                             </div>
 
                             <div class="form-group">

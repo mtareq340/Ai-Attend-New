@@ -15,9 +15,7 @@
                     </div>
                     <div class="col-4">
                         @can('add_role')
-                        <button class="btn btn btn-primary">
-                        <a href="{{ route('roles.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Role</a>
-                        </button>
+                        <a href="{{ route('roles.create')}}" class="btn btn btn-primary waves-effect waves-light"><i class="fa fa-plus"></i> Add Role</a>
                         @endcan
                     </div>
                     <div class="page-title-box col-4">

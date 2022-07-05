@@ -19,7 +19,8 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     //
-    public function index(){
+    public function index()
+    {
         $users_count = User::count();
         $employess_count = Employee::count();
         $branches_count = Branch::count();
@@ -36,7 +37,7 @@ class HomeController extends Controller
         $now = Carbon::now();
         $diffDays = $datework->diffInDays($now);
 
-        $percentDays =  ($diffDays/$plan->number_days)*100;
+        $percentDays =  ($diffDays / $plan->number_days) * 100;
         $percentDays = number_format($percentDays, 2);
 
         $loginHistories = DB::table('login_histories')->where('user_id', auth()->user()->id)->latest()->take(20)->get();
@@ -45,5 +46,4 @@ class HomeController extends Controller
         ,'jobs_count', 'percentDays', 'plan', 'empRequestsRevs', 'loginHistories'
     ));
     }
-
 }

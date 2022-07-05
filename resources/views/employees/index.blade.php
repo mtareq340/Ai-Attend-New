@@ -2,9 +2,11 @@
 
 @section('css')
     <!-- Plugins css -->
-    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
@@ -15,6 +17,7 @@
         .selectize-dropdown-header {
             display: none !important
         }
+
     </style>
     <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
         type="text/css" />
@@ -48,15 +51,14 @@
         </button> --}}
                 <button type="button" class="btn  btn-primary waves-effect waves-light" data-toggle="modal"
                     data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
-                <button class="btn btn-success">
-                    <a href="{{ route('employees.excelPage') }}" style="color:white"><i class="fa fa-plus"></i> Upload Excel
-                        Sheet</a>
 
-                </button>
-                <button class="btn btn-dark">
-                    <a href="{{ route('downloadExcelEmps') }}" style="color:white"><i class="fa fa-plus"></i> Download
-                        excel file</a>
-                </button>
+                <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light btn-success"><i
+                        class="fa fa-plus"></i> Upload Excel
+                    Sheet</a>
+
+                <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light btn-dark"><i
+                        class="fa fa-plus"></i> Download
+                    excel file</a>
                 {{-- </div> --}}
             @endcan
 
@@ -109,17 +111,11 @@
                                         <td>{{ $emp->job->name }}</td>
                                         <td>
                                             @can('edit_employee')
-                                                <<<<<<< HEAD <a href="{{ route('employees.edit', $emp->id) }}"
-                                                    id="updatesubmit" class="action-icon">
-                                                    <i class="mdi mdi-square-edit-outline"></i>
-                                                    </a>
-                                                    =======
-                                                    <input type="checkbox"
-                                                        onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')"
-                                                        class="js-switch" {{ $emp->active ? 'checked' : '' }}
-                                                        data-plugin="switchery" />
-                                                    >>>>>>> ddfa7034f93bf251b5db0c2f5631e9024d538929
-                                                @endcan
+                                                <input type="checkbox"
+                                                    onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')"
+                                                    class="js-switch" {{ $emp->active ? 'checked' : '' }}
+                                                    data-plugin="switchery" />
+                                            @endcan
                                         </td>
                                         <td>
                                             @can('edit_employee')
@@ -161,6 +157,11 @@
         <!-- end row-->
 
 
+        {{-- //////////////////////////////////////////////////////////////// --}}
+        {{-- insert modal --}}
+        {{-- //////////////////////////////////////////////////////////////// --}}
+
+
         <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
@@ -193,8 +194,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 1 *</label>
-                                        <input type="text" name="phone" class="form-control" id="phone"
-                                            placeholder="010..." required>
+                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="010..."
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -219,8 +220,8 @@
                                         <label>Gender *</label>
                                         <div class="d-flex">
                                             <div class="radio mx-1">
-                                                <input type="radio" name="gender" id="genderM" value="male"
-                                                    required="" checked>
+                                                <input type="radio" name="gender" id="genderM" value="male" required=""
+                                                    checked>
                                                 <label for="genderM">
                                                     Male
                                                 </label>
@@ -277,7 +278,11 @@
             </div>
         </div><!-- /.modal -->
 
-        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        {{-- //////////////////////////////////////////////////////////////// --}}
+        {{-- edit moal --}}
+        {{-- //////////////////////////////////////////////////////////////// --}}
+
+        {{-- <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -292,15 +297,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name" class="control-label">Name</label>
-                                        <input type="text" name="name" value="" class="form-control"
-                                            id="name" required>
+                                        <input type="text" name="name" value="" class="form-control" id="name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email" class="control-label">Email</label>
-                                        <input type="email" name="email" value="" class="form-control"
-                                            id="email" placeholder="Ex@ex.com">
+                                        <input type="email" name="email" value="" class="form-control" id="email"
+                                            placeholder="Ex@ex.com">
                                     </div>
                                 </div>
                             </div>
@@ -308,15 +312,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 1 *</label>
-                                        <input type="text" name="phone" value="" class="form-control"
-                                            id="phone" placeholder="010..." required>
+                                        <input type="text" name="phone" value="" class="form-control" id="phone"
+                                            placeholder="010..." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 2 </label>
-                                        <input type="text" name="phone_num2" value="" class="form-control"
-                                            id="phone_num2" placeholder="phone num 2">
+                                        <input type="text" name="phone_num2" value="" class="form-control" id="phone_num2"
+                                            placeholder="phone num 2">
                                     </div>
                                 </div>
                             </div>
@@ -325,8 +329,8 @@
                                     <div class="form-group">
                                         <label for="inputAddress" class="col-form-label">Address <span
                                                 class="text-muted font-weight-light">(optional)</span></label>
-                                        <input type="text" name="address" value="" class="form-control"
-                                            id="address" placeholder="1234 Main St">
+                                        <input type="text" name="address" value="" class="form-control" id="address"
+                                            placeholder="1234 Main St">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -334,8 +338,7 @@
                                         <label>Gender *</label>
                                         <div class="d-flex">
                                             <div class="radio mx-1">
-                                                <input type="radio" name="gender" id="male" value=""
-                                                    required="" checked>
+                                                <input type="radio" name="gender" id="male" value="" required="" checked>
                                                 <label for="genderM">
                                                     Male
                                                 </label>
@@ -378,8 +381,8 @@
                                     <div class="form-group">
                                         <label for="input-age" class="col-form-label">Age <span
                                                 class="text-muted font-weight-light">(optional)</span></label>
-                                        <input type="number" name="age" value="" class="form-control"
-                                            id="age" placeholder="age">
+                                        <input type="number" name="age" value="" class="form-control" id="age"
+                                            placeholder="age">
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +394,7 @@
                     </form>
                 </div>
             </div>
-        </div><!-- /.modal -->
+        </div><!-- /.modal --> --}}
 
 
 
@@ -406,7 +409,7 @@
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Page js-->
-    <<<<<<< HEAD <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
     <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
@@ -415,68 +418,41 @@
     <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js') }}"></script>
 
+
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
-        var elem = document.querySelectorAll('.js-switch');
-        elem.forEach(element => {
-            new Switchery(element, {
-                size: 'small',
-                color: '#64b0f2'
-            });
-        });
+        const toggleActivationAndLocked = async (e, id, type) => {
+            try {
+                let checked = e.target.checked;
+                const rawResponse = await fetch('{{ route('toggleActiveEmp') }}', {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        id,
+                        checked,
+                        type
+                    })
+                });
+                const content = await rawResponse.json();
+                console.log(content);
 
-        $('.selectize-drop-header').selectize({
-                sortField: 'text',
-                hideSelected: false,
-                plugins: {
-                    'dropdown_header': {
-                        title: 'Language'
-                    }
+                if (content.error) {
+                    // notify error
+                } else {
+                    // notify success
+
                 }
-            })
+            } catch (err) {
+                console.log(err);
+            }
 
-
-            ===
-            === = <
-            script src = "{{ asset('assets/js/pages/datatables.init.js') }}" >
-    </script>
-    <script>
-        >>> >>> > ddfa7034f93bf251b5db0c2f5631e9024d538929
-        // toggle active with ajax
-        const toggleActivationAndLocked = (e, id, type) => {
-
-            (async () => {
-                try {
-                    let checked = e.target.checked;
-                    const rawResponse = await fetch('{{ route('toggleActiveEmp') }}', {
-                        method: 'PATCH',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            id,
-                            checked,
-                            type
-                        })
-                    });
-                    const content = await rawResponse.json();
-                    console.log(content);
-
-                    if (content.error) {
-                        // notify error
-                    } else {
-                        // notify success
-
-                    }
-                } catch (err) {
-                    console.log(err);
-                }
-            })
-            ();
 
         }
+
     </script>
     <script>
         $(document).ready(function() {
@@ -552,5 +528,6 @@
             });
 
         });
+
     </script>
 @endsection

@@ -19,9 +19,7 @@
                 </div>
                 <div class="col-4">
                     @can('add_job')
-                    <button class="btn btn btn-primary">
-                        <a href="{{ route('jobs.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Job</a>
-                    </button>
+                        <a href="{{ route('jobs.create')}}" class="btn btn btn-primary"><i class="fa fa-plus"></i> Add Job</a>
                     @endcan
                 </div>
                 <div class="page-title-box col-4">
@@ -42,7 +40,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Jobs</h4>
+                        {{-- <h4 class="header-title">Jobs</h4> --}}
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>

@@ -44,6 +44,7 @@ class AppointmentController extends Controller
     }
     public function store(Request $request)
     {
+        return $request->all();
         try {
             $validator = Validator::make(
                 $request->all(),
