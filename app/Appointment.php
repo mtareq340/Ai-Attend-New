@@ -28,6 +28,6 @@ class Appointment extends Model
     }
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'assign_appointments');
+        return $this->belongsToMany(Employee::class, 'assign_appointments' , 'employee_id' , 'appointment_id');
     }
 }
