@@ -18,7 +18,8 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     //
-    public function index(){
+    public function index()
+    {
         $users_count = User::count();
         $employess_count = Employee::count();
         $branches_count = Branch::count();
@@ -35,12 +36,18 @@ class HomeController extends Controller
         $now = Carbon::now();
         $diffDays = $datework->diffInDays($now);
 
-        $percentDays =  ($diffDays/$plan->number_days)*100;
+        $percentDays =  ($diffDays / $plan->number_days) * 100;
         $percentDays = number_format($percentDays, 2);
 
-        return view('dashboard' , compact('users_count' , 'employess_count' , 'branches_count'
-        ,'jobs_count', 'percentDays', 'plan', 'empRequestsRevs'
-    ));
+        return view('dashboard', compact(
+            'users_count',
+            'employess_count',
+            'branches_count',
+            'jobs_count',
+            'percentDays',
+            'plan',
+            'empRequestsRevs',
+            'companySettings'
+        ));
     }
-
 }

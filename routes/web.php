@@ -28,6 +28,8 @@ Route::group(['prefix' => 'dashboard'], function () {
   Route::resource('jobs',               'Dashboard\JobController');
   Route::resource('attend_methods', 'Dashboard\AttendmethodController');
   Route::resource('devices',             'Dashboard\DeviceController');
+
+  Route::get('locations/devices', 'Dashboard\LocationController@getLocationDevices')->name('getLocationDevices');
   Route::resource('locations', 'Dashboard\LocationController');
   // employees attend methods
   Route::resource('employees_attend_methods', 'Dashboard\EmployeeAttendMethodController');
@@ -63,7 +65,7 @@ Route::group(['prefix' => 'dashboard'], function () {
   // start settings
 
   Route::patch('settings/cover', 'Dashboard\CompanySettingsController@uploadCover')->name('changeCover');
-  Route::delete('settings/logo/reset' ,'Dashboard\CompanySettingsController@resetLogo')->name('resetLogo');
+  Route::delete('settings/logo/reset', 'Dashboard\CompanySettingsController@resetLogo')->name('resetLogo');
   Route::patch('settings/logo', 'Dashboard\CompanySettingsController@uploadLogo')->name('changeLogo');
   Route::resource("company-settings", 'Dashboard\CompanySettingsController');
 
@@ -84,7 +86,10 @@ Route::group(['prefix' => 'dashboard'], function () {
   //
 
   //extra time
-  Route::resource('extra_time', 'Dashboard\ExtraTimeController');
+  // Route::resource('extra_time', 'Dashboard\ExtraTimeController');
+
+  //brnach_settings
+  Route::resource('branch_setting', 'Dashboard\BranchSettingController');
 
   // roles routes
   Route::resource('roles', 'Dashboard\RoleController');

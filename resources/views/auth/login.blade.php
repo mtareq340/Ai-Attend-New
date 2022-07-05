@@ -26,7 +26,8 @@
                     
                                         <a href="{{route('index')}}" class="logo logo-light text-center">
                                             <span class="logo-lg">
-                                                <img src="{{asset('assets/images/logo.jpg')}}" alt="" height="22">
+                                                <img src="{{asset('assets/images/logo.jpg')}}"
+                                                alt="" height="22">
                                             </span>
                                         </a>
                                     </div>

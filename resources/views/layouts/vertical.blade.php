@@ -3,7 +3,7 @@
 
 <head>
     @include('layouts.shared/title-meta', ['title' => $title])
-    @include('layouts.shared/head-css')
+    @include('layouts.shared.head-css')
     {{-- @include('layouts.shared/head-css', ["demo" => "modern"]) --}}
 </head>
 

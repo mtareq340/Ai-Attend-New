@@ -15,9 +15,7 @@
                     </div>
                     <div class="col-4">
                         @can('add_appointment')
-                        <button class="btn btn btn-primary">
-                             <a href="{{ route('appointment.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Appointment</a>
-                        </button>
+                             <a href="{{ route('appointment.create')}}" class="btn btn btn-primary waves-effect waves-light"><i class="fa fa-plus"></i> Add Appointment</a>
                         @endcan
                     </div>
                     <div class="page-title-box col-4">
@@ -43,15 +41,20 @@
                                         <th>Name</th>
                                         <th>Location Name</th>
                                         <th>Branch Name</th>
-                                        <th>Start from</th>
-                                        <th>End to</th>
-                                        <th>Daley hour & min</th>
-                                        <th>Overtime hour & min</th>
-                                        <th> Active Extra time </th>
+                                        <th>Start from (P1)</th>
+                                        <th>End to (P1)</th>
+                                        <th>Daley Time (P1)</th>
+                                        <th>Overtime Time (P1)</th>
+                                        <th>Start from (P2)</th>
+                                        <th>End to (P2)</th>
+                                        <th>Start from (P2)</th>
+                                        <th>End to (P2)</th>                       
+                                        <th>Daley Time (P2)</th> 
+                                        <th>Overtime Time (P2)</th>
                                         <th>Date</th>
-                                        <th>Action</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
+                                        <th>Action</th>
                                         <th> Active Extra time </th>
                                     </tr>
                                 </thead>
@@ -59,14 +62,17 @@
                                <tbody>
                                 @foreach ($appointments as $appoint)
                                 <tr>
-
                                     <td>{{$appoint->name}}</td>
-                                    <td>{{$appoint->branch->name}}</td>
                                     <td>{{$appoint->location->name}}</td>
-                                    <td>{{$appoint->start_from}}</td>
-                                    <td>{{$appoint->end_to}}</td>
-                                    <td>{{$appoint->delay}}</td>
-                                    <td>{{$appoint->overtime}}</td>
+                                    <td>{{$appoint->branch->name}}</td>
+                                    <td>{{$appoint->start_from_period_1}}</td>
+                                    <td>{{$appoint->end_to_period_1}}</td>
+                                    <td>{{$appoint->delay_period_1}}</td>
+                                    <td>{{$appoint->overtime_period_1}}</td>
+                                    <td>{{$appoint->start_from_period_2}}</td>
+                                    <td>{{$appoint->end_to_period_2}}</td>
+                                    <td>{{$appoint->delay_period_2}}</td>
+                                    <td>{{$appoint->overtime_period_2}}</td>
                                     <td>{{$appoint->date}}</td>
                                     <td>{{ $appoint->created_at }}</td>
                                     <td>{{ $appoint->updated_at }}</td>
@@ -92,7 +98,6 @@
                                     </td>
                                 </tr>
                                 @endforeach
-
                                </tbody>
                             </table>
 
