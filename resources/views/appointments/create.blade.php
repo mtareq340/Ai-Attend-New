@@ -7,6 +7,8 @@
     <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
 @endsection
@@ -17,55 +19,56 @@
         <form id="profileForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
             @csrf
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{route('appointment.index')}}">Appointments</a></li>
-                            <li class="breadcrumb-item active">Add Appointments</li>
-                        </ol>
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ route('appointment.index') }}">Appointments</a>
+                                </li>
+                                <li class="breadcrumb-item active">Add Appointments</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Appointments</h4>
                     </div>
-                    <h4 class="page-title">Appointments</h4>
                 </div>
             </div>
-        </div>
-        <!-- end page title -->
+            <!-- end page title -->
 
 
 
-        <div class="row">
+            <div class="row">
 
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
 
-                        {{-- <h4 class="header-title mb-3"> Wizard With Form Validation</h4> --}}
+                            {{-- <h4 class="header-title mb-3"> Wizard With Form Validation</h4> --}}
 
-                        <div id="rootwizard">
-                            <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
-                                <li class="nav-item" data-target-form="#accountForm">
-                                    <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-account-circle mr-1"></i>
-                                        <span class="d-none d-sm-inline">Appointment</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item" data-target-form="#profileForm">
-                                    <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-face-profile mr-1"></i>
-                                        <span class="d-none d-sm-inline">Location & Devices</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item" data-target-form="#otherForm">
-                                    <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
-                                        <span class="d-none d-sm-inline">Employees</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <div id="rootwizard">
+                                <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
+                                    <li class="nav-item" data-target-form="#accountForm">
+                                        <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-account-circle mr-1"></i>
+                                            <span class="d-none d-sm-inline">Appointment</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-target-form="#profileForm">
+                                        <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-face-profile mr-1"></i>
+                                            <span class="d-none d-sm-inline">Location & Devices</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-target-form="#otherForm">
+                                        <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
+                                            <span class="d-none d-sm-inline">Employees</span>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                            <div class="tab-content mb-0 b-0 pt-0">
+                                <div class="tab-content mb-0 b-0 pt-0">
 
 
                                     <div class="tab-pane" id="first">
@@ -254,8 +257,11 @@
                                                             <label for="job_id_input">Job</label>
                                                             <select id="job_id_input" data-toggle="select2"
                                                                 onchange="getJobEmployees(event)" class="select2">
+                                                                <option value="">All</option>
+
                                                                 @foreach ($jobs as $job)
-                                                                    <option value="{{ $job->id }}">{{ $job->name }}
+                                                                    <option value="{{ $job->name }}">
+                                                                        {{ $job->name }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -263,16 +269,22 @@
 
                                                     </div>
 
-                                                    <table id="demo-custom-toolbar" class="appointments-emp-table" data-toggle="table" data-search="true"
-                                                        data-sort-name="id" data-page-size="1000">
-                                                        <thead class="thead-light">
+
+                                                    <table id="state-saving-datatable"
+                                                        class="table appointments-emp-table activate-select dt-responsive nowrap w-100">
+                                                        <thead>
                                                             <tr>
-                                                                <th></th>
-                                                                <th data-field="id" data-sortable="true">Job
-                                                                    number
+                                                                <th>
+                                                                    <div
+                                                                        class="checkbox checkbox-success form-check-inline">
+                                                                        <input onchange="selectAllEmps(event)"
+                                                                            type="checkbox" id="selectall">
+                                                                        <label for="selectall"></label>
+                                                                    </div>
                                                                 </th>
-                                                                <th data-field="job" data-sortable="true">Job</th>
-                                                                <th data-field="name" data-sortable="true">Name</th>
+                                                                <th>Job number</th>
+                                                                <th>Job</th>
+                                                                <th>Name</th>
                                                             </tr>
                                                         </thead>
 
@@ -293,14 +305,12 @@
                                                                     </td>
                                                                     <td>{{ $emp->job_number }}</td>
                                                                     <td>{{ $emp->job->name }}</td>
-
                                                                     <td>{{ $emp->name }}</td>
-
                                                                 </tr>
                                                             @endforeach
-
                                                         </tbody>
                                                     </table>
+
                                                 </div> <!-- end card-box-->
                                             </div> <!-- end col-->
                                         </div>
@@ -337,10 +347,9 @@
 
 @section('script')
 
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+
     <script>
-        const clearDevices = () => {
-            $('#devices_input').val([])
-        }
         $('#inputLocation').val('')
         const getLocationDevices = (event) => {
             const id = event.target.value
@@ -364,63 +373,33 @@
                         )
                     });
 
-
                 },
                 error: () => {
                     alert('something went wrong try again later')
                 }
             });
 
-        }
-
-
-        // handle filter employee
-        $('#job_id_input').val('')
-        const getJobEmployees = (event) => {
-            const job_id = event.target.value
-            $.ajax({
-                url: "{{ route('getEmployeesByJob') }}",
-                type: 'GET',
-                data: {
-                    job_id
-                },
-                success: (res) => {
-                    $('.appointments-emp-table tbody').empty()
-
-                    res.forEach((emp) => {
-                        const row = `
-                            <tr>
-                                <td>
-                                    <div
-                                        class="checkbox checkbox-success form-check-inline">
-                                        <input type="checkbox"
-                                            id="checkbox-${emp.id}"
-                                            name="emp_ids[]"
-                                            value="${emp.id}">
-                                        <label for="checkbox-${emp.id}"
-                                            class="w-100"></label>
-                                    </div>
-                                </td>
-                                <td>${emp.job_number}</td>
-                                <td>${emp.job.name}</td>
-                                <td>${emp.name}</td>
-                            </tr>
-                            `
-                        $('.appointments-emp-table tbody').append(row)
-
-                    })
-                },
-                error: () => {
-                    alert('something went wrong try again later')
-                }
-            });
         }
 
     </script>
     <!-- Plugins js-->
     <script src="{{ asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
-    {{-- init the wizard --}}
+    <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
+
+
+    <!-- Page js-->
+    <script src="{{ asset('assets/js/pages/bootstrap-tables.init.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+
     <script>
+        // handl moving forward and backward
         $('#rootwizard').bootstrapWizard({
             onTabShow: function(tab, navigation, index) {
                 var $total = navigation.find('li').length;
@@ -438,28 +417,56 @@
             }
         });
 
-    </script>
-    <!-- Page js-->
-    <!-- Plugins js-->
-    <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
+        // datatable
 
-    <!-- Page js-->
-    <script src="{{ asset('assets/js/pages/bootstrap-tables.init.js') }}"></script>
-    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
-    <script>
+        // clear state
+        localStorage.removeItem('DataTables_state-saving-datatable_/{{ Request::path()  }}');
+        // adjust header with the body
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
+        });
+        // Default Datatable
+        const emptable = $('#state-saving-datatable').DataTable({
+            stateSave: true,
+            scrollX: true,
+            scrollY: '300px',
+            paging: false,
+            bInfo: false
+        });
+
+
+        // handle filter employee
+        $('#job_id_input').val('')
+        const getJobEmployees = (event) => {
+            const job = event.target.value
+            emptable.search(job).draw()
+        }
+
+        //handl toggle one period and two periods
         const handlePeriodChange = (event) => {
             if (event.target.value == 2) {
                 $('#second-period').removeClass('d-none')
                 return
             }
             $('#second-period').addClass('d-none')
+        }
+
+
+        // select all visible employees
+        const selectAllEmps = (event) => {
+            var cells = emptable.column(0, {
+                    'filter': 'applied'
+                }).nodes(), // Cells from 1st column
+                state = event.target.checked ? true : false;
+
+            console.log(state);
+            // select all visible
+            for (var i = 0; i < cells.length; i += 1) {
+                const checkbox = cells[i].querySelector("input[type='checkbox']")
+                checkbox.checked = state;
+            }
+            // emptable.draw()
         }
 
     </script>
