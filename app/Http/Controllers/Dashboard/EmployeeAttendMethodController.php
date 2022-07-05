@@ -43,12 +43,14 @@ class EmployeeAttendMethodController extends Controller
         if (!Gate::allows('add_employee_attend_method')) {
             return abort(401);
         }
-        //
-        $employees = Employee::whereDoesntHave('attend_methods')->get();
-        $jobs = Job::all();
-        $branchs = Branch::all();
         $attendmethod = Attendmethods::all();
-        return view('employees_attend_methods.create', compact('employees', 'jobs', 'attendmethod', 'branchs'));
+        $employees = '';
+        if (auth()->user()->hasRole('super_admin')) {
+            $employees = Employee::whereDoesntHave('attend_methods')->get();
+        } else {
+            $employees = Employee::whereDoesntHave('attend_methods')->where('branch_id', auth()->user()->branch_id)->get();
+        }
+        return view('employees_attend_methods.create', compact('employees', 'attendmethod',));
     }
 
 

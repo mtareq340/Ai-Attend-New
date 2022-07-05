@@ -1,4 +1,14 @@
 @extends('layouts.vertical', ['title' => 'Form Components'])
+@section('css')
+    <!-- Plugins css -->
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+@endsection
 @section('content')
     @if (session()->has('message'))
         {{ dd('vbnm') }}
@@ -44,6 +54,21 @@
                                 <label for="name" class="col-form-label">Name</label>
                                 <input type="name" value="{{ $location->name }}" name="name" class="form-control"
                                     id="name" placeholder="Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputbrnach" class="col-form-label">Branch *</label>
+                                <select name="branch_id" id="inputbranch" class="selectize-drop-header"
+                                    placeholder="Select a Branch..." required>
+                                    @if (auth()->user()->hasRole('super_admin'))
+                                    <option selected  value="{{ $selected_branch->id }}">{{ $selected_branch->name }}</option>
+                                    @foreach ($branchs as $branch)
+                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                    @endforeach
+                                    @else
+                                        <option selected  value="{{ $branchs->id }}">{{ $branchs->name }}</option>
+                                    @endif
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>devices</label>
@@ -98,7 +123,17 @@
 
 
     @endsection
-    @section('script')
+        @section('script')
+        <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js') }}"></script>
+        <!-- Page js-->
+        <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn1ZmThbXMe-8C-boHXrWFupCBpT8LmnU">
         </script>
         <script>

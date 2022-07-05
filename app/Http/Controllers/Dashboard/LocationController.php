@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Branch;
 use App\Device;
 use App\Http\Controllers\Controller;
 use App\Location;
@@ -34,17 +35,25 @@ class LocationController extends Controller
         if (!Gate::allows('add_location')) {
             return abort(401);
         }
-        $devices = Device::where('active' , 1)->get();
-        return view('locations.create', compact('devices'));
+        if (auth()->user()->hasRole('super_admin')) {
+            $devices = Device::where('active', 1)->get();
+            $branchs = Branch::all();
+        } else {
+            $devices = Device::where('active', 1)->get();
+            $branchs = Branch::findOrfail(auth()->user()->branch_id);
+            // dd($branchs);
+        }
+        return view('locations.create', compact('devices', 'branchs'));
     }
 
     public function store(Request $req)
     {
-        // try {
+        try {
             $validator = Validator::make(
                 $req->all(),
                 [
                     'name' => 'required',
+                    'branch_id' => 'required',
                     'devices' => 'required',
                     'location_address' => 'required',
                     'distance' => 'required|numeric',
@@ -53,6 +62,7 @@ class LocationController extends Controller
                 ],
                 [
                     'name.required' => 'برجاء ادخال الاسم',
+                    'branch_id.required' => 'برجاء اختيار الفرع',
                     'devices.required' => 'برجاء تحديد الجهاز/الأجهزة',
                     'location_address.required' => 'برجاء ادخال العنوان',
                     'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
@@ -72,11 +82,11 @@ class LocationController extends Controller
             $location->fill($data);
             $location->save();
             $location->devices()->attach($req->devices);
-            
+
             return redirect()->route('locations.index')->with(['success' => 'تم الحفظ بنجاح']);
-        // } catch (Exception $e) {
-        //     return redirect()->route('locations.create')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-        // }
+        } catch (Exception $e) {
+            return redirect()->route('locations.create')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+        }
     }
     public function destroy($id)
     {
@@ -94,22 +104,32 @@ class LocationController extends Controller
         if (!Gate::allows('edit_location')) {
             return abort(401);
         }
-        $devices = Device::where('active' , 1)->get();
+        $selected_branch = '';
         $location = Location::find($id);
-        $devicename = Device::find($location->device_id);
-
-        return view('locations.update', compact('location', 'devices', 'devicename'));
+        if (auth()->user()->hasRole('super_admin')) {
+            $devices = Device::where('active', 1)->get();
+            $selected_branch = Branch::find($location->branch_id);
+            $branchs = Branch::all();
+            $devicename = Device::find($location->device_id);
+        } else {
+            $devices = Device::where('active', 1)->get();
+            $branchs = Branch::findOrfail(auth()->user()->branch_id);
+            $devicename = Device::find($location->device_id);
+            // dd($branchs);
+        }
+        return view('locations.update', compact('location', 'devices', 'devicename', 'branchs', 'selected_branch'));
     }
     public function update(Request $req, $id)
     {
         try {
-     
+
             $validator = Validator::make(
                 $req->all(),
                 [
                     'name' => 'required',
                     'devices' => 'required',
                     'location_address' => 'required',
+                    'branch_id' => 'required',
                     'distance' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
                     'location_longituide' => 'required|numeric',
@@ -117,6 +137,7 @@ class LocationController extends Controller
                 [
                     'name.required' => 'برجاء ادخال الاسم',
                     'devices.required' => 'برجاء تحديد الجهاز/الأجهزة',
+                    'branch_id.required' => 'برجاء اختيار الفرع',
                     'location_address.required' => 'برجاء ادخال العنوان',
                     'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
                     'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
@@ -140,9 +161,10 @@ class LocationController extends Controller
         }
     }
     // will be called with ajax
-    public function getLocationDevices(Request $req){
+    public function getLocationDevices(Request $req)
+    {
         $id = $req->location_id;
-        if(! $id) return 'no id provided';
+        if (!$id) return 'no id provided';
 
         return Location::find($id)->devices;
     }

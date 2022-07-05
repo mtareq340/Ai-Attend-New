@@ -65,9 +65,13 @@
         <form action="{{route('branch_setting.update',$extra_time[0]->id)}}" method="POST" class="needs-validation" novalidate>
             @csrf
             @method('PATCH')
-            <div class="form-group">
+            <div class="form-group row">
+                <div class="col-6">
                 <input type="text" name="over_time_count" value="{{$extra_time[0]->over_time_count}}" class="form-control">
-                <button type="submit" class="btn btn-success mt-2">Add Extra Time</button>
+                </div>
+                <div class="col-3">
+                <button type="submit" class="btn btn-success">Add Extra Time</button>
+                </div>
             </div>
         </form>
     </div>

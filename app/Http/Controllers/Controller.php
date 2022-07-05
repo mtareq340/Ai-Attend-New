@@ -12,4 +12,10 @@ use Illuminate\Support\Facades\View;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    protected $company_setting;
+    public function __construct()
+    {
+        $this->company_setting = CompanySettings::all();
+        View::share('company_setting', $this->company_setting);
+    }
 }

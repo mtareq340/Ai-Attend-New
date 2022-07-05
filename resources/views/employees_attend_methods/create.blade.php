@@ -45,8 +45,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                  
+                <div class="card-body">       
                     <form action="{{ route('employees_attend_methods.store') }}" method="post" autocomplete="off" class="needs-validation" novalidate>
                         @csrf
                         
