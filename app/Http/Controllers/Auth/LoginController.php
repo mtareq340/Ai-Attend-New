@@ -47,6 +47,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request)
     {
         $agent = new Agent();
+        // dd($agent->city());
         $details = [
             "device" => $agent->device(),
             "platform" => $agent->platform(),

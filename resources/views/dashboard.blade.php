@@ -189,23 +189,9 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card-box">
-                    <div class="dropdown float-right">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Edit Report</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                        </div>
-                    </div>
-
                     <h4 class="header-title mb-3">Latest 10 Employees Requests Review</h4>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="height: 330px;overflow: auto;">
                         <table class="table table-borderless table-hover table-nowrap table-centered m-0">
 
                             <thead class="thead-light">
@@ -218,7 +204,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @if (count($empRequestsRevs) > 0)
                                 @foreach ($empRequestsRevs as $empRequestsRev)
                                 <tr>
@@ -228,7 +213,6 @@
                                     <td>{{$empRequestsRev->date}}</td>
                                 </tr>
                                 @endforeach
-                                {{$empRequestsRevs->render()}}
                                 @else
                                 <tr>thir is no Requests to Review</tr>
                                 @endif
@@ -268,36 +252,33 @@
 
             <div class="col-xl-6">
                 <div class="card-box">
-                    <div class="dropdown float-right">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Edit Report</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                        </div>
-                    </div>
+                    <h4 class="header-title mb-3">Your Latest 20 Login Histories</h4>
 
-                    <h4 class="header-title mb-3">Revenue History</h4>
-
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="height: 330px;overflow: auto;">
                         <table class="table table-borderless table-nowrap table-hover table-centered m-0">
 
                             <thead class="thead-light">
                                 <tr>
-                                    <th>Marketplaces</th>
-                                    <th>Date</th>
-                                    <th>Payouts</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>#</th>
+                                    <th>IP</th>
+                                    <th>DateTime</th>
+                                    <th>Details</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (count($loginHistories) > 0)
+                                @foreach ($loginHistories as $index=>$loginHistory)
                                 <tr>
+                                    <td>{{$index+1}}</td>
+                                    <td>{{$loginHistory->ip}}</td>
+                                    <td>{{$loginHistory->datetime}}</td>
+                                    <td>{{$loginHistory->details}}</td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>thir is no login history</tr>
+                                @endif
+                                {{-- <tr>
                                     <td>
                                         <h5 class="m-0 font-weight-normal">Themes Market</h5>
                                     </td>
@@ -317,118 +298,7 @@
                                     <td>
                                         <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
                                     </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <h5 class="m-0 font-weight-normal">Freelance</h5>
-                                    </td>
-
-                                    <td>
-                                        Oct 12, 2018
-                                    </td>
-
-                                    <td>
-                                        $1247.25
-                                    </td>
-
-                                    <td>
-                                        <span class="badge bg-soft-success text-success">Paid</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <h5 class="m-0 font-weight-normal">Share Holding</h5>
-                                    </td>
-
-                                    <td>
-                                        Oct 10, 2018
-                                    </td>
-
-                                    <td>
-                                        $815.89
-                                    </td>
-
-                                    <td>
-                                        <span class="badge bg-soft-success text-success">Paid</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <h5 class="m-0 font-weight-normal">Envato's Affiliates</h5>
-                                    </td>
-
-                                    <td>
-                                        Oct 03, 2018
-                                    </td>
-
-                                    <td>
-                                        $248.75
-                                    </td>
-
-                                    <td>
-                                        <span class="badge bg-soft-danger text-danger">Overdue</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <h5 class="m-0 font-weight-normal">Marketing Revenue</h5>
-                                    </td>
-
-                                    <td>
-                                        Sep 21, 2018
-                                    </td>
-
-                                    <td>
-                                        $978.21
-                                    </td>
-
-                                    <td>
-                                        <span class="badge bg-soft-warning text-warning">Upcoming</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <h5 class="m-0 font-weight-normal">Advertise Revenue</h5>
-                                    </td>
-
-                                    <td>
-                                        Sep 15, 2018
-                                    </td>
-
-                                    <td>
-                                        $358.10
-                                    </td>
-
-                                    <td>
-                                        <span class="badge bg-soft-success text-success">Paid</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                    </td>
-                                </tr>
-
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div> <!-- end .table-responsive-->
