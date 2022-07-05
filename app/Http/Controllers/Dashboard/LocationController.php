@@ -34,7 +34,7 @@ class LocationController extends Controller
         if (!Gate::allows('add_location')) {
             return abort(401);
         }
-        $devices = Device::all();
+        $devices = Device::where('active', 1)->get();
         return view('locations.create', compact('devices'));
     }
 

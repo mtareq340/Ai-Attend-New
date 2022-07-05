@@ -32,10 +32,12 @@
             dd(auth()->user()->name);
         @endphp --}}
         @can('add_branch')
-        <button onclick="showAddFormRoot(event)" class="btn btn btn-primary my-2">
-            <i class="fa fa-plus"></i>
-            Add Branch
-        </button>
+        @if(auth()->user()->hasRole('super_admin'))
+            <button onclick="showAddFormRoot(event)" class="btn btn btn-primary my-2">
+                <i class="fa fa-plus"></i>
+                Add Branch
+            </button>
+        @endif
         @endcan
 
         <div class="row">
@@ -62,18 +64,22 @@
                                     <td>{{ $branch->name }}</td>
                                     <td>{{ $branch->phone }}</td>
                                     <td>{{ $branch->address }}</td>
-                                    {{-- <td>
+                                    <td>
                                         <ul>
                                         @foreach ($branch->children()->get() as $item)
-                                        <li>{{$item->name}}</li>
+                                            <li>{{$item->name}}</li>
                                         @endforeach
                                         </ul>
-                                    </td> --}}
+                                    </td>
                                     <td>
                                         <div class="row row-xs wd-xl-4p">
+                                        @if (! $branch->parent_id)
                                             <a href="#" onclick="showAddForm('{{$branch->id}}')" class="action-icon">
                                                 <i class="fa fa-plus"></i>
                                             </a>
+                                        @endif
+                                            
+                                            
                                             @can('edit_branch')
                                             <a href="{{ route('branches.edit', $branch->id) }}" class="action-icon">
                                             @endcan

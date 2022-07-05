@@ -26,7 +26,16 @@ class BrancheController extends Controller
         if (!Gate::allows('show_branches')) {
             return abort(401);
         }
-        return view('branches.index_table', ['branches' => Branch::all()]);
+        $branch_id = auth()->user()->branch_id;
+        if (auth()->user()->hasRole('super_admin'))
+        {
+            return view('branches.index_table', ['branches' => Branch::all()]);
+
+        } else 
+        {
+
+            return view('branches.index_table', ['branches' => Branch::where('id',$branch_id)->orWhere('parent_id' ,$branch_id)->get()]);
+        }
     }
 
     /**
@@ -47,6 +56,8 @@ class BrancheController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $data = $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -57,18 +68,31 @@ class BrancheController extends Controller
         ]);
 
 
-        $branch = new Branch($data);
-        $branch->save();
-        $data['branch_id'] = $branch->id;
-        $AttendenceSettings = AttendenceSettings::create($data);
+            $branch = new Branch($data);
+           
         // return $request->parent_id;
         if ($request->parent_id) {
+            // adding a new sub branch
+            if(auth()->user()->branch_id != $request->parent_id){
+                return abort(403);
+            }
+
             // $parent = Branch::find($request->parent_id);
             $branch->parent_id = $request->parent_id;
             $branch->save();
+        }else{
+            // adding a new main branch
+            if (! auth()->user()->hasRole('super_admin')){
+                return abort(403);
+            }
+
+            $branch->save();
+            $AttendenceSettings = AttendenceSettings::create(['branch_id' => $branch->id]);
+
         }
 
         return back()->with('success', 'تم الحفظ بنجاح');
+    
     }
 
     /**
