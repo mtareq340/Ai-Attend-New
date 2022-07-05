@@ -38,11 +38,7 @@ class AppointmentController extends Controller
         $locations = Location::all();
         $jobs = Job::all();
         $devices = Device::all();
-        if($req->job_id){
-            $employees = Employee::where('job_id' , $req->job_id)->get();
-        }else{
-            $employees = Employee::all();
-        }
+        $employees = Employee::all();
         return view('appointments.create', compact('locations','employees' , 'jobs'));
     }
     public function store(Request $request)
