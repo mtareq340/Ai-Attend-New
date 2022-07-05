@@ -50,7 +50,7 @@ class BrancheController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'phone' => 'required',
-            'address' => 'required',
+            'address' => '',
             'notes' => '',
             // 'long' => 'required|numeric',
             // 'lat' => 'required|numeric',
@@ -111,7 +111,7 @@ class BrancheController extends Controller
             $request->validate([
                 'name' => 'required',
                 'phone' => 'required|numeric',
-                'address' => 'required'
+                'address' => ''
             ]);
             $branch = Branch::findOrFail($id);
             //update in db

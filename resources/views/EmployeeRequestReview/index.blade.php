@@ -24,8 +24,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
-                        <h4 class="header-title">Employees Request</h4>
+                        {{-- <h4 class="header-title">Employees Request</h4> --}}
                         <table id="scroll-horizontal-datatable" class="table table-striped dt-responsive nowrap w-100">
                                 
                             <div class="dt-buttons"></div>
@@ -42,15 +41,13 @@
                             <tbody>
                                 @foreach($requestreviews as $emp)
                                 <tr>
-                                    <td>{{ $emp->employee->name }}</td>
+                                    <td>{{ $emp->empname }}</td>
                                     <td>{{ $emp->request }}</td>
                                     <td>{{ $emp->date }}</td>
-                                   
                                     <td>
-                                        @can('make_response')
-                                        <a href="{{route('employee_request',$emp->id)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
-                                        @endcan
-
+                                        {{-- @can('make_response') --}}
+                                        <a href="{{route('employee_request',$emp->reqid)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
+                                        {{-- @endcan --}}
                                     </td>    
                                     
                                 </tr>

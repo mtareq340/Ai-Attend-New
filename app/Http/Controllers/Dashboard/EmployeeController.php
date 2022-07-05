@@ -33,16 +33,19 @@ class EmployeeController extends Controller
 
     public function index()
     {
+
         if (!Gate::allows('show_employees')) {
             return abort(401);
         }
+        $branches = Branch::all();
+        $jobs = Job::all();
         //
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::latest()->get();
         } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
         }
-        return view('employees.index', compact('employees'));
+        return view('employees.index', compact('employees', 'branches', 'jobs'));
     }
 
     /**
@@ -83,23 +86,26 @@ class EmployeeController extends Controller
 
         // return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
         try {
-            $request->validate([
-                'name' => 'required',
-                'phone' => 'required|numeric',
-                'gender' => 'required',
-                'branch_id' => 'required',
-                'job_id' => 'required',
-            ]);
+            // $request->validate([
+            //     'name' => 'required',
+            //     'phone' => 'required|numeric',
+            //     'gender' => 'required',
+            //     'branch_id' => 'required',
+            //     'job_id' => 'required',
+            // ]);
             $plan_id = Setting::find(1)->value;
             $plan = Plan::find($plan_id);
             // $employees_count = Employee::count();
             // if ($plan->count_employees <= $employees_count)
             //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
             $data = $request->except('_token');
-            $data['password'] = Hash::make($data['password']);
+            // $data['password'] = Hash::make($data['password']);
+            // if($data['password']){
+            // $data['password'] = Hash::make($data['password']);
+            // }
             $emp = Employee::create($data);
 
-            return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
+            return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             // return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
             return $e;
@@ -128,11 +134,11 @@ class EmployeeController extends Controller
         if (!Gate::allows('edit_employee')) {
             return abort(401);
         }
-        //
-        $emp = Employee::FindOrFail($id);
-        $branches = Branch::all();
-        $jobs = Job::all();
-        return view('employees.edit', compact('emp', 'branches', 'jobs'));
+        $emp = Employee::find($id);
+        // return view('employees.edit', compact('emp', 'branches', 'jobs'));
+        return response()->json([
+            'data' => $emp
+        ]);
     }
 
     /**
@@ -146,17 +152,17 @@ class EmployeeController extends Controller
     {
         //
         try {
-            $request->validate([
-                'name' => 'required',
-                'phone' => 'required|numeric',
-                'gender' => 'required',
-                'branch_id' => 'required',
-                'job_id' => 'required',
-            ]);
+            // $request->validate([
+            //     'name' => 'required',
+            //     'phone' => 'required|numeric',
+            //     'gender' => 'required',
+            //     'branch_id' => 'required',
+            //     'job_id' => 'required',
+            // ]);
             $emp = Employee::findOrFail($id);
-
             //update in db
             $emp->update($request->all());
+            // $emp->update($request->all());
             return redirect()->route('employees.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
@@ -198,15 +204,16 @@ class EmployeeController extends Controller
         // ckeck if file is right
         $first_row = $data[0][0];
         if (
-            $first_row[0] != 'name' ||
-            $first_row[1] != 'email' ||
-            $first_row[2] != 'address' ||
-            $first_row[3] != 'phone' ||
-            $first_row[4] != 'password' ||
-            $first_row[5] != 'gender (male - female)' ||
-            $first_row[6] != 'age'
+            $first_row[0] != 'job number' ||
+            $first_row[1] != 'name' ||
+            $first_row[2] != 'email' ||
+            $first_row[3] != 'address' ||
+            $first_row[4] != 'phone' ||
+            $first_row[5] != 'password' ||
+            $first_row[6] != 'gender (male - female)' ||
+            $first_row[7] != 'age'
         ) {
-            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الموفر أسفل الصفحة')->withInput();
+            return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الخاص بالموظفين')->withInput();
         }
         // if($data[0])
 
@@ -216,13 +223,14 @@ class EmployeeController extends Controller
             // skip first row
             if ($i == 0) continue;
             $emp = [
-                'name' => $row[0],
-                'email' => $row[1],
-                'address' => $row[2],
-                'phone' => $row[3],
-                'password' => $row[4],
-                'gender' => $row[5],
-                'age' => $row[6],
+                'job_number' => $row[0],
+                'name' => $row[1],
+                'email' => $row[2],
+                'address' => $row[3],
+                'phone' => $row[4],
+                'password' => $row[5],
+                'gender' => $row[6],
+                'age' => $row[7],
                 'branch_id' => $request->branch_id,
                 'job_id' => $request->job_id,
             ];

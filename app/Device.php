@@ -12,8 +12,8 @@ class Device extends Model
         'name', 'notes', 'created_at', 'updated_at'
     ];
 
-    public function location()
+    public function locations()
     {
-        return $this->hasMany(Location::class);
+        return $this->belongsToMany(Location::class ,'devices_to_locations');
     }
 }

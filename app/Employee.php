@@ -11,7 +11,7 @@ class Employee extends Model
 {
 
     protected $fillable = [
-        'name', 'email', 'address', 'phone', 'password', 'age', 'branch_id', 'gender', 'job_id', 'otp', 'created_at', 'updated_at'
+        'name', 'email', 'address', 'phone', 'password', 'age', 'branch_id', 'gender', 'job_id','job_number', 'otp', 'created_at', 'updated_at'
     ];
     //
     public function branch()
@@ -25,5 +25,9 @@ class Employee extends Model
     public function attend_methods()
     {
         return $this->belongsToMany(Attendmethods::class, 'employee_attend_methods', null, 'attend_method_id');
+    }
+    public function extra_time()
+    {
+        return $this->hasMany(ExtraTime::class, 'employee_id');
     }
 }

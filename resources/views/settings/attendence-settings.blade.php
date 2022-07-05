@@ -44,6 +44,36 @@
         </div>
     </div>
 
+    {{-- <div class="row mb-3">
+        <div class="col-6 col-lg-3">
+            <span>Validate finger</span>
+        </div>
+        <div class="col-6 col-lg-4">
+            <input type="checkbox" onchange="toggleAttendenceSettings(event, 'validate_finger')" {{$attendence_settings->validate_finger?'checked':''}} class="js-switch" data-plugin="switchery" />
+        </div>
+    </div> --}}
+    <div class="row mb-3">
+        <div class="col-6 col-lg-3">
+            <span>Vacation Days</span>
+        </div>
+        <div class="col-6 col-lg-4">
+            <input type="checkbox" id="toggle" onchange="activevication()"  class="js-switch" data-plugin="switchery" />
+        </div>
+    </div>
+    <div class="form-group row mb-3" id="vication" style="display: none">
+        <form action="{{route('addvication')}}" method="POST">
+            @csrf
+            @foreach($week_days as $day)
+               <div class="checkbox checkbox-success form-check-inline">
+                   <input type="checkbox" name="days[]" id="" value="{{$day->id}}" >
+                   <label for="inlineCheckbox{{$day->id}}"> {{$day->days}} </label>
+               </div>
+            @endforeach
+            <br>
+            <button type="submit" class="btn btn-success mt-2">Add Vication</button>
+        </form>
+        </div>
+    </div>
 
     {{-- <form action="{{}}">
         <div class="row mb-3">
@@ -117,6 +147,10 @@ var elem = document.querySelectorAll('.js-switch');
 
 
     </script>
-
-
+    <script>
+        function activevication(){
+            let v = document.getElementById('vication');
+            v.style.display ='block';
+        }
+    </script>
 @endsection

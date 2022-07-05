@@ -15,13 +15,14 @@ class EmployeeImport implements ToModel
     public function model(array $row)
     {
             return new Employee([
-                'name' => $row[0],
-                'email' => $row[1],
-                'address' => $row[2],
-                'phone' => $row[3],
-                'password' => $row[4],
-                'gender' => $row[5],
-                'age' => $row[6],
+                'job_number' => $row[0],
+                'name' => $row[1],
+                'email' => $row[2],
+                'address' => $row[3],
+                'phone' => $row[4],
+                'password' => $row[5],
+                'gender' => $row[6],
+                'age' => $row[7],
             ]);
     }
 }
