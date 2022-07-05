@@ -37,11 +37,7 @@
             {{-- </div> --}}
         </div>
         <!-- end page title -->
-        @can('add_device')
-            <button class="btn btn btn-primary">
-                <a href="{{ route('devices.create') }}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
-            </button>
-        @endcan
+
 
         <div class="row">
             <div class="col-12">

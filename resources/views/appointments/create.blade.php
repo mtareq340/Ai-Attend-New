@@ -17,56 +17,55 @@
         <form id="profileForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
             @csrf
 
-            <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                                <li class="breadcrumb-item active">Wizard</li>
-                            </ol>
-                        </div>
-                        <h4 class="page-title">Form Wizard</h4>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{route('appointment.index')}}">Appointments</a></li>
+                            <li class="breadcrumb-item active">Add Appointments</li>
+                        </ol>
                     </div>
+                    <h4 class="page-title">Appointments</h4>
                 </div>
             </div>
-            <!-- end page title -->
+        </div>
+        <!-- end page title -->
 
 
 
-            <div class="row">
+        <div class="row">
 
-                <div class="col-xl-12">
-                    <div class="card">
-                        <div class="card-body">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
 
-                            <h4 class="header-title mb-3"> Wizard With Form Validation</h4>
+                        {{-- <h4 class="header-title mb-3"> Wizard With Form Validation</h4> --}}
 
-                            <div id="rootwizard">
-                                <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
-                                    <li class="nav-item" data-target-form="#accountForm">
-                                        <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                            <i class="mdi mdi-account-circle mr-1"></i>
-                                            <span class="d-none d-sm-inline">Appointment</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" data-target-form="#profileForm">
-                                        <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                            <i class="mdi mdi-face-profile mr-1"></i>
-                                            <span class="d-none d-sm-inline">Location & Devices</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" data-target-form="#otherForm">
-                                        <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                            <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
-                                            <span class="d-none d-sm-inline">Employees</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                        <div id="rootwizard">
+                            <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
+                                <li class="nav-item" data-target-form="#accountForm">
+                                    <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                        <i class="mdi mdi-account-circle mr-1"></i>
+                                        <span class="d-none d-sm-inline">Appointment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item" data-target-form="#profileForm">
+                                    <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                        <i class="mdi mdi-face-profile mr-1"></i>
+                                        <span class="d-none d-sm-inline">Location & Devices</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item" data-target-form="#otherForm">
+                                    <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                        <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
+                                        <span class="d-none d-sm-inline">Employees</span>
+                                    </a>
+                                </li>
+                            </ul>
 
-                                <div class="tab-content mb-0 b-0 pt-0">
+                            <div class="tab-content mb-0 b-0 pt-0">
 
 
                                     <div class="tab-pane" id="first">
@@ -405,10 +404,10 @@
                                 <td>${emp.job_number}</td>
                                 <td>${emp.job.name}</td>
                                 <td>${emp.name}</td>
-                            </tr>   
+                            </tr>
                             `
                         $('.appointments-emp-table tbody').append(row)
-                        
+
                     })
                 },
                 error: () => {

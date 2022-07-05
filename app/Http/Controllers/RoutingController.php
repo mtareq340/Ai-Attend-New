@@ -10,9 +10,8 @@ class RoutingController extends Controller
 
     // public function __construct()
     // {
-    //     $this->middleware('auth')->except('index');
+    //      $this->middleware('auth')->except('index');
     // }
-
     /**
      * Display a listing of the resource.
      *
@@ -40,9 +39,9 @@ class RoutingController extends Controller
      * second level route
      */
     public function secondLevel($first, $second)
-    {        
+    {
         if ($first != 'assets')
-            return view($first.'.'.$second);
+            return view($first . '.' . $second);
         return view('index');
     }
 
@@ -52,7 +51,7 @@ class RoutingController extends Controller
     public function thirdLevel($first, $second, $third)
     {
         if ($first != 'assets')
-            return view($first.'.'.$second.'.'.$third);
+            return view($first . '.' . $second . '.' . $third);
         return view('index');
     }
 }

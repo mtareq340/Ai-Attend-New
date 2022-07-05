@@ -14,6 +14,10 @@ class Device extends Model
 
     public function locations()
     {
-        return $this->belongsToMany(Location::class ,'devices_to_locations');
+        return $this->belongsToMany(Location::class, 'devices_to_locations');
+    }
+    public function appointment()
+    {
+        return $this->belongsToMany(Appointment::class, 'appointment_device', 'appointment_id');
     }
 }
