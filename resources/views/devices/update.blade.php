@@ -38,7 +38,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Devices</h4>
+                        {{-- <h4 class="header-title">Devices</h4> --}}
 
                         <form action="{{ route('devices.update', $device->id) }}" method="post" class="needs-validation"
                             novalidate>

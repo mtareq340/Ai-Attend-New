@@ -61,6 +61,7 @@
         </div>
     </div>
     <div class="form-group row mb-3" id="extratime" style="display: none">
+        <label for="">Fill Extra Time</label>
         <form action="{{route('branch_setting.update',$extra_time[0]->id)}}" method="POST" class="needs-validation" novalidate>
             @csrf
             @method('PATCH')
@@ -79,6 +80,7 @@
         </div>
     </div>
     <div class="form-group row mb-3" id="vication" style="display: none">
+        <label for="">Select Vacation Days</label>
         <form action="{{route('addvication')}}" method="POST">
             @csrf
             @foreach($list_of_days as $day)

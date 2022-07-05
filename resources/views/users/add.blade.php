@@ -50,7 +50,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Users</h4>
+                        {{-- <h4 class="header-title">Users</h4> --}}
 
                         <form action="{{ route('users.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf

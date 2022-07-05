@@ -282,7 +282,7 @@
         {{-- edit moal --}}
         {{-- //////////////////////////////////////////////////////////////// --}}
 
-        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        {{-- <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -394,7 +394,7 @@
                     </form>
                 </div>
             </div>
-        </div><!-- /.modal -->
+        </div><!-- /.modal --> --}}
 
 
 
