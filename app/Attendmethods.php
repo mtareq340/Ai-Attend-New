@@ -14,6 +14,6 @@ class Attendmethods extends Model
     ];
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'employee_attend_methods', 'employee_id');
+        return $this->belongsToMany(Employee::class, 'employee_attend_methods', 'employee_id', 'attend_method_id');
     }
 }
