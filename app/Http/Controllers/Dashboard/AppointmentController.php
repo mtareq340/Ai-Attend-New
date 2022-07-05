@@ -11,6 +11,7 @@ use App\Device;
 use App\Job;
 use App\Week_Day;
 use Carbon\Carbon;
+use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -50,7 +51,7 @@ class AppointmentController extends Controller
     }
     public function store(Request $request)
     {
-        try {
+        // try {
             $data = $request->all(); 
 
             $validator = Validator::make(
@@ -143,10 +144,11 @@ class AppointmentController extends Controller
             }
           
             
-
-            $appointment = new Appointment($request->except(['period_count' , 'attendence_days' , 'devices' , 'emps']));
+            $appointment = new Appointment($request->except(['period_count' , 'attendence_days' , 'devices' , 'emps' , 'date']));
             $appointment->fill([
-                'attendence_days' => implode(',', $request->attendence_days)
+                'attendence_days' => implode(',', $request->attendence_days),
+                'branch_id' => auth()->user()->branch_id,
+                'date' => Carbon::parse($request->date)
             ]);
             $appointment->save();
 
@@ -155,24 +157,17 @@ class AppointmentController extends Controller
             $employees = [];
             foreach ($request->emps as $emp) {
                 $emp = json_decode($emp);
-                array_push($employees,[
-                    'employee_id' => $emp->id,
-                    'work_appointment_id' =>  $appointment->id,
-                    'branch_id' => auth()->id(),
-                    'location_id' => $request->location_id,
-                    'job_id' => $emp->job_id
-                ]);
+                $assign_appointment = DB::table('assign_appointments')
+                ->insert(['employee_id' => $emp->id, 'work_appointment_id' => $appointment->id,
+                'job_id' => $emp->job_id,'branch_id' => auth()->user()->branch_id,'location_id'=>$request->location_id]);
             }
-            return $employees;
-            // fill appointments employees
+            // fill appointments em ployees  
+            return redirect()->route('appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
 
-
-            // return redirect()->route('appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
-
-        } catch (Exception $e) {
-            return $e;
+        // } catch (Exception $e) {
+            // return $e;
             // return redirect()->route('appointment.create')->with(['error' => 'حدث خطا برجاء المحاوله مره اخري']);
-        }
+        // }
     }
 
     public function destroy($id)
