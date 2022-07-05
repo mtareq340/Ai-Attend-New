@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
+
 // Dashboard Routes
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard','middleware' => 'auth'], function () {
 
   // home
   Route::get('/', 'Dashboard\HomeController@index');
