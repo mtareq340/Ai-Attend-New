@@ -135,10 +135,9 @@ class EmployeeController extends Controller
             return abort(401);
         }
         $emp = Employee::find($id);
-        // return view('employees.edit', compact('emp', 'branches', 'jobs'));
-        return response()->json([
-            'data' => $emp
-        ]);
+        $branches = Branch::all();
+        $jobs = Job::all();
+        return view('employees.edit', compact('emp', 'branches', 'jobs'));
     }
 
     /**
@@ -152,18 +151,14 @@ class EmployeeController extends Controller
     {
         //
         try {
-            // $request->validate([
-            //     'name' => 'required',
-            //     'phone' => 'required|numeric',
-            //     'gender' => 'required',
-            //     'branch_id' => 'required',
-            //     'job_id' => 'required',
-            // ]);
+            $request->validate([
+                'job_number' => 'required',
+            ]);
             $emp = Employee::findOrFail($id);
             //update in db
             $emp->update($request->all());
             // $emp->update($request->all());
-            return redirect()->route('employees.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
+            return redirect()->route('employees.index')->with(['success' => 'تم تحديث الموظف بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
@@ -296,5 +291,11 @@ class EmployeeController extends Controller
         return Response()->download($filepath, 'employees.xlsx', [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ]);
+    }
+
+    public function getEmployeesByJob(Request $req){
+        $job_id = $req->job_id;
+        $employees = Employee::with('job')->where('job_id' , $job_id)->get();
+        return $employees;
     }
 }

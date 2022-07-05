@@ -54,6 +54,25 @@
     </div> --}}
     <div class="row mb-3">
         <div class="col-6 col-lg-3">
+            <span>Extra Time</span>
+        </div>
+        <div class="col-6 col-lg-4">
+            <input type="checkbox" id="toggleextra" onchange="activeextra()"  class="js-switch" data-plugin="switchery" />
+        </div>
+    </div>
+    <div class="form-group row mb-3" id="extratime" style="display: none">
+        <label for="">Fill Extra Time</label>
+        <form action="{{route('branch_setting.update',$extra_time[0]->id)}}" method="POST" class="needs-validation" novalidate>
+            @csrf
+            @method('PATCH')
+            <div class="form-group">
+                <input type="text" name="over_time_count" value="{{$extra_time[0]->over_time_count}}" class="form-control">
+                <button type="submit" class="btn btn-success mt-2">Add Extra Time</button>
+            </div>
+        </form>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6 col-lg-3">
             <span>Vacation Days</span>
         </div>
         <div class="col-6 col-lg-4">
@@ -61,16 +80,17 @@
         </div>
     </div>
     <div class="form-group row mb-3" id="vication" style="display: none">
+        <label for="">Select Vacation Days</label>
         <form action="{{route('addvication')}}" method="POST">
             @csrf
-            @foreach($week_days as $day)
+            @foreach($list_of_days as $day)
                <div class="checkbox checkbox-success form-check-inline">
-                   <input type="checkbox" name="days[]" id="" value="{{$day->id}}" >
-                   <label for="inlineCheckbox{{$day->id}}"> {{$day->days}} </label>
-               </div>
+                   <input type="checkbox" name="days[]" id="" {{ $day['selected'] ? 'checked':''}} value="{{$day['id']}}"  >
+                   <label for="inlineCheckbox{{$day['id']}}"> {{$day['days']}} </label>
+                </div>
             @endforeach
             <br>
-            <button type="submit" class="btn btn-success mt-2">Add Vication</button>
+            <button type="submit" class="btn btn-success mt-2">Add Vacation</button>
         </form>
         </div>
     </div>
@@ -95,13 +115,6 @@
 
 
     <script>
-var elem = document.querySelectorAll('.js-switch');
-        elem.forEach(element => {
-            new Switchery(element , {
-                color : '#64b0f2'
-            });
-        });
-
         const enableCompanySettingsEditing = () => {
             $("#ssid_input").removeAttr('disabled');
             $("#mac_address_input").removeAttr('disabled');
@@ -149,8 +162,28 @@ var elem = document.querySelectorAll('.js-switch');
     </script>
     <script>
         function activevication(){
+            let isChecked = $('#toggle')[0].checked
+            console.log(isChecked);
             let v = document.getElementById('vication');
-            v.style.display ='block';
+            if(isChecked){
+                v.style.display ='block';
+            }
+            else{
+                v.style.display ='none';
+            }
+        }
+    </script>
+    <script>
+        function activeextra(){
+            let isChecked = $('#toggleextra').is(':checked');
+            console.log(isChecked);
+            let extratime = document.getElementById('extratime');
+            if(isChecked){
+                extratime.style.display ='block';
+            }
+            else{
+                extratime.style.display ='none';
+            }
         }
     </script>
 @endsection

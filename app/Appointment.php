@@ -11,7 +11,7 @@ class Appointment extends Model
     use Notifiable;
     protected $table = 'work_appointments';
     protected $fillable = [
-        'name', 'location_id', 'start_from', 'end_to', 'delay', 'branch_id', 'overtime', 'date', 'created_at', 'updated_at'
+        'name', 'location_id', 'start_from_period1', 'end_to_period1', 'start_from_period2', 'end_to_period2', 'delay_period1', 'delay_period2', 'branch_id', 'overtime_period_1', 'over_time_period_2', 'date', 'created_at', 'updated_at'
     ];
 
     public function location()
@@ -21,5 +21,9 @@ class Appointment extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+    public function device()
+    {
+        return $this->belongsToMany(Device::class, 'appointment_device', 'device_id');
     }
 }

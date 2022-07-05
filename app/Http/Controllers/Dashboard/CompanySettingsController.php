@@ -17,13 +17,12 @@ class CompanySettingsController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->hasRole('super_admin')){
+        if (auth()->user()->hasRole('super_admin')) {
             $company_settings = CompanySettings::first();
             return view('settings.company-settings', compact('company_settings'));
-        }else{
+        } else {
             return abort(401);
         }
-
     }
 
     public function update(Request $req, $id)
@@ -104,24 +103,31 @@ class CompanySettingsController extends Controller
     {
         try {
             $input['days'] = $request->input('days');
-            $list_of_days = implode(',', $input['days']);
-            // dd($list_of_days);
             $data = CompanySettings::first();
-            // dd($data);
-            $data->update([
-                'vication_days' => $list_of_days
-            ]);
+            if ($input['days'] != NULL) {
+                $list_of_days = implode(',', $input['days']);
+                // dd($list_of_days);
+                // dd($data);
+                $data->update([
+                    'vication_days' => $list_of_days
+                ]);
+            } else {
+                $data->update([
+                    'vication_days' => '7'
+                ]);
+            }
+
             return back()->with('success', 'تم اضافه اجازه');
         } catch (Exception $e) {
             return $e;
         }
     }
 
-    public function resetLogo(Request $req){
+    public function resetLogo(Request $req)
+    {
         $settings = CompanySettings::first();
         $settings['logo'] = null;
         $settings->save();
         return back()->with('success', 'تم اعادة ضبط اللوجو بنجاح');
     }
-
 }

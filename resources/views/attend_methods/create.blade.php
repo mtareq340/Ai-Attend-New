@@ -47,7 +47,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Attend Methods</h4>
+                        {{-- <h4 class="header-title">Attend Methods</h4> --}}
                       
                         <form action="{{ route('attend_methods.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf

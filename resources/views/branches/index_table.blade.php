@@ -43,12 +43,7 @@
         {{-- @php
             dd(auth()->user()->name);
         @endphp --}}
-        @can('add_branch')
-            <button onclick="showAddFormRoot(event)" class="btn btn btn-primary my-2">
-                <i class="fa fa-plus"></i>
-                Add Branch
-            </button>
-        @endcan
+        
 
         <div class="row">
             <div class="col-12">

@@ -17,7 +17,8 @@
 
     <style>
         .selectize-dropdown-header{
-            display : none !important
+            display : none !important;
+            display:none;
         }
     </style>
 @endsection
