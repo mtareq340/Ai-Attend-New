@@ -28,7 +28,7 @@ class EmployeeAttendMethodController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $emps = Employee::all();
         } else {
-            $emps = Employee::where('branch_id', auth()->user()->branch_id)->where('active', '1')->where('locked', '=', '0')->get();
+            $emps = Employee::where('branch_id', auth()->user()->branch_id)->where('active', '1')->get();
         }
         return view("employees_attend_methods.index", compact('emps'));
     }
@@ -80,7 +80,6 @@ class EmployeeAttendMethodController extends Controller
             return redirect()->route('employees_attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             return redirect()->route('employees_attend_methods.create')->with(['error' => 'حدث خطا برجاء المحاوله']);
-            // return $e;
         }
     }
 

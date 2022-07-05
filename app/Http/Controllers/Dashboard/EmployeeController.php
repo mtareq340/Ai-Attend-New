@@ -42,6 +42,7 @@ class EmployeeController extends Controller
         //
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::latest()->get();
+            // dd($employees);
         } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
         }
