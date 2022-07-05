@@ -156,4 +156,5 @@ class EmployeesController extends Controller
             return Response()->json(['status' => 0, 'message' => 'there is no data']);
         }
     }
+    
 }
