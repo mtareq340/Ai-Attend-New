@@ -293,9 +293,22 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function getEmployeesByJob(Request $req){
+    public function getEmployeesByJob(Request $req)
+    {
         $job_id = $req->job_id;
-        $employees = Employee::with('job')->where('job_id' , $job_id)->get();
+        if ($job_id) {
+            if (auth()->user()->hasRole('super_admin')) {
+                $employees = Employee::with('job')->where('job_id', $job_id)->get();
+            } else {
+                $employees = Employee::with('job')->where('branch_id', auth()->user()->branch_id)->where('job_id', $job_id)->get();
+            }
+        } else {
+            if (auth()->user()->hasRole('super_admin')) {
+                $employees = Employee::with('job')->get();
+            } else {
+                $employees = Employee::with('job')->where('branch_id', auth()->user()->branch_id)->get();
+            }
+        }
         return $employees;
     }
 }
