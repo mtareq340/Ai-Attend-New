@@ -26,7 +26,7 @@ class EmployeeAttendMethodController extends Controller
             return abort(401);
         }
         if (auth()->user()->hasRole('super_admin')) {
-            $emps = Employee::where('locked', '=', '0')->where('active', '1')->get();
+            $emps = Employee::all();
         } else {
             $emps = Employee::where('branch_id', auth()->user()->branch_id)->where('active', '1')->where('locked', '=', '0')->get();
         }
@@ -43,12 +43,17 @@ class EmployeeAttendMethodController extends Controller
         if (!Gate::allows('add_employee_attend_method')) {
             return abort(401);
         }
-        //
-        $employees = Employee::whereDoesntHave('attend_methods')->get();
+        $attendmethods = Attendmethods::all();
         $jobs = Job::all();
-        $branchs = Branch::all();
-        $attendmethod = Attendmethods::all();
-        return view('employees_attend_methods.create', compact('employees', 'jobs', 'attendmethod', 'branchs'));
+        $employees = '';
+        if (auth()->user()->hasRole('super_admin')) {
+            $employees = Employee::whereDoesntHave('attend_methods')->get();
+            // $employees = Employee::all();
+        } else {
+            $employees = Employee::whereDoesntHave('attend_methods')->where('branch_id', auth()->user()->branch_id)->get();
+            // $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+        }
+        return view('employees_attend_methods.create', compact('employees', 'attendmethods', 'jobs'));
     }
 
 
@@ -62,22 +67,20 @@ class EmployeeAttendMethodController extends Controller
     {
         try {
             $request->validate([
-                'att_id' => 'required',
-                'employee_id' => 'required',
+                'attendance_id' => 'required',
+                'emp_ids' => 'required',
             ]);
-            $employees = $request->employee_id;
-            $attend = $request->att_id;
-            $list = [];
-            foreach ($employees as $emp) {
-                array_push($list, [
-                    'employee_id' => $emp,
-                    'attend_method_id' => $attend,
-                ]);
+            $employees = $request->emp_ids;
+            $attends = $request->attendance_id;
+            // dd($employees, $attends);
+            foreach ($attends as $attend) {
+                $attend_method = Attendmethods::find($attend);
+                $attend_method->employees()->sync($employees);
             }
-            EmpAttendMethods::insert($list);
-            return redirect()->route('employees_attend_methods.create')->with(['success' => 'تم الحفظ بنجاح']);
+            return redirect()->route('employees_attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             return redirect()->route('employees_attend_methods.create')->with(['error' => 'حدث خطا برجاء المحاوله']);
+            // return $e;
         }
     }
 

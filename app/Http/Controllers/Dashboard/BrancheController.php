@@ -27,7 +27,9 @@ class BrancheController extends Controller
         if (!Gate::allows('show_branches')) {
             return abort(401);
         }
-        return view('branches.index_table', ['branches' => Branch::all()]);
+        if (auth()->user()->hasRole('super_admin')) {
+            return view('branches.index_table', ['branches' => Branch::all()]);
+        }
     }
 
     /**

@@ -322,7 +322,6 @@
 
 
                                     {{-- end form --}}
-
                                 </div> <!-- tab-content -->
                             </div> <!-- end #rootwizard-->
 
