@@ -3,10 +3,14 @@
     <!-- Plugins css -->
     <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
         type="text/css" />
+    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
 @endsection
@@ -14,63 +18,74 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        <form id="profileForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
+        <form id="appointmentForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
             @csrf
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{route('appointment.index')}}">Appointments</a></li>
-                            <li class="breadcrumb-item active">Add Appointments</li>
-                        </ol>
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ route('appointment.index') }}">Appointments</a>
+                                </li>
+                                <li class="breadcrumb-item active">Add Appointments</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Appointments</h4>
                     </div>
-                    <h4 class="page-title">Appointments</h4>
                 </div>
             </div>
-        </div>
-        <!-- end page title -->
+            <!-- end page title -->
 
 
 
-        <div class="row">
+            <div class="row">
 
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
 
-                        {{-- <h4 class="header-title mb-3"> Wizard With Form Validation</h4> --}}
+                            {{-- <h4 class="header-title mb-3"> Wizard With Form Validation</h4> --}}
 
-                        <div id="rootwizard">
-                            <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
-                                <li class="nav-item" data-target-form="#accountForm">
-                                    <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-account-circle mr-1"></i>
-                                        <span class="d-none d-sm-inline">Appointment</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item" data-target-form="#profileForm">
-                                    <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-face-profile mr-1"></i>
-                                        <span class="d-none d-sm-inline">Location & Devices</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item" data-target-form="#otherForm">
-                                    <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
-                                        <span class="d-none d-sm-inline">Employees</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <div id="rootwizard">
+                                <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
+                                    <li class="nav-item" data-target-form="#accountForm">
+                                        <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-account-circle mr-1"></i>
+                                            <span class="d-none d-sm-inline">Appointment</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-target-form="#profileForm">
+                                        <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-face-profile mr-1"></i>
+                                            <span class="d-none d-sm-inline">Location & Devices</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-target-form="#otherForm">
+                                        <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                            <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
+                                            <span class="d-none d-sm-inline">Employees</span>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                            <div class="tab-content mb-0 b-0 pt-0">
+                                <div class="tab-content mb-0 b-0 pt-0">
 
 
                                     <div class="tab-pane" id="first">
                                         <div class="row">
                                             <div class="col-12">
+
+                                                <div class="form-group row mb-3">
+                                                    <label for="name_input">Appointment name</label>
+                                                    <input type="text" name="name" id="name_input"  class="form-control"/>
+                                                </div>
+
+                                                <div class="form-group row mb-3">
+                                                    <label for="date_input">Date</label>
+                                                    <input type="text" name="date" id="date_input"  class="form-control" data-provide="datepicker">
+                                                </div>
 
                                                 <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label" for="userName3">Periods</label>
@@ -79,13 +94,13 @@
 
                                                             <div class="radio form-check-inline">
                                                                 <input type="radio" onchange="handlePeriodChange(event)"
-                                                                    id="inlineRadio1" value="1" name="radioInline"
+                                                                    id="inlineRadio1" value="1" name="period_count"
                                                                     checked="">
                                                                 <label for="inlineRadio1"> One </label>
                                                             </div>
                                                             <div class="radio form-check-inline">
                                                                 <input type="radio" onchange="handlePeriodChange(event)"
-                                                                    id="inlineRadio2" value="2" name="radioInline">
+                                                                    id="inlineRadio2" value="2" name="period_count">
                                                                 <label for="inlineRadio2"> Two </label>
                                                             </div>
 
@@ -101,27 +116,29 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-town-city">Start Time</label>
-                                                                    <input type="time" id="preloading-timepicker"
-                                                                        class="form-control" placeholder="Pick a time">
+                                                                    <label for="start_from_period_1_input">Start Time</label>
+                                                                    <input type="time" id="start_from_period_1_input"
+                                                                        class="form-control" name="start_from_period_1" placeholder="Pick a time">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-state"> End Time</label>
+                                                                    <label for="end_to_period_1_input"> End Time</label>
                                                                     <input class="form-control" type="time"
                                                                         placeholder="Enter your End Time"
-                                                                        id="billing-state" />
+                                                                        name="end_to_period_1"
+                                                                        id="end_to_period_1_input" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-zip-postal">Delay Period</label>
-                                                                    <input class="form-control" type="time"
-                                                                        placeholder="Enter your Delay Period"
-                                                                        id="billing-zip-postal" />
+                                                                    <label for="delay_period_1_input">Delay Period</label>
+                                                                    <input type="text" id="delay_period_1_input" name="delay_period_1" class="24hours-timepicker form-control" placeholder="00:00">
                                                                 </div>
                                                             </div>
+                                                            
+                                                            
+
                                                         </div> <!-- end row -->
                                                     </div>
                                                 </div>
@@ -133,83 +150,59 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-town-city">Start Time</label>
-                                                                    <input type="time" id="preloading-timepicker"
-                                                                        class="form-control" placeholder="Pick a time">
+                                                                    <label for="start_from_period_2_input">Start Time</label>
+                                                                    <input type="time" id="start_from_period_2_input"
+                                                                        class="form-control" name="start_from_period_2" placeholder="Pick a time">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-state"> End Time</label>
+                                                                    <label for="end_to_period_2_input"> End Time</label>
                                                                     <input class="form-control" type="time"
                                                                         placeholder="Enter your End Time"
-                                                                        id="billing-state" />
+                                                                        name="end_to_period_2"
+                                                                        id="end_to_period_2_input" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label for="billing-zip-postal">Delay Period</label>
-                                                                    <input class="form-control" type="time"
-                                                                        placeholder="Enter your Delay Period"
-                                                                        id="billing-zip-postal" />
+                                                                    <label for="delay_period_2_input">Delay Period</label>
+                                                                    <input type="text" id="delay_period_2_input" name="delay_period_2" class="24hours-timepicker form-control" placeholder="00:00">
                                                                 </div>
                                                             </div>
+
+                                                   
                                                         </div> <!-- end row -->
                                                     </div>
                                                 </div>
                                                 {{-- /////////////////// --}}
 
 
+                                                    <div class="form-group mb-3">
+                                                        <label for="overtime_input">overtime</label>
+                                                        <input type="text" id="overtime_input" name="overtime" class="24hours-timepicker form-control" placeholder="00:00">
+                                                    </div>
 
                                                 <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label" for="password3"> Attendance
                                                         Days</label>
                                                     <div class="col-md-9">
-
+                                                        @foreach ($days as $day)
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="" value="option1">
-                                                            <label for="inlineCheckbox2"> Saturday </label>
+                                                            <input {{$day->id == 7 ? '' : 'checked'}} name="attendence_days[]" type="checkbox" id="day-{{$day->id}}" value="{{$day->id}}">
+                                                            <label for="day-{{$day->id}}">{{$day->days}}</label>
                                                         </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="" value="option1">
-                                                            <label for="inlineCheckbox2"> Sunday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1">
-                                                            <label for="inlineCheckbox2"> Monday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1">
-                                                            <label for="inlineCheckbox2"> Tuesday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
-                                                                checked>
-                                                            <label for="inlineCheckbox2"> Wednesday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
-                                                                checked>
-                                                            <label for="inlineCheckbox2"> Thursday </label>
-                                                        </div>
-                                                        <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
-                                                                checked>
-                                                            <label for="inlineCheckbox2"> Friday </label>
-                                                        </div>
-
-
-
+                                                        @endforeach
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row mb-3">
-                                                    <label class="col-md-3 col-form-label" for="confirm3">repeat</label>
+                                                    <label class="col-md-3 col-form-label">repeat</label>
                                                     <div class="col-md-9">
                                                         <div class="checkbox checkbox-success form-check-inline">
-                                                            <input type="checkbox" id="inlineCheckbox2" value="option1"
+                                                            <input type="checkbox" id="repeat-checkbox" value="1" name="attendance_repeat"
                                                                 checked>
-                                                            <label for="inlineCheckbox2"> repeat </label>
+                                                            <label for="repeat-checkbox"> repeat </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,8 +247,11 @@
                                                             <label for="job_id_input">Job</label>
                                                             <select id="job_id_input" data-toggle="select2"
                                                                 onchange="getJobEmployees(event)" class="select2">
+                                                                <option value="">All</option>
+
                                                                 @foreach ($jobs as $job)
-                                                                    <option value="{{ $job->id }}">{{ $job->name }}
+                                                                    <option value="{{ $job->name }}">
+                                                                        {{ $job->name }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -263,29 +259,35 @@
 
                                                     </div>
 
-                                                    <table id="demo-custom-toolbar" class="appointments-emp-table" data-toggle="table" data-search="true"
-                                                        data-sort-name="id" data-page-size="1000">
-                                                        <thead class="thead-light">
+                                                    <label class="mt-2 h4">Employees</label>
+                                                    <table id="state-saving-datatable"
+                                                        class="table appointments-emp-table activate-select dt-responsive nowrap w-100">
+                                                        <thead>
                                                             <tr>
-                                                                <th></th>
-                                                                <th data-field="id" data-sortable="true">Job
-                                                                    number
+                                                                <th>
+                                                                    <div
+                                                                        class="checkbox checkbox-success form-check-inline">
+                                                                        <input onchange="selectAllEmps(event)"
+                                                                            type="checkbox" id="selectall">
+                                                                        <label for="selectall"></label>
+                                                                    </div>
                                                                 </th>
-                                                                <th data-field="job" data-sortable="true">Job</th>
-                                                                <th data-field="name" data-sortable="true">Name</th>
+                                                                <th>Job number</th>
+                                                                <th>Job</th>
+                                                                <th>Name</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
                                                             @foreach ($employees as $emp)
                                                                 <tr>
-                                                                    <td>
+                                                                    <td style="width:10%">
                                                                         <div
                                                                             class="checkbox checkbox-success form-check-inline">
                                                                             <input type="checkbox"
                                                                                 id="checkbox-{{ $emp->id }}"
-                                                                                name="emp_ids[]"
-                                                                                value="{{ $emp->id }}">
+                                                                                name="emps[]"
+                                                                                value="{{ json_encode(['id' => $emp->id , 'job_id' => $emp->job_id])  }}">
                                                                             <label for="checkbox-{{ $emp->id }}"
                                                                                 class="w-100"></label>
                                                                         </div>
@@ -293,14 +295,12 @@
                                                                     </td>
                                                                     <td>{{ $emp->job_number }}</td>
                                                                     <td>{{ $emp->job->name }}</td>
-
                                                                     <td>{{ $emp->name }}</td>
-
                                                                 </tr>
                                                             @endforeach
-
                                                         </tbody>
                                                     </table>
+
                                                 </div> <!-- end card-box-->
                                             </div> <!-- end col-->
                                         </div>
@@ -322,7 +322,6 @@
 
 
                                     {{-- end form --}}
-
                                 </div> <!-- tab-content -->
                             </div> <!-- end #rootwizard-->
 
@@ -337,10 +336,9 @@
 
 @section('script')
 
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+
     <script>
-        const clearDevices = () => {
-            $('#devices_input').val([])
-        }
         $('#inputLocation').val('')
         const getLocationDevices = (event) => {
             const id = event.target.value
@@ -364,63 +362,41 @@
                         )
                     });
 
-
-                },
-                error: () => {
-                    alert('something went wrong try again later')
-                }
-            });
-
-        }
-
-
-        // handle filter employee
-        $('#job_id_input').val('')
-        const getJobEmployees = (event) => {
-            const job_id = event.target.value
-            $.ajax({
-                url: "{{ route('getEmployeesByJob') }}",
-                type: 'GET',
-                data: {
-                    job_id
-                },
-                success: (res) => {
-                    $('.appointments-emp-table tbody').empty()
-
-                    res.forEach((emp) => {
-                        const row = `
-                            <tr>
-                                <td>
-                                    <div
-                                        class="checkbox checkbox-success form-check-inline">
-                                        <input type="checkbox"
-                                            id="checkbox-${emp.id}"
-                                            name="emp_ids[]"
-                                            value="${emp.id}">
-                                        <label for="checkbox-${emp.id}"
-                                            class="w-100"></label>
-                                    </div>
-                                </td>
-                                <td>${emp.job_number}</td>
-                                <td>${emp.job.name}</td>
-                                <td>${emp.name}</td>
-                            </tr>
-                            `
-                        $('.appointments-emp-table tbody').append(row)
-
-                    })
                 },
                 error: () => {
                     alert('something went wrong try again later')
                 }
             });
         }
+
 
     </script>
     <!-- Plugins js-->
     <script src="{{ asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
-    {{-- init the wizard --}}
+    <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
+    <!-- Page js-->
+    <script src="{{ asset('assets/js/pages/bootstrap-tables.init.js') }}"></script>
+    <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+    <script src="{{asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+
     <script>
+        // init 24 hours , minutes
+        $('.24hours-timepicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
+        // handl moving forward and backward
         $('#rootwizard').bootstrapWizard({
             onTabShow: function(tab, navigation, index) {
                 var $total = navigation.find('li').length;
@@ -438,28 +414,65 @@
             }
         });
 
-    </script>
-    <!-- Page js-->
-    <!-- Plugins js-->
-    <script src="{{ asset('assets/libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
 
-    <!-- Page js-->
-    <script src="{{ asset('assets/js/pages/bootstrap-tables.init.js') }}"></script>
-    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
-    <script>
+
+        // submit appointment
+        document.querySelector("#appointmentForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            emptable.search('').draw()
+            e.target.submit();
+        });
+
+        // datatable
+
+        // clear state
+        localStorage.removeItem('DataTables_state-saving-datatable_/{{ Request::path() }}');
+        // adjust header with the body
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
+        });
+        // Default Datatable
+        const emptable = $('#state-saving-datatable').DataTable({
+            stateSave: true,
+            scrollX: true,
+            scrollY: '300px',
+            paging: false,
+            bInfo: false
+        });
+
+
+        // handle filter employee
+        $('#job_id_input').val('')
+        const getJobEmployees = (event) => {
+            const job = event.target.value
+            emptable.search(job).draw()
+        }
+
+        //handl toggle one period and two periods
         const handlePeriodChange = (event) => {
             if (event.target.value == 2) {
                 $('#second-period').removeClass('d-none')
                 return
             }
             $('#second-period').addClass('d-none')
+        }
+
+
+        // select all visible employees
+        const selectAllEmps = (event) => {
+            var cells = emptable.column(0, {
+                    'filter': 'applied'
+                }).nodes(), // Cells from 1st column
+                state = event.target.checked ? true : false;
+
+            console.log(state);
+            // select all visible
+            for (var i = 0; i < cells.length; i += 1) {
+                const checkbox = cells[i].querySelector("input[type='checkbox']")
+                checkbox.checked = state;
+            }
+            // emptable.draw()
         }
 
     </script>

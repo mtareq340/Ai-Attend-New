@@ -19,7 +19,7 @@ class RoutingController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return redirect('auth/login');
     }
 
     /**

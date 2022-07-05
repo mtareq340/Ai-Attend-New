@@ -12,7 +12,7 @@ class Location extends Model
 
     protected $table = 'locations';
 
-    protected $fillable = ['name', 'location_address', 'distance', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
+    protected $fillable = ['name', 'branch_id', 'location_address', 'distance', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
 
     public function device()
     {
@@ -24,6 +24,10 @@ class Location extends Model
     }
     public function devices()
     {
-        return $this->belongsToMany(Device::class,'devices_to_locations');
+        return $this->belongsToMany(Device::class, 'devices_to_locations');
+    }
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }

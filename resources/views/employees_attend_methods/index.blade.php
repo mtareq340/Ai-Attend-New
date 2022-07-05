@@ -55,10 +55,11 @@
                                     </td>
                                     <td>
                                         @can('edit_employee_attend_method')
-                                        <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light">
-                                            <i class="fa fa-pen"></i>
+                                        <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button"class="action-icon">
+                                        <i class="mdi mdi-square-edit-outline"></i> 
                                         </a>
                                         @endcan
+                                     
                                     </td>
                                 </tr>
                                 @endforeach

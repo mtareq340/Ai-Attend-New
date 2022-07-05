@@ -43,6 +43,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Branch Name</th>
                                     <th>Devices</th>
                                     <th>Location Address</th>
                                     <th>Distance</th>
@@ -60,13 +61,13 @@
                                 @foreach ($locations as $l)
                                     <tr>
                                         <td>{{ $l->name }}</td>
+                                        <td>{{ $l->branch->name }}</td>
                                         <td>
                                             <ul>
                                                 @foreach ($l->devices as $device)
                                                     <li>{{ $device->name }}</li>
                                                 @endforeach
                                             </ul>
-
                                         </td>
                                         <td>{{ $l->location_address }}</td>
                                         <td>{{ $l->distance }}</td>
