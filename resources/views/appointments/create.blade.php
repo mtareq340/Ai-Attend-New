@@ -16,7 +16,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        <form id="profileForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
+        <form id="appointmentForm" method="post" action="{{ route('appointment.store') }}" class="form-horizontal">
             @csrf
 
             <!-- start page title -->
@@ -417,10 +417,19 @@
             }
         });
 
+
+
+        // submit appointment
+        document.querySelector("#appointmentForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            emptable.search('').draw()
+            e.target.submit();
+        });
+
         // datatable
 
         // clear state
-        localStorage.removeItem('DataTables_state-saving-datatable_/{{ Request::path()  }}');
+        localStorage.removeItem('DataTables_state-saving-datatable_/{{ Request::path() }}');
         // adjust header with the body
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable()
