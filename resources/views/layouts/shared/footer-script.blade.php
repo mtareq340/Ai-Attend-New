@@ -1,6 +1,7 @@
 <!-- bundle -->
 <!-- Vendor js -->
 <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+<script src="{{ asset('assets/js/notyf.min.js') }}"></script>
 @yield('script')
 <!-- App js -->
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
@@ -73,5 +74,8 @@
 
     }); //end of delete
 
+    var notyf = new Notyf({
+            duration: 4000,
+    });
 </script>
 @yield('script-bottom')

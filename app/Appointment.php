@@ -11,7 +11,7 @@ class Appointment extends Model
     use Notifiable;
     protected $table = 'work_appointments';
     protected $fillable = [
-        'name', 'location_id', 'start_from_period1', 'end_to_period1', 'start_from_period2', 'end_to_period2', 'delay_period1', 'delay_period2', 'branch_id', 'overtime_period_1', 'over_time_period_2', 'date', 'created_at', 'updated_at'
+        'name', 'location_id', 'start_from_period_1', 'end_to_period_1', 'start_from_period_2', 'end_to_period_2', 'delay_period_1', 'delay_period_2', 'branch_id', 'overtime', 'date', 'created_at', 'updated_at'
     ];
 
     public function location()
@@ -24,10 +24,10 @@ class Appointment extends Model
     }
     public function devices()
     {
-        return $this->belongsToMany(Device::class, 'appointment_device','device_id' , 'appointment_id');
+        return $this->belongsToMany(Device::class, 'appointment_device' , 'appointment_id','device_id');
     }
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'assign_appointments' , 'employee_id' , 'appointment_id');
+        return $this->belongsToMany(Employee::class, 'assign_appointments' , 'appointment_id' , 'employee_id');
     }
 }

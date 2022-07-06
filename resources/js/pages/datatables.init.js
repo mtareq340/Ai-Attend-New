@@ -10,6 +10,7 @@ $(document).ready(function() {
 
     // Default Datatable
     $('#basic-datatable').DataTable({
+        "ordering": false,
         "language": {
             "paginate": {
                 "previous": "<i class='mdi mdi-chevron-left'>",
@@ -23,6 +24,7 @@ $(document).ready(function() {
 
     //Buttons examples
     var table = $('#datatable-buttons').DataTable({
+        "ordering": false,
         lengthChange: false,
         buttons: ['copy', 'print', 'pdf'],
         buttons: [
@@ -45,6 +47,7 @@ $(document).ready(function() {
 
     // Multi Selection Datatable
     $('#selection-datatable').DataTable({
+        "ordering": false,
         select: {
             style: 'multi'
         },
@@ -61,6 +64,7 @@ $(document).ready(function() {
 
     // Key Datatable
     $('#key-datatable').DataTable({
+        "ordering": false,
         keys: true,
         "language": {
             "paginate": {
@@ -79,6 +83,7 @@ $(document).ready(function() {
 
     // Alternative Pagination Datatable
     $('#alternative-page-datatable').DataTable({
+        "ordering": false,
         "pagingType": "full_numbers",
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
@@ -87,6 +92,7 @@ $(document).ready(function() {
 
     // Scroll Vertical Datatable
      $('#scroll-vertical-datatable').DataTable({
+        "ordering": false,
         "scrollY":        "350px",
         "scrollCollapse": true,
         "paging":         false,
@@ -104,6 +110,7 @@ $(document).ready(function() {
     // Scroll Horizantal Datatable
     //***************** */ edited by mohammed ahmed*********************
     var scrollableDatatableWithButtons = $('#scroll-horizontal-datatable').DataTable({
+        "ordering": false,
         "scrollX": true,
         lengthChange: false,
         buttons: [
@@ -129,6 +136,7 @@ $(document).ready(function() {
 
     // Complex headers with column visibility Datatable
     $('#complex-header-datatable').DataTable({
+        "ordering": false,
         "language": {
             "paginate": {
                 "previous": "<i class='mdi mdi-chevron-left'>",
@@ -146,6 +154,7 @@ $(document).ready(function() {
 
     // Row created callback Datatable
     $('#row-callback-datatable').DataTable({
+        "ordering": false,
         "language": {
             "paginate": {
                 "previous": "<i class='mdi mdi-chevron-left'>",
@@ -164,6 +173,7 @@ $(document).ready(function() {
 
     // Default Datatable
     $('#state-saving-datatable').DataTable({
+        "ordering": false,
         stateSave: true,
         "language": {
             "paginate": {

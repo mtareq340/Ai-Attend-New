@@ -70,7 +70,6 @@
                     <div class="card-body">
 
                         {{-- <h4 class="header-title">Employees table</h4> --}}
-
                         <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100">
                             <div class="dt-buttons"></div>
                             <thead>
@@ -118,7 +117,7 @@
                                             @endcan
                                         </td>
                                         <td>
-                                            @can('edit_employee')
+                                            @can('active_employee')
                                                 <input type="checkbox"
                                                     onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')"
                                                     class="js-switch-red" {{ $emp->locked ? 'checked' : '' }}
@@ -194,7 +193,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 1 *</label>
-                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="010..."
+                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="phone num 1"
                                             required>
                                     </div>
                                 </div>
@@ -215,9 +214,9 @@
                                             placeholder="1234 Main St">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Gender *</label>
+                                        <label>Gender </label>
                                         <div class="d-flex">
                                             <div class="radio mx-1">
                                                 <input type="radio" name="gender" id="genderM" value="male" required=""
@@ -238,7 +237,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputBranch" class="col-form-label">Branch *</label>
-                                        <select name="branch_id" id="inputBranch" class="selectize-drop-header"
+                                        <select name="branch_id" id="inputBranch" class="form-control selectize-drop-header"
                                             placeholder="Select a branch..." required>
                                             @foreach ($branches as $branch)
                                                 <option value="{{ $branch->id }}">{{ $branch->name }}</option>
@@ -251,7 +250,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputJob" class="col-form-label">Job *</label>
-                                        <select name="job_id" id="inputJob" class="selectize-drop-header"
+                                        <select name="job_id" id="inputJob" class="form-control selectize-drop-header"
                                             placeholder="Select a job..." required>
                                             @foreach ($jobs as $job)
                                                 <option value="{{ $job->id }}">{{ $job->name }}</option>
@@ -259,6 +258,14 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputJob" class="col-form-label">Job Number *</label>
+                                        <input type="number" name="job_number" class="form-control" id="job_num" placeholder="Select Job Number">
+                                    </div>
+                                </div>
+                                
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="input-age" class="col-form-label">Age <span
@@ -271,7 +278,7 @@
                         </div>
                         <div class="modal-footer">
                             <a href="" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</a>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Add Employees</button>
                         </div>
                     </form>
                 </div>
@@ -454,6 +461,20 @@
         }
 
     </script>
+      <script>
+        function activevication(){
+            let isChecked = $('#qr')[0].checked
+            // console.log(isChecked);
+            return isChecked;
+        }
+
+        function activebar(){
+            let isChecked = $('#bar')[0].checked
+            // console.log(isChecked);
+            return isChecked;
+        }
+    </script>
+  
     <script>
         $(document).ready(function() {
             // ////////////////////////////
