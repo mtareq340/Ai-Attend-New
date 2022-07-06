@@ -10,7 +10,7 @@ Auth::routes();
 
 
 // Dashboard Routes
-Route::group(['prefix' => 'dashboard','middleware' => 'auth'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
   // home
   Route::get('/', 'Dashboard\HomeController@index');
@@ -42,7 +42,7 @@ Route::group(['prefix' => 'dashboard','middleware' => 'auth'], function () {
   Route::patch('employees/activate', 'Dashboard\EmployeeController@toggleActiveAndLocked')->name('toggleActiveEmp');
   Route::post('employees/import', 'Dashboard\EmployeeController@import')->name('import_employees');
   Route::get('/employees/downloadexcel', 'Dashboard\EmployeeController@downloadExcelEmployees')->name('downloadExcelEmps');
-  Route::get('/job_employees/get' , 'Dashboard\EmployeeController@getEmployeesByJob')->name('getEmployeesByJob');
+  Route::get('/job_employees/get', 'Dashboard\EmployeeController@getEmployeesByJob')->name('getEmployeesByJob');
   Route::post('import', 'Dashboard\EmployeeController@import')->name('import_emp_post');
   Route::resource('employees', 'Dashboard\EmployeeController');
   // assign appointment route
@@ -64,6 +64,8 @@ Route::group(['prefix' => 'dashboard','middleware' => 'auth'], function () {
   //Request Type
   Route::resource('employee_request_type', 'Dashboard\RequestTypeController');
 
+  //employeee Attendace //
+  Route::resource('employee_attendance', 'Dashboard\EmployeeAttendanceController');
 
   // start settings
 
