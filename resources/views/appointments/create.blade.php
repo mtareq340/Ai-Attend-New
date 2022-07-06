@@ -456,6 +456,7 @@
         $('#job_id_input').val('')
         const getJobEmployees = (event) => {
             const job = event.target.value
+            $('#job_id_input').val('')
             emptable.search(job).draw()
         }
 
