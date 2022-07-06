@@ -36,6 +36,7 @@
                             <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Name</th>
                                         <th>Device Name</th>
                                         <th>Location Address</th>
@@ -45,7 +46,6 @@
                                         <th>Note</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
-                                        <th>Actions</th>
 
                                     </tr>
                                 </thead>
@@ -54,16 +54,7 @@
                                 <tbody>
                                     @foreach($locations  as $l)
                                     <tr>
-                                        <td>{{ $l->name }}</td>
-                                        <td>{{ $l->device->name}}</td>
-                                        <td>{{ $l->location_address }}</td>
-                                        <td>{{ $l->distance }}</td>
-                                        <td>{{ $l->location_latitude }}</td>
-                                        <td>{{ $l->location_longituide }}</td>
-                                        <td>{{ $l->notes }}</td>
-                                        <td>{{ $l->created_at }}</td>
-                                        <td>{{ $l->updated_at }}</td>
-                                        <td> 
+                                        <td class="px-5 py-0"> 
                                             <div class="row row-xs wd-xl-4p">
                                                 <a href="{{ route('locations.edit',$l->id) }}" class="action-icon">
                                                 <i class="mdi mdi-square-edit-outline"></i> </a>
@@ -75,6 +66,15 @@
                                                 </form>
                                             </div>
                                         </td>	
+                                        <td>{{ $l->name }}</td>
+                                        <td>{{ $l->device->name}}</td>
+                                        <td>{{ $l->location_address }}</td>
+                                        <td>{{ $l->distance }}</td>
+                                        <td>{{ $l->location_latitude }}</td>
+                                        <td>{{ $l->location_longituide }}</td>
+                                        <td>{{ $l->notes }}</td>
+                                        <td>{{ $l->created_at }}</td>
+                                        <td>{{ $l->updated_at }}</td>
                                     </tr>
                                    
                                     @endforeach
@@ -99,6 +99,7 @@
 
     <!-- Page js-->
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
-
+    
+})
 
 @endsection

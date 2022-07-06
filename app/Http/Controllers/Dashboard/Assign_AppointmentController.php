@@ -22,7 +22,7 @@ class Assign_AppointmentController extends Controller
         if (!Gate::allows('show_assign_appointments')) {
             return abort(401);
         }
-        $appoints = Assign_Appointment::all();
+        $appoints = Assign_Appointment::latest()->get();
         // dd($appoints);
         return view('assign_appointments.index', compact('appoints'));
     }

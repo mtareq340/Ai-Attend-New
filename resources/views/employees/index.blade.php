@@ -54,6 +54,7 @@
                             <div class="dt-buttons"></div>
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
@@ -62,7 +63,6 @@
                                     <th>Job</th>
                                     <th>Active</th>
                                     <th>Locked</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -70,23 +70,7 @@
                             <tbody>
                                 @foreach($employees as $emp)
                                 <tr>
-                                    <td>{{ $emp->name }}</td>
-                                    <td>{{ $emp->email }}</td>
-                                    <td>{{ $emp->phone }}</td>
-                                    <td>{{ $emp->address }}</td>
-                                    <td>{{ $emp->branch->name }}</td>
-                                    <td>{{ $emp->job->name }}</td>
-                                    <td>
-                                        @can('edit_employee')
-                                        <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')" class="js-switch" {{$emp->active?'checked':''}} data-plugin="switchery" />
-                                        @endcan
-                                    </td>
-                                    <td>
-                                        @can('edit_employee')
-                                        <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')" class="js-switch" {{$emp->locked?'checked':''}} data-plugin="switchery" />
-                                        @endcan
-                                    </td>
-                                    <td>
+                                    <td class="px-5 py-0">
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_employee')
                                             <a href="{{ route('employees.edit', $emp->id) }}" class="action-icon">
@@ -102,6 +86,22 @@
                                             </form>
                                             @endcan
                                         </div>
+                                    </td>
+                                    <td>{{ $emp->name }}</td>
+                                    <td>{{ $emp->email }}</td>
+                                    <td>{{ $emp->phone }}</td>
+                                    <td>{{ $emp->address }}</td>
+                                    <td>{{ $emp->branch->name }}</td>
+                                    <td>{{ $emp->job->name }}</td>
+                                    <td>
+                                        @can('edit_employee')
+                                        <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')" class="js-switch" {{$emp->active?'checked':''}} data-plugin="switchery" />
+                                        @endcan
+                                    </td>
+                                    <td>
+                                        @can('edit_employee')
+                                        <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')" class="js-switch" {{$emp->locked?'checked':''}} data-plugin="switchery" />
+                                        @endcan
                                     </td>
                                 </tr>
 

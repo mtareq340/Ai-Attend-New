@@ -22,7 +22,7 @@ class JobController extends Controller
         /*
             return view in path view/jobs/index.blade.php
         */
-        $jobs = Job::all();
+        $jobs = Job::latest()->get();
         return view('jobs.index', compact('jobs'));
     }
 

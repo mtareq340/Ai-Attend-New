@@ -31,10 +31,10 @@
                             <div class="dt-buttons"></div>
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Employee Name</th>
                                     <th>Request</th>
                                     <th>Date</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                         
@@ -42,16 +42,15 @@
                             <tbody>
                                 @foreach($requestreviews as $emp)
                                 <tr>
+                                    <td class="px-5 py-0">
+                                        @can('make_response')
+                                        <a href="{{route('employee_request',$emp->id)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
+                                        @endcan
+                                    </td>    
                                     <td>{{ $emp->employee->name }}</td>
                                     <td>{{ $emp->request }}</td>
                                     <td>{{ $emp->date }}</td>
                                    
-                                    <td>
-                                        @can('make_response')
-                                        <a href="{{route('employee_request',$emp->id)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
-                                        @endcan
-
-                                    </td>    
                                     
                                 </tr>
                                

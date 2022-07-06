@@ -49,11 +49,11 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Address</th>
                                     {{-- <th>sub branches</th> --}}
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -61,17 +61,7 @@
                             <tbody>
                                 @foreach($branches as $branch)
                                 <tr>
-                                    <td>{{ $branch->name }}</td>
-                                    <td>{{ $branch->phone }}</td>
-                                    <td>{{ $branch->address }}</td>
-                                    <td>
-                                        <ul>
-                                        @foreach ($branch->children()->get() as $item)
-                                            <li>{{$item->name}}</li>
-                                        @endforeach
-                                        </ul>
-                                    </td>
-                                    <td>
+                                    <td class="px-5 py-0">
                                         <div class="row row-xs wd-xl-4p">
                                         @if (! $branch->parent_id)
                                             <a href="#" onclick="showAddForm('{{$branch->id}}')" class="action-icon">
@@ -93,6 +83,16 @@
                                             </form>
                                             @endcan
                                         </div>
+                                    </td>
+                                    <td>{{ $branch->name }}</td>
+                                    <td>{{ $branch->phone }}</td>
+                                    <td>{{ $branch->address }}</td>
+                                    <td>
+                                        <ul>
+                                        @foreach ($branch->children()->get() as $item)
+                                            <li>{{$item->name}}</li>
+                                        @endforeach
+                                        </ul>
                                     </td>
                                 </tr>
 
@@ -195,6 +195,11 @@
             $('#branch-modal').modal('show');
 
         }
+
+        // $(document).ready(function () {
+        // $('#datatable-buttons').DataTable({
+        //     order: [[1, 'desc']],
+        // });
 
     </script>
 @endsection

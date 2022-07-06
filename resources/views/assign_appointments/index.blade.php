@@ -36,22 +36,17 @@
                     <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Employee Name</th>
                                 <th>Job Name</th>
                                 <th>Branch Name</th>
                                 <th>Location Name</th>
                                 <th>Appointment</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         @foreach ($appoints as $a )
                         <tr>
-                            <td>{{ $a->employees->name }}</td>
-                            <td>{{ $a->job->name }}</td>
-                            <td>{{ $a->branch->name }}</td>
-                            <td>{{ $a->location->name }}</td>
-                            <td>{{ $a->appointment->name }}</td>
-                            <td>
+                            <td class="px-5 py-0">
                                 <div class="row row-xs wd-xl-4p">
                                     @can('edit_assign_appointment')
                                     <a href="{{ route('assign_appointment.edit', $a->id) }}" class="action-icon">
@@ -68,6 +63,11 @@
                                     @endcan
                                 </div>
                             </td>
+                            <td>{{ $a->employees->name }}</td>
+                            <td>{{ $a->job->name }}</td>
+                            <td>{{ $a->branch->name }}</td>
+                            <td>{{ $a->location->name }}</td>
+                            <td>{{ $a->appointment->name }}</td>
                         </tr>
                         @endforeach
                         <tbody>

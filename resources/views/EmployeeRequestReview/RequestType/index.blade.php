@@ -40,9 +40,9 @@
                             <div class="dt-buttons"></div>
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Note</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                         
@@ -50,9 +50,7 @@
                             <tbody>
                                 @foreach($types as $type)
                                 <tr>
-                                    <td>{{ $type->name }}</td>
-                                    <td>{{ $type->note }}</td>
-                                    <td>
+                                    <td class="px-5 py-0">
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_attend_method')
                                             <a href="{{ route('employee_request_type.edit',$type->id) }}" class="action-icon">
@@ -68,8 +66,9 @@
                                             </form>
                                             @endcan
                                         </div>
-                                    </td>
-                                    
+                                    </td>                                    
+                                    <td>{{ $type->name }}</td>
+                                    <td>{{ $type->note }}</td>
                                 </tr>
                                
                                 @endforeach

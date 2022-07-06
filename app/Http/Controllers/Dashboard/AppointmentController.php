@@ -22,7 +22,7 @@ class AppointmentController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $appointments = Appointment::latest()->get();
         } else {
-            $appointments = Appointment::where('branch_id', '=', auth()->user()->branch_id)->get();
+            $appointments = Appointment::where('branch_id', '=', auth()->user()->branch_id)->latest()->get();
         }
         return view('appointments.index', compact('appointments'));
     }

@@ -37,7 +37,7 @@ class UserController extends Controller
         if(auth()->user()->hasRole('super_admin')){
             $users = User::latest()->get();
         }else{
-            $users = User::where('branch_id', auth()->user()->branch_id)->get();
+            $users = User::where('branch_id', auth()->user()->branch_id)->latest()->get();
         }
         return view('users/index', compact('users'));
     }

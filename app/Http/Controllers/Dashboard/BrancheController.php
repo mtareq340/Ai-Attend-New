@@ -29,12 +29,12 @@ class BrancheController extends Controller
         $branch_id = auth()->user()->branch_id;
         if (auth()->user()->hasRole('super_admin'))
         {
-            return view('branches.index_table', ['branches' => Branch::all()]);
+            return view('branches.index_table', ['branches' => Branch::latest()->get()]);
 
         } else 
         {
 
-            return view('branches.index_table', ['branches' => Branch::where('id',$branch_id)->orWhere('parent_id' ,$branch_id)->get()]);
+            return view('branches.index_table', ['branches' => Branch::where('id',$branch_id)->orWhere('parent_id' ,$branch_id)->latest()->get()]);
         }
     }
 

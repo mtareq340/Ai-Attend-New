@@ -28,7 +28,7 @@ class RoleController extends Controller
         if (!Gate::allows('show_roles')) {
             return abort(401);
         }
-        $roles = Role::all();
+        $roles = Role::latest()->get();
         $permissions = Permission::all();
         return view('roles.index', compact('roles'));
     }

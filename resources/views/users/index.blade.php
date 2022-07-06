@@ -45,13 +45,13 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Phone</th>
                                     <th>Role</th>
                                     <th>Branch</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -59,22 +59,7 @@
                             <tbody>
                                 @foreach($users as $user)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->address }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>
-                                        @if ($user->roles->first())
-                                            {{$user->roles->first()->name}}
-                                        @else
-                                            <span class="badge badge-danger">none</span>
-                                        @endif
-
-                                    </td>
-                                    <td>
-                                        {{optional($user->branch)->name}}
-                                    </td>
-                                    <td>
+                                    <td class="px-5 py-0">
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_user')
                                             <a href="{{ route('users.edit', $user->id) }}" class="action-icon">
@@ -90,6 +75,21 @@
                                             </form>
                                             @endcan
                                         </div>
+                                    </td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->address }}</td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td>
+                                        @if ($user->roles->first())
+                                            {{$user->roles->first()->name}}
+                                        @else
+                                            <span class="badge badge-danger">none</span>
+                                        @endif
+
+                                    </td>
+                                    <td>
+                                        {{optional($user->branch)->name}}
                                     </td>
                                 </tr>
 

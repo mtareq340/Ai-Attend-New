@@ -35,6 +35,7 @@
                             <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Name</th>
                                         <th>Location Name</th>
                                         <th>Branch Name</th>
@@ -43,7 +44,6 @@
                                         <th>Daley hour & min</th>
                                         <th>Overtime hour & min</th>
                                         <th>Date</th>
-                                        <th>Action</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
 
@@ -54,17 +54,7 @@
                                 @foreach ($appointments as $appoint)
                                 <tr>
 
-                                    <td>{{$appoint->name}}</td>
-                                    <td>{{$appoint->branch->name}}</td>
-                                    <td>{{$appoint->location->name}}</td>
-                                    <td>{{$appoint->start_from}}</td>
-                                    <td>{{$appoint->end_to}}</td>
-                                    <td>{{$appoint->delay}}</td>
-                                    <td>{{$appoint->overtime}}</td>
-                                    <td>{{$appoint->date}}</td>
-                                    <td>{{ $appoint->created_at }}</td>
-                                    <td>{{ $appoint->updated_at }}</td>
-                                    <td>
+                                    <td class="px-5 py-0">
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_appointment')
                                             <a href="{{ route('appointment.edit',$appoint->id) }}" class="action-icon">
@@ -81,6 +71,16 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    <td>{{$appoint->name}}</td>
+                                    <td>{{$appoint->location->name}}</td>
+                                    <td>{{$appoint->branch->name}}</td>
+                                    <td>{{$appoint->start_from}}</td>
+                                    <td>{{$appoint->end_to}}</td>
+                                    <td>{{$appoint->delay}}</td>
+                                    <td>{{$appoint->overtime}}</td>
+                                    <td>{{$appoint->date}}</td>
+                                    <td>{{ $appoint->created_at }}</td>
+                                    <td>{{ $appoint->updated_at }}</td>
                                 </tr>
                                 @endforeach
 

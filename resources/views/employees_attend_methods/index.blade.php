@@ -33,16 +33,23 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive w-100">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Employee Name</th>
                                     <th>Employee Branch</th>
                                     <th>Employee Job</th>
                                     <th>Attend Methods</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($emps as $emp)
                                 <tr>
+                                <td class="px-5 py-0">
+                                    @can('edit_employee_attend_method')
+                                    <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
+                                    @endcan
+                                </td>
                                 <td>{{$emp->name}}</td>
                                     <td>{{$emp->branch->name}}</td>
                                     <td>{{$emp->job->name}}</td>
@@ -52,13 +59,6 @@
                                                     <li>{{$attend_method->name}}</li>
                                             @endforeach
                                         </ul>
-                                    </td>
-                                    <td>
-                                        @can('edit_employee_attend_method')
-                                        <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button" class="btn btn-blue waves-effect waves-light">
-                                            <i class="fa fa-pen"></i>
-                                        </a>
-                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

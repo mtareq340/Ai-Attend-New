@@ -24,7 +24,7 @@ class AttendmethodController extends Controller
         /*
             return view in path view/attend_methods/index.blade.php
         */
-        $attend_methods  = Attendmethods::all();
+        $attend_methods  = Attendmethods::latest()->get();
         return view('attend_methods.index', compact('attend_methods'));
     }
 

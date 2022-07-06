@@ -25,7 +25,7 @@ class EmployeeAttendMethodController extends Controller
         if (!Gate::allows('show_employee_attend_methods')) {
             return abort(401);
         }
-        $emps = Employee::all();
+        $emps = Employee::latest()->get();
         return view("employees_attend_methods.index", compact('emps'));
     }
 

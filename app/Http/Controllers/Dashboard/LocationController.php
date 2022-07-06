@@ -24,8 +24,7 @@ class LocationController extends Controller
         if (!Gate::allows('show_locations')) {
             return abort(401);
         }
-        $locations = Location::all();
-        // dd($locations);
+        $locations = Location::latest()->get();
         return view('locations\index', compact('locations'));
     }
 

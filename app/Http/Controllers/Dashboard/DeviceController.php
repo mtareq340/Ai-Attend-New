@@ -25,7 +25,7 @@ class DeviceController extends Controller
         /*
             return view in path view/devices/index.blade.php
         */
-        $devices  = Device::all();
+        $devices  = Device::latest()->get();
         return view('devices.index', compact('devices'));
     }
 

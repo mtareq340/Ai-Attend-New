@@ -40,7 +40,7 @@ class EmployeeController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::latest()->get();
         } else {
-            $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+            $employees = Employee::where('branch_id', auth()->user()->branch_id)->latest()->get();
         }
         return view('employees.index', compact('employees'));
     }

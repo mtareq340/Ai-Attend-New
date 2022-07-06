@@ -41,10 +41,10 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Note</th>
                                     <th>Activate</th>
-                                    <th>Action</th>
                                     
                                 </tr>
                             </thead>
@@ -53,12 +53,7 @@
                             <tbody>
                                 @foreach($devices  as $device)
                                     <tr>
-                                        <td>{{ $device->name }}</td>
-                                        <td>{{ $device->notes }}</td>
-                                        <td>
-                                            <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $device->id }}' , 'active')" class="js-switch" {{$device->active?'checked':''}} data-plugin="switchery" />
-                                        </td>
-                                        <td>
+                                        <td class="px-5 py-0">
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_device')
                                                 <a href="{{ route('devices.edit', $device->id) }}" class="action-icon">
@@ -74,6 +69,11 @@
                                                 </form>
                                                 @endcan
                                             </div>
+                                        </td>
+                                        <td>{{ $device->name }}</td>
+                                        <td>{{ $device->notes }}</td>
+                                        <td>
+                                            <input type="checkbox" onchange="toggleActivationAndLocked(event,'{{ $device->id }}' , 'active')" class="js-switch" {{$device->active?'checked':''}} data-plugin="switchery" />
                                         </td>
                                     </tr>
                                 @endforeach

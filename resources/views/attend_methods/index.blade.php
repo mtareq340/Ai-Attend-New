@@ -42,9 +42,9 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Note</th>
-                                    <th>Actions</th>
 
                                 </tr>
                             </thead>
@@ -53,9 +53,7 @@
                             <tbody>
                                 @foreach($attend_methods  as $attend_method)
                                     <tr>
-                                        <td>{{ $attend_method->name }}</td>
-                                        <td>{{ $attend_method->notes }}</td>
-                                        <td>
+                                        <td class="px-5 py-0">
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_attend_method')
                                                 <a href="{{ route('attend_methods.edit', $attend_method->id) }}" class="action-icon">
@@ -72,6 +70,8 @@
                                                 @endcan
                                             </div>
                                         </td>
+                                        <td>{{ $attend_method->name }}</td>
+                                        <td>{{ $attend_method->notes }}</td>
                                     </tr>
                                 @endforeach
 
