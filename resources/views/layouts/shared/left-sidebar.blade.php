@@ -114,7 +114,7 @@
                 {{-- EndSidebar Jobs --}}
 
                 {{-- start of Employees --}}
-                @can('show_employees')
+                {{-- @can('show_employees')
                     <li>
                         <a href="#sidebaremp" data-toggle="collapse">
                             <i class="fas fa-user-tie"></i>
@@ -136,8 +136,27 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
+
+                @can('show_employees')
+                <li>
+                    <a href="{{ route('employees.index') }}">
+                        <i class="fas fa-user-tie"></i>
+                        <span> Employees </span>
+                    </a>
+                </li>
+            @endcan
                 {{-- end of Employees --}}
+
+
+            @can('show_employee_attendance')
+                <li>
+                    <a href="{{ route('employee_attendance.index') }}">
+                        <i class="fas fa-user-tie"></i>
+                        <span> Employees Attendance </span>
+                    </a>
+                </li>
+            @endcan
 
 
             
@@ -318,21 +337,20 @@
                 {{-- end of appointment --}}
 
                 {{-- start of Management Plans  --}}
-                @can('show_assign_appointments')
+                {{-- @can('show_assign_appointments') --}}
                     <li>
-                        <a href="#sidebarassign" data-toggle="">
+                        {{-- <a href="#sidebarassign" data-toggle="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="feather feather-clipboard icon-dual">
                                 <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                                 <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                             </svg>
-                        </a>
-                        <a href="{{ route('assign_appointment.index') }}"> Management Plans</a>
-
-                       
+                        </a> --}}
+                        <a href="#"> Management Plans</a>
+                        {{-- <p>Management Plans</p>                        --}}
                     </li>
-                @endcan
+                {{-- @endcan --}}
 
                 @can('show_extra_time')
                 <li>
