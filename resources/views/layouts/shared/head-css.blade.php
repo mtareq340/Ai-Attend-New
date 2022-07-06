@@ -4,6 +4,9 @@
 <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="{{ asset('assets/plugins/noty/noty.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/notyf.css') }}">
+
+
 <script src="{{ asset('assets/plugins/noty/noty.min.js') }}"></script>
 
 @if(isset($mode) && $mode == 'rtl')
