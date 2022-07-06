@@ -431,10 +431,6 @@
 
 
 
-
-
-        // datatable
-
         // clear state
         localStorage.removeItem('DataTables_state-saving-datatable_/{{ Request::path() }}');
         // adjust header with the body
