@@ -63,12 +63,11 @@
                                         <td>{{$emp->attendanc_method->name}}</td>
                                         <td>
                                             @if ($emp->state == 1)
-                                                <p class="btn btn-success rounded">Success</p>
+                                                <p class="badge badge-success badge-pill" style="font-size: 15px">Success</p>
                                             @else
-                                                <p class="btn btn-danger rounded">Fail</p>
-
+                                                <p class="badge badge-danger badge-pill" style="font-size: 15px">Fail</p>
                                             @endif
-                                            {{$emp->state}}
+                                            {{-- {{$emp->state}} --}}
                                         </td>
                                         <td>{{$emp->created_at}}</td>
                                         <td>{{$emp->updated_at}}</td>

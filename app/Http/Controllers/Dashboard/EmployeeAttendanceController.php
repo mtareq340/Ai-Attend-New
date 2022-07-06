@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Attendmethods;
+use App\Branch;
+use App\Employee;
 use App\Employee_Attendance;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class EmployeeAttendanceController extends Controller
@@ -32,6 +36,16 @@ class EmployeeAttendanceController extends Controller
     public function create()
     {
         //
+        if (auth()->user()->hasRole('super_admin')) {
+            $branch = Branch::all();
+            $employees = Employee::all();
+            $attendance = Attendmethods::all();
+        } else {
+            $branch = Branch::find(auth()->user()->branch_id);
+            $employees = Employee::find(auth()->user()->branch_id);
+            $attendance = Attendmethods::all();
+        }
+        return view('employee_attendance.create', compact('branch', 'employees', 'attendance'));
     }
 
     /**
@@ -43,6 +57,28 @@ class EmployeeAttendanceController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            $request->validate([
+                'employee_id' => 'required',
+                'attendance_method_id' => 'required',
+            ]);
+            $branch = auth()->user()->branch_id;
+            $attendance  = $request->attendance_method_id;
+            $employees = $request->employee_id;
+            $emplist = [];
+            foreach ($employees as $emp) {
+                array_push($emplist, [
+                    'employee_id' => $emp,
+                    'branch_id' => $branch,
+                    'attendance_method_id' => $attendance,
+                ]);
+            }
+            // dd($emplist);
+            Employee_Attendance::insert($emplist);
+            return redirect()->back()->with(['success' => 'تم الحفظ بنجاح']);
+        } catch (Exception $e) {
+            return $e;
+        }
     }
 
     /**
