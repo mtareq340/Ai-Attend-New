@@ -25,7 +25,11 @@ class LocationController extends Controller
         if (!Gate::allows('show_locations')) {
             return abort(401);
         }
-        $locations = Location::all();
+        if (auth()->user()->hasRole('super_admin')) {
+            $locations = Location::all();
+        } else {
+            $locations = Location::where('branch_id', auth()->user()->branch_id)->get();
+        }
         // dd($locations);
         return view('locations\index', compact('locations'));
     }

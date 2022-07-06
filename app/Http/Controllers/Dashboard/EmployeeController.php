@@ -87,13 +87,21 @@ class EmployeeController extends Controller
 
         // return redirect()->route('employees.create')->with(['success' => 'تم الحفظ بنجاح']);
         try {
-            // $request->validate([
-            //     'name' => 'required',
-            //     'phone' => 'required|numeric',
-            //     'gender' => 'required',
-            //     'branch_id' => 'required',
-            //     'job_id' => 'required',
-            // ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'phone' => 'required',
+
+                ],
+                [
+                    'phone.required' => 'برجاء ادخال رقم الهاتف',
+
+                ]
+            );
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
             $plan_id = Setting::find(1)->value;
             $plan = Plan::find($plan_id);
             // $employees_count = Employee::count();
@@ -104,8 +112,8 @@ class EmployeeController extends Controller
             // if($data['password']){
             // $data['password'] = Hash::make($data['password']);
             // }
+            // dd($data);
             $emp = Employee::create($data);
-
             return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
             // return redirect()->back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
