@@ -23,7 +23,7 @@ class AppointmentController extends Controller
     public function index()
     {
         if (!Gate::allows('show_appointments')) {
-            return abort(401);
+            return abort(400);
         }
         if (auth()->user()->hasRole('super_admin')) {
             $appointments = Appointment::latest()->get();
@@ -36,7 +36,7 @@ class AppointmentController extends Controller
     public function create(Request $req)
     {
         if (!Gate::allows('add_appointment')) {
-            return abort(401);
+            return abort(400);
         }
         $locations = Location::all();
         $jobs = Job::all();
@@ -51,9 +51,8 @@ class AppointmentController extends Controller
     }
     public function store(Request $request)
     {
-        // try {
+        try {
             $data = $request->all(); 
-
             $validator = Validator::make(
                 $data,
                 [
@@ -89,18 +88,19 @@ class AppointmentController extends Controller
             );
             if ($validator->fails()) {
                 $err_msg = $validator->errors()->first();
-                return back()->with('error', $err_msg)->withInput();
+                return response()->json(['msg' => $err_msg] , 400);
             }
 
             // handle validation for selecting old Date
 
             if(Carbon::parse($request->date)->isPast()){
-            return back()->with('error', 'هذا التاريخ غير مسموح')->withInput();
+            return response()->json(['msg' => 'هذا التاريخ غير مسموح'] , 400);
         }
     
 
         $start_1 = Carbon::parse($request->start_from_period_1); 
-        $end_1 = Carbon::parse($request->end_to_period_1); 
+        $end_1 = Carbon::parse($request->end_to_period_1);
+
     
 
         // handle validation for selecting 2 periods
@@ -110,51 +110,48 @@ class AppointmentController extends Controller
                 $end_2 = Carbon::parse($request->end_to_period_2); 
 
                if(!$request->start_from_period_2){
-                    return back()->with('error', 'برجاء اختيار وقت بداية الفترة الثانية')->withInput();
+                    return response()->json(['msg' => 'برجاء اختيار وقت بداية الفترة الثانية'] , 400);
                 }
                 if(!$request->end_to_period_2){
-                    return back()->with('error', 'برجاء اختيار وقت نهاية الفترة الثانية')->withInput();
+                    return response()->json(['msg' => 'برجاء اختيار وقت نهاية الفترة الثانية'] , 400);
                 }
                 if(!$request->delay_period_2){
-                    return back()->with('error', 'برجاء اختيار الفترة المرنة للفترة الثانية')->withInput();
+                    return response()->json(['msg' => 'برجاء اختيار الفترة المرنة للفترة الثانية'] , 400);
                 }
             
 
                 if($end_1->gt($start_2)){
-                    return back()->with('error', 'يجب ان يكون وقت بدأ الفترة الثانية بعد وقت انتهاء الفترة الأولى')->withInput();
+                    return response()->json(['msg' => 'يجب ان يكون وقت بدأ الفترة الثانية بعد وقت انتهاء الفترة الأولى'] , 400);
                 }
     
                 if($end_1->gt($start_2)){
-                    return back()->with('error', 'يجب ان يكون وقت بداية الفترة الثانية بعد وقت نهاية الفترة الأولى')->withInput();
-    
+                    return response()->json(['msg' => 'يجب ان يكون وقت بداية الفترة الثانية بعد وقت نهاية الفترة الأولى'] , 400);
                 }
                 if($start_2->gt($end_2)){
-                    return back()->with('error', 'يجب ان يكون وقت نهاية الفترة الثانية بعد وقت بداية الفترة الثانية')->withInput();
+                    return response()->json(['msg' => 'يجب ان يكون وقت نهاية الفترة الثانية بعد وقت بداية الفترة الثانية'] , 400);
                 }
             
             }
-
      
             // handle validation for selecting time
-
-
           
             if($start_1->gt($end_1)){
-                return back()->with('error', 'يجب ان يكون وقت انتهاء الفترة الأولى بعد وقت بدأ الفترة الأولى')->withInput();
+                return response()->json(['msg' => 'يجب ان يكون وقت انتهاء الفترة الأولى بعد وقت بدأ الفترة الأولى'] , 400);
             }
           
             
             $appointment = new Appointment($request->except(['period_count' , 'attendence_days' , 'devices' , 'emps' , 'date']));
+            
             $appointment->fill([
                 'attendence_days' => implode(',', $request->attendence_days),
                 'branch_id' => auth()->user()->branch_id,
-                'date' => Carbon::parse($request->date)
+                'date' => Carbon::parse($request->date),
             ]);
             $appointment->save();
 
             // fill appointments devices
             $appointment->devices()->attach($request->devices);
-            $employees = [];
+
             foreach ($request->emps as $emp) {
                 $emp = json_decode($emp);
                 $assign_appointment = DB::table('assign_appointments')
@@ -162,17 +159,17 @@ class AppointmentController extends Controller
                 'job_id' => $emp->job_id,'branch_id' => auth()->user()->branch_id,'location_id'=>$request->location_id]);
             }
             // fill appointments em ployees  
-            return redirect()->route('appointment.index')->with(['success' => 'تم الحفظ بنجاح']);
+            return response()->json(['msg' => 'تم اضافة موعد الدوام بنجاح'] , 200);
 
-        // } catch (Exception $e) {
-            // return $e;
-            // return redirect()->route('appointment.create')->with(['error' => 'حدث خطا برجاء المحاوله مره اخري']);
-        // }
+        } catch (Exception $e) {
+            return response()->json(['msg' => 'حدث خطأ ما قم بالمحاولة مرة اخرى او اتصل بالشركة'] , 500);
+        }
     }
 
     public function destroy($id)
     {
         try {
+            
             $appointment = Appointment::find($id);
             $appointment->delete();
             return redirect()->route('appointment.edit')->with(['success' => 'تم حذف الحضور بنجاح']);
@@ -185,7 +182,7 @@ class AppointmentController extends Controller
     public function edit($id)
     {
         if (!Gate::allows('edit_appointment')) {
-            return abort(401);
+            return abort(400);
         }
         $appointment = Appointment::find($id);
         $branch = Branch::find(auth()->user()->branch_id);

@@ -70,7 +70,6 @@
                     <div class="card-body">
 
                         {{-- <h4 class="header-title">Employees table</h4> --}}
-
                         <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100">
                             <div class="dt-buttons"></div>
                             <thead>
