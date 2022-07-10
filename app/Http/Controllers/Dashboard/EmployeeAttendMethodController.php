@@ -73,9 +73,9 @@ class EmployeeAttendMethodController extends Controller
             $employees = $request->emp_ids;
             $attends = $request->attendance_id;
             // dd($employees, $attends);
-            foreach ($attends as $attend) {
-                $attend_method = Attendmethods::find($attend);
-                $attend_method->employees()->sync($employees);
+            foreach ($employees as $emp) {
+                $emps = Employee::find($emp);
+                $emps->attend_methods()->sync($attends);
             }
             return redirect()->route('employees_attend_methods.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
