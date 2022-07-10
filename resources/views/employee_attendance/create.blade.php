@@ -36,7 +36,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('assign_appointment.index')}}">Employees Attendance</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('employee_attendance.index')}}">Employees Attendance</a></li>
                             <li class="breadcrumb-item active">Add Employees Attendance</li>
                         </ol>
                     </div>

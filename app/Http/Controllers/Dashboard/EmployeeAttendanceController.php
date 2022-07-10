@@ -77,7 +77,7 @@ class EmployeeAttendanceController extends Controller
             Employee_Attendance::insert($emplist);
             return redirect()->back()->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
-            return $e;
+            return redirect()->route('employee_attendance.create')->with(['error' => 'حدثت مشكله برجاء الماوله مره اخري']);
         }
     }
 
