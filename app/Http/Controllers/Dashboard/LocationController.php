@@ -96,8 +96,12 @@ class LocationController extends Controller
     {
         try {
             $location = Location::find($id);
-            $location->delete();
-            return redirect()->route('locations.index')->with(['success' => 'تم خذدغ الموقع بنجاح']);
+            $delete = $location->delete();
+            if (!$delete) {
+                return redirect()->route('locations.index')->with(['error' => 'لا يمكن حذف الموقع لانه مسجل علي فرع']);
+            } else {
+                return redirect()->route('locations.index')->with(['success' => 'تم حذف الموقع بنجاح']);
+            }
         } catch (Exception $e) {
             return redirect()->route('locations.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }

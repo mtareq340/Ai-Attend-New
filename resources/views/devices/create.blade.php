@@ -60,7 +60,7 @@
 
                             <div class="form-group">
                                 <label for="code_input" class="col-form-label">Code *</label>
-                                <input type="name" name="code" class="form-control" id="code_input" placeholder="Name"
+                                <input type="name" name="code" class="form-control" id="code_input" placeholder="code"
                                     required>
                             </div>
 

@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label for="code_input" class="col-form-label">Code *</label>
                                 <input type="name" name="code" class="form-control" id="code_input"
-                                    value="{{ $device->code }}" placeholder="Name" required>
+                                    value="{{ $device->code }}" placeholder="Code" required>
                             </div>
 
                             <div class="form-group shadow-textarea">

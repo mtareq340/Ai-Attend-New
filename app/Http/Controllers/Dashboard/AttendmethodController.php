@@ -131,7 +131,7 @@ class AttendmethodController extends Controller
             $attend_methods = Attendmethods::findOrFail($id);
             //update in db
             $attend_methods->update($request->all());
-            return redirect()->route('attend_methods.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
+            return redirect()->route('attend_methods.index')->with(['success' => 'تم تحديث طريقه التحضير بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('attend_methods.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
@@ -147,7 +147,10 @@ class AttendmethodController extends Controller
     {
         try {
             $attend_methods = Attendmethods::find($id);
-            $attend_methods->delete();
+            $delete = $attend_methods->delete();
+            if (!$delete) {
+                return redirect()->route('attend_methods.index')->with(['error' => 'لا يمكن حذف طريقه تحضير مخصصه للموظفين']);
+            }
             return redirect()->route('attend_methods.index')->with(['success' => 'تم حذف الحضور بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('attend_methods.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);

@@ -70,6 +70,7 @@ class DeviceController extends Controller
         }
         // Save The Request Into DataBase
         $data = $request->all();
+        // dd($data);
         $devices = Device::create($data);
         return redirect()->route('devices.index')->with(['success' => 'تم الحفظ بنجاح']);
     }
@@ -117,7 +118,7 @@ class DeviceController extends Controller
 
             //update in db
             $devices->update($request->all());
-            return redirect()->route('devices.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
+            return redirect()->route('devices.index')->with(['success' => 'تم تحديث الجهاز بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('devices.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
@@ -133,10 +134,14 @@ class DeviceController extends Controller
     {
         try {
             $devices = Device::find($id);
-
-            $devices->delete();
-            return redirect()->route('devices.index')->with(['success' => 'تم حذف الحضور بنجاح']);
-        } catch (\Exception $ex) {
+            $delete = $devices->delete();
+            //check if data is deleted or not
+            if (!$delete) {
+                return redirect()->route('devices.index')->with(['error' => 'لايمكن حذف هذا الجهاز لانه يتيع لموقع']);
+            } else {
+                return redirect()->route('devices.index')->with(['success' => 'تم الحذف بنجاح']);
+            }
+        } catch (Exception $ex) {
             return redirect()->route('devices.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }

@@ -9,7 +9,6 @@ class Location extends Model
 {
     //
     use Notifiable;
-
     protected $table = 'locations';
 
     protected $fillable = ['name', 'branch_id', 'location_address', 'distance', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
@@ -29,5 +28,20 @@ class Location extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($location) {
+            $relationMethods = ['branch'];
+
+            foreach ($relationMethods as $relationMethod) {
+                if ($location->$relationMethod()->count() > 0) {
+                    return false;
+                }
+            }
+        });
     }
 }
