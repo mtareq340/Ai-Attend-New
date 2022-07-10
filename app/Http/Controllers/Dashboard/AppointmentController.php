@@ -11,7 +11,7 @@ use App\Device;
 use App\Job;
 use App\Week_Day;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -38,21 +38,24 @@ class AppointmentController extends Controller
         if (!Gate::allows('add_appointment')) {
             return abort(400);
         }
-        $locations = Location::all();
         $jobs = Job::all();
         $devices = Device::all();
-        if(auth()->user()->hasRole('super_admin')){
+        if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::all();
-        }else{
-            $employees = Employee::where('branch_id' , auth()->user()->branch_id)->get();
+            $locations = Location::all();
+            $branchs = Branch::all();
+        } else {
+            $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+            $locations = Location::where('branch_id', auth()->user()->branch_id)->get();
+            $branchs = Branch::find(auth()->user()->branch_id);
         }
         $days = Week_Day::all();
-        return view('appointments.create', compact('locations','employees' , 'jobs' , 'days'));
+        return view('appointments.create', compact('locations', 'branchs', 'employees', 'jobs', 'days'));
     }
     public function store(Request $request)
     {
         try {
-            $data = $request->all(); 
+            $data = $request->all();
             $validator = Validator::make(
                 $data,
                 [
@@ -65,6 +68,7 @@ class AppointmentController extends Controller
 
                     'overtime' => 'required',
                     'location_id' => 'required',
+                    'branch_id' => 'required',
 
                     'attendence_days' => 'required',
                     'devices' => 'required',
@@ -79,7 +83,7 @@ class AppointmentController extends Controller
 
                     'overtime.required' => 'برجاء اختيار الوقت الاضافي',
                     'location_id.required' => 'برجاء اختيار الموقع',
-
+                    'branch_id.required' => 'برجاء اختيار الفرع',
                     'attendence_days.required' => 'يجب اختيار على الاقل يوم عمل واحد',
                     'devices.required' => 'يجب اختيار على الاقل جهاز واحد',
                     'emps.required' => 'يجب اختيار على الاقل موظف واحد',
@@ -88,63 +92,62 @@ class AppointmentController extends Controller
             );
             if ($validator->fails()) {
                 $err_msg = $validator->errors()->first();
-                return response()->json(['msg' => $err_msg] , 400);
+                return response()->json(['msg' => $err_msg], 400);
             }
 
             // handle validation for selecting old Date
 
-            if(Carbon::parse($request->date)->isPast()){
-            return response()->json(['msg' => 'هذا التاريخ غير مسموح'] , 400);
-        }
-    
-
-        $start_1 = Carbon::parse($request->start_from_period_1); 
-        $end_1 = Carbon::parse($request->end_to_period_1);
-
-    
-
-        // handle validation for selecting 2 periods
-            if( $request->period_count == '2' ){
-
-                $start_2 = Carbon::parse($request->start_from_period_2); 
-                $end_2 = Carbon::parse($request->end_to_period_2); 
-
-               if(!$request->start_from_period_2){
-                    return response()->json(['msg' => 'برجاء اختيار وقت بداية الفترة الثانية'] , 400);
-                }
-                if(!$request->end_to_period_2){
-                    return response()->json(['msg' => 'برجاء اختيار وقت نهاية الفترة الثانية'] , 400);
-                }
-                if(!$request->delay_period_2){
-                    return response()->json(['msg' => 'برجاء اختيار الفترة المرنة للفترة الثانية'] , 400);
-                }
-            
-
-                if($end_1->gt($start_2)){
-                    return response()->json(['msg' => 'يجب ان يكون وقت بدأ الفترة الثانية بعد وقت انتهاء الفترة الأولى'] , 400);
-                }
-    
-                if($end_1->gt($start_2)){
-                    return response()->json(['msg' => 'يجب ان يكون وقت بداية الفترة الثانية بعد وقت نهاية الفترة الأولى'] , 400);
-                }
-                if($start_2->gt($end_2)){
-                    return response()->json(['msg' => 'يجب ان يكون وقت نهاية الفترة الثانية بعد وقت بداية الفترة الثانية'] , 400);
-                }
-            
+            if (Carbon::parse($request->date)->isPast()) {
+                return response()->json(['msg' => 'هذا التاريخ غير مسموح'], 400);
             }
-     
+
+
+            $start_1 = Carbon::parse($request->start_from_period_1);
+            $end_1 = Carbon::parse($request->end_to_period_1);
+
+
+
+            // handle validation for selecting 2 periods
+            if ($request->period_count == '2') {
+
+                $start_2 = Carbon::parse($request->start_from_period_2);
+                $end_2 = Carbon::parse($request->end_to_period_2);
+
+                if (!$request->start_from_period_2) {
+                    return response()->json(['msg' => 'برجاء اختيار وقت بداية الفترة الثانية'], 400);
+                }
+                if (!$request->end_to_period_2) {
+                    return response()->json(['msg' => 'برجاء اختيار وقت نهاية الفترة الثانية'], 400);
+                }
+                if (!$request->delay_period_2) {
+                    return response()->json(['msg' => 'برجاء اختيار الفترة المرنة للفترة الثانية'], 400);
+                }
+
+
+                if ($end_1->gt($start_2)) {
+                    return response()->json(['msg' => 'يجب ان يكون وقت بدأ الفترة الثانية بعد وقت انتهاء الفترة الأولى'], 400);
+                }
+
+                if ($end_1->gt($start_2)) {
+                    return response()->json(['msg' => 'يجب ان يكون وقت بداية الفترة الثانية بعد وقت نهاية الفترة الأولى'], 400);
+                }
+                if ($start_2->gt($end_2)) {
+                    return response()->json(['msg' => 'يجب ان يكون وقت نهاية الفترة الثانية بعد وقت بداية الفترة الثانية'], 400);
+                }
+            }
+
             // handle validation for selecting time
-          
-            if($start_1->gt($end_1)){
-                return response()->json(['msg' => 'يجب ان يكون وقت انتهاء الفترة الأولى بعد وقت بدأ الفترة الأولى'] , 400);
+
+            if ($start_1->gt($end_1)) {
+                return response()->json(['msg' => 'يجب ان يكون وقت انتهاء الفترة الأولى بعد وقت بدأ الفترة الأولى'], 400);
             }
-          
-            
-            $appointment = new Appointment($request->except(['period_count' , 'attendence_days' , 'devices' , 'emps' , 'date']));
-            
+
+
+            $appointment = new Appointment($request->except(['period_count', 'attendence_days', 'devices', 'emps', 'date']));
+
             $appointment->fill([
                 'attendence_days' => implode(',', $request->attendence_days),
-                'branch_id' => auth()->user()->branch_id,
+                'branch_id' => $request->branch_id,
                 'date' => Carbon::parse($request->date),
             ]);
             $appointment->save();
@@ -155,21 +158,22 @@ class AppointmentController extends Controller
             foreach ($request->emps as $emp) {
                 $emp = json_decode($emp);
                 $assign_appointment = DB::table('assign_appointments')
-                ->insert(['employee_id' => $emp->id, 'work_appointment_id' => $appointment->id,
-                'job_id' => $emp->job_id,'branch_id' => auth()->user()->branch_id,'location_id'=>$request->location_id]);
+                    ->insert([
+                        'employee_id' => $emp->id, 'work_appointment_id' => $appointment->id,
+                        'job_id' => $emp->job_id, 'branch_id' => $request->branch_id, 'location_id' => $request->location_id
+                    ]);
             }
             // fill appointments em ployees  
-            return response()->json(['msg' => 'تم اضافة موعد الدوام بنجاح'] , 200);
-
+            return response()->json(['msg' => 'تم اضافة موعد الدوام بنجاح'], 200);
         } catch (Exception $e) {
-            return response()->json(['msg' => 'حدث خطأ ما قم بالمحاولة مرة اخرى او اتصل بالشركة'] , 500);
+            return response()->json(['msg' => 'حدث خطأ ما قم بالمحاولة مرة اخرى او اتصل بالشركة'], 500);
         }
     }
 
     public function destroy($id)
     {
         try {
-            
+
             $appointment = Appointment::find($id);
             $appointment->delete();
             return redirect()->route('appointment.edit')->with(['success' => 'تم حذف الحضور بنجاح']);
@@ -243,4 +247,28 @@ class AppointmentController extends Controller
             return redirect()->route('appointment.edit')->with(['error' => 'حذث خطا برجاء المحاوله مره اخري']);
         }
     }
+
+    public function getlocationfrombranch(Request $req)
+    {
+        $text = '';
+        $branch_id = $req->branch_id;
+        // $job_id  = $req->job_id;
+        $locations =  location::where('branch_id', '=', $branch_id)->get();
+        foreach ($locations as $location) {
+            $text  .= "<option value = '$location->id'>" . $location->name . "</option>";
+        }
+        return $text;
+    }
+
+    // public function get_location_devices(Request $req)
+    // {
+    //     $text = '';
+    //     $branch_id = $req->branch_id;
+    //     // $job_id  = $req->job_id;
+    //     $devices =  Device::where('branch_id', '=', $branch_id)->get();
+    //     foreach ($devices as $d) {
+    //         $text  .= "<option value = '$d->id'>" . $d->name . "</option>";
+    //     }
+    //     return $text;
+    // }
 }

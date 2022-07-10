@@ -9,9 +9,7 @@
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
-        type="text/css" />
-
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
 @endsection
@@ -228,15 +226,27 @@
 
                                     <div class="tab-pane fade" id="second">
                                         <div class="row">
+                                            
+                                            <div class="form-group mb-2 w-100">
+                                                <label for="inputBranch">Branch *</label>
+                                                <select id="inputBranch" 
+                                                    data-toggle="select2"  class="select2" name="branch_id">
+                                                    @if (auth()->user()->hasRole('super_admin'))     
+                                                        @foreach ($branchs as $branch)
+                                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                        @endforeach 
+                                                    @else
+                                                        <option selected  value="{{$branchs->id}}">{{$branchs->name}}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
 
                                             <div class="form-group mb-2 w-100">
                                                 <label for="inputLocation">Location *</label>
-                                                <select id="inputLocation" onchange="getLocationDevices(event)"
+                                                <select  id="inputLocation" onchange="getLocationDevices(event)"
                                                     data-toggle="select2" class="select2" name="location_id">
-                                                    @foreach ($locations as $location)
-                                                        <option value="{{ $location->id }}">{{ $location->name }}
-                                                        </option>
-                                                    @endforeach
+                                                        <option value=""></option>
+                                            
                                                 </select>
                                             </div>
 
@@ -404,6 +414,27 @@
     <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
     <script>
+
+        //filitering locations from Branch
+        function get_location_from_branch(){
+            let branch_id = $('#inputBranch').val();
+            // console.log(branch_id);
+            // console.log(job_id);
+            $.ajax(
+                {
+                    "type":"get",
+                    'url':`{{ route('get_location_from_branch') }}`,
+                    'data':{branch_id : branch_id},
+                    "success":function(data){
+                        $('#inputLocation').html(data);
+                        console.log(data);
+                    },
+                    "error":function(){
+                        
+                    },
+
+                });
+        }
         // init 24 hours , minutes
         $('.24hours-timepicker').flatpickr({
             enableTime: true,
@@ -428,6 +459,7 @@
                 }
             }
         });
+        
 
 
 

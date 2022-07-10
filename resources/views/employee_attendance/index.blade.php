@@ -1,5 +1,4 @@
 @extends('layouts.vertical', ['title' => 'Datatables'])
-
 @section('css')
     <!-- Plugins css -->
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
@@ -39,9 +38,25 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
-                        <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                        <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
+                            <li class="nav-item" data-target-form="#profileForm">
+                                <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                    <i class="mdi mdi-face-profile mr-1"></i>
+                                    <span class="d-none d-sm-inline">Success</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-target-form="#otherForm">
+                                <a href="#secound" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                    <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
+                                    <span class="d-none d-sm-inline">Fail</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-pane fade" id="first">
+                        <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100 ">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Job Number</th>
                                     <th>Branch Name</th>
@@ -57,18 +72,18 @@
                             <tbody>
                                 @foreach ($employees as $emp)
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>{{$emp->employee->name}}</td>
                                         <td>{{$emp->employee->job_number}}</td>
                                         <td>{{$emp->branch->name}}</td>
                                         <td>{{$emp->attendanc_method->name}}</td>
                                         <td>
                                             @if ($emp->state == 1)
-                                                <p class="btn btn-success rounded">Success</p>
+                                                <p class="badge badge-success badge-pill" style="font-size: 15px">Success</p>
                                             @else
-                                                <p class="btn btn-danger rounded">Fail</p>
-
+                                                <p class="badge badge-danger badge-pill" style="font-size: 15px">Fail</p>
                                             @endif
-                                            {{$emp->state}}
+                                            {{-- {{$emp->state}} --}}
                                         </td>
                                         <td>{{$emp->created_at}}</td>
                                         <td>{{$emp->updated_at}}</td>
@@ -97,12 +112,13 @@
 
                             </tbody>
                         </table>
-
-                    </div> <!-- end card body-->
+                    </div>                    
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
+   
     </div>
+
 
 
 @endsection
@@ -114,6 +130,24 @@
 
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    <script>
+        // $('#rootwizard').bootstrapWizard({
+        //     // onTabShow: function(tab, navigation, index) {
+        //     //     var $total = navigation.find('li').length;
+        //     //     var $current = index + 1;
 
+        //     //     if ($total == $current) {
+        //     //         // last tab
+        //     //         $('#next').addClass('d-none')
+        //     //         $('#submit-btn').removeClass('d-none')
+        //     //     } else {
+        //     //         // other tabs
+        //     //         $('#next').removeClass('d-none')
+        //     //         $('#submit-btn').addClass('d-none')
+        //     //     }
+        //     // }
+        // });
+        
+    </script>
 
 @endsection

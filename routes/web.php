@@ -67,6 +67,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   //employeee Attendace //
   Route::resource('employee_attendance', 'Dashboard\EmployeeAttendanceController');
 
+  Route::get('get_location_from_branch', 'Dashboard\AppointmentController@getlocationfrombranch')->name('get_location_from_branch');
   // start settings
 
   Route::patch('settings/cover', 'Dashboard\CompanySettingsController@uploadCover')->name('changeCover');
