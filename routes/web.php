@@ -103,6 +103,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   Route::post('/addvication', 'Dashboard\CompanySettingsController@addvication')->name('addvication');
 });
 
+
+
+
+
+
+
 Route::group(['prefix' => '/'], function () {
   Route::get('{first}/{second}/{third}', 'RoutingController@thirdLevel')->name('third');
   Route::get('{first}/{second}', 'RoutingController@secondLevel')->name('second');

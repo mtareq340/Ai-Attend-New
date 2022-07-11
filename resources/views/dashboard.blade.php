@@ -10,18 +10,14 @@
     <!-- Start Content-->
     <div class="container-fluid">
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                       
-                    </div>
-                    <h4 class="page-title">Dashboard</h4>
-                </div>
-            </div>
+
+        <div class="py-2">
+            @if(Session::has('alerts'))
+                @foreach (json_decode(Session::get('alerts')) as $alert)
+                    <div class="mb-1 alert alert-{{$alert->type}}">{{$alert->message_en}}</div>            
+                @endforeach
+            @endif
         </div>
-        <!-- end page title -->
 
         <div class="row">
             <div class="col-md-6 col-xl-3">
@@ -97,7 +93,37 @@
             </div> <!-- end col-->
         </div>
         <!-- end row-->
+        <div class="w-100">
+            <center>
+                <div>
+                    <div class="card-box">
+                        <div class="dropdown float-right">
+                        
+                        </div>
 
+                        <p class=" h3 mb-0">Registeration Number : {{$registeration_number}}</p>
+
+                        <div class="widget-chart text-center" dir="ltr">
+
+                            <div id="chart">
+                            </div>
+                            <p class="h3 {{$diffDays <=5 ? 'text-danger' : 'text-info'}} ">{{$diffDays}} days left</p>
+                            {{-- <div id="total-revenue" class="mt-0"  data-colors="#f1556c"></div> --}}
+
+                            <h5 class="text-muted mt-0">Maximum Employees</h5>
+                            <h2>{{$plan->count_employees}}</h2>
+
+
+                        
+
+                        </div>
+                    </div> <!-- end card-box -->
+                </div> <!-- end col-->
+            </center>
+
+        </div>
+        
+        <!-- end row -->
         <div class="row">
             <div class="col-xl-6">
                 <div class="card-box">
@@ -219,40 +245,7 @@
         </div>
         <!-- end row -->
 
-        <div class="row">
-            <center>
-                <div class="col-lg-12">
-                    <div class="card-box">
-                        <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical"></i>
-                            </a>
-                        
-                        </div>
-
-                        <h4 class="header-title mb-0">Plan Analysis</h4>
-
-                        <div class="widget-chart text-center" dir="ltr">
-
-                            <div id="chart">
-                            </div>
-                            {{-- <div id="total-revenue" class="mt-0"  data-colors="#f1556c"></div> --}}
-
-                            <h5 class="text-muted mt-0">Maximum Employees</h5>
-                            <h2>{{$plan->count_employees}}</h2>
-
-                            <p class="text-muted w-75 mx-auto sp-line-2">Traditional heading elements are designed to work best in the meat of your page content.</p>
-
-                        
-
-                        </div>
-                    </div> <!-- end card-box -->
-                </div> <!-- end col-->
-            </center>
-
-          
-        </div>
-        <!-- end row -->
+        
 
         
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\CompanySettings;
 use App\Http\Controllers\Controller;
+use App\Plan;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Carbon\Carbon;
@@ -10,6 +12,7 @@ use Jenssegers\Agent\Agent;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
@@ -46,6 +49,42 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request)
     {
+
+        // call api
+        $base_url = 'http://127.0.0.1:5000';
+
+        $response = Http::get($base_url . '/api/getData', ['company_id' => 34]);
+        $alerts = $response['alerts'];
+        $payment_detail = $response['payment_detail'];
+        if (!$payment_detail) {
+            Auth::logout();
+            $request->session()->flash('msg', "sorry ,your subscription has expired .. contact sphinx company to renew your subscription");
+            return redirect('/auth/login');
+        }
+        // check if company plan subscription is over
+        $end_date = Carbon::parse($payment_detail['end_date']);
+        if ($end_date->isPast()) {
+            Auth::logout();
+            $request->session()->flash('msg', "sorry ,your subscription has expired .. contact sphinx company to renew your subscription");
+            return redirect('/auth/login');
+        }
+
+
+        $request->session()->flash('alerts', json_encode($alerts));
+        $company_settings = CompanySettings::first();
+        if (!$company_settings->registeration_num) {
+            $company_settings->registeration_num = $payment_detail['company']['registration_num'];
+            $company_settings->save();
+        }
+
+        $plan = Plan::first();
+        $plan->start_date = $payment_detail['start_date'];
+        $plan->end_date = $payment_detail['end_date'];
+        $plan->number_days = $payment_detail['plan']['duration_days'];
+        $plan->count_employees = $payment_detail['plan']['max_emp'];
+        $plan->save();
+
+
         $agent = new Agent();
         // dd($agent->city());
         $details = [
@@ -54,7 +93,7 @@ class LoginController extends Controller
             "browser" => $agent->browser(),
         ];
         $activity_log = [
-            'user_id' => Auth::user()->id ,
+            'user_id' => Auth::user()->id,
             'ip' => request()->getClientIp(),
             'datetime' =>  Carbon::now()->toDateTimeString(),
             'created_at' =>  Carbon::now()->toDateTimeString(),
@@ -63,12 +102,11 @@ class LoginController extends Controller
         ];
 
         DB::table('login_histories')->insert($activity_log);
-
-
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
         return redirect('auth/login');
-      }
+    }
 }
