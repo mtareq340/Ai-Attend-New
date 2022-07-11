@@ -117,14 +117,13 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        /*
-            Delete The Job Where id = id request
-            And redirect -> with msg [  ]
-        */
+      
         try {
             $job = Job::find($id);
-
-            $job->delete();
+            $deleted =  $job->delete();
+            if(!$deleted){
+            return redirect()->route('jobs.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            }
             return redirect()->route('jobs.index')->with(['success' => 'تم حذف الوظيفة بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('jobs.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);

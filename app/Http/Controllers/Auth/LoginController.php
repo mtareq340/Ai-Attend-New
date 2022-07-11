@@ -9,9 +9,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as DB;
 use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
@@ -46,6 +46,8 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
 
     protected function authenticated(Request $request)
     {
@@ -100,6 +102,8 @@ class LoginController extends Controller
             'updated_at' =>  Carbon::now()->toDateTimeString(),
             'details' => json_encode($details)
         ];
+
+
 
         DB::table('login_histories')->insert($activity_log);
     }

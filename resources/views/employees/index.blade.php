@@ -117,7 +117,7 @@
                                             @endcan
                                         </td>
                                         <td>
-                                            @can('active_employee')
+                                            @can('edit_employee')
                                                 <input type="checkbox"
                                                     onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')"
                                                     class="js-switch-red" {{ $emp->locked ? 'checked' : '' }}
@@ -193,8 +193,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 1 *</label>
-                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="phone num 1"
-                                            required>
+                                        <input type="text" name="phone" class="form-control" id="phone"
+                                            placeholder="phone num 1" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -262,10 +262,11 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputJob" class="col-form-label">Job Number *</label>
-                                        <input type="number" name="job_number" class="form-control" id="job_num" placeholder="Select Job Number">
+                                        <input type="number" name="job_number" class="form-control" id="job_num"
+                                            placeholder="Select Job Number">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="input-age" class="col-form-label">Age <span
@@ -461,20 +462,21 @@
         }
 
     </script>
-      <script>
-        function activevication(){
+    <script>
+        function activevication() {
             let isChecked = $('#qr')[0].checked
             // console.log(isChecked);
             return isChecked;
         }
 
-        function activebar(){
+        function activebar() {
             let isChecked = $('#bar')[0].checked
             // console.log(isChecked);
             return isChecked;
         }
+
     </script>
-  
+
     <script>
         $(document).ready(function() {
             // ////////////////////////////

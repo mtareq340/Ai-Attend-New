@@ -13,25 +13,25 @@
         <!-- start page title -->
         <div class="row align-items-center py-1">
             {{-- <div class="col-12"> --}}
-                <div class="col-4">
-                    <h4 class="page-title">Branches</h4>
-                </div>
-                <div class="col-4">
-                    @can('add_branch')
+            <div class="col-4">
+                <h4 class="page-title">Branches</h4>
+            </div>
+            <div class="col-4">
+                @can('add_branch')
                     <button onclick="showAddFormRoot(event)" class="btn btn btn-primary  ">
                         <i class="fa fa-plus"></i>
                         Add Branch
                     </button>
-                    @endcan
+                @endcan
+            </div>
+            <div class="page-title-box col-4">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Branch</li>
+                    </ol>
                 </div>
-                <div class="page-title-box col-4">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Branch</li>
-                        </ol>
-                    </div>
-                </div>
+            </div>
 
 
             {{-- </div> --}}
@@ -43,7 +43,7 @@
         {{-- @php
             dd(auth()->user()->name);
         @endphp --}}
-        
+
 
         <div class="row">
             <div class="col-12">
@@ -87,15 +87,23 @@
                                                     @endcan
                                                     <i class="mdi mdi-square-edit-outline"></i> </a>
                                                 <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
-                                                @can('delete_branch')
-                                                    <form action="{{ route('branches.destroy', $branch->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button style="border-color:white; color:red; font-size: 0.8rem;"
-                                                            class="action-icon delete" type="submit"> <i
-                                                                class="mdi mdi-delete"></i></button>
-                                                    </form>
-                                                @endcan
+
+
+                                                {{-- wiil only delete the branch when it has no children --}}
+                                                @if ($branch->children->count() == 0)
+
+                                                    @can('delete_branch')
+                                                        <form action="{{ route('branches.destroy', $branch->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button style="border-color:white; color:red; font-size: 0.8rem;"
+                                                                class="action-icon delete" type="submit"> <i
+                                                                    class="mdi mdi-delete"></i></button>
+                                                        </form>
+                                                    @endcan
+                                                @endif
+
                                             </div>
                                         </td>
                                     </tr>
@@ -136,10 +144,10 @@
                                     </div>
 
                                     <div class="form-group col-lg-6">
-                                        <label class="form-control-label"
-                                            for="input-name">{{ __('Phone number') }}</label>
+                                        <label class="form-control-label" for="input-name">{{ __('Phone number') }} <span
+                                                class="text-muted">(optional)</span></label>
                                         <input type="tel" name="phone" id="input-name"
-                                            class="form-control form-control-alternative" required />
+                                            class="form-control form-control-alternative" />
                                     </div>
                                 </div>
 

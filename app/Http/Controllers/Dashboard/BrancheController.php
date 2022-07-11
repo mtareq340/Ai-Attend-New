@@ -2,21 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\AttendenceSettings;
 use App\Branch;
 use App\Branch_Setting;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class BrancheController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,35 +18,26 @@ class BrancheController extends Controller
 
     public function index(Request $request)
     {
+
         if (!Gate::allows('show_branches')) {
             return abort(401);
         }
-        if (auth()->user()->hasRole('super_admin')) {
+        $user = auth()->user();
+        if ($user->hasRole('super_admin')) {
             return view('branches.index_table', ['branches' => Branch::all()]);
+        } else {
+            $branches =  Branch::where('id', $user->branch_id)->orWhere('parent_id', $user->branch_id)->get();
+            return view('branches.index_table', ['branches' => $branches]);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //this was added by using ajax call in the index view
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => '',
             'address' => '',
             'notes' => '',
             // 'long' => 'required|numeric',
@@ -89,7 +74,6 @@ class BrancheController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -142,13 +126,12 @@ class BrancheController extends Controller
     {
         try {
             $branch = Branch::findOrFail($id);
-            if ($branch->can_delete) {
-                //delete in db
-                $branch->delete();
-                return back()->with(['success' => 'تم حذف الفرع بنجاح']);
-            } else {
-                return back()->with(['error' => 'هذا الفرع يوجد عليه موظفين لا يمكن مسحه']);
+            $deleted = $branch->delete();
+            if (!$deleted) {
+                return back()->with(['error' => 'هذا الفرع لا يمكن مسحه']);
             }
+            $branch->branch_settings->delete();
+            return back()->with(['success' => 'تم حذف الفرع بنجاح']);
         } catch (\Exception $ex) {
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }

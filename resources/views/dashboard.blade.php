@@ -112,8 +112,6 @@
 
                             <h5 class="text-muted mt-0">Maximum Employees</h5>
                             <h2>{{$plan->count_employees}}</h2>
-
-
                         
 
                         </div>
