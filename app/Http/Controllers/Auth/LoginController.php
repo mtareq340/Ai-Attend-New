@@ -10,6 +10,7 @@ use Jenssegers\Agent\Agent;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
@@ -44,8 +45,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+  
+
     protected function authenticated(Request $request)
     {
+
+
         $agent = new Agent();
         // dd($agent->city());
         $details = [
@@ -62,8 +67,9 @@ class LoginController extends Controller
             'details' => json_encode($details)
         ];
 
+    
+    
         DB::table('login_histories')->insert($activity_log);
-
 
     }
 

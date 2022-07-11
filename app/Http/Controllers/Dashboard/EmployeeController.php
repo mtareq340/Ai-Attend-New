@@ -11,7 +11,6 @@ use App\Imports\EmployeeImport;
 use App\Job;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
@@ -250,20 +249,17 @@ class EmployeeController extends Controller
     }
 
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try {
             $emp = Employee::findOrFail($id);
-            //delete in db
-            $emp->delete();
-            return redirect()->route('employees.index')->with(['success' => 'تم حذف الموظف بنجاح']);
+            $emp->attend_methods()->detach();
+            $emp->requests()->delete();
+            $deleted = $emp->delete();
+            if(! $deleted){
+                    return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            } 
+           return redirect()->route('employees.index')->with(['success' => 'تم حذف الموظف بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
