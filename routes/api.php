@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\EmployeesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,9 @@ salah
 
 Route::group(['as' => 'api.' ,'namespace' => 'Api'], function () {
 
+
+
+
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
     Route::post('employees/is_employee_phone_exist', 'EmployeesController@isEmployeePhoneExist'); // parameters ($phone)
@@ -36,6 +40,9 @@ Route::group(['as' => 'api.' ,'namespace' => 'Api'], function () {
     Route::post('employee_requests/getData', 'EmployeeRequestController@getData');
     Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
+
+    Route::get('employees/attend_methods' , [EmployeesController::class , 'get_employee_attendenceMethods']);
+
 
     // Company Apis
     Route::post('company/get_settings', 'CompanySettingsController@getData'); // parameters ()

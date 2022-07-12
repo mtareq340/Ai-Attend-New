@@ -17,9 +17,6 @@ class AttendMethodController extends Controller
 {
     public function getData(Request $request){
         $data =  Attendmethods::where('active', 1)->get();
-
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);
-
     }
-
 }

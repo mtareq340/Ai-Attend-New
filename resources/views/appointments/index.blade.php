@@ -1,7 +1,8 @@
 @extends('layouts.vertical', ['title' => 'Datatables'])
 @section('css')
     <!-- Plugins css -->
-    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -45,13 +46,11 @@
                                     <th>Start from (P1)</th>
                                     <th>End to (P1)</th>
                                     <th>Daley Time (P1)</th>
-                                    <th>Overtime Time (P1)</th>
-                                    <th>Start from (P2)</th>
-                                    <th>End to (P2)</th>
+                                    {{-- <th>Overtime Time (P1)</th> --}}
                                     <th>Start from (P2)</th>
                                     <th>End to (P2)</th>
                                     <th>Daley Time (P2)</th>
-                                    <th>Overtime Time (P2)</th>
+                                    {{-- <th>Overtime Time (P2)</th> --}}
                                     <th>Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
@@ -69,11 +68,13 @@
                                         <td>{{ $appoint->start_from_period_1 }}</td>
                                         <td>{{ $appoint->end_to_period_1 }}</td>
                                         <td>{{ $appoint->delay_period_1 }}</td>
-                                        <td>{{ $appoint->overtime_period_1 }}</td>
+                                        {{-- <td>{{ $appoint->overtime_period_1 }}</td> --}}
                                         <td>{{ $appoint->start_from_period_2 }}</td>
                                         <td>{{ $appoint->end_to_period_2 }}</td>
                                         <td>{{ $appoint->delay_period_2 }}</td>
-                                        <td>{{ $appoint->overtime_period_2 }}</td>
+                                        {{-- <td>{{ $appoint->overtime_period_2 }}</td> --}}
+
+
                                         <td>{{ $appoint->date }}</td>
                                         <td>{{ $appoint->created_at }}</td>
                                         <td>{{ $appoint->updated_at }}</td>

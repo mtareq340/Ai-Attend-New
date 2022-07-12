@@ -156,5 +156,22 @@ class EmployeesController extends Controller
             return Response()->json(['status' => 0, 'message' => 'there is no data']);
         }
     }
+
+    function get_employee_attendenceMethods(Request $req){
+    $rules = array(
+            'id' => 'required',
+        );
+        $validator = Validator::make($req->all(), $rules);
+        if ($validator->fails()) {
+            return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
+        }   
+        $emp = Employee::find($req->id);
+        if(! $emp){
+            return response()->json(['status' => 0 , 'message' => 'errors' , 'errors' => [
+                'employee' => 'the employee is not found'
+            ]], 404);
+        }
+        return $emp->attend_methods()->where('active' , 1)->get();
+    }
     
 }

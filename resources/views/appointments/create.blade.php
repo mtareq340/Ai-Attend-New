@@ -195,8 +195,10 @@
                                                 </div>
 
                                                 <div class="form-group row mb-3">
+
                                                     <label class="col-md-3 col-form-label" for="password3"> Attendance
                                                         Days</label>
+
                                                     <div class="col-md-9">
                                                         @foreach ($days as $day)
                                                             <div class="checkbox checkbox-success form-check-inline">
@@ -380,6 +382,7 @@
                 },
                 success: (res) => {
                     const $devices_select = $('#devices_input')
+                    $devices_select.empty()
                     res.forEach(device => {
                         $devices_select.append(
                             new Option(
@@ -390,7 +393,7 @@
                             )
                         )
                     });
-
+                    $devices_select.val('')
                 },
                 error: () => {
                     alert('something went wrong try again later')
@@ -409,6 +412,8 @@
                 },
                 success: (res) => {
                     const $locations_select = $('#inputLocation')
+                    $locations_select.empty()
+                    $('#devices_input').empty()
                     res.forEach(location => {
                         $locations_select.append(
                             new Option(
@@ -448,25 +453,6 @@
     <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
     <script>
-        //filitering locations from Branch
-        function get_location_from_branch() {
-            let branch_id = $('#inputBranch').val();
-            $.ajax({
-                "type": "get",
-                'url': `{{ route('get_location_from_branch') }}`,
-                'data': {
-                    branch_id: branch_id
-                },
-                "success": function(data) {
-                    $('#inputLocation').html(data);
-                    console.log(data);
-                },
-                "error": function() {
-
-                },
-
-            });
-        }
         // init 24 hours , minutes
         $('.24hours-timepicker').flatpickr({
             enableTime: true,
@@ -591,7 +577,7 @@
                 contentType: 'application/json',
                 data: JSON.stringify(values),
                 success: function(data) {
-                    notyf.success('appointment is added successfully')
+                    notyf.success('تم اضافة خطة الدوام بنجاح')
                     window.location = '/dashboard/appointment'
                 },
                 error: function(error) {
