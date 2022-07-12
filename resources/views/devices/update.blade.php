@@ -1,5 +1,8 @@
 @extends('layouts.vertical', ['title' => 'Form Components'])
+@section('css')
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
+@endsection
 @section('content')
 
     @if (session()->has('message'))
@@ -57,6 +60,19 @@
                                     value="{{ $device->code }}" placeholder="Code" required>
                             </div>
 
+                            <div class="form-group">
+                                <label for="locationInput">Location</label>
+                                <select id="locationInput" data-toggle="select2" name="location_id" class="select2">
+                                    @foreach ($locations as $location)
+                                        <option {{ $device->id == $location->id ? 'selected' : '' }}
+                                            value="{{ $location->id }}">
+                                            {{ $location->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
                             <div class="form-group shadow-textarea">
                                 <label for="exampleFormControlTextarea6">Note</label>
                                 <textarea class="form-control z-depth-1" name="notes" id="exampleFormControlTextarea6"
@@ -79,4 +95,12 @@
 
 
     </div> <!-- container -->
+@endsection
+@section('script')
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script>
+        $('[data-toggle="select2"]').select2();
+
+    </script>
+
 @endsection

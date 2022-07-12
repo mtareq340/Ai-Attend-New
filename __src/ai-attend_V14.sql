@@ -1,19 +1,24 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2022 at 04:04 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Jul 12, 2022 at 03:01 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `ai-attend-agaza`
+-- Database: `ai-attend`
 --
 
 -- --------------------------------------------------------
@@ -104,7 +109,7 @@ INSERT INTO `attendance_settings` (`id`, `branch_id`, `allow_delay`, `automatic_
 CREATE TABLE `attend_methods` (
   `id` bigint(20) NOT NULL,
   `name` varchar(191) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1',
+  `active` tinyint(1) DEFAULT 1,
   `notes` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -161,8 +166,8 @@ CREATE TABLE `branch_setting` (
   `branch_id` int(11) NOT NULL,
   `over_time_count` int(11) NOT NULL,
   `vication_days` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -234,8 +239,7 @@ CREATE TABLE `devices` (
   `id` bigint(20) NOT NULL,
   `name` varchar(191) NOT NULL,
   `code` varchar(100) NOT NULL,
-  `active` tinyint(1) DEFAULT '1',
-  `location_id` int(30) NOT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   `notes` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -245,8 +249,34 @@ CREATE TABLE `devices` (
 -- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`id`, `name`, `code`, `active`, `location_id`, `notes`, `created_at`, `updated_at`) VALUES
-(9, 'becon device', '85+98568', 1, 2, NULL, '2022-07-12 10:36:46', '2022-07-12 10:49:06');
+INSERT INTO `devices` (`id`, `name`, `code`, `active`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 'Mohamed Tarek', 'IS668', 1, 'dfbgnhm', '2022-06-21 05:15:14', '2022-07-10 15:05:42'),
+(4, 'becon', 'Cs22', 1, NULL, '2022-07-04 19:51:02', '2022-07-10 15:05:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `devices_to_locations`
+--
+
+CREATE TABLE `devices_to_locations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `device_id` bigint(20) NOT NULL,
+  `location_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `devices_to_locations`
+--
+
+INSERT INTO `devices_to_locations` (`id`, `device_id`, `location_id`) VALUES
+(1, 1, 3),
+(2, 1, 4),
+(3, 3, 4),
+(4, 4, 4),
+(5, 1, 2),
+(6, 4, 2),
+(7, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -267,8 +297,8 @@ CREATE TABLE `employees` (
   `age` bigint(20) DEFAULT NULL,
   `branch_id` bigint(20) DEFAULT NULL,
   `job_id` bigint(20) DEFAULT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `locked` int(11) NOT NULL DEFAULT '1',
+  `active` int(11) NOT NULL DEFAULT 1,
+  `locked` int(11) NOT NULL DEFAULT 1,
   `otp` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -299,9 +329,9 @@ CREATE TABLE `employee_attendance` (
   `employee_id` int(11) DEFAULT NULL,
   `branch_id` int(11) NOT NULL,
   `attendance_method_id` int(11) NOT NULL,
-  `states` tinyint(1) DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `states` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -392,8 +422,8 @@ CREATE TABLE `employee_request_review` (
   `employee_id` int(11) NOT NULL,
   `request` varchar(255) NOT NULL,
   `date` datetime NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -451,11 +481,7 @@ CREATE TABLE `locations` (
 INSERT INTO `locations` (`id`, `name`, `location_address`, `distance`, `location_latitude`, `location_longituide`, `branch_id`, `notes`, `created_at`, `updated_at`) VALUES
 (1, 'Giza location', '123 main AT', '100', '30.014082', '31.482892', 2, NULL, '2022-06-29 06:56:21', '2022-06-29 06:56:21'),
 (2, 'water fall', '1234 main ST', '150', '29.934973', '30.921903', 5, NULL, '2022-06-29 06:57:08', '2022-06-29 06:57:08'),
-(5, 'test', '123 main AT', '100', '30.042022', '30.963788', 7, NULL, '2022-07-06 09:22:01', '2022-07-06 09:22:01'),
-(6, 'new location', 'address', '70', '30.044400', '31.235700', 7, NULL, '2022-07-12 10:42:20', '2022-07-12 10:42:20'),
-(7, 'new location', 'address', '50', '30.044400', '31.235700', 7, NULL, '2022-07-12 10:42:49', '2022-07-12 10:42:49'),
-(8, 'new location', 'address', '50', '30.044400', '31.235700', 2, NULL, '2022-07-12 10:43:23', '2022-07-12 10:43:23'),
-(9, 'new location 2', 'address', '50', '30.044400', '31.235700', 2, NULL, '2022-07-12 10:46:30', '2022-07-12 10:46:40');
+(5, 'test', '123 main AT', '100', '30.042022', '30.963788', 7, NULL, '2022-07-06 09:22:01', '2022-07-06 09:22:01');
 
 -- --------------------------------------------------------
 
@@ -510,22 +536,7 @@ INSERT INTO `login_histories` (`id`, `user_id`, `ip`, `datetime`, `created_at`, 
 (30, 30, '127.0.0.1', '2022-07-11 15:28:47', '2022-07-11 15:28:47', '2022-07-11 15:28:47', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (31, 30, '127.0.0.1', '2022-07-11 15:30:06', '2022-07-11 15:30:06', '2022-07-11 15:30:06', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (32, 30, '127.0.0.1', '2022-07-11 15:58:42', '2022-07-11 15:58:42', '2022-07-11 15:58:42', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(33, 30, '127.0.0.1', '2022-07-11 16:04:59', '2022-07-11 16:04:59', '2022-07-11 16:04:59', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(34, 30, '127.0.0.1', '2022-07-12 07:43:05', '2022-07-12 07:43:05', '2022-07-12 07:43:05', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(35, 30, '127.0.0.1', '2022-07-12 07:53:05', '2022-07-12 07:53:05', '2022-07-12 07:53:05', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(36, 30, '127.0.0.1', '2022-07-12 07:56:03', '2022-07-12 07:56:03', '2022-07-12 07:56:03', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(37, 30, '127.0.0.1', '2022-07-12 08:56:08', '2022-07-12 08:56:08', '2022-07-12 08:56:08', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(38, 30, '127.0.0.1', '2022-07-12 08:56:53', '2022-07-12 08:56:53', '2022-07-12 08:56:53', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(39, 30, '127.0.0.1', '2022-07-12 09:03:03', '2022-07-12 09:03:03', '2022-07-12 09:03:03', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(40, 30, '127.0.0.1', '2022-07-12 09:09:41', '2022-07-12 09:09:41', '2022-07-12 09:09:41', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(41, 30, '127.0.0.1', '2022-07-12 09:33:51', '2022-07-12 09:33:51', '2022-07-12 09:33:51', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(42, 30, '127.0.0.1', '2022-07-12 09:47:39', '2022-07-12 09:47:39', '2022-07-12 09:47:39', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(43, 30, '127.0.0.1', '2022-07-12 09:48:08', '2022-07-12 09:48:08', '2022-07-12 09:48:08', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(44, 30, '127.0.0.1', '2022-07-12 09:48:25', '2022-07-12 09:48:25', '2022-07-12 09:48:25', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(45, 30, '127.0.0.1', '2022-07-12 09:49:42', '2022-07-12 09:49:42', '2022-07-12 09:49:42', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(46, 30, '127.0.0.1', '2022-07-12 09:50:31', '2022-07-12 09:50:31', '2022-07-12 09:50:31', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(47, 30, '127.0.0.1', '2022-07-12 11:13:44', '2022-07-12 11:13:44', '2022-07-12 11:13:44', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(48, 30, '127.0.0.1', '2022-07-12 11:32:20', '2022-07-12 11:32:20', '2022-07-12 11:32:20', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Edge\"}');
+(33, 30, '127.0.0.1', '2022-07-11 16:04:59', '2022-07-11 16:04:59', '2022-07-11 16:04:59', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}');
 
 -- --------------------------------------------------------
 
@@ -795,9 +806,9 @@ INSERT INTO `plans` (`id`, `name`, `count_employees`, `price`, `start_date`, `en
 CREATE TABLE `request_type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `note` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `note` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -870,8 +881,8 @@ CREATE TABLE `users` (
   `password` varchar(191) DEFAULT NULL,
   `role_id` bigint(20) DEFAULT NULL,
   `branch_id` bigint(20) DEFAULT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `locked` int(11) NOT NULL DEFAULT '1',
+  `active` int(11) NOT NULL DEFAULT 1,
+  `locked` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -915,8 +926,8 @@ INSERT INTO `vications` (`id`, `week_day_id`, `attendance_setting_id`) VALUES
 CREATE TABLE `week_days` (
   `id` int(11) NOT NULL,
   `days` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_At` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_At` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -941,7 +952,7 @@ INSERT INTO `week_days` (`id`, `days`, `created_at`, `updated_At`) VALUES
 CREATE TABLE `work_appointments` (
   `id` bigint(20) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `attendance_repeat` int(1) NOT NULL DEFAULT '1',
+  `attendance_repeat` int(1) NOT NULL DEFAULT 1,
   `location_id` bigint(20) NOT NULL,
   `start_from_period_1` time DEFAULT NULL,
   `end_to_period_1` time DEFAULT NULL,
@@ -955,6 +966,16 @@ CREATE TABLE `work_appointments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `work_appointments`
+--
+
+INSERT INTO `work_appointments` (`id`, `name`, `attendance_repeat`, `location_id`, `start_from_period_1`, `end_to_period_1`, `start_from_period_2`, `end_to_period_2`, `delay_period_1`, `delay_period_2`, `branch_id`, `overtime`, `date`, `created_at`, `updated_at`) VALUES
+(31, 'appointment name test', 1, 3, '07:51:00', '19:51:00', NULL, NULL, '00:15:00', NULL, 2, '05:00', '2022-09-24', '2022-07-06 03:52:02', '2022-07-06 03:52:02'),
+(32, 'appointment name', 1, 3, '08:05:00', '20:04:00', NULL, NULL, '00:15:00', NULL, 2, '05:00', '2022-08-13', '2022-07-06 04:05:13', '2022-07-06 04:05:13'),
+(33, 'two periods test', 1, 3, '08:05:00', '20:05:00', NULL, NULL, '00:15:00', NULL, 2, '05:00', '2022-08-20', '2022-07-06 04:06:07', '2022-07-06 04:06:07'),
+(34, 'Sphinks Appointment', 1, 2, '12:09:00', '15:08:00', NULL, NULL, '12:00:00', NULL, 5, '12:00', '2022-07-21', '2022-07-06 08:04:46', '2022-07-06 08:04:46');
 
 --
 -- Indexes for dumped tables
@@ -1012,6 +1033,12 @@ ALTER TABLE `company_settings`
 -- Indexes for table `devices`
 --
 ALTER TABLE `devices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `devices_to_locations`
+--
+ALTER TABLE `devices_to_locations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1143,19 +1170,19 @@ ALTER TABLE `attendance_settings`
 -- AUTO_INCREMENT for table `attend_methods`
 --
 ALTER TABLE `attend_methods`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `branch_setting`
 --
 ALTER TABLE `branch_setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `company_plans`
@@ -1173,13 +1200,19 @@ ALTER TABLE `company_settings`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `devices_to_locations`
+--
+ALTER TABLE `devices_to_locations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `employee_attendance`
@@ -1215,13 +1248,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `login_histories`
 --
 ALTER TABLE `login_histories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1239,7 +1272,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `request_type`
 --
 ALTER TABLE `request_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1269,5 +1302,9 @@ ALTER TABLE `week_days`
 -- AUTO_INCREMENT for table `work_appointments`
 --
 ALTER TABLE `work_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

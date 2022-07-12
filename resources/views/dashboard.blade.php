@@ -2,8 +2,8 @@
 
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/selectize/selectize.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -12,9 +12,9 @@
 
 
         <div class="py-2">
-            @if(Session::has('alerts'))
+            @if (Session::has('alerts'))
                 @foreach (json_decode(Session::get('alerts')) as $alert)
-                    <div class="mb-1 alert alert-{{$alert->type}}">{{$alert->message_en}}</div>            
+                    <div class="mb-1 alert alert-{{ $alert->type }}">{{ $alert->message_en }}</div>
                 @endforeach
             @endif
         </div>
@@ -30,8 +30,8 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="mt-1"><span data-plugin="counterup">{{$plan->count_employees}}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Max Employees Number</p>
+                                <h3 class="mt-1"><span data-plugin="counterup">{{ $plan->count_employees }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Max Employees</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -48,7 +48,8 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$employess_count}}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $employess_count }}</span>
+                                </h3>
                                 <p class="text-muted mb-1 text-truncate">Employees</p>
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$branches_count}}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $branches_count }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Branches</p>
                             </div>
                         </div>
@@ -84,7 +85,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$jobs_count}}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $jobs_count }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Jobs</p>
                             </div>
                         </div>
@@ -98,21 +99,23 @@
                 <div>
                     <div class="card-box">
                         <div class="dropdown float-right">
-                        
+
                         </div>
 
-                        <p class=" h3 mb-0">Registeration Number : {{$registeration_number}}</p>
+                        <p class=" h3 mb-0">Registeration Number : {{ $registeration_number }}</p>
 
                         <div class="widget-chart text-center" dir="ltr">
 
                             <div id="chart">
                             </div>
-                            <p class="h3 {{$diffDays <=5 ? 'text-danger' : 'text-info'}} ">{{$diffDays}} days left</p>
+                            <p class="h3 {{ $diffDays <= 5 ? 'text-danger' : 'text-info' }} ">{{ $diffDays }} days
+                                left
+                            </p>
                             {{-- <div id="total-revenue" class="mt-0"  data-colors="#f1556c"></div> --}}
 
                             <h5 class="text-muted mt-0">Maximum Employees</h5>
-                            <h2>{{$plan->count_employees}}</h2>
-                        
+                            <h2>{{ $plan->count_employees }}</h2>
+
 
                         </div>
                     </div> <!-- end card-box -->
@@ -120,7 +123,7 @@
             </center>
 
         </div>
-        
+
         <!-- end row -->
         <div class="row">
             <div class="col-xl-6">
@@ -141,16 +144,16 @@
                             </thead>
                             <tbody>
                                 @if (count($empRequestsRevs) > 0)
-                                @foreach ($empRequestsRevs as $empRequestsRev)
-                                <tr>
-                                    <td>{{optional($empRequestsRev->employee)->name}}</td>
-                                    <td>{{optional($empRequestsRev->employee)->phone}}</td>
-                                    <td>{{$empRequestsRev->request}}</td>
-                                    <td>{{$empRequestsRev->date}}</td>
-                                </tr>
-                                @endforeach
+                                    @foreach ($empRequestsRevs as $empRequestsRev)
+                                        <tr>
+                                            <td>{{ optional($empRequestsRev->employee)->name }}</td>
+                                            <td>{{ optional($empRequestsRev->employee)->phone }}</td>
+                                            <td>{{ $empRequestsRev->request }}</td>
+                                            <td>{{ $empRequestsRev->date }}</td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr>thir is no Requests to Review</tr>
+                                    <tr>thir is no Requests to Review</tr>
                                 @endif
                                 {{-- <tr>
                                     <td style="width: 36px;">
@@ -203,16 +206,16 @@
                             </thead>
                             <tbody>
                                 @if (count($loginHistories) > 0)
-                                @foreach ($loginHistories as $index=>$loginHistory)
-                                <tr>
-                                    <td>{{$index+1}}</td>
-                                    <td>{{$loginHistory->ip}}</td>
-                                    <td>{{$loginHistory->datetime}}</td>
-                                    <td>{{$loginHistory->details}}</td>
-                                </tr>
-                                @endforeach
+                                    @foreach ($loginHistories as $index => $loginHistory)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $loginHistory->ip }}</td>
+                                            <td>{{ $loginHistory->datetime }}</td>
+                                            <td>{{ $loginHistory->details }}</td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr>thir is no login history</tr>
+                                    <tr>thir is no login history</tr>
                                 @endif
                                 {{-- <tr>
                                     <td>
@@ -243,33 +246,97 @@
         </div>
         <!-- end row -->
 
-        
 
-        
+
+
 
     </div> <!-- container -->
 @endsection
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
-    <script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
-    <script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
 
     <!-- Dashboar 1 init js-->
-    <script src="{{asset('assets/js/pages/dashboard-1.init.js')}}"></script>
+    <script src="{{ asset('assets/js/pages/dashboard-1.init.js') }}"></script>
     <script>
-        var options = {
-        chart: {
-            height: 350,
-            type: 'radialBar',
-        },
-        series: [{{$percentDays}}],
-        labels: ['Progress'],
+        var percent = {{ $percentDays }}
+        let color = "#168be2"
+
+        if (percent < 25) {
+            color = "#de0d26"
         }
+        var options = {
+            chart: {
+                height: 350,
+                type: 'radialBar',
+            },
+            series: [percent],
+            labels: ['Progress'],
+            fill: {
+                colors: [color]
+            }
+
+        }
+
+        // var options = {
+        //     chart: {
+        //         height: 280,
+        //         type: "radialBar",
+        //     },
+
+        //     series: [{{ $percentDays }}],
+
+        //     colors: ["#20E647"],
+        //     plotOptions: {
+        //         radialBar: {
+        //             hollow: {
+        //                 margin: 0,
+        //                 size: "70%",
+        //             },
+        //             track: {
+        //                 dropShadow: {
+        //                     enabled: true,
+        //                     top: 2,
+        //                     left: 0,
+        //                     blur: 4,
+        //                     opacity: 0.15
+        //                 }
+        //             },
+        //             dataLabels: {
+        //                 name: {
+        //                     offsetY: -10,
+        //                     color: "#fff",
+        //                     fontSize: "18px"
+        //                 },
+        //                 value: {
+        //                     color: "#fff",
+        //                     fontSize: "30px",
+        //                     show: true
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     fill: {
+        //         type: "gradient",
+        //         gradient: {
+        //             shade: "dark",
+        //             type: "vertical",
+        //             gradientToColors: ["#87D4F9"],
+        //             stops: [0, 100]
+        //         }
+        //     },
+        //     stroke: {
+        //         lineCap: "round"
+        //     },
+        //     labels: ["Progress"]
+        // };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
 
         chart.render();
+
     </script>
 @endsection

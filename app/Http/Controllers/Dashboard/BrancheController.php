@@ -158,4 +158,12 @@ class BrancheController extends Controller
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
+  
+    public function getBranchLocations(Request $req)
+    {
+        $id = $req->branch_id;
+        if (!$id) return 'no id provided';
+
+        return Branch::find($id)->locations;
+    }
 }

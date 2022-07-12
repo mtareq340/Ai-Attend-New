@@ -9,12 +9,12 @@ class Device extends Model
 {
     use Notifiable;
     protected $fillable = [
-        'name', 'code', 'notes', 'created_at', 'updated_at'
+        'name', 'code', 'notes', 'created_at', 'updated_at' , 'location_id'
     ];
 
-    public function locations()
+    public function location()
     {
-        return $this->belongsToMany(Location::class, 'devices_to_locations');
+        return $this->belongsTo(Location::class , 'location_id');
     }
     public function appointment()
     {

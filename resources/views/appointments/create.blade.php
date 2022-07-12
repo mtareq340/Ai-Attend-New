@@ -9,7 +9,8 @@
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
 @endsection
@@ -226,27 +227,30 @@
 
                                     <div class="tab-pane fade" id="second">
                                         <div class="row">
-                                            
+
                                             <div class="form-group mb-2 w-100">
                                                 <label for="inputBranch">Branch *</label>
-                                                <select id="inputBranch" 
-                                                    data-toggle="select2"  class="select2" name="branch_id">
-                                                    @if (auth()->user()->hasRole('super_admin'))     
-                                                        @foreach ($branchs as $branch)
-                                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
-                                                        @endforeach 
+                                                <select onchange="getBranchLocations(event)" id="inputBranch"
+                                                    data-toggle="select2" class="select2" name="branch_id">
+                                                    @if (auth()->user()->hasRole('super_admin'))
+                                                        @foreach ($branches as $branch)
+                                                            <option value="{{ $branch->id }}">{{ $branch->name }}
+                                                            </option>
+                                                        @endforeach
                                                     @else
-                                                        <option selected  value="{{$branchs->id}}">{{$branchs->name}}</option>
+                                                        <option selected value="{{ $branches->id }}">
+                                                            {{ $branches->name }}
+                                                        </option>
                                                     @endif
                                                 </select>
                                             </div>
 
                                             <div class="form-group mb-2 w-100">
                                                 <label for="inputLocation">Location *</label>
-                                                <select  id="inputLocation" onchange="getLocationDevices(event)"
-                                                    data-toggle="select2" class="select2" name="location_id">
-                                                        <option value=""></option>
-                                            
+                                                <select id="inputLocation" onchange="getdevicesFromLocation(event)"
+                                                    data-toggle="select2" class="select2" name="location_id"
+                                                    data-placeholder="Choose ...">
+
                                                 </select>
                                             </div>
 
@@ -274,7 +278,6 @@
                                                             <select id="job_id_input" data-toggle="select2"
                                                                 onchange="getJobEmployees(event)" class="select2">
                                                                 <option value="">All</option>
-
                                                                 @foreach ($jobs as $job)
                                                                     <option value="{{ $job->name }}">
                                                                         {{ $job->name }}
@@ -366,7 +369,8 @@
 
     <script>
         $('#inputLocation').val('')
-        const getLocationDevices = (event) => {
+        $('#inputBranch').val('')
+        const getdevicesFromLocation = (event) => {
             const id = event.target.value
             $.ajax({
                 url: "{{ route('getLocationDevices') }}",
@@ -376,7 +380,6 @@
                 },
                 success: (res) => {
                     const $devices_select = $('#devices_input')
-                    $devices_select.empty()
                     res.forEach(device => {
                         $devices_select.append(
                             new Option(
@@ -395,6 +398,38 @@
             });
         }
 
+
+        const getBranchLocations = (event) => {
+            const id = event.target.value
+            $.ajax({
+                url: "{{ route('getBranchLocations') }}",
+                type: 'GET',
+                data: {
+                    branch_id: id
+                },
+                success: (res) => {
+                    const $locations_select = $('#inputLocation')
+                    res.forEach(location => {
+                        $locations_select.append(
+                            new Option(
+                                location.name,
+                                location.id,
+                                false,
+                                false
+                            )
+                        )
+                    });
+
+                    $('#inputLocation').val('')
+
+
+                },
+                error: () => {
+                    alert('something went wrong try again later')
+                }
+            });
+        }
+
     </script>
     <!-- Plugins js-->
     <script src="{{ asset('assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js') }}"></script>
@@ -404,7 +439,6 @@
     <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
@@ -414,26 +448,24 @@
     <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
     <script>
-
         //filitering locations from Branch
-        function get_location_from_branch(){
+        function get_location_from_branch() {
             let branch_id = $('#inputBranch').val();
-            // console.log(branch_id);
-            // console.log(job_id);
-            $.ajax(
-                {
-                    "type":"get",
-                    'url':`{{ route('get_location_from_branch') }}`,
-                    'data':{branch_id : branch_id},
-                    "success":function(data){
-                        $('#inputLocation').html(data);
-                        console.log(data);
-                    },
-                    "error":function(){
-                        
-                    },
+            $.ajax({
+                "type": "get",
+                'url': `{{ route('get_location_from_branch') }}`,
+                'data': {
+                    branch_id: branch_id
+                },
+                "success": function(data) {
+                    $('#inputLocation').html(data);
+                    console.log(data);
+                },
+                "error": function() {
 
-                });
+                },
+
+            });
         }
         // init 24 hours , minutes
         $('.24hours-timepicker').flatpickr({
@@ -459,7 +491,7 @@
                 }
             }
         });
-        
+
 
 
 
@@ -530,21 +562,21 @@
                     return $(this).val();
                 }).get();
 
-            
+
             var devices = $("#devices_input")
                 .map(function() {
                     return $(this).val();
                 }).get();
 
-          
+
             var emps = []
-            $("input:checkbox[name=emps]:checked").each(function(){
-                    emps.push($(this).val());
+            $("input:checkbox[name=emps]:checked").each(function() {
+                emps.push($(this).val());
             });
-           
+
             var attendence_days = []
-            $("input:checkbox[name=attendence_days]:checked").each(function(){
-                    attendence_days.push($(this).val());
+            $("input:checkbox[name=attendence_days]:checked").each(function() {
+                attendence_days.push($(this).val());
             });
 
             values['emps'] = emps
@@ -565,7 +597,7 @@
                 error: function(error) {
                     const msg = error.responseJSON.msg
                     notyf.error(msg)
-                
+
                 },
                 processData: false,
 

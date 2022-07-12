@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB as DB;
 use Illuminate\Support\Facades\Http;
+use Jerry\JWT\JWT;
 
 class LoginController extends Controller
 {
@@ -55,7 +56,17 @@ class LoginController extends Controller
         // call api
         $base_url = 'http://127.0.0.1:5000';
 
-        $response = Http::get($base_url . '/api/getData', ['company_id' => 34]);
+        $payload = [
+            'company_id' => env('COMPANY_ID')
+        ];
+        $jwt_token = JWT::basic_encode($payload , env('JWT_SECRET'));
+       
+        $response = Http::withHeaders([
+            'access_token' =>  $jwt_token
+        ])->get($base_url . '/api/getData');
+        
+
+
         $alerts = $response['alerts'];
         $payment_detail = $response['payment_detail'];
         if (!$payment_detail) {

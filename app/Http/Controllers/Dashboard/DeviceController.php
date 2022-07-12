@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Device;
 use App\Http\Controllers\Controller;
+use App\Location;
 use Exception;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
@@ -42,7 +43,8 @@ class DeviceController extends Controller
         /*
             return view in path view/devices/create.blade.php
         */
-        return view('devices.create');
+        $locations = Location::all();
+        return view('devices.create' ,compact('locations'));
     }
 
     /**
@@ -57,7 +59,6 @@ class DeviceController extends Controller
             $request->all(),
             [
                 'name' => 'required',
-
             ],
             [
                 'name.required' => 'برجاء ادخال الاسم الجهاز',
@@ -98,7 +99,9 @@ class DeviceController extends Controller
             return abort(401);
         }
         $device = Device::FindOrFail($id);
-        return view('devices.update', compact('device'));
+        $locations = Location::all();
+
+        return view('devices.update', compact('device' , 'locations'));
     }
 
     /**
