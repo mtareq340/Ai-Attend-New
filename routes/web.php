@@ -108,6 +108,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   //update attendance method employee
   Route::get('edit_employee_attend_method/{id}', 'Dashboard\EmployeeController@edit_employee_attend_method')->name('edit_employee_attend_method');
   Route::patch('store_employee_attend_method/{id}', 'Dashboard\EmployeeController@store_employee_attend_method')->name('store_employee_attend_method');
+
+  //make response
+  Route::post('accept_response/{id}', 'Dashboard\EmployeeRequestReviewController@accept_response')->name('accept_response');
+  Route::post('reject_response/{id}', 'Dashboard\EmployeeRequestReviewController@reject_response')->name('reject_response');
 });
 
 

@@ -139,6 +139,8 @@
                                     <th>Phone</th>
                                     <th>Request</th>
                                     <th>Date</th>
+                                    <th>Accept</th>
+                                    <th>Reject</th>
                                     {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
@@ -150,6 +152,21 @@
                                             <td>{{ optional($empRequestsRev->employee)->phone }}</td>
                                             <td>{{ $empRequestsRev->request }}</td>
                                             <td>{{ $empRequestsRev->date }}</td>
+                                            <td>
+                                                <form action="{{route('accept_response',$empRequestsRev->id)}}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success"><i class="fe-check-circle "></i></button>
+                                                </form>
+                                          
+                                            </td>
+                                            <td>
+                                                <form action="{{route('reject_response',$empRequestsRev->id)}}" method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-danger">
+                                                        <i class="fe-x-circle "></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
