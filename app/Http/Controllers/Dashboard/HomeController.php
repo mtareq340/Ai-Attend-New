@@ -33,7 +33,7 @@ class HomeController extends Controller
 
         $startDate = Carbon::parse($plan->start_date);
         $endDate = Carbon::parse($plan->end_date);
-
+        
         $datework = Carbon::createFromDate($endDate);
         $now = Carbon::now();
         $diffDays = $datework->diffInDays($now);
@@ -43,6 +43,7 @@ class HomeController extends Controller
         $registeration_number = $companySettings->registeration_num;
         $loginHistories = DB::table('login_histories')->where('user_id', auth()->user()->id)->latest()->take(20)->get();
 
+        $final_end_date = $endDate->addDays(env('ALLOW_PLAN_DAYS'))->format('Y-m-d');
         return view('dashboard', compact(
             'users_count',
             'employess_count',
@@ -53,7 +54,8 @@ class HomeController extends Controller
             'empRequestsRevs',
             'loginHistories',
             'diffDays',
-            'registeration_number'
+            'registeration_number',
+            'final_end_date'
         ));
     }
 }

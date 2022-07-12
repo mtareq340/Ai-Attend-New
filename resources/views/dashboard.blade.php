@@ -108,9 +108,10 @@
 
                             <div id="chart">
                             </div>
-                            <p class="h3 {{ $diffDays <= 5 ? 'text-danger' : 'text-info' }} ">{{ $diffDays }} days
-                                left
-                            </p>
+
+                            @if ($diffDays == 0)
+                                <p class="text-danger">Your service will be closed at {{ $final_end_date }}</p>
+                            @endif
                             {{-- <div id="total-revenue" class="mt-0"  data-colors="#f1556c"></div> --}}
 
                             <h5 class="text-muted mt-0">Maximum Employees</h5>
@@ -263,76 +264,79 @@
     <script src="{{ asset('assets/js/pages/dashboard-1.init.js') }}"></script>
     <script>
         var percent = {{ $percentDays }}
-        let color = "#168be2"
+        let color_a = "#168be2"
+        let color_b = "#9248e0"
 
         if (percent < 25) {
-            color = "#de0d26"
-        }
-        var options = {
-            chart: {
-                height: 350,
-                type: 'radialBar',
-            },
-            series: [percent],
-            labels: ['Progress'],
-            fill: {
-                colors: [color]
-            }
-
+            color_a = "#de0d26"
+            color_b = "#eb3d34"
         }
 
         // var options = {
         //     chart: {
-        //         height: 280,
-        //         type: "radialBar",
+        //         height: 350,
+        //         type: 'radialBar',
         //     },
-
-        //     series: [{{ $percentDays }}],
-
-        //     colors: ["#20E647"],
-        //     plotOptions: {
-        //         radialBar: {
-        //             hollow: {
-        //                 margin: 0,
-        //                 size: "70%",
-        //             },
-        //             track: {
-        //                 dropShadow: {
-        //                     enabled: true,
-        //                     top: 2,
-        //                     left: 0,
-        //                     blur: 4,
-        //                     opacity: 0.15
-        //                 }
-        //             },
-        //             dataLabels: {
-        //                 name: {
-        //                     offsetY: -10,
-        //                     color: "#fff",
-        //                     fontSize: "18px"
-        //                 },
-        //                 value: {
-        //                     color: "#fff",
-        //                     fontSize: "30px",
-        //                     show: true
-        //                 }
-        //             }
-        //         }
-        //     },
+        //     series: [percent],
+        //     labels: ['Progress'],
         //     fill: {
-        //         type: "gradient",
-        //         gradient: {
-        //             shade: "dark",
-        //             type: "vertical",
-        //             gradientToColors: ["#87D4F9"],
-        //             stops: [0, 100]
-        //         }
-        //     },
-        //     stroke: {
-        //         lineCap: "round"
-        //     },
-        //     labels: ["Progress"]
-        // };
+        //         colors: [color]
+        //     }
+
+        // }
+
+        var options = {
+            chart: {
+                height: 280,
+                type: "radialBar",
+            },
+
+            series: [{{ $percentDays }}],
+
+            colors: [color_a],
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        margin: 0,
+                        size: "70%",
+                    },
+                    track: {
+                        dropShadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            blur: 4,
+                            opacity: 0.15
+                        }
+                    },
+                    dataLabels: {
+                        name: {
+                            offsetY: -10,
+                            color: "#fff",
+                            fontSize: "18px"
+                        },
+                        value: {
+                            color: "#fff",
+                            fontSize: "30px",
+                            show: true
+                        }
+                    }
+                }
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shade: "light",
+                    type: "vertical",
+                    gradientToColors: [color_b],
+                    stops: [0, 100]
+                }
+            },
+            stroke: {
+                lineCap: "round"
+            },
+            labels: ["{{ $diffDays }} days left"]
+        };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
 
