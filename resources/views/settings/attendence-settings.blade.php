@@ -75,16 +75,17 @@
             </div>
         </form>
     </div>
-    <div class="row mb-3">
+    {{-- <div class="row mb-3">
         <div class="col-6 col-lg-3">
             <span>Vacation Days</span>
         </div>
         <div class="col-6 col-lg-4">
             <input type="checkbox" id="toggle" onchange="activevication()"  class="js-switch" data-plugin="switchery" />
         </div>
-    </div>
-    <div class="form-group row mb-3" id="vication" style="display: none">
-        <label for="">Select Vacation Days</label>
+    </div> --}}
+    <label class="" for="">Select Vacation Days</label>
+
+    <div class="form-group row mb-3 ml-2" id="vication" >
         <form action="{{route('addvication')}}" method="POST">
             @csrf
             @foreach($list_of_days as $day)
@@ -164,7 +165,7 @@
 
 
     </script>
-    <script>
+    {{-- <script>
         function activevication(){
             let isChecked = $('#toggle')[0].checked
             console.log(isChecked);
@@ -176,7 +177,7 @@
                 v.style.display ='none';
             }
         }
-    </script>
+    </script> --}}
     <script>
         function activeextra(){
             let isChecked = $('#toggleextra').is(':checked');

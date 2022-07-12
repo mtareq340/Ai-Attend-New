@@ -90,13 +90,13 @@ class EmployeeController extends Controller
                 $request->all(),
                 [
                     'phone' => 'required',
-                    'job_num' => 'required|unique:employees'
+                    'job_number' => 'required|unique:employees'
 
                 ],
                 [
                     'phone.required' => 'برجاء ادخال رقم الهاتف',
-                    'job_num.required' => 'برجاء ادخال رقم الموظف',
-                    'job_num.unique' => 'هذا الرقم تم تسجيله من قبل'
+                    'job_number.required' => 'برجاء ادخال رقم الموظف',
+                    'job_number.unique' => 'هذا الرقم تم تسجيله من قبل'
                 ]
             );
             if ($validator->fails()) {

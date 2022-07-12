@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name</label>
                                 <input type="name" value="{{ $location->name }}" name="name" class="form-control"
-                                    id="name" placeholder="Name">
+                                    id="name" placeholder="Name" required>
                             </div>
 
                             <div class="form-group">
@@ -92,7 +92,7 @@
                             <div class="form-group">
                                 <label for="distance" class="col-form-label">Distance</label>
                                 <input type="text" value="{{ $location->distance }}" name="distance" class="form-control"
-                                    id="distance" placeholder="Distance">
+                                    id="distance" placeholder="Distance" required>
                             </div>
 
 

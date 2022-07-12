@@ -39,13 +39,13 @@
                     <div class="card-body">
                         {{-- <h4 class="header-title">Jobs</h4> --}}
                       
-                        <form action="{{ route('jobs.update', $job->id)}}" method="post">
+                        <form action="{{ route('jobs.update', $job->id)}}" method="post" class="needs-validation" novalidate>
                             {{ csrf_field() }}
 							{{ method_field('PATCH') }}
 
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name</label>
-                                <input type="name" value="{{ $job->name }}" name="name" class="form-control" id="name" placeholder="Name">
+                                <input type="name" value="{{ $job->name }}" name="name" class="form-control" id="name" placeholder="Name" required>
                             </div>
                             
                             <div class="form-group shadow-textarea">

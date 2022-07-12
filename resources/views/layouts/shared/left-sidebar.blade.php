@@ -289,7 +289,7 @@
                     <li>
                         <a href="#sidebarempatt" data-toggle="collapse">
                             <i class="fa fa-users"></i>.
-                            <span>Employees Attendance(M)</span>
+                            <span>Emps Attendance(M)</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarempatt">
