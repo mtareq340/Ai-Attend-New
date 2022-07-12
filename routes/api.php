@@ -24,7 +24,7 @@ salah
 /* Api Routes
    important default prefix => 'api' */
 
-Route::group(['as' => 'api.' ,'namespace' => 'Api'], function () {
+Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
@@ -43,6 +43,7 @@ Route::group(['as' => 'api.' ,'namespace' => 'Api'], function () {
     // Attenance Methodd Apis
     Route::post('attend_methods/getData', 'AttendMethodController@getData');
 
-
+    // employee attenance 
+    Route::post('employees/get_employees_attenance', 'AttendanceController@set_employee_attendence');
+    Route::post('employees/get_employees_checkout', 'api\AttendanceController@set_employee_checkout');
 });
-

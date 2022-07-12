@@ -11,10 +11,12 @@ class Employee_Attendance extends Model
     protected $fillable = [
         'employee_id',
         'branch_id',
+        'appointment_id',
         'attendance_method_id',
         'created_at',
         'updated_at',
-        'state'
+        'departure_time',
+        'statue'
     ];
     public function employee()
     {
@@ -27,5 +29,9 @@ class Employee_Attendance extends Model
     public function attendanc_method()
     {
         return $this->belongsTo(Attendmethods::class, 'attendance_method_id');
+    }
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 }

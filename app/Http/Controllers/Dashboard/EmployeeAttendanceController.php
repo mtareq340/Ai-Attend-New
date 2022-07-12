@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Appointment;
 use App\Attendmethods;
 use App\Branch;
 use App\Employee;
@@ -40,9 +41,11 @@ class EmployeeAttendanceController extends Controller
             $branch = Branch::all();
             $employees = Employee::all();
             $attendance = Attendmethods::all();
+            $appointments = Appointment::all();
         } else {
             $branch = Branch::find(auth()->user()->branch_id);
-            $employees = Employee::find(auth()->user()->branch_id);
+            $employees = Employee::where('branch_id', auth()->user()->branch_id);
+            $appointments = Appointment::where('branch_id', auth()->user()->branch_id);
             $attendance = Attendmethods::all();
         }
         return view('employee_attendance.create', compact('branch', 'employees', 'attendance'));
