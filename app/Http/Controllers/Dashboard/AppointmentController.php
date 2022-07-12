@@ -43,14 +43,14 @@ class AppointmentController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::all();
             $locations = Location::all();
-            $branchs = Branch::all();
+            $branches = Branch::all();
         } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
             $locations = Location::where('branch_id', auth()->user()->branch_id)->get();
-            $branchs = Branch::find(auth()->user()->branch_id);
+            $branches = Branch::find(auth()->user()->branch_id);
         }
         $days = Week_Day::all();
-        return view('appointments.create', compact('locations', 'branchs', 'employees', 'jobs', 'days'));
+        return view('appointments.create', compact('locations', 'branches', 'employees', 'jobs', 'days'));
     }
     public function store(Request $request)
     {

@@ -14,26 +14,26 @@
         <!-- start page title -->
         <div class="row align-items-center my-2">
             {{-- <div class="col-12"> --}}
-                <div class="col-4">
-                    <h4 class="page-title">Devices</h4>
-                </div>
-                <div class="col-4">
-                    @can('add_device')
+            <div class="col-4">
+                <h4 class="page-title">Devices</h4>
+            </div>
+            <div class="col-4">
+                @can('add_device')
                     <button class="btn btn btn-primary">
-                        <a href="{{ route('devices.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
+                        <a href="{{ route('devices.create') }}" style="color:white"><i class="fa fa-plus"></i> Add Device</a>
                     </button>
-                    @endcan
+                @endcan
 
+            </div>
+            <div class="page-title-box col-4">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Devices</li>
+                    </ol>
                 </div>
-                <div class="page-title-box col-4">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Devices</li>
-                        </ol>
-                    </div>
 
-                </div>
+            </div>
             {{-- </div> --}}
         </div>
         <!-- end page title -->
@@ -51,6 +51,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Code</th>
+                                    <th>location</th>
                                     <th>Note</th>
                                     <th>Activate</th>
                                     <th>Action</th>
@@ -63,6 +64,7 @@
                                     <tr>
                                         <td>{{ $device->name }}</td>
                                         <td>{{ $device->code }}</td>
+                                        <td>{{ $device->location->name }}</td>
                                         <td>{{ $device->notes }}</td>
                                         <td>
                                             <input type="checkbox"
@@ -113,12 +115,11 @@
 @section('script')
     <!-- Plugins js-->
     <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>   
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <!-- Page js-->
     <script>
-
         const toggleActivationAndLocked = (e, id, type) => {
 
             (async () => {

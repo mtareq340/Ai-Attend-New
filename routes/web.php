@@ -38,6 +38,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   // employees attend methods
   Route::resource('employees_attend_methods', 'Dashboard\EmployeeAttendMethodController');
   // branches
+  Route::get('branches/locations', 'Dashboard\BrancheController@getBranchLocations')->name('getBranchLocations');
   Route::resource('branches', 'Dashboard\BrancheController');
   // employees (this order should remain the same)
   Route::get('employees/add-from-excel', 'Dashboard\EmployeeController@excelPage')->name('employees.excelPage');

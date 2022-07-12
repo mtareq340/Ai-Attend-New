@@ -58,7 +58,6 @@ class LocationController extends Controller
                 [
                     'name' => 'required',
                     'branch_id' => 'required',
-                    'devices' => 'required',
                     'location_address' => 'required',
                     'distance' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
@@ -67,12 +66,10 @@ class LocationController extends Controller
                 [
                     'name.required' => 'برجاء ادخال الاسم',
                     'branch_id.required' => 'برجاء اختيار الفرع',
-                    'devices.required' => 'برجاء تحديد الجهاز/الأجهزة',
                     'location_address.required' => 'برجاء ادخال العنوان',
                     'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
                     'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
                     'location_longituide.required' => 'برجاء ادخال الاحدثيات الطول',
-
                 ]
             );
             if ($validator->fails()) {
@@ -85,7 +82,6 @@ class LocationController extends Controller
             $location = new Location();
             $location->fill($data);
             $location->save();
-            $location->devices()->attach($req->devices);
 
             return redirect()->route('locations.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
@@ -115,17 +111,13 @@ class LocationController extends Controller
         $selected_branch = '';
         $location = Location::find($id);
         if (auth()->user()->hasRole('super_admin')) {
-            $devices = Device::where('active', 1)->get();
             $selected_branch = Branch::find($location->branch_id);
             $branchs = Branch::all();
-            $devicename = Device::find($location->device_id);
         } else {
-            $devices = Device::where('active', 1)->get();
             $branchs = Branch::findOrfail(auth()->user()->branch_id);
-            $devicename = Device::find($location->device_id);
             // dd($branchs);
         }
-        return view('locations.update', compact('location', 'devices', 'devicename', 'branchs', 'selected_branch'));
+        return view('locations.update', compact('location',  'branchs', 'selected_branch'));
     }
     public function update(Request $req, $id)
     {
@@ -135,7 +127,6 @@ class LocationController extends Controller
                 $req->all(),
                 [
                     'name' => 'required',
-                    'devices' => 'required',
                     'location_address' => 'required',
                     'branch_id' => 'required',
                     'distance' => 'required|numeric',
@@ -144,7 +135,6 @@ class LocationController extends Controller
                 ],
                 [
                     'name.required' => 'برجاء ادخال الاسم',
-                    'devices.required' => 'برجاء تحديد الجهاز/الأجهزة',
                     'branch_id.required' => 'برجاء اختيار الفرع',
                     'location_address.required' => 'برجاء ادخال العنوان',
                     'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
@@ -159,10 +149,10 @@ class LocationController extends Controller
             }
 
 
-            $data = $req->except('devices');
+            $data = $req->all();
             $location = Location::findOrFail($id);
             $location->update($data);
-            $location->devices()->sync($req->devices);
+
             return redirect()->route('locations.index')->with(['success' => 'تم تحديث الموقع بنجاح']);
         } catch (Exception $e) {
             return redirect()->route('locations.edit')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
