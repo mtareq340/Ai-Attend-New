@@ -112,9 +112,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
 
 
-
-
-
 Route::group(['prefix' => '/'], function () {
   Route::get('{first}/{second}/{third}', 'RoutingController@thirdLevel')->name('third');
   Route::get('{first}/{second}', 'RoutingController@secondLevel')->name('second');
