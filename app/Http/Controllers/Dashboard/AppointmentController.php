@@ -67,7 +67,7 @@ class AppointmentController extends Controller
                     'location_id' => 'required',
                     'branch_id' => 'required',
 
-                    'attendence_days' => 'required',
+                    'attendance_days' => 'required',
                     'devices' => 'required',
                     'emps' => 'required',
                 ],
@@ -81,7 +81,7 @@ class AppointmentController extends Controller
                     'overtime.required' => 'برجاء اختيار الوقت الاضافي',
                     'location_id.required' => 'برجاء اختيار الموقع',
                     'branch_id.required' => 'برجاء اختيار الفرع',
-                    'attendence_days.required' => 'يجب اختيار على الاقل يوم عمل واحد',
+                    'attendance_days.required' => 'يجب اختيار على الاقل يوم عمل واحد',
                     'devices.required' => 'يجب اختيار على الاقل جهاز واحد',
                     'emps.required' => 'يجب اختيار على الاقل موظف واحد',
 
@@ -140,10 +140,10 @@ class AppointmentController extends Controller
             }
 
 
-            $appointment = new Appointment($request->except(['period_count', 'attendence_days', 'devices', 'emps', 'date']));
+            $appointment = new Appointment($request->except(['period_count', 'attendance_days', 'devices', 'emps', 'date']));
 
             $appointment->fill([
-                'attendence_days' => implode(',', $request->attendence_days),
+                'attendance_days' => implode(',', $request->attendance_days),
                 'branch_id' => $request->branch_id,
                 'date' => Carbon::parse($request->date),
             ]);
@@ -152,14 +152,33 @@ class AppointmentController extends Controller
             // fill appointments devices
             $appointment->devices()->attach($request->devices);
 
+            // foreach ($request->emps as $emp) {
+            //     $emp = json_decode($emp);
+            //     $assign_appointment = DB::table('assign_appointments')
+            //         ->insert([
+            //             'employee_id' => $emp->id, 'work_appointment_id' => $appointment->id,
+            //             'job_id' => $emp->job_id, 'branch_id' => $request->branch_id, 'location_id' => $request->location_id
+            //         ]);
+            // }
+            
+            $emps = [];
             foreach ($request->emps as $emp) {
                 $emp = json_decode($emp);
-                $assign_appointment = DB::table('assign_appointments')
-                    ->insert([
-                        'employee_id' => $emp->id, 'work_appointment_id' => $appointment->id,
-                        'job_id' => $emp->job_id, 'branch_id' => $request->branch_id, 'location_id' => $request->location_id
-                    ]);
+                array_push(
+                    $emps,
+                    [
+                        'employee_id' => $emp->id, 
+                        'work_appointment_id' => $appointment->id,
+                        'job_id' => $emp->job_id,
+                         'branch_id' => $request->branch_id,
+                        'location_id' => $request->location_id
+                    ]
+                );
             }
+            $appointment->employees()->attach($emps);
+
+
+
             // fill appointments em ployees  
             return response()->json(['msg' => 'تم اضافة موعد الدوام بنجاح'], 200);
         } catch (Exception $e) {

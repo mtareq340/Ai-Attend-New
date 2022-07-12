@@ -203,7 +203,7 @@
                                                         @foreach ($days as $day)
                                                             <div class="checkbox checkbox-success form-check-inline">
                                                                 <input {{ $day->id == 7 ? '' : 'checked' }}
-                                                                    name="attendence_days" type="checkbox"
+                                                                    name="attendance_days" type="checkbox"
                                                                     id="day-{{ $day->id }}"
                                                                     value="{{ $day->id }}">
                                                                 <label
@@ -560,14 +560,14 @@
                 emps.push($(this).val());
             });
 
-            var attendence_days = []
-            $("input:checkbox[name=attendence_days]:checked").each(function() {
-                attendence_days.push($(this).val());
+            var attendance_days = []
+            $("input:checkbox[name=attendance_days]:checked").each(function() {
+                attendance_days.push($(this).val());
             });
 
             values['emps'] = emps
             values['devices'] = devices
-            values['attendence_days'] = attendence_days
+            values['attendance_days'] = attendance_days
             $.ajax({
                 type: 'POST',
                 url: "{{ route('appointment.store') }}",
