@@ -29,40 +29,38 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <h4 class="page-title">Employees</h4>   
+            </div>            
+            <div class="col-5">
+                <div class="row">
+             @can('add_employee')
+
+                <button type="button" class="btn  btn-primary waves-effect waves-light " data-toggle="modal"
+                data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
+
+            <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light ml-1 btn-success"><i
+                    class="fa fa-plus"></i> Upload Excel
+                Sheet</a>
+
+            <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light ml-1 btn-dark"><i
+                    class="fa fa-plus"></i> Download
+                excel file</a>
+            @endcan
+
+            </div>
+            </div>
+                <div class="page-title-box col-4">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Employees</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Employees</h4>
                 </div>
-            </div>
         </div>
         <!-- end page title -->
-        {{-- <div class="col-4"> --}}
-        @can('add_employee')
-            <div class="mb-2">
-                {{-- <button class="btn btn btn-primary">
-            <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
-        </button> --}}
-                <button type="button" class="btn  btn-primary waves-effect waves-light" data-toggle="modal"
-                    data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
-
-                <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light btn-success"><i
-                        class="fa fa-plus"></i> Upload Excel
-                    Sheet</a>
-
-                <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light btn-dark"><i
-                        class="fa fa-plus"></i> Download
-                    excel file</a>
-                {{-- </div> --}}
-            @endcan
-
-        </div>
 
         <div class="row">
             <div class="col-12">
@@ -106,7 +104,7 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
-                                            <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button" class="btn btn-sm btn-primary float-right">
+                                            <a href="/dashboard/edit_employee_attend_method/{{$emp->id}}" type="button" class="btn btn-sm btn-primary float-right">
                                                 <i class="mdi mdi-square-edit-outline"></i>
                                             
                                             </a>
@@ -201,7 +199,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name" class="control-label">Name</label>
+                                        <label for="name" class="control-label">Name *</label>
                                         <input type="text" name="name" class="form-control" id="field-1"
                                             placeholder="Jone Doe" required>
                                     </div>

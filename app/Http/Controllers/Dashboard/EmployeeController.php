@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Attendmethods;
 use App\Branch;
+use App\EmpAttendMethods;
 use App\Employee;
 use App\Setting;
 use App\Plan;
@@ -316,5 +318,54 @@ class EmployeeController extends Controller
             }
         }
         return $employees;
+    }
+
+    public function edit_employee_attend_method($id)
+    {
+        if (!Gate::allows('edit_employee_attend_method')) {
+            return abort(401);
+        }
+        $emp = Employee::find($id);
+        $allattendmethod = Attendmethods::all();
+        $attend_methods = $emp->attend_methods;
+        return view('employees.edit_attendance_method', compact('emp', 'attend_methods', 'allattendmethod'));
+    }
+
+    public function store_employee_attend_method(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'attend_methods' => 'required',
+            ]);
+            $emp = Employee::find($id);
+            $old = $emp->attend_methods;
+            $new = $request->attend_methods;
+            // dd($old);
+
+            //first delete old attend method for employee //
+            $oldlist = [];
+            foreach ($old as $o) {
+                array_push($oldlist, [
+                    'employee_id' => $id,
+                    'attend_method_id' => $o->id,
+                ]);
+            }
+            // dd($oldlist);
+            $attend = EmpAttendMethods::where('employee_id', $id);
+            $attend->delete($oldlist);
+
+            //add new attend methods//
+            $newlist = [];
+            foreach ($new as $n) {
+                array_push($newlist, [
+                    'employee_id' => $id,
+                    'attend_method_id' => $n,
+                ]);
+            }
+            EmpAttendMethods::insert($newlist);
+            return redirect()->route('employees.index')->with(['success' => 'تم التحديث بنجاح']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'حدث خطا برجاء المحاوله']);
+        }
     }
 }

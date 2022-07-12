@@ -103,6 +103,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   Route::resource('roles', 'Dashboard\RoleController');
 
   Route::post('/addvication', 'Dashboard\CompanySettingsController@addvication')->name('addvication');
+
+  //update attendance method employee
+  Route::get('edit_employee_attend_method/{id}', 'Dashboard\EmployeeController@edit_employee_attend_method')->name('edit_employee_attend_method');
+  Route::patch('store_employee_attend_method/{id}', 'Dashboard\EmployeeController@store_employee_attend_method')->name('store_employee_attend_method');
 });
 
 
