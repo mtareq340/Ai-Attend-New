@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\AttendenceSettings;
 use App\Branch;
 use App\Branch_Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class BrancheController extends Controller
 {
@@ -35,15 +37,25 @@ class BrancheController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'phone' => '',
-            'address' => '',
-            'notes' => '',
-            // 'long' => 'required|numeric',
-            // 'lat' => 'required|numeric',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|unique:branches',
+                'phone' => '',
+                'address' => ''
+            ],
 
+            [
+                'name.required' => "لا يجب ترك اسم الفرع فارغ",
+                'name.unique' => "هذا الفرع تمت اضافته سابقا"
+            ]
+        );
+
+        if ($validator->fails()) {
+            $err_msg = $validator->errors()->first();
+            return back()->with('error', $err_msg)->withInput();
+        }
+        $data = $request->except('_token');
 
         $branch = new Branch($data);
         $branch->save();
@@ -55,7 +67,8 @@ class BrancheController extends Controller
             'over_time_count' => '0'
         ]);
         ///////////////////////////////////
-        // $AttendenceSettings = AttendenceSettings::create($data);
+        $AttendenceSettings = AttendenceSettings::create($data);
+
         // return $request->parent_id;
         if ($request->parent_id) {
             // $parent = Branch::find($request->parent_id);
@@ -92,22 +105,31 @@ class BrancheController extends Controller
         return view('branches.edit', ['branch' => $branch]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'name' => 'required',
-                'phone' => 'required|numeric',
-                'address' => ''
-            ]);
             $branch = Branch::findOrFail($id);
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required|unique:branches,name,' . $id,
+                    'phone' => '',
+                    'address' => ''
+                ],
+
+                [
+                    'name.required' => "لا يجب ترك اسم الفرع فارغ",
+                    'name.unique' => "هذا الفرع تمت اضافته سابقا"
+                ]
+            );
+
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
             //update in db
             $branch->update($request->all());
             return redirect()->route('branches.index', ['type' => 'table'])->with(['success' => 'تم تحديث الفرع بنجاح']);

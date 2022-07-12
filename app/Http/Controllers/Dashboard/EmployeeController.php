@@ -90,11 +90,13 @@ class EmployeeController extends Controller
                 $request->all(),
                 [
                     'phone' => 'required',
+                    'job_num' => 'required|unique:employees'
 
                 ],
                 [
                     'phone.required' => 'برجاء ادخال رقم الهاتف',
-
+                    'job_num.required' => 'برجاء ادخال رقم الموظف',
+                    'job_num.unique' => 'هذا الرقم تم تسجيله من قبل'
                 ]
             );
             if ($validator->fails()) {
@@ -191,7 +193,6 @@ class EmployeeController extends Controller
             ],
             [
                 'file.required' => "يجب اختيار ملف اكسيل اولا",
-
             ]
 
         );
@@ -256,10 +257,10 @@ class EmployeeController extends Controller
             $emp->attend_methods()->detach();
             $emp->requests()->delete();
             $deleted = $emp->delete();
-            if(! $deleted){
-                    return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
-            } 
-           return redirect()->route('employees.index')->with(['success' => 'تم حذف الموظف بنجاح']);
+            if (!$deleted) {
+                return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            }
+            return redirect()->route('employees.index')->with(['success' => 'تم حذف الموظف بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }

@@ -31,11 +31,13 @@ class Employee extends Model
         return $this->hasMany(ExtraTime::class, 'employee_id');
     }
 
-    public function assign_appointments(){
-        return $this->hasMany(Assign_Appointment::class );
+    public function assign_appointments()
+    {
+        return $this->hasMany(Assign_Appointment::class);
     }
-    public function requests(){
-        return $this->hasMany(employee_requests::class );
+    public function requests()
+    {
+        return $this->hasMany(employee_requests::class);
     }
 
 
@@ -44,7 +46,7 @@ class Employee extends Model
         parent::boot();
 
         static::deleting(function ($employee) {
-            $relationMethods = ['assign_appointments'];
+            $relationMethods = ['assign_appointments', 'attend_methods'];
             foreach ($relationMethods as $relationMethod) {
                 if ($employee->$relationMethod()->count() > 0) {
                     return false;

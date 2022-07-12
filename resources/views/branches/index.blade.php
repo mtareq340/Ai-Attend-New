@@ -96,7 +96,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('branches.store') }}" method="POST">
+                    <form action="{{ route('branches.store') }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         <input id="parent_id" name="parent_id" hidden />
 

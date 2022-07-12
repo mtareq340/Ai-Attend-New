@@ -17,13 +17,14 @@ class Branch extends Model
         'long',
         'lat'
     ];
- 
+
 
     public function appointment()
     {
         return $this->hasMany(Appointment::class);
     }
-    public function employees() {
+    public function employees()
+    {
         return $this->hasMany("App\Employee");
     }
     public function assigned_appointments()
@@ -38,30 +39,30 @@ class Branch extends Model
     {
         return $this->hasOne(Branch_Setting::class);
     }
-    public function locations() {
+    public function locations()
+    {
         return $this->hasMany(Location::class);
     }
-    public function users() {
+    public function users()
+    {
         return $this->hasMany(User::class);
     }
 
 
 
-  
+
 
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function ($job) {
-            $relationMethods = ['employees', 'users' ,'appointment' , 'assigned_appointments' ,'attendance_settings' , 'locations'];
-
+        static::deleting(function ($branch) {
+            $relationMethods = ['employees', 'users', 'appointment', 'assigned_appointments', 'locations'];
             foreach ($relationMethods as $relationMethod) {
-                if ($job->$relationMethod()->count() > 0) {
+                if ($branch->$relationMethod()->count() > 0) {
                     return false;
                 }
             }
         });
     }
-    
 }

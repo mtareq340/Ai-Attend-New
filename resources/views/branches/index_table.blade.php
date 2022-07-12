@@ -135,34 +135,36 @@
                             @csrf
                             <input id="parent_id" name="parent_id" hidden />
 
-                            <div class="pl-lg-4">
+                            <div class="">
                                 <div class="row">
                                     <div class="form-group col-lg-6">
-                                        <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
+                                        <label class="form-control-label" for="input-name">{{ __('Name') }}
+                                        @include('red_star')
+                                        </label>
                                         <input type="text" name="name" id="input-name"
                                             class="form-control form-control-alternative" required />
                                     </div>
 
                                     <div class="form-group col-lg-6">
-                                        <label class="form-control-label" for="input-name">{{ __('Phone number') }} <span
+                                        <label class="form-control-label" for="input-phone">{{ __('Phone number') }} <span
                                                 class="text-muted">(optional)</span></label>
-                                        <input type="tel" name="phone" id="input-name"
+                                        <input type="tel" name="phone" id="input-phone"
                                             class="form-control form-control-alternative" />
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-name">{{ __('Address') }} <span
+                                    <label class="form-control-label" for="input-address">{{ __('Address') }} <span
                                             class="text-muted">(optional)</span></label>
-                                    <input type="tel" name="address" id="input-name"
+                                    <input type="tel" name="address" id="input-address"
                                         class="form-control form-control-alternative" />
                                 </div>
 
 
                                 <div class="form-group mt-2">
-                                    <label class="form-control-label" for="input-name">{{ __('Notes') }} <span
+                                    <label class="form-control-label" for="input-notes">{{ __('Notes') }} <span
                                             class="text-muted">(optional)</span></label>
-                                    <input type="tel" name="notes" id="input-name"
+                                    <input type="tel" name="notes" id="input-notes"
                                         class="form-control form-control-alternative" />
                                 </div>
 

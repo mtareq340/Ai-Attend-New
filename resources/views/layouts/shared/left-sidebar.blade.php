@@ -64,14 +64,14 @@
                 {{-- end of account settings --}}
 
                 {{-- start of plans --}}
-                @can('show_plans')
+                {{-- @can('show_plans')
                     <li>
                         <a href="{{ route('plans.index') }}">
                             <i class="mdi mdi-office-building"></i>
                             <span> Plans </span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- end of plans --}}
 
 

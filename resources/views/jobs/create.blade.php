@@ -51,7 +51,7 @@
                         <form action="{{ route('jobs.store')}}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Name</label>
+                                <label for="name" class="col-form-label">Name @include('red_star')</label>
                                 <input type="name" name="name" class="form-control" id="name" placeholder="Name">
                             </div>
 

@@ -106,6 +106,10 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
+                                            <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button" class="btn btn-sm btn-primary float-right">
+                                                <i class="mdi mdi-square-edit-outline"></i>
+                                            
+                                            </a>
                                         </td>
                                         <td>{{ $emp->job->name }}</td>
                                         <td>
@@ -142,7 +146,31 @@
                                                     </form>
                                                 @endcan
                                             </div>
+                                        
+                                        
+                                            {{-- <div class="row row-xs wd-xl-4p">
+                                                @can('edit_employee')
+                                                    <a href="{{ route('employees.edit', $emp->id) }}" class="btn btn-sm btn-info mr-1">
+                                                        <i class="mdi text-white mdi-square-edit-outline"></i>
+                                                    </a>
+                                                @endcan
+                                                <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+                                                @can('delete_employee')
+                                                    <form action="{{ route('employees.destroy', $emp->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm delete" type="submit">
+                                                            <i class="mdi text-white mdi-delete"></i>
+
+                                                        </button>
+                                                    </form>
+                                                @endcan
+                                            </div> --}}
+                                        
+                                        
                                         </td>
+
+                                        
                                     </tr>
                                 @endforeach
 
@@ -156,10 +184,7 @@
         <!-- end row-->
 
 
-        {{-- //////////////////////////////////////////////////////////////// --}}
-        {{-- insert modal --}}
-        {{-- //////////////////////////////////////////////////////////////// --}}
-
+       
 
         <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" style="display: none;">
@@ -192,6 +217,32 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="inputJob" class="col-form-label">Job *</label>
+                                        <select name="job_id" id="inputJob" class="form-control selectize-drop-header"
+                                            placeholder="Select a job..." required>
+                                            @foreach ($jobs as $job)
+                                                <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputJob" class="col-form-label">Job Number *</label>
+                                        <input type="number" name="job_number" class="form-control" id="job_num"
+                                            placeholder="Select Job Number">
+                                    </div>
+                                </div>
+
+                              
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 1 *</label>
                                         <input type="text" name="phone" class="form-control" id="phone"
                                             placeholder="phone num 1" required>
@@ -214,25 +265,23 @@
                                             placeholder="1234 Main St">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                                <div class="col-md-12">
                                         <label>Gender </label>
                                         <div class="d-flex">
-                                            <div class="radio mx-1">
+                                            <div class="radio mr-1">
                                                 <input type="radio" name="gender" id="genderM" value="male" required=""
                                                     checked>
-                                                <label for="genderM">
+                                                <label for="genderM" class="pl-1 m-0">
                                                     Male
                                                 </label>
                                             </div>
-                                            <div class="radio mx-1">
+                                            <div class="radio">
                                                 <input type="radio" name="gender" id="genderF" value="female">
-                                                <label for="genderF">
+                                                <label for="genderF"  class="pl-1">
                                                     Female
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -245,27 +294,6 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inputJob" class="col-form-label">Job *</label>
-                                        <select name="job_id" id="inputJob" class="form-control selectize-drop-header"
-                                            placeholder="Select a job..." required>
-                                            @foreach ($jobs as $job)
-                                                <option value="{{ $job->id }}">{{ $job->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inputJob" class="col-form-label">Job Number *</label>
-                                        <input type="number" name="job_number" class="form-control" id="job_num"
-                                            placeholder="Select Job Number">
-                                    </div>
-                                </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -276,6 +304,10 @@
                                     </div>
                                 </div>
                             </div>
+                            
+
+                            
+
                         </div>
                         <div class="modal-footer">
                             <a href="" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</a>

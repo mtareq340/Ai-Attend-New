@@ -84,8 +84,9 @@
                                                 <form action="{{ route('locations.destroy', $l->id) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
-                                                    <button style="border-color:white; color:red; font-size: 0.8rem;"
-                                                        class="action-icon delete" type="submit"> <i class="mdi mdi-delete"></i></button>
+                                                        <button style="border-color:white; color:red; font-size: 0.8rem;"
+                                                        class="action-icon delete" type="submit"> <i
+                                                            class="mdi mdi-delete"></i></button>
                                                 </form>
                                             </div>
                                         </td>
