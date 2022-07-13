@@ -20,20 +20,26 @@ class EmployeeAttendanceController extends Controller
      */
     public function index()
     {
+        $work_appointments = Appointment::all();
+
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee_Attendance::all();
             // dd($employees);
         } else {
             $employees = Employee_Attendance::where('branch_id', auth()->user()->branch_id)->get();
         }
-        return view('employee_attendance.index', compact('employees'));
+        return view('employee_attendance.index', compact('employees', 'work_appointments'));
     }
 
     public function make_employees_attendance_success(Request $request)
     {
-        return $request->all();
-        $attendance = $request->employees_attendance;
-        // dd($attendance);
+        $employee_attendances = $request->employees_attendance;
+        foreach ($employee_attendances as $emp_attendnce) {
+            // return $emp_attendnce;
+            $data = Employee_Attendance::find($emp_attendnce);
+            $data->update(['state' => 1]);
+        }
+        return redirect()->back()->with(['success' => 'تم التحديث']);
     }
     /**
      * Show the form for creating a new resource.

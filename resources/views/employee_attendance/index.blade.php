@@ -27,13 +27,18 @@
             </div>
         </div>
         <!-- end page title -->
-        
+        <select name="appointment_id" id="" style="width: 500px">
+            @foreach ($work_appointments as $work_appointment)
+                <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
+            @endforeach
+        </select>\<br><br><br>
             <div class="row align-items-center mb-2">
-            <a href="{{ route('employee_attendance.create') }}"
+            {{-- <a href="{{ route('employee_attendance.create') }}"
                 class="btn btn btn-primary waves-effect waves-light mx-1"><i class="fa fa-plus"></i> Add
-                Employee Attendance Manullay</a>
-            
+                Employee Attendance Manullay</a> --}}
+                
                 <button id="attendance_submit" class="btn btn-success" >Make success Attendance</button>
+                {{-- <button id="attendance_submit" class="btn btn-success" >Make success Attendance</button> --}}
             </div>
 
         <div class="row">
@@ -136,9 +141,11 @@
                  data: {
                    employees_attendance,
                    '_token' : "{{ csrf_token() }}"
-                 },
+                 
+                },
                  success: function(result){
-                    window.location.reload()
+                    // window.location.reload()
+                    console.log(result)
                 },
                  error:function(err)
                  {
@@ -147,6 +154,8 @@
                  
                 });
               });
+
+
         });
     </script>
 @endsection
