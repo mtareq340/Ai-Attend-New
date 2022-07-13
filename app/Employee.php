@@ -35,6 +35,14 @@ class Employee extends Model
     {
         return $this->hasMany(Assign_Appointment::class);
     }
+    public function appointments()
+    {
+        return $this->belongsToMany(Appointment::class , 'assign_appointments' , 'employee_id' , 'work_appointment_id');
+    }
+    public function appointmentsIds()
+    {
+        return $this->assign_appointments()->pluck('work_appointment_id')->toArray();
+    }
     public function requests()
     {
         return $this->hasMany(employee_requests::class);

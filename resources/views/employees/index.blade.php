@@ -31,34 +31,34 @@
         <!-- start page title -->
         <div class="row align-items-center">
             <div class="col-3">
-                <h4 class="page-title">Employees</h4>   
-            </div>            
+                <h4 class="page-title">Employees</h4>
+            </div>
             <div class="col-5">
                 <div class="row">
-             @can('add_employee')
+                    @can('add_employee')
 
-                <button type="button" class="btn  btn-primary waves-effect waves-light " data-toggle="modal"
-                data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
+                        <button type="button" class="btn  btn-primary waves-effect waves-light " data-toggle="modal"
+                            data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
 
-            <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light ml-1 btn-success"><i
-                    class="fa fa-plus"></i> Upload Excel
-                Sheet</a>
+                        <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light ml-1 btn-success"><i
+                                class="fa fa-plus"></i> Upload Excel
+                            Sheet</a>
 
-            <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light ml-1 btn-dark"><i
-                    class="fa fa-plus"></i> Download
-                excel file</a>
-            @endcan
+                        <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light ml-1 btn-dark"><i
+                                class="fa fa-plus"></i> Download
+                            excel file</a>
+                    @endcan
 
-            </div>
-            </div>
-                <div class="page-title-box col-4">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Employees</li>
-                        </ol>
-                    </div>
                 </div>
+            </div>
+            <div class="page-title-box col-4">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Employees</li>
+                    </ol>
+                </div>
+            </div>
         </div>
         <!-- end page title -->
 
@@ -104,9 +104,10 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
-                                            <a href="/dashboard/edit_employee_attend_method/{{$emp->id}}" type="button" class="btn btn-sm btn-primary float-right">
+                                            <a href="/dashboard/edit_employee_attend_method/{{ $emp->id }}"
+                                                type="button" class="btn btn-sm btn-primary float-right">
                                                 <i class="mdi mdi-square-edit-outline"></i>
-                                            
+
                                             </a>
                                         </td>
                                         <td>{{ $emp->job->name }}</td>
@@ -144,8 +145,8 @@
                                                     </form>
                                                 @endcan
                                             </div>
-                                        
-                                        
+
+
                                             {{-- <div class="row row-xs wd-xl-4p">
                                                 @can('edit_employee')
                                                     <a href="{{ route('employees.edit', $emp->id) }}" class="btn btn-sm btn-info mr-1">
@@ -164,11 +165,11 @@
                                                     </form>
                                                 @endcan
                                             </div> --}}
-                                        
-                                        
+
+
                                         </td>
 
-                                        
+
                                     </tr>
                                 @endforeach
 
@@ -182,7 +183,7 @@
         <!-- end row-->
 
 
-       
+
 
         <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true" style="display: none;">
@@ -233,7 +234,7 @@
                                     </div>
                                 </div>
 
-                              
+
                             </div>
 
 
@@ -264,22 +265,21 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                        <label>Gender </label>
-                                        <div class="d-flex">
-                                            <div class="radio mr-1">
-                                                <input type="radio" name="gender" id="genderM" value="male" required=""
-                                                    checked>
-                                                <label for="genderM" class="pl-1 m-0">
-                                                    Male
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <input type="radio" name="gender" id="genderF" value="female">
-                                                <label for="genderF"  class="pl-1">
-                                                    Female
-                                                </label>
-                                            </div>
+                                    <label>Gender </label>
+                                    <div class="d-flex">
+                                        <div class="radio mr-1">
+                                            <input type="radio" name="gender" id="genderM" value="male" required="" checked>
+                                            <label for="genderM" class="pl-1 m-0">
+                                                Male
+                                            </label>
                                         </div>
+                                        <div class="radio">
+                                            <input type="radio" name="gender" id="genderF" value="female">
+                                            <label for="genderF" class="pl-1">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -302,9 +302,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
 
-                            
+
 
                         </div>
                         <div class="modal-footer">

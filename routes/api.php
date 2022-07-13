@@ -51,6 +51,6 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('attend_methods/getData', 'AttendMethodController@getData');
 
     // employee attenance 
-    Route::post('employees/get_employees_attenance', 'AttendanceController@set_employee_attendence');
+    Route::post('employees/set_employees_attenance', 'AttendanceController@set_employee_attendence');
     Route::post('employees/get_employees_checkout', 'api\AttendanceController@set_employee_checkout');
 });

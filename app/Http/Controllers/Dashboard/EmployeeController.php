@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -111,11 +112,9 @@ class EmployeeController extends Controller
             // if ($plan->count_employees <= $employees_count)
             //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
             $data = $request->except('_token');
-            // $data['password'] = Hash::make($data['password']);
-            // if($data['password']){
-            // $data['password'] = Hash::make($data['password']);
-            // }
-            // dd($data);
+            if($data['password']){
+                $data['password'] = Hash::make($data['password']);
+            }
             $emp = Employee::create($data);
             return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
@@ -234,7 +233,7 @@ class EmployeeController extends Controller
                 'email' => $row[2],
                 'address' => $row[3],
                 'phone' => $row[4],
-                'password' => $row[5],
+                'password' => $row[5] ? Hash::make($row[5]) : null,
                 'gender' => $row[6],
                 'age' => $row[7],
                 'branch_id' => $request->branch_id,
