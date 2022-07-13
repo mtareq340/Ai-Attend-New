@@ -29,6 +29,12 @@ class EmployeeAttendanceController extends Controller
         return view('employee_attendance.index', compact('employees'));
     }
 
+    public function make_employees_attendance_success(Request $request)
+    {
+        return $request->all();
+        $attendance = $request->employees_attendance;
+        // dd($attendance);
+    }
     /**
      * Show the form for creating a new resource.
      *

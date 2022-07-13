@@ -112,6 +112,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   //make response
   Route::post('accept_response/{id}', 'Dashboard\EmployeeRequestReviewController@accept_response')->name('accept_response');
   Route::post('reject_response/{id}', 'Dashboard\EmployeeRequestReviewController@reject_response')->name('reject_response');
+
+  Route::post('make_employees_attendance_success', 'Dashboard\EmployeeAttendanceController@make_employees_attendance_success')->name('make_employees_attendance_success');
 });
 
 
