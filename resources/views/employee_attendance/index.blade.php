@@ -31,17 +31,14 @@
         </div>
         <div class="row">
             <div class="form-group col-6">
-                <div class="row">
-                <div class="col-8">
                     <select name="appointment_id" id="sel_appointment" class="form-control">
+                        <option value="" selected disabled>Select Attendance Plan</option>
                         @foreach ($work_appointments as $work_appointment)
                             <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
                         @endforeach
                     </select>
-            </div>
-            <div class="col-4">  
-                <button id="filter_submit" class="btn btn-primary">Get Data</button>
-            </div>
+            
+            
             </div>
             </div>  
 
@@ -125,34 +122,12 @@
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
       $(document).ready(function(){
-           $('#filter_submit').click(function(e){
-             e.preventDefault();
-             let appoitment_id = $('#sel_appointment').val();
-               $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            });
-            $.ajax({
-               url: "{{ route('employee_attendance.index') }}",
-               method: 'GET',
-               data: {
-                appoitment_id,
-                 '_token' : "{{ csrf_token() }}"
-               
-              },
-               success: function(result){
-                    $('body').html(result);
-                    // console.log(result);
-                },
-               error:function(err)
-               {
-                  notyf.error('حدثت مشكله برجاء المحاوله مره اخري')
-                  console.log(err);
-               }
-               
-              });
-            });
+
+        $('#sel_appointment').change(function(e){
+            let appoitment_id = $('#sel_appointment').val();
+            window.location = `/dashboard/employee_attendance?appointment_id=${appoitment_id}`;
+            
+        });
       });  
     </script>
     <script>
@@ -181,7 +156,7 @@
                 },
                  success: function(result){
                     notyf.success('تم التحديث بنجاح')
-                    // window.location.reload();
+                    window.location.reload();
 
                 },
                  error:function(err)

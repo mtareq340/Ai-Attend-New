@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="form-group row mb-3" id="extratime" style="display: none">
-        <label for="">Fill Extra Time</label>
+        <label for="">Fill OverTime</label>
         <form action="{{route('branch_setting.update',$extra_time[0]->id)}}" method="POST" class="needs-validation" novalidate>
             @csrf
             @method('PATCH')
@@ -70,7 +70,7 @@
                 <input type="text" name="over_time_count" value="{{$extra_time[0]->over_time_count}}" class="form-control">
                 </div>
                 <div class="col-3">
-                <button type="submit" class="btn btn-success">Add Extra Time</button>
+                <button type="submit" class="btn btn-success">Add Max Overtime</button>
                 </div>
             </div>
         </form>

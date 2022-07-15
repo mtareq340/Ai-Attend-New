@@ -20,17 +20,18 @@ class EmployeeAttendanceController extends Controller
      */
     public function index(Request $request)
     {
+
         $work_appointments = Appointment::all();
 
         if (auth()->user()->hasRole('super_admin')) {
-            if (isset($request->appoitment_id)) {
-                $employees = Employee_Attendance::where('appointment_id', $request->appoitment_id)->get();
+            if (isset($request->appointment_id)) {
+                $employees = Employee_Attendance::where('appointment_id', $request->appointment_id)->get();
             } else {
                 $employees = Employee_Attendance::all();
             }
         } else {
-            if (isset($request->appoitment_id)) {
-                $employees = Employee_Attendance::where('appointment_id', $request->appoitment_id)->where('branch_id', auth()->user()->branch_id)->get();
+            if (isset($request->appointment_id)) {
+                $employees = Employee_Attendance::where('appointment_id', $request->appointment_id)->where('branch_id', auth()->user()->branch_id)->get();
             } else {
                 $employees = Employee_Attendance::where('branch_id', auth()->user()->branch_id)->get();
             }
