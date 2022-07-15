@@ -39,6 +39,7 @@ class EmployeeAttendanceController extends Controller
         return view('employee_attendance.index', compact('employees', 'work_appointments'));
     }
 
+
     public function make_employees_attendance_success(Request $request)
     {
         $employee_attendances = $request->employees_attendance;

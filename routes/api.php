@@ -41,7 +41,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
-    Route::get('employees/attend_methods' , [EmployeesController::class , 'get_employee_attendenceMethods']);
+    Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
 
 
     // Company Apis
@@ -52,5 +52,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
     // employee attenance 
     Route::post('employees/set_employees_attenance', 'AttendanceController@set_employee_attendence');
-    Route::post('employees/get_employees_checkout', 'api\AttendanceController@set_employee_checkout');
+    // Route::post('employees/get_employees_checkout', 'api\AttendanceController@set_employee_checkout');
+
+    Route::post('employees/set_employees_departure', 'DepartureController@set_employee_departure');
 });
