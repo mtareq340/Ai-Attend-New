@@ -26,9 +26,9 @@ class BrancheController extends Controller
         }
         $user = auth()->user();
         if ($user->hasRole('super_admin')) {
-            return view('branches.index_table', ['branches' => Branch::all()]);
+            return view('branches.index_table', ['branches' => Branch::orderBy('id', 'DESC')->get()]);
         } else {
-            $branches =  Branch::where('id', $user->branch_id)->orWhere('parent_id', $user->branch_id)->get();
+            $branches =  Branch::where('id', $user->branch_id)->orWhere('parent_id', $user->branch_id)->orderBy('id', 'DESC')->get();
             return view('branches.index_table', ['branches' => $branches]);
         }
     }
@@ -158,7 +158,7 @@ class BrancheController extends Controller
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }
-  
+
     public function getBranchLocations(Request $req)
     {
         $id = $req->branch_id;

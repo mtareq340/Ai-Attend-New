@@ -46,7 +46,16 @@
                                 <tr>
                                     <td>{{ $emp->employee->name }}</td>
                                     <td>{{ $emp->request }}</td>
-                                    <td>{{ $emp->request_type->name }}</td>
+                                    @if ($emp->request_type->name=='reject')
+                                        <td>
+                                            <p class="badge badge-danger badge-pill" style="font-size: 13px">
+                                            {{ $emp->request_type->name }}</p>
+                                        </td>
+                                    @else
+                                        <td >
+                                            <p class="badge badge-success badge-pill" style="font-size: 13px">{{ $emp->request_type->name }}</p>    
+                                        </td>
+                                    @endif
                                     <td>{{ $emp->user->name}}</td>
                                     <td>{{ $emp->date }}</td>
                                 </tr>

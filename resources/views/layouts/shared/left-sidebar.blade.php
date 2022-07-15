@@ -315,19 +315,19 @@
                     <li>
                         <a href="#sidebarappointment" data-toggle="collapse">
                             <i class="fe-check-square"></i>.
-                            <span> Appointment </span>
+                            <span> Attendance Plan </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarappointment">
                             <ul class="nav-second-level">
                                 @can('show_appointments')
                                     <li>
-                                        <a href="{{ route('appointment.index') }}">Appointments</a>
+                                        <a href="{{ route('appointment.index') }}">Attendance Plan</a>
                                     </li>
                                 @endcan
                                 @can('add_appointment')
                                     <li>
-                                        <a href="{{ route('appointment.create') }}">Add Appointments</a>
+                                        <a href="{{ route('appointment.create') }}">Add Attendance Plan</a>
                                     </li>
                                 @endcan
                             </ul>

@@ -8,9 +8,14 @@
 @section('content')
     <div class="container-fluid">
         <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
+        <div class="row align-items-center pt-1">
+            <div class="col-4">
+                <h4 class="page-title">Employee Attendance</h4>
+            </div>
+            <div class="col-4">
+                    <button id="attendance_submit" class="btn btn-success" >Make Succesful Attendance</button>
+            </div>
+                <div class="page-title-box col-4">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
@@ -19,32 +24,34 @@
                     </div>
                     <div class="row align-items-center">
                         <div class="col-md-3">
-                            <h4 class="page-title">Employee Attendance</h4>
-                        </div>
                         </div>
                     </div>
+                    </div>
                 </div>
-            </div>
         </div>
-        <!-- end page title -->
-        <select name="appointment_id" id="" style="width: 500px">
-            @foreach ($work_appointments as $work_appointment)
-                <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
-            @endforeach
-        </select>\<br><br><br>
-            <div class="row align-items-center mb-2">
-            {{-- <a href="{{ route('employee_attendance.create') }}"
-                class="btn btn btn-primary waves-effect waves-light mx-1"><i class="fa fa-plus"></i> Add
-                Employee Attendance Manullay</a> --}}
-                
-                <button id="attendance_submit" class="btn btn-success" >Make success Attendance</button>
-                {{-- <button id="attendance_submit" class="btn btn-success" >Make success Attendance</button> --}}
+        <div class="row">
+            <div class="form-group col-6">
+                <div class="row">
+                <div class="col-8">
+                    <select name="appointment_id" id="sel_appointment" class="form-control">
+                        @foreach ($work_appointments as $work_appointment)
+                            <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
+                        @endforeach
+                    </select>
             </div>
+            <div class="col-4">  
+                <button id="filter_submit" class="btn btn-primary">Get Data</button>
+            </div>
+            </div>
+            </div>  
 
+    
+        </div>
+        
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body" >
+                    <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
                         <table id="datatable-buttons" class="table table-striped nowrap w-100 " >
                             <thead>
@@ -116,10 +123,39 @@
 
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
-    
     <script>
-        // let employees_attendance = $("input[type='checkbox']").val();
-        // console.log(employees_attendance);
+      $(document).ready(function(){
+           $('#filter_submit').click(function(e){
+             e.preventDefault();
+             let appoitment_id = $('#sel_appointment').val();
+               $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            $.ajax({
+               url: "{{ route('employee_attendance.index') }}",
+               method: 'GET',
+               data: {
+                appoitment_id,
+                 '_token' : "{{ csrf_token() }}"
+               
+              },
+               success: function(result){
+                    $('body').html(result);
+                    // console.log(result);
+                },
+               error:function(err)
+               {
+                  notyf.error('حدثت مشكله برجاء المحاوله مره اخري')
+                  console.log(err);
+               }
+               
+              });
+            });
+      });  
+    </script>
+    <script>
         $(document).ready(function(){
            
 
@@ -144,18 +180,18 @@
                  
                 },
                  success: function(result){
-                    // window.location.reload()
-                    console.log(result)
+                    notyf.success('تم التحديث بنجاح')
+                    // window.location.reload();
+
                 },
                  error:function(err)
                  {
+                    notyf.error('حدثت مشكله برجاء المحاوله مره اخري')
                     console.log(err);
                  }
                  
                 });
               });
-
-
         });
     </script>
 @endsection
