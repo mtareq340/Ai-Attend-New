@@ -20,24 +20,26 @@ class EmployeeRequestReviewController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $req)
     {
         //
         // if (!Gate::allows('show_employees_request_review')) {
         //     return abort(401);
         // }
         if (auth()->user()->hasRole('super_admin')) {
-            // $requestreviews = Employee_Request_Review::all();
-            $requestreviews = DB::table('employee_request_review')
-                ->select('employee_request_review.id as reqid', 'employees.name as empname', 'request', 'employee_request_review.date as date')
-                ->join('employees', 'employees.id', '=', 'employee_request_review.employee_id')
-                ->get();
+            if ($req->status) {
+                $requestreviews = Employee_Request_Review::where('status', $req->status)->get();
+            } else {
+                $requestreviews = Employee_Request_Review::all();
+            }
         } else {
-            $requestreviews = DB::table('employees')->select('employee_request_review.id as reqid', 'employees.name as empname', 'request', 'employee_request_review.date as date')
-                ->join('branches', 'branches.id', '=', 'employees.branch_id')
-                ->join('employee_request_review', 'employee_request_review.employee_id', '=', 'employees.id')
-                ->where('branches.id', auth()->user()->branch_id)->get();
-            // dd($requestreviews);
+            $requestreviews = Employee_Request_Review::whereHas('employee', function ($q) {
+                $q->where('branch_id', auth()->user()->branch_id);
+            });
+            if ($req->status) {
+                $requestreviews = $requestreviews->where('status', $req->status);
+            }
+            $requestreviews = $requestreviews->get();
         }
         return view('EmployeeRequestReview.index', compact('requestreviews'));
     }
@@ -93,17 +95,9 @@ class EmployeeRequestReviewController extends Controller
     {
         try {
             $emp_request_review = Employee_Request_Review::find($id);
-            // dd($emp_request_review);
-            EmployeeRequest::create([
-                'employee_id' => $emp_request_review->employee_id,
-                'user_id' => auth()->user()->id,
-                'request_type_id' => 3,
-                'request' => $emp_request_review->request,
-                'date' => $emp_request_review->date
-            ]);
-            //  delete from Employee Request Review//
-            $emp_request_review->delete();
-            return redirect()->back()->with(['success' => 'تم الاضافه']);
+            $emp_request_review->status = 2;
+            $emp_request_review->save();
+            return redirect()->back()->with(['success' => 'تم التعديل بنجاح']);
         } catch (Exception $e) {
             return back()->with(['error' => 'حدثت مشكله برجاء المحاوله مره اخري']);
         }
@@ -113,17 +107,9 @@ class EmployeeRequestReviewController extends Controller
     {
         try {
             $emp_request_review = Employee_Request_Review::find($id);
-            // dd($emp_request_review);
-            EmployeeRequest::create([
-                'employee_id' => $emp_request_review->employee_id,
-                'user_id' => auth()->user()->id,
-                'request_type_id' => 2,
-                'request' => $emp_request_review->request,
-                'date' => $emp_request_review->date
-            ]);
-            //  delete from Employee Request Review//
-            $emp_request_review->delete();
-            return redirect()->back()->with(['success' => 'تم الاضافه']);
+            $emp_request_review->status = 3;
+            $emp_request_review->save();
+            return redirect()->back()->with(['success' => 'تم التعديل بنجاح']);
         } catch (Exception $e) {
             return back()->with(['error' => 'حدثت مشكله برجاء المحاوله مره اخري']);
         }

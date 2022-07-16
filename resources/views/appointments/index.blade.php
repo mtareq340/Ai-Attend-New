@@ -12,19 +12,19 @@
         <div class="row align-items-center my-2">
             {{-- <div class="col-12"> --}}
             <div class="col-4">
-                <h4 class="page-title">Appointments</h4>
+                <h4 class="page-title">Attendance Plan</h4>
             </div>
             <div class="col-4">
                 @can('add_appointment')
                     <a href="{{ route('appointment.create') }}" class="btn btn btn-primary waves-effect waves-light"><i
-                            class="fa fa-plus"></i> Add Appointment</a>
+                            class="fa fa-plus"></i> Add Attendance Plan</a>
                 @endcan
             </div>
             <div class="page-title-box col-4">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Appointments</li>
+                        <li class="breadcrumb-item active">Attendance Plan</li>
                     </ol>
                 </div>
             </div>
@@ -40,7 +40,9 @@
                         <table id="scroll-horizontal-datatable" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>Name</th>
+                                    <th>Type</th>
                                     <th>Location Name</th>
                                     <th>Branch Name</th>
                                     <th>Start from (P1)</th>
@@ -54,7 +56,6 @@
                                     <th>Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Action</th>
                                     <th> Active Extra time </th>
                                 </tr>
                             </thead>
@@ -62,23 +63,7 @@
                             <tbody>
                                 @foreach ($appointments as $appoint)
                                     <tr>
-                                        <td>{{ $appoint->name }}</td>
-                                        <td>{{ $appoint->location->name }}</td>
-                                        <td>{{ $appoint->branch->name }}</td>
-                                        <td>{{ $appoint->start_from_period_1 }}</td>
-                                        <td>{{ $appoint->end_to_period_1 }}</td>
-                                        <td>{{ $appoint->delay_period_1 }}</td>
-                                        {{-- <td>{{ $appoint->overtime_period_1 }}</td> --}}
-                                        <td>{{ $appoint->start_from_period_2 }}</td>
-                                        <td>{{ $appoint->end_to_period_2 }}</td>
-                                        <td>{{ $appoint->delay_period_2 }}</td>
-                                        {{-- <td>{{ $appoint->overtime_period_2 }}</td> --}}
-
-
-                                        <td>{{ $appoint->date }}</td>
-                                        <td>{{ $appoint->created_at }}</td>
-                                        <td>{{ $appoint->updated_at }}</td>
-                                        <td>
+                                        <td class="ml-2">
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_appointment')
                                                     <a href="{{ route('appointment.edit', $appoint->id) }}"
@@ -99,6 +84,24 @@
                                                 @endcan
                                             </div>
                                         </td>
+                                        <td>{{ $appoint->name }}</td>
+                                        <td>{{$appoint->attendance_plan_type->name}}</td>
+                                        <td>{{ $appoint->location->name }}</td>
+                                        <td>{{ $appoint->branch->name }}</td>
+                                        <td>{{ $appoint->start_from_period_1 }}</td>
+                                        <td>{{ $appoint->end_to_period_1 }}</td>
+                                        <td>{{ $appoint->delay_period_1 }}</td>
+                                        {{-- <td>{{ $appoint->overtime_period_1 }}</td> --}}
+                                        <td>{{ $appoint->start_from_period_2 }}</td>
+                                        <td>{{ $appoint->end_to_period_2 }}</td>
+                                        <td>{{ $appoint->delay_period_2 }}</td>
+                                        {{-- <td>{{ $appoint->overtime_period_2 }}</td> --}}
+
+
+                                        <td>{{ $appoint->date }}</td>
+                                        <td>{{ $appoint->created_at }}</td>
+                                        <td>{{ $appoint->updated_at }}</td>
+                                        
                                         <td>
                                             <input type="checkbox" class="js-switch" data-plugin="switchery" />
                                         </td>

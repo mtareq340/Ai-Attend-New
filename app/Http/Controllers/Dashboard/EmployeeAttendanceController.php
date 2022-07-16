@@ -18,27 +18,32 @@ class EmployeeAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $work_appointments = Appointment::all();
 
         if (auth()->user()->hasRole('super_admin')) {
-            $employees = Employee_Attendance::all();
-            // dd($employees);
+            if (isset($request->appointment_id)) {
+                $employees = Employee_Attendance::where('appointment_id', $request->appointment_id)->get();
+            } else {
+                $employees = Employee_Attendance::all();
+            }
         } else {
-            $employees = Employee_Attendance::where('branch_id', auth()->user()->branch_id)->get();
+            if (isset($request->appointment_id)) {
+                $employees = Employee_Attendance::where('appointment_id', $request->appointment_id)->where('branch_id', auth()->user()->branch_id)->get();
+            } else {
+                $employees = Employee_Attendance::where('branch_id', auth()->user()->branch_id)->get();
+            }
         }
         return view('employee_attendance.index', compact('employees', 'work_appointments'));
     }
 
+
     public function make_employees_attendance_success(Request $request)
     {
         $employee_attendances = $request->employees_attendance;
-        foreach ($employee_attendances as $emp_attendnce) {
-            // return $emp_attendnce;
-            $data = Employee_Attendance::find($emp_attendnce);
-            $data->update(['state' => 1]);
-        }
+        Employee_Attendance::whereIn('id', $employee_attendances)->update(['state' => 1]);
         return redirect()->back()->with(['success' => 'تم التحديث']);
     }
     /**

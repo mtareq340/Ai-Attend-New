@@ -44,9 +44,9 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Note</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
@@ -54,8 +54,6 @@
                             <tbody>
                                 @foreach($jobs as $job)
                                 <tr>
-                                    <td>{{ $job->name }}</td>
-                                    <td>{{ $job->notes }}</td>
                                     <td>
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_job')
@@ -73,6 +71,9 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    <td>{{ $job->name }}</td>
+                                    <td>{{ $job->notes }}</td>
+                                    
                                 </tr>
 
                                 @endforeach

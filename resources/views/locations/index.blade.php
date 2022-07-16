@@ -42,6 +42,7 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Branch Name</th>
                                     <th>Devices</th>
@@ -52,7 +53,6 @@
                                     <th>Note</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
@@ -60,12 +60,30 @@
                             <tbody>
                                 @foreach ($locations as $l)
                                     <tr>
+                                        <td>
+                                            <div class="row row-xs wd-xl-4p">
+                                                <a href="{{ route('locations.edit', $l->id) }}" class="action-icon">
+                                                    <i class="mdi mdi-square-edit-outline"></i> </a>
+                                                {{-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> --}}
+                                                <form action="{{ route('locations.destroy', $l->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button style="border-color:white; color:red; font-size: 0.8rem;"
+                                                        class="action-icon delete" type="submit"> <i
+                                                            class="mdi mdi-delete"></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
                                         <td>{{ $l->name }}</td>
                                         <td>{{ $l->branch->name }}</td>
                                         <td>
                                             <ul>
                                                 @foreach ($l->devices as $device)
-                                                    <li>{{ $device->name }}</li>
+                                                    @if ($device->code)
+                                                        <li>becon-{{ $device->code }}</li>
+                                                    @elseif($device->ssid)
+                                                        <li>wifi-{{ $device->ssid }}</li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
                                         </td>

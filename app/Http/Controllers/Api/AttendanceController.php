@@ -18,24 +18,24 @@ class AttendanceController extends Controller
         $rules = array(
             'emp_id' => 'required',
             'appointment_id' => 'required',
-            'period' => 'required|in:1,2', 
+            'period' => 'required|in:1,2',
             'attend_method_id' => 'required',
             'state' => 'required|in:1,0'
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
-        }   
+        }
         $emp = Employee::find($request->emp_id);
-        if(!$emp){
-            return response()->json(['status' => 0 , 'message' => 'errors' , 'errors' => [
+        if (!$emp) {
+            return response()->json(['status' => 0, 'message' => 'errors', 'errors' => [
                 'employee' => 'the employee is not found'
             ]], 404);
         }
         // employee is found
         $emp_appointments_ids = $emp->appointmentsIds();
-        if(! in_array( $request->appointment_id , $emp_appointments_ids )){
-            return response()->json(['status' => 0 , 'message' => 'errors' , 'errors' => [
+        if (!in_array($request->appointment_id, $emp_appointments_ids)) {
+            return response()->json(['status' => 0, 'message' => 'errors', 'errors' => [
                 'employee' => 'the employee is not associated in this appointment'
             ]], 404);
         }
@@ -48,22 +48,21 @@ class AttendanceController extends Controller
         $emp_attendence->appointment_id = $request->appointment_id;
         $emp_attendence->attendance_method_id = $request->attend_method_id;
         // $emp_attendence->state = $request->state;
-        
+
         $now = Carbon::now();
         $period = $request->period;
-        $start = Carbon::parse($appointment['start_from_period_'.$period]);
-        $end = Carbon::parse($appointment['end_to_period_'.$period]);
-        return Carbon::parse($appointment['delay_period_'.$period])->format('h:m:s');
+        $start = Carbon::parse($appointment['start_from_period_' . $period]);
+        $end = Carbon::parse($appointment['end_to_period_' . $period]);
+        return Carbon::parse($appointment['delay_period_' . $period])->format('h:m:s');
         // if(
         //     $now->gt($start)
         //     &&
         //     $now->lt( $end-> )
 
         // )
-        
-        
-        $emp_attendence->save();
 
+
+        $emp_attendence->save();
     }
 
     public function set_employee_checkout(Request $request)

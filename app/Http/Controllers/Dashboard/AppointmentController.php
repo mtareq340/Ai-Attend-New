@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Appointment;
+use App\Attendance_Plan_Types;
 use App\Branch;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Device;
 use App\Job;
+use App\Plan_Attendance_Types;
 use App\Week_Day;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -42,12 +44,14 @@ class AppointmentController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::all();
             $branches = Branch::all();
+            $attendance_plan_types = Attendance_Plan_Types::all();
         } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
             $branches = Branch::find(auth()->user()->branch_id);
+            $attendance_plan_types = Attendance_Plan_Types::all();
         }
         $days = Week_Day::all();
-        return view('appointments.create', compact('branches', 'employees', 'jobs', 'days'));
+        return view('appointments.create', compact('branches', 'employees', 'jobs', 'days', 'attendance_plan_types'));
     }
     public function store(Request $request)
     {
@@ -58,6 +62,7 @@ class AppointmentController extends Controller
                 [
                     'name' => 'required',
                     'date' => 'required',
+                    'attendance_plan_type_id' => 'required',
                     'period_count' => 'required|in:1,2',
                     'start_from_period_1' => 'required',
                     'end_to_period_1' => 'required',
@@ -77,6 +82,7 @@ class AppointmentController extends Controller
                     'start_from_period_1.required' => 'برجاء اختيار وقت بداية الفترة الأولى',
                     'end_to_period_1.required' => 'برجاء اختيار وقت نهاية الفترة الأولى',
                     'delay_period_1.required' => 'برجاء اختيار الفترة المرنة للفترة الأولى',
+                    'attendance_plan_type_id.required' => 'برجاء اختيار نوع خطه الدوام',
 
                     'overtime.required' => 'برجاء اختيار الوقت الاضافي',
                     'location_id.required' => 'برجاء اختيار الموقع',
@@ -146,6 +152,7 @@ class AppointmentController extends Controller
                 'attendance_days' => implode(',', $request->attendance_days),
                 'branch_id' => $request->branch_id,
                 'date' => Carbon::parse($request->date),
+                'attendance_plan_type_id' => $request->attendance_plan_type_id
             ]);
             $appointment->save();
 
@@ -160,17 +167,17 @@ class AppointmentController extends Controller
             //             'job_id' => $emp->job_id, 'branch_id' => $request->branch_id, 'location_id' => $request->location_id
             //         ]);
             // }
-            
+
             $emps = [];
             foreach ($request->emps as $emp) {
                 $emp = json_decode($emp);
                 array_push(
                     $emps,
                     [
-                        'employee_id' => $emp->id, 
+                        'employee_id' => $emp->id,
                         'work_appointment_id' => $appointment->id,
                         'job_id' => $emp->job_id,
-                         'branch_id' => $request->branch_id,
+                        'branch_id' => $request->branch_id,
                         'location_id' => $request->location_id
                     ]
                 );
@@ -208,13 +215,16 @@ class AppointmentController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::all();
             $branches = Branch::all();
+            $attendance_plan_types = Attendance_Plan_Types::all();
         } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
             $branches = Branch::find(auth()->user()->branch_id);
+            $attendance_plan_types = Attendance_Plan_Types::all();
         }
         $days = Week_Day::all();
         $appointment = Appointment::find($id);
-        return view('appointments.edit', compact('employees', 'jobs', 'appointment', 'days', 'branches'));
+        $attendance_plan_types = Attendance_Plan_Types::all();
+        return view('appointments.edit', compact('employees', 'jobs', 'appointment', 'days', 'branches', 'attendance_plan_types'));
     }
 
     public function update(Request $request, $id)
@@ -229,6 +239,7 @@ class AppointmentController extends Controller
                 [
                     'name' => 'required',
                     // 'date' => 'required',
+                    'attendance_plan_type_id' => 'required',
                     'period_count' => 'required|in:1,2',
                     'start_from_period_1' => 'required',
                     'end_to_period_1' => 'required',
@@ -245,6 +256,7 @@ class AppointmentController extends Controller
                 [
                     'name.required' => 'برجاء ادخال اسم الحضور',
                     // 'date.required' => "برجاء ادخال تاريخ بداية تطبيق الدوام",
+                    'attendance_plan_type_id.required' => 'برجاء اختيار نوع خطه الدوام',
                     'start_from_period_1.required' => 'برجاء اختيار وقت بداية الفترة الأولى',
                     'end_to_period_1.required' => 'برجاء اختيار وقت نهاية الفترة الأولى',
                     'delay_period_1.required' => 'برجاء اختيار الفترة المرنة للفترة الأولى',

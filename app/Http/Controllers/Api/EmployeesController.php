@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Branch;
 use App\Employee;
 use App\Http\Controllers\Controller;
-use App\Imports\EmployeeImport;
-use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
-use Auth;
 
 class EmployeesController extends Controller
 {
 
     function employeeLogin(Request $request)
     {
-
         $rules = array(
             'email' => 'required',
             'password' => 'required',
@@ -139,7 +133,7 @@ class EmployeesController extends Controller
                 'password' => Hash::make($request->new_password)
             ]);
             return Response()->json(['status' => 1, 'message' => 'Successful..! Your password is changed']);
-        } catch (exception $e) {
+        } catch (\Exception $e) {
             return Response()->json(['status' => 0, 'message' => $e->getMessage()]);
         }
     }

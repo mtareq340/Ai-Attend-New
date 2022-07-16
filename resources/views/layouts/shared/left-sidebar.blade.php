@@ -139,28 +139,39 @@
                 @endcan --}}
 
                 @can('show_employees')
-                <li>
-                    <a href="{{ route('employees.index') }}">
-                        <i class="fas fa-user-tie"></i>
-                        <span> Employees </span>
-                    </a>
-                </li>
-            @endcan
+                    <li>
+                        <a href="{{ route('employees.index') }}">
+                            <i class="fas fa-user-tie"></i>
+                            <span> Employees </span>
+                        </a>
+                    </li>
+                @endcan
                 {{-- end of Employees --}}
 
 
-            @can('show_employee_attendance')
-                <li>
-                    <a href="{{ route('employee_attendance.index') }}">
-                        <i class="fas fa-user-tie"></i>
-                        <span> Employees Attendance </span>
-                    </a>
-                </li>
+            @can('show_employee_attendance_and_deartures')
+            <li>
+                <a href="#sidebaratt_dep" data-toggle="collapse">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Attend & Departure</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebaratt_dep">
+                    <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('employee_attendance.index') }}">Employees Attendance</a>
+                            </li>
+                        
+                            <li>
+                                <a href="{{ route('employees_departures.index') }}">Employees Departures</a>
+                            </li>
+                    </ul>
+                </div>
+            </li>
+
             @endcan
 
 
-            
-              
 
 
 
@@ -179,11 +190,11 @@
                                         <a href="{{ route('employee_request_review') }}">Employees Requests Reviews</a>
                                     </li>
                                 @endcan
-                                @can('show_employees')
+                                {{-- @can('show_employees')
                                     <li>
                                         <a href="{{ route('employee_requests.index') }}">Employees Requests</a>
                                     </li>
-                                @endcan
+                                @endcan --}}
                                 {{-- @can('add_employee')
                                     <li>
                                         <a href="{{ route('employee_request_type.index') }}">Request Type</a>
@@ -196,7 +207,7 @@
                 {{-- end of employees requests --}}
 
 
-              
+
                 {{-- start of locations --}}
                 @can('show_locations')
                     <li>
@@ -255,8 +266,8 @@
                 @endcan
                 {{-- EndSidebar devices --}}
 
-       
-              
+
+
                 {{-- Here attend_methods  Sidebar --}}
                 @can('show_attend_methods')
                     <li>
@@ -283,7 +294,7 @@
                 @endcan
                 {{-- EndSidebar attend_methods --}}
 
-           
+
                 {{-- start of employee - attend methods --}}
                 @can('show_employee_attend_methods')
                     <li>
@@ -315,19 +326,19 @@
                     <li>
                         <a href="#sidebarappointment" data-toggle="collapse">
                             <i class="fe-check-square"></i>.
-                            <span> Appointment </span>
+                            <span> Attendance Plan </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarappointment">
                             <ul class="nav-second-level">
                                 @can('show_appointments')
                                     <li>
-                                        <a href="{{ route('appointment.index') }}">Appointments</a>
+                                        <a href="{{ route('appointment.index') }}">Attendance Plan</a>
                                     </li>
                                 @endcan
                                 @can('add_appointment')
                                     <li>
-                                        <a href="{{ route('appointment.create') }}">Add Appointments</a>
+                                        <a href="{{ route('appointment.create') }}">Add Attendance Plan</a>
                                     </li>
                                 @endcan
                             </ul>
@@ -336,10 +347,10 @@
                 @endcan
                 {{-- end of appointment --}}
 
-                {{-- start of Management Plans  --}}
+                {{-- start of Management Plans --}}
                 {{-- @can('show_assign_appointments') --}}
-                    <li>
-                        {{-- <a href="#sidebarassign" data-toggle="">
+                <li>
+                    {{-- <a href="#sidebarassign" data-toggle="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="feather feather-clipboard icon-dual">
@@ -347,34 +358,39 @@
                                 <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                             </svg>
                         </a> --}}
-                        <a href="#"> Management Plans</a>
-                        {{-- <p>Management Plans</p>                        --}}
-                    </li>
+                    <a href="#"> Management Plans</a>
+                    {{-- <p>Management Plans</p> --}}
+                </li>
                 {{-- @endcan --}}
 
                 @can('show_extra_time')
-                <li>
-                    <a href="#sidebarextra" data-toggle="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard icon-dual"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                        <span>Extra Time</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarextra">
-                        <ul class="nav-second-level">
-                            @can('show_assign_appointments')
-                            <li>
-                                <a href="{{ route('extra_time.index') }}">Extra Time</a>
-                            </li>
-                            @endcan
+                    <li>
+                        <a href="#sidebarextra" data-toggle="collapse">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-clipboard icon-dual">
+                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                            </svg>
+                            <span>Extra Time</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarextra">
+                            <ul class="nav-second-level">
+                                @can('show_assign_appointments')
+                                    <li>
+                                        <a href="{{ route('extra_time.index') }}">Extra Time</a>
+                                    </li>
+                                @endcan
 
-                            @can('add_extra_time')
-                            <li>
-                                <a href="{{ route('extra_time.create') }}">Add Extra Time</a>
-                            </li>
-                            @endcan
-                        </ul>
-                    </div>
-                </li>
+                                @can('add_extra_time')
+                                    <li>
+                                        <a href="{{ route('extra_time.create') }}">Add Extra Time</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
                 @endcan
                 {{-- End of Assign Appointment --}}
 
@@ -433,7 +449,7 @@
 
 
 
-                {{-- <li class="menu-title">Some Pages For Design</li>
+                <li class="menu-title">Some Pages For Design</li>
 
                 <li>
                     <a href="{{ route('second', ['apps', 'calendar']) }}">
@@ -1127,7 +1143,7 @@
                             </li>
                         </ul>
                     </div>
-                </li> --}}
+                </li>
             </ul>
 
         </div>
