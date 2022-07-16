@@ -58,7 +58,6 @@
 
 
                             <tbody>
-                                {{--  --}}
                                 @foreach ($locations as $l)
                                     <tr>
                                         <td>{{ $l->name }}</td>
