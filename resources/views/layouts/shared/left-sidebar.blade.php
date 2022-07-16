@@ -149,27 +149,27 @@
                 {{-- end of Employees --}}
 
 
-            @can('show_employee_attendance_and_deartures')
-            <li>
-                <a href="#sidebaratt_dep" data-toggle="collapse">
-                    <i class="fas fa-user-tie"></i>
-                    <span>Attend & Departure</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebaratt_dep">
-                    <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('employee_attendance.index') }}">Employees Attendance</a>
-                            </li>
-                        
-                            <li>
-                                <a href="{{ route('employees_departures.index') }}">Employees Departures</a>
-                            </li>
-                    </ul>
-                </div>
-            </li>
+                @can('show_employee_attendance_and_deartures')
+                    <li>
+                        <a href="#sidebaratt_dep" data-toggle="collapse">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Attend & Departure</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebaratt_dep">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ route('employee_attendance.index') }}">Employees Attendance</a>
+                                </li>
 
-            @endcan
+                                <li>
+                                    <a href="{{ route('employees_departures.index') }}">Employees Departures</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                @endcan
 
 
 
@@ -347,21 +347,23 @@
                 @endcan
                 {{-- end of appointment --}}
 
-                {{-- start of Management Plans --}}
-                {{-- @can('show_assign_appointments') --}}
-                <li>
-                    {{-- <a href="#sidebarassign" data-toggle="">
+
+
+                @can('show_assign_appointments')
+                    <li>
+                        <a href="{{ route('assign_appointment.index') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="feather feather-clipboard icon-dual">
                                 <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                                 <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                             </svg>
-                        </a> --}}
-                    <a href="#"> Management Plans</a>
-                    {{-- <p>Management Plans</p> --}}
-                </li>
-                {{-- @endcan --}}
+                            <span>Management Plans</span>
+                            <span class=""></span>
+                        </a>
+
+                    </li>
+                @endcan
 
                 @can('show_extra_time')
                     <li>
