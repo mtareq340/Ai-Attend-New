@@ -54,11 +54,10 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    {{-- <th>sub branches</th> --}}
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -66,6 +65,37 @@
                             <tbody>
                                 @foreach ($branches as $branch)
                                     <tr>
+                                        <td>
+                                            <div class="row row-xs wd-xl-4p">
+                                                <a href="#" onclick="showAddForm('{{ $branch->id }}')"
+                                                    class="action-icon">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                         
+                                                @can('edit_branch')
+                                                <a href="{{ route('branches.edit', $branch->id) }}" class="action-icon">
+                                                @endcan
+                                                <i class="mdi mdi-square-edit-outline"></i> </a>
+                                            <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+
+
+                                            {{-- wiil only delete the branch when it has no children --}}
+                                            @if ($branch->children->count() == 0)
+
+                                                @can('delete_branch')
+                                                    <form action="{{ route('branches.destroy', $branch->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button style="border-color:white; color:red; font-size: 0.8rem;"
+                                                            class="action-icon delete" type="submit"> <i
+                                                                class="mdi mdi-delete"></i></button>
+                                                    </form>
+                                                @endcan
+                                            @endif
+
+                                            </div>
+                                        </td>
                                         <td>{{ $branch->name }}</td>
                                         <td>{{ $branch->phone }}</td>
                                         <td>{{ $branch->address }}</td>
@@ -76,36 +106,7 @@
                                         @endforeach
                                         </ul>
                                     </td> --}}
-                                        <td>
-                                            <div class="row row-xs wd-xl-4p">
-                                                <a href="#" onclick="showAddForm('{{ $branch->id }}')"
-                                                    class="action-icon">
-                                                    <i class="fa fa-plus"></i>
-                                                </a>
-                                                @can('edit_branch')
-                                                    <a href="{{ route('branches.edit', $branch->id) }}" class="action-icon">
-                                                    @endcan
-                                                    <i class="mdi mdi-square-edit-outline"></i> </a>
-                                                <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
-
-
-                                                {{-- wiil only delete the branch when it has no children --}}
-                                                @if ($branch->children->count() == 0)
-
-                                                    @can('delete_branch')
-                                                        <form action="{{ route('branches.destroy', $branch->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button style="border-color:white; color:red; font-size: 0.8rem;"
-                                                                class="action-icon delete" type="submit"> <i
-                                                                    class="mdi mdi-delete"></i></button>
-                                                        </form>
-                                                    @endcan
-                                                @endif
-
-                                            </div>
-                                        </td>
+                                        
                                     </tr>
 
                                 @endforeach

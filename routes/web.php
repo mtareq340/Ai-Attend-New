@@ -114,6 +114,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   Route::post('reject_response/{id}', 'Dashboard\EmployeeRequestReviewController@reject_response')->name('reject_response');
 
   Route::post('make_employees_attendance_success', 'Dashboard\EmployeeAttendanceController@make_employees_attendance_success')->name('make_employees_attendance_success');
+
+  //employees Departure 
+  Route::resource('employees_departures', 'Dashboard\EmployeesDepartureController');
+  Route::post('make_employees_departure_success', 'Dashboard\EmployeesDepartureController@make_employees_departure_success')->name('make_employees_departure_success');
 });
 
 

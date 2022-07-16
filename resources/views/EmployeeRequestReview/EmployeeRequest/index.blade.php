@@ -19,7 +19,15 @@
             </div>
         </div>     
         <!-- end page title --> 
-
+        <div class="row pb-3">
+            <div class="col-6">
+                <select name="request_type_id" id="request_type_id" class="form-control">
+                    <option value="" selected disabled>Select Request Type</option>
+                    <option value="3">accept</option>
+                    <option value="2">reject</option>
+                </select>    
+            </div> 
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -46,7 +54,16 @@
                                 <tr>
                                     <td>{{ $emp->employee->name }}</td>
                                     <td>{{ $emp->request }}</td>
-                                    <td>{{ $emp->request_type->name }}</td>
+                                    @if ($emp->request_type->name=='reject')
+                                        <td>
+                                            <p class="badge badge-danger badge-pill" style="font-size: 13px">
+                                            {{ $emp->request_type->name }}</p>
+                                        </td>
+                                    @else
+                                        <td >
+                                            <p class="badge badge-success badge-pill" style="font-size: 13px">{{ $emp->request_type->name }}</p>    
+                                        </td>
+                                    @endif
                                     <td>{{ $emp->user->name}}</td>
                                     <td>{{ $emp->date }}</td>
                                 </tr>
@@ -78,6 +95,15 @@
     <script src="{{asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
     <!-- Page js-->
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+  
+          $('#request_type_id').change(function(e){
+              let request_type_id = $('#request_type_id').val();
+              window.location = `/dashboard/employee_requests?request_type_id=${request_type_id}`; 
+          });
+        });  
+      </script>
     <script>
         var elem = document.querySelectorAll('.js-switch');
         elem.forEach(element => {

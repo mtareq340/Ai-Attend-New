@@ -4,16 +4,16 @@ namespace App\Http\Controllers\api;
 
 use App\Appointment;
 use App\Employee;
-use App\Employee_Attendance;
+use App\Employee_Departure;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AttendanceController extends Controller
+class DepartureController extends Controller
 {
     //
-    public function set_employee_attendence(Request $request)
+    public function set_employee_departure(Request $request)
     {
         $rules = array(
             'emp_id' => 'required',
@@ -39,40 +39,30 @@ class AttendanceController extends Controller
                 'employee' => 'the employee is not associated in this appointment'
             ]], 404);
         }
-        // the employee is associated with the appointment
         $appointment = Appointment::find($request->appointment_id);
-        $emp_attendence = new Employee_Attendance();
+        $emp_departure = new Employee_Departure();
 
-        $emp_attendence->employee_id = $request->emp_id;
-        $emp_attendence->branch_id = $appointment->branch_id;
-        $emp_attendence->appointment_id = $request->appointment_id;
-        $emp_attendence->attendance_method_id = $request->attend_method_id;
-        // $emp_attendence->state = $request->state;
+        $emp_departure->employee_id = $request->emp_id;
+        $emp_departure->branch_id = $appointment->branch_id;
+        $emp_departure->appointment_id = $request->appointment_id;
+        $emp_departure->attendance_method_id = $request->attend_method_id;
 
         $now = Carbon::now();
         $period = $request->period;
-        $start = Carbon::parse($appointment['start_from_period_' . $period]);
+        // $start = Carbon::parse($appointment['start_from_period_' . $period]);
         $end = Carbon::parse($appointment['end_to_period_' . $period]);
-        return Carbon::parse($appointment['delay_period_' . $period])->format('h:m:s');
-        // if(
-        //     $now->gt($start)
-        //     &&
-        //     $now->lt( $end-> )
-
-        // )
-
-
-        $emp_attendence->save();
-    }
-
-    public function set_employee_checkout(Request $request)
-    {
-        $employee_attendance_id = $request->id;
-        $departure_time = $request->departure_time;
-        $employee_attendance = Employee_Attendance::find($employee_attendance_id);
-        $employee_attendance->update(
-            ['departure_time' => $departure_time]
-        );
-        return response()->json(['status' => 1, 'message' => 'Employee has made Check out']);
+        //check if time is greater than or equal to end time of attendance plan
+        if ($now->gte($end)) {
+            $emp_departure->save();
+            return response()->json([
+                'state' => '1',
+                'message' => 'Successful Departure'
+            ]);
+        } else {
+            return response()->json([
+                'state' => '0',
+                'message' => 'Departure time has not comming yet'
+            ]);
+        }
     }
 }
