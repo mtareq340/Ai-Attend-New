@@ -40,6 +40,11 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
+<<<<<<< HEAD
+=======
+    Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
+
+>>>>>>> 392c0ea61bbdcdee8cdcc73ed45e3c70b564fdf6
 
     // Company Apis
     Route::post('company/get_settings', 'CompanySettingsController@getData'); // parameters ()
@@ -49,5 +54,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
     // employee attenance 
     Route::post('employees/set_employees_attenance', 'AttendanceController@set_employee_attendence');
-    Route::post('employees/get_employees_checkout', 'api\AttendanceController@set_employee_checkout');
+    // Route::post('employees/get_employees_checkout', 'api\AttendanceController@set_employee_checkout');
+
+    Route::post('employees/set_employees_departure', 'DepartureController@set_employee_departure');
 });

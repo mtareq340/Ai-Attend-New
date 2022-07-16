@@ -31,10 +31,10 @@
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('appointment.index') }}">Appointments</a>
                                 </li>
-                                <li class="breadcrumb-item active">Edit Appointments</li>
+                                <li class="breadcrumb-item active">Edit Attendance Plan</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Appointments</h4>
+                        <h4 class="page-title">Attendance Plan</h4>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                                     <li class="nav-item" data-target-form="#accountForm">
                                         <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                             <i class="mdi mdi-account-circle mr-1"></i>
-                                            <span class="d-none d-sm-inline">Appointment</span>
+                                            <span class="d-none d-sm-inline">Attendance Plan </span>
                                         </a>
                                     </li>
                                     <li class="nav-item" data-target-form="#profileForm">
@@ -194,6 +194,14 @@
                                                     </div>
                                                 </div>
                                                 {{-- /////////////////// --}}
+                                                <div class="form-group">
+                                                    <label for="attendance_plan_types">Attendance Plan Type</label>
+                                                    <select name="attendance_plan_type_id" id="attendance_plan_types" data-toggle="select2" class="select2">
+                                                        @foreach ($attendance_plan_types as $plan )
+                                                            <option value="{{$plan->id}}">{{$plan->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
 
                                                 <div class="form-group mb-3">

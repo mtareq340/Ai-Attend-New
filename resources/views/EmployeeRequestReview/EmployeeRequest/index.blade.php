@@ -82,6 +82,16 @@
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
+        $(document).ready(function() {
+
+            $('#request_type_id').change(function(e) {
+                let request_type_id = $('#request_type_id').val();
+                window.location = `/dashboard/employee_requests?request_type_id=${request_type_id}`;
+            });
+        });
+
+    </script>
+    <script>
         var elem = document.querySelectorAll('.js-switch');
         elem.forEach(element => {
             new Switchery(element, {
