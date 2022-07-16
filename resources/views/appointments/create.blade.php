@@ -386,7 +386,8 @@
                     res.forEach(device => {
                         $devices_select.append(
                             new Option(
-                                device.name,
+                                device.type == 'becon' ? `becon-${device.code}` :
+                                `wifi-${device.ssid}`,
                                 device.id,
                                 false,
                                 false

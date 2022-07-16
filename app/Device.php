@@ -9,7 +9,7 @@ class Device extends Model
 {
     use Notifiable;
     protected $fillable = [
-        'name', 'code', 'notes', 'created_at', 'updated_at' , 'location_id'
+        'type' ,'ssid', 'location_id', 'code', 'notes', 'created_at', 'updated_at' 
     ];
 
     public function location()

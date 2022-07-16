@@ -27,9 +27,6 @@ salah
 
 Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
-
-
-
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
    
