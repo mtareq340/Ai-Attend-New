@@ -32,7 +32,7 @@ class DepartureController extends Controller
                 'employee' => 'the employee is not found'
             ]], 404);
         }
-        // employee is found
+        // employees is found
         $emp_appointments_ids = $emp->appointmentsIds();
         if (!in_array($request->appointment_id, $emp_appointments_ids)) {
             return response()->json(['status' => 0, 'message' => 'errors', 'errors' => [
@@ -41,7 +41,6 @@ class DepartureController extends Controller
         }
         $appointment = Appointment::find($request->appointment_id);
         $emp_departure = new Employee_Departure();
-
         $emp_departure->employee_id = $request->emp_id;
         $emp_departure->branch_id = $appointment->branch_id;
         $emp_departure->appointment_id = $request->appointment_id;
