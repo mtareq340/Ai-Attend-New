@@ -15,10 +15,14 @@ class EmployeeRequestsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // Return view in path EmployeeRequests/index
-        $employee_requests = EmployeeRequest::all();
+        if (isset($request->request_type_id)) {
+            $employee_requests = EmployeeRequest::where('request_type_id', $request->request_type_id)->get();
+        } else {
+            $employee_requests = EmployeeRequest::all();
+        }
         return view('EmployeeRequestReview.EmployeeRequest.index', compact(
             'employee_requests'
         ));

@@ -49,10 +49,10 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Name</th>
                                     <th>Active</th>
                                     <th>Note</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
@@ -60,14 +60,6 @@
                             <tbody>
                                 @foreach ($attend_methods as $attend_method)
                                     <tr>
-                                        <td>{{ $attend_method->name }}</td>
-                                        <td>
-                                            <input type="checkbox"
-                                                onchange="toggleActivationAndLocked(event,'{{ $attend_method->id }}','active')"
-                                                class="js-switch" {{ $attend_method->active ? 'checked' : '' }}
-                                                data-plugin="switchery" />
-                                        </td>
-                                        <td>{{ $attend_method->notes }}</td>
                                         <td>
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_attend_method')
@@ -88,6 +80,15 @@
                                                 @endcan
                                             </div>
                                         </td>
+                                        <td>{{ $attend_method->name }}</td>
+                                        <td>
+                                            <input type="checkbox"
+                                                onchange="toggleActivationAndLocked(event,'{{ $attend_method->id }}','active')"
+                                                class="js-switch" {{ $attend_method->active ? 'checked' : '' }}
+                                                data-plugin="switchery" />
+                                        </td>
+                                        <td>{{ $attend_method->notes }}</td>
+                                        
                                     </tr>
                                 @endforeach
 

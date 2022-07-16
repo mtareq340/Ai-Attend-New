@@ -149,13 +149,26 @@
                 {{-- end of Employees --}}
 
 
-            @can('show_employee_attendance')
-                <li>
-                    <a href="{{ route('employee_attendance.index') }}">
-                        <i class="fas fa-user-tie"></i>
-                        <span> Employees Attendance </span>
-                    </a>
-                </li>
+            @can('show_employee_attendance_and_deartures')
+            <li>
+                <a href="#sidebaratt_dep" data-toggle="collapse">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Attend & Departure</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebaratt_dep">
+                    <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('employee_attendance.index') }}">Employees Attendance</a>
+                            </li>
+                        
+                            <li>
+                                <a href="{{ route('employees_departures.index') }}">Employees Departures</a>
+                            </li>
+                    </ul>
+                </div>
+            </li>
+
             @endcan
 
 
@@ -315,19 +328,19 @@
                     <li>
                         <a href="#sidebarappointment" data-toggle="collapse">
                             <i class="fe-check-square"></i>.
-                            <span> Appointment </span>
+                            <span> Attendance Plan </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarappointment">
                             <ul class="nav-second-level">
                                 @can('show_appointments')
                                     <li>
-                                        <a href="{{ route('appointment.index') }}">Appointments</a>
+                                        <a href="{{ route('appointment.index') }}">Attendance Plan</a>
                                     </li>
                                 @endcan
                                 @can('add_appointment')
                                     <li>
-                                        <a href="{{ route('appointment.create') }}">Add Appointments</a>
+                                        <a href="{{ route('appointment.create') }}">Add Attendance Plan</a>
                                     </li>
                                 @endcan
                             </ul>

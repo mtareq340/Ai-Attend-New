@@ -72,61 +72,23 @@
                             <div class="dt-buttons"></div>
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>Name</th>
-                                    <th>Job number</th>
+                                    <th>Job</th>
+                                    <th>Job number</th> 
+                                    <th>Branch</th>
+                                    <th>Attendance Plan</th>
+                                    <th>Attend methods</th>                
+                                    <th>Active</th>
+                                    <th>Locked</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>Branch</th>
-                                    <th>Attend methods</th>
-                                    <th>Job</th>
-                                    <th>Active</th>
-                                    <th>Locked</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
                                 @foreach ($employees as $emp)
                                     <tr>
-                                        <td>{{ $emp->name }}</td>
-                                        <td>{{ $emp->job_number }}</td>
-                                        <td>{{ $emp->email }}</td>
-                                        <td>{{ $emp->phone }}</td>
-                                        <td>{{ $emp->address }}</td>
-                                        <td>{{ $emp->branch->name }}</td>
-                                        <td>
-                                            <ul>
-                                                @foreach ($emp->attend_methods as $method)
-                                                    <li>
-                                                        {{ $method->name }}
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                            <a href="/dashboard/edit_employee_attend_method/{{ $emp->id }}"
-                                                type="button" class="btn btn-sm btn-primary float-right">
-                                                <i class="mdi mdi-square-edit-outline"></i>
-
-                                            </a>
-                                        </td>
-                                        <td>{{ $emp->job->name }}</td>
-                                        <td>
-                                            @can('edit_employee')
-                                                <input type="checkbox"
-                                                    onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')"
-                                                    class="js-switch" {{ $emp->active ? 'checked' : '' }}
-                                                    data-plugin="switchery" />
-                                            @endcan
-                                        </td>
-                                        <td>
-                                            @can('edit_employee')
-                                                <input type="checkbox"
-                                                    onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')"
-                                                    class="js-switch-red" {{ $emp->locked ? 'checked' : '' }}
-                                                    data-plugin="switchery" />
-                                            @endcan
-                                        </td>
                                         <td>
                                             <div class="row row-xs wd-xl-4p">
                                                 @can('edit_employee')
@@ -145,30 +107,55 @@
                                                     </form>
                                                 @endcan
                                             </div>
-
-
-                                            {{-- <div class="row row-xs wd-xl-4p">
-                                                @can('edit_employee')
-                                                    <a href="{{ route('employees.edit', $emp->id) }}" class="btn btn-sm btn-info mr-1">
-                                                        <i class="mdi text-white mdi-square-edit-outline"></i>
-                                                    </a>
-                                                @endcan
-                                                <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
-                                                @can('delete_employee')
-                                                    <form action="{{ route('employees.destroy', $emp->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm delete" type="submit">
-                                                            <i class="mdi text-white mdi-delete"></i>
-
-                                                        </button>
-                                                    </form>
-                                                @endcan
-                                            </div> --}}
-
-
                                         </td>
 
+                                        <td>{{ $emp->name }}</td>
+                                        <td>{{ $emp->job->name }}</td>
+                                        <td>{{ $emp->job_number }}</td>
+                                        <td>{{ $emp->branch->name }}</td>
+                                        <td>
+                                            <ul>
+                                                @foreach ($emp->appointments as $appointment )
+                                                    <li>{{$appointment->name}}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                @foreach ($emp->attend_methods as $method)
+                                                    <li>
+                                                        {{ $method->name }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            <a href="/dashboard/edit_employee_attend_method/{{ $emp->id }}"
+                                                type="button" class="btn btn-sm btn-primary float-right">
+                                                <i class="mdi mdi-square-edit-outline"></i>
+
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @can('edit_employee')
+                                                <input type="checkbox"
+                                                    onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'active')"
+                                                    class="js-switch" {{ $emp->active ? 'checked' : '' }}
+                                                    data-plugin="switchery" />
+                                            @endcan
+                                        </td>
+                                        <td>
+                                            @can('edit_employee')
+                                                <input type="checkbox"
+                                                    onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')"
+                                                    class="js-switch-red" {{ $emp->locked ? 'checked' : '' }}
+                                                    data-plugin="switchery" />
+                                            @endcan
+                                        </td>
+
+                                        <td>{{ $emp->email }}</td>
+                                        <td>{{ $emp->phone }}</td>
+                                        <td>{{ $emp->address }}</td>
+                                    
+                                       
 
                                     </tr>
                                 @endforeach

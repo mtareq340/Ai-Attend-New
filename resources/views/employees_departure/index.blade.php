@@ -13,13 +13,13 @@
                 <h4 class="page-title">Employee Attendance</h4>
             </div>
             <div class="col-4">
-                    <button id="attendance_submit" class="btn btn-success" >Make Succesful Attendance</button>
+                    <button id="departure_submit" class="btn btn-success" >Make Succesful Departures</button>
             </div>
                 <div class="page-title-box col-4">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Employee Attendance</li>
+                            <li class="breadcrumb-item active">Employee Departures</li>
                         </ol>
                     </div>
                     <div class="row align-items-center">
@@ -29,20 +29,7 @@
                     </div>
                 </div>
         </div>
-        <div class="row">
-            <div class="form-group col-6">
-                    <select name="appointment_id" id="sel_appointment" class="form-control">
-                        <option value="" selected disabled>Select Attendance Plan</option>
-                        @foreach ($work_appointments as $work_appointment)
-                            <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
-                        @endforeach
-                    </select>
-            
-            
-            </div>
-            </div>  
-
-    
+         
         </div>
         
         <div class="row">
@@ -67,7 +54,7 @@
 
 
                             <tbody>
-                                @foreach ($employees as $emp)
+                                @foreach ($employees_departure as $emp)
                                     <tr>
                                         <td>
                                             @if ($emp->state == 0)
@@ -97,7 +84,6 @@
                                             {{-- {{$emp->state}} --}}
                                         </td>
                                         <td>{{$emp->created_at}}</td>
-                                        <td>{{$emp->departure_time}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -133,12 +119,12 @@
         $(document).ready(function(){
            
 
-             $('#attendance_submit').click(function(e){
+             $('#departure_submit').click(function(e){
                e.preventDefault();
-               let employees_attendance = []
+               let employees_departure = []
 
                $("input:checkbox[name=emps]:checked").each(function() {
-                employees_attendance.push($(this).val());
+                employees_departure.push($(this).val());
                  });
                  $.ajaxSetup({
                   headers: {
@@ -146,10 +132,10 @@
                   }
               });
               $.ajax({
-                 url: "{{ route('make_employees_attendance_success') }}",
+                 url: "{{ route('make_employees_departure_success') }}",
                  method: 'post',
                  data: {
-                   employees_attendance,
+                   employees_departure,
                    '_token' : "{{ csrf_token() }}"
                  
                 },

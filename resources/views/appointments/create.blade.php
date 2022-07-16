@@ -28,12 +28,12 @@
                     <div class="page-title-box">
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{ route('appointment.index') }}">Appointments</a>
+                                <li class="breadcrumb-item"><a href="{{ route('appointment.index') }}">Attendance Plan</a>
                                 </li>
-                                <li class="breadcrumb-item active">Add Appointments</li>
+                                <li class="breadcrumb-item active">Add Attendance Plan</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Appointments</h4>
+                        <h4 class="page-title">Attendance Plan</h4>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                                     <li class="nav-item" data-target-form="#accountForm">
                                         <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                             <i class="mdi mdi-account-circle mr-1"></i>
-                                            <span class="d-none d-sm-inline">Appointment</span>
+                                            <span class="d-none d-sm-inline">Attendance PLan</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" data-target-form="#profileForm">
@@ -79,7 +79,7 @@
                                             <div class="col-12">
 
                                                 <div class="form-group row mb-3">
-                                                    <label for="name_input">Appointment name</label>
+                                                    <label for="name_input">Plan Attendance name</label>
                                                     <input type="text" name="name" id="name_input" class="form-control" />
                                                 </div>
 
@@ -187,9 +187,17 @@
                                                 </div>
                                                 {{-- /////////////////// --}}
 
+                                                <div class="form-group">
+                                                    <label for="attendance_plan_types">Attendance Plan Type</label>
+                                                    <select name="attendance_plan_type_id" id="attendance_plan_types" data-toggle="select2" class="select2">
+                                                        @foreach ($attendance_plan_types as $plan )
+                                                            <option value="{{$plan->id}}">{{$plan->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
                                                 <div class="form-group mb-3">
-                                                    <label for="overtime_input">overtime</label>
+                                                    <label for="overtime_input">max overtime</label>
                                                     <input type="text" id="overtime_input" name="overtime"
                                                         class="24hours-timepicker form-control" placeholder="00:00">
                                                 </div>
@@ -212,7 +220,7 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-
+                                                
                                                 <div class="form-group row mb-3">
                                                     <label class="col-md-3 col-form-label">repeat</label>
                                                     <div class="col-md-9">
