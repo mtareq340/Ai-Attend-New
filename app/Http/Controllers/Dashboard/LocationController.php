@@ -9,7 +9,6 @@ use App\Location;
 use Exception;
 use Illuminate\Http\Request;
 
-use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,10 +39,10 @@ class LocationController extends Controller
             return abort(401);
         }
         if (auth()->user()->hasRole('super_admin')) {
-            $devices = Device::where('active', 1)->get();
+            $devices = Device::all();
             $branchs = Branch::all();
         } else {
-            $devices = Device::where('active', 1)->get();
+            $devices = Device::all();
             $branchs = Branch::findOrfail(auth()->user()->branch_id);
             // dd($branchs);
         }
@@ -74,18 +73,31 @@ class LocationController extends Controller
             );
             if ($validator->fails()) {
                 $err_msg = $validator->errors()->first();
-                return back()->with('error', $err_msg)->withInput();
+                return response()->json(['msg' => $err_msg], 400);
+
             }
 
-            $data = $req->all();
-            // dd($data);
+            $data = $req->except('devices');
             $location = new Location();
             $location->fill($data);
             $location->save();
 
-            return redirect()->route('locations.index')->with(['success' => 'تم الحفظ بنجاح']);
+            $devices = [];
+            // save the devices
+            foreach ($req->devices as $device) {
+                array_push($devices , [
+                    "code" => $device['code'] ?? '',
+                    "ssid" => $device['ssid'] ?? '' ,
+                    "type" => $device['type'],
+                    "location_id" => $location->id,
+                ]);
+
+            }
+            Device::insert($devices);
+            return response()->json(['msg' => 'تم اضافة الموقع بنجاح'], 200);
+
         } catch (Exception $e) {
-            return redirect()->route('locations.create')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            return response()->json(['msg' => $e->getMessage()], 400);
         }
     }
     public function destroy($id)
@@ -109,7 +121,9 @@ class LocationController extends Controller
             return abort(401);
         }
         $selected_branch = '';
-        $location = Location::find($id);
+        $location = Location::with(['devices' => function ($query) {
+            $query->select('code', 'type' , 'ssid' , 'location_id' );
+        }])->find($id);
         if (auth()->user()->hasRole('super_admin')) {
             $selected_branch = Branch::find($location->branch_id);
             $branchs = Branch::all();
@@ -145,7 +159,8 @@ class LocationController extends Controller
             );
             if ($validator->fails()) {
                 $err_msg = $validator->errors()->first();
-                return back()->with('error', $err_msg)->withInput();
+                return response()->json(['msg' => $err_msg], 400);
+
             }
 
 
@@ -153,9 +168,17 @@ class LocationController extends Controller
             $location = Location::findOrFail($id);
             $location->update($data);
 
-            return redirect()->route('locations.index')->with(['success' => 'تم تحديث الموقع بنجاح']);
+
+            $devices = $req->devices;
+            // save the devices
+            
+            // return $devices;
+            $location->devices()->delete();
+            Device::insert($devices);
+            return "success";
         } catch (Exception $e) {
-            return redirect()->route('locations.edit')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            return response()->json(['msg' => $e->getMessage()], 400);
+        
         }
     }
     // will be called with ajax

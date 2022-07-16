@@ -27,9 +27,6 @@ salah
 
 Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
-
-
-
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
    
@@ -43,8 +40,8 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
-    Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
 
+    Route::post('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
 
     // Company Apis
     Route::post('company/get_settings', 'CompanySettingsController@getData'); // parameters ()
