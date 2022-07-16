@@ -41,10 +41,15 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
 
 >>>>>>> 392c0ea61bbdcdee8cdcc73ed45e3c70b564fdf6
+=======
+    Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
+
+>>>>>>> b6b717d1493fc68659a2950547dc93688a5872ba
 
     // Company Apis
     Route::post('company/get_settings', 'CompanySettingsController@getData'); // parameters ()

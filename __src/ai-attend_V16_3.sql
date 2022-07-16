@@ -1264,3 +1264,153 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+-- phpMyAdmin SQL Dump
+-- version 4.8.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 16, 2022 at 09:59 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Database: `ai-attend-agaza`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `devices`
+--
+
+CREATE TABLE `devices` (
+  `id` bigint(20) NOT NULL,
+  `type` enum('becon','wifi') NOT NULL,
+  `code` varchar(100) DEFAULT NULL,
+  `ssid` varchar(200) DEFAULT NULL,
+  `location_id` int(30) NOT NULL,
+  `notes` varchar(191) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `devices`
+--
+
+INSERT INTO `devices` (`id`, `type`, `code`, `ssid`, `location_id`, `notes`, `created_at`, `updated_at`) VALUES
+(20, 'becon', '451245', '', 32, NULL, NULL, NULL),
+(21, 'wifi', '', 'rwasfas', 32, NULL, NULL, NULL),
+(32, 'wifi', NULL, '4124512rdxcvfwegtvsdfg', 33, NULL, NULL, NULL),
+(47, 'wifi', NULL, 'new wifi', 34, NULL, NULL, NULL),
+(48, 'wifi', NULL, 'extra new', 34, NULL, NULL, NULL),
+(49, 'becon', '4321412412412', NULL, 34, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_request_review`
+--
+
+CREATE TABLE `employee_request_review` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `request` varchar(255) NOT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `details` varchar(255) NOT NULL,
+  `status` enum('1','2','3') NOT NULL DEFAULT '1',
+  `date` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_request_review`
+--
+
+INSERT INTO `employee_request_review` (`id`, `employee_id`, `request`, `attachment`, `details`, `status`, `date`, `created_at`, `updated_at`) VALUES
+(27, 11, 'I nee a day off', '/uploads/requests/1657924788mohammed-ahmed-editied0000020007.jpg', 'اللالانيشلبسشكمبمستشكبتسشختبسشكتبكشسمتبمشسةبمسشةب ب تشسحخبتسشكم بؤ تشسخحبتسشةنمبشس بليشسبسش بشسبسش  بسش بشسي', '3', '2022-07-15 00:00:00', '2022-07-15 20:39:48', '2022-07-15 21:32:44'),
+(28, 11, 'I nee a day off', '/uploads/requests/165792673006a35f16927ca22d4f74fa2c390548ad.jpg', 'اللالانيشلبسشكمبمستشكبتسشختبسشكتبكشسمتبمشسةبمسشةب ب تشسحخبتسشكم بؤ تشسخحبتسشةنمبشس بليشسبسش بشسبسش  بسش بشسي', '1', '2022-07-15 00:00:00', '2022-07-15 21:12:10', '2022-07-15 21:12:10'),
+(29, 11, 'I nee a day off', '/uploads/requests/16579267689cb4842b2d30d2b6f7885a341253e470.jpg', 'extra details', '1', '2022-07-15 00:00:00', '2022-07-15 21:12:48', '2022-07-15 21:12:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
+CREATE TABLE `locations` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `location_address` varchar(255) NOT NULL,
+  `distance` varchar(255) NOT NULL,
+  `location_latitude` decimal(8,6) NOT NULL,
+  `location_longituide` decimal(9,6) NOT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `name`, `location_address`, `distance`, `location_latitude`, `location_longituide`, `branch_id`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 'Giza location', '123 main AT', '100', '30.014082', '31.482892', 2, NULL, '2022-06-29 06:56:21', '2022-06-29 06:56:21'),
+(2, 'water fall', '1234 main ST', '150', '29.934973', '30.921903', 5, NULL, '2022-06-29 06:57:08', '2022-06-29 06:57:08'),
+(5, 'test', '123 main AT', '100', '30.042022', '30.963788', 7, NULL, '2022-07-06 09:22:01', '2022-07-06 09:22:01'),
+(33, 'test location', 'address', '100', '30.012298', '31.497312', 2, NULL, '2022-07-14 14:50:29', '2022-07-14 14:52:50'),
+(34, 'locationnnnn', 'e4124214', '100', '30.044400', '31.235700', 2, NULL, '2022-07-15 21:01:18', '2022-07-15 21:01:18');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `devices`
+--
+ALTER TABLE `devices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `employee_request_review`
+--
+ALTER TABLE `employee_request_review`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `devices`
+--
+ALTER TABLE `devices`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT for table `employee_request_review`
+--
+ALTER TABLE `employee_request_review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+COMMIT;
