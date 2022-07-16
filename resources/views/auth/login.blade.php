@@ -31,6 +31,10 @@
                                             </span>
                                         </a>
                                     </div>
+
+                                    @if (Session::has('msg'))
+                                        <div class="alert alert-danger my-2">{{Session::get('msg')}}</div>
+                                    @endif
                                     <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.</p>
                                 </div>
 

@@ -16,4 +16,18 @@ class Attendmethods extends Model
     {
         return $this->belongsToMany(Employee::class, 'employee_attend_methods', 'employee_id', 'attend_method_id');
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($employees) {
+            $relationMethods = ['employees'];
+
+            foreach ($relationMethods as $relationMethod) {
+                if ($employees->$relationMethod()->count() > 0) {
+                    return false;
+                }
+            }
+        });
+    }
 }

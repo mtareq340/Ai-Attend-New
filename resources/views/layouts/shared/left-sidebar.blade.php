@@ -64,14 +64,14 @@
                 {{-- end of account settings --}}
 
                 {{-- start of plans --}}
-                @can('show_plans')
+                {{-- @can('show_plans')
                     <li>
                         <a href="{{ route('plans.index') }}">
                             <i class="mdi mdi-office-building"></i>
                             <span> Plans </span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- end of plans --}}
 
 
@@ -169,14 +169,14 @@
                     <li>
                         <a href="#sidebarempreq" data-toggle="collapse">
                             <i class="fas fa-user-tie"></i>
-                            <span> Employees Request </span>
+                            <span> Employees Requests </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarempreq">
                             <ul class="nav-second-level">
                                 @can('show_employees')
                                     <li>
-                                        <a href="{{ route('employee_request_review') }}">Employees Request Review</a>
+                                        <a href="{{ route('employee_request_review') }}">Employees Requests Reviews</a>
                                     </li>
                                 @endcan
                                 @can('show_employees')
@@ -184,11 +184,11 @@
                                         <a href="{{ route('employee_requests.index') }}">Employees Requests</a>
                                     </li>
                                 @endcan
-                                @can('add_employee')
+                                {{-- @can('add_employee')
                                     <li>
                                         <a href="{{ route('employee_request_type.index') }}">Request Type</a>
                                     </li>
-                                @endcan
+                                @endcan --}}
                             </ul>
                         </div>
                     </li>
@@ -289,7 +289,7 @@
                     <li>
                         <a href="#sidebarempatt" data-toggle="collapse">
                             <i class="fa fa-users"></i>.
-                            <span>Employees Attendance</span>
+                            <span>Emps Attendance(M)</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarempatt">
@@ -336,21 +336,18 @@
                 @endcan
                 {{-- end of appointment --}}
 
-                {{-- start of Management Plans  --}}
-                {{-- @can('show_assign_appointments') --}}
-                    <li>
-                        {{-- <a href="#sidebarassign" data-toggle="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-clipboard icon-dual">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                            </svg>
-                        </a> --}}
-                        <a href="#"> Management Plans</a>
-                        {{-- <p>Management Plans</p>                        --}}
-                    </li>
-                {{-- @endcan --}}
+         
+
+                @can('show_assign_appointments')
+                <li>
+                    <a href="{{ route('assign_appointment.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard icon-dual"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                        <span>Management Plans</span>
+                        <span class=""></span>
+                    </a>
+                
+                </li>
+                @endcan
 
                 @can('show_extra_time')
                 <li>
@@ -433,7 +430,7 @@
 
 
 
-                <li class="menu-title">Some Pages For Design</li>
+                {{-- <li class="menu-title">Some Pages For Design</li>
 
                 <li>
                     <a href="{{ route('second', ['apps', 'calendar']) }}">
@@ -1127,7 +1124,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
 
         </div>

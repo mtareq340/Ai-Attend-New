@@ -1,4 +1,8 @@
 @extends('layouts.vertical', ['title' => 'Form Components'])
+@section('css')
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+
+@endsection
 @section('textArea')
     <style>
         .shadow-textarea textarea.form-control::placeholder {
@@ -60,9 +64,22 @@
 
                             <div class="form-group">
                                 <label for="code_input" class="col-form-label">Code *</label>
-                                <input type="name" name="code" class="form-control" id="code_input" placeholder="Name"
+                                <input type="name" name="code" class="form-control" id="code_input" placeholder="code"
                                     required>
                             </div>
+
+
+                            <div class="form-group">
+                                <label for="locationInput">Location</label>
+                                <select id="locationInput" data-toggle="select2" name="location_id" class="select2">
+                                    @foreach ($locations as $location)
+                                        <option value="{{ $location->id }}">
+                                            {{ $location->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
                             <div class="form-group shadow-textarea">
                                 <label for="exampleFormControlTextarea6">Note</label>
@@ -85,4 +102,12 @@
 
 
     </div> <!-- container -->
+@endsection
+@section('script')
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script>
+        $('[data-toggle="select2"]').select2();
+
+    </script>
+
 @endsection

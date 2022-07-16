@@ -17,23 +17,52 @@ class Branch extends Model
         'long',
         'lat'
     ];
-    protected $appends = [
-        'can_delete'
-    ];
+
 
     public function appointment()
     {
-        return $this->hasOne(Appointment::class);
+        return $this->hasMany(Appointment::class);
     }
-    public function employees() {
-        return $this->hasMany("App\Employee", "branch_id");
+    public function employees()
+    {
+        return $this->hasMany("App\Employee");
+    }
+    public function assigned_appointments()
+    {
+        return $this->hasMany(Assign_Appointment::class);
+    }
+    public function attendance_settings()
+    {
+        return $this->hasOne(AttendenceSettings::class);
+    }
+    public function branch_settings()
+    {
+        return $this->hasOne(Branch_Setting::class);
+    }
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 
-    public function getCanDeleteAttribute(){
-        $valid = true;
-        if ($this->employees()->count() > 0)
-            $valid = false;
-        
-        return $valid;
+
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($branch) {
+            $relationMethods = ['employees', 'users', 'appointment', 'assigned_appointments', 'locations'];
+            foreach ($relationMethods as $relationMethod) {
+                if ($branch->$relationMethod()->count() > 0) {
+                    return false;
+                }
+            }
+        });
     }
 }

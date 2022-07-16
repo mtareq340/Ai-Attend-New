@@ -2,26 +2,22 @@
 
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/selectize/selectize.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                       
-                    </div>
-                    <h4 class="page-title">Dashboard</h4>
-                </div>
-            </div>
+
+        <div class="py-2">
+            @if (Session::has('alerts'))
+                @foreach (json_decode(Session::get('alerts')) as $alert)
+                    <div class="mb-1 alert alert-{{ $alert->type }}">{{ $alert->message_en }}</div>
+                @endforeach
+            @endif
         </div>
-        <!-- end page title -->
 
         <div class="row">
             <div class="col-md-6 col-xl-3">
@@ -34,8 +30,8 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="mt-1"><span data-plugin="counterup">{{$plan->count_employees}}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Max Employees Number</p>
+                                <h3 class="mt-1"><span data-plugin="counterup">{{ $plan->count_employees }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Max Employees</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -52,7 +48,8 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$employess_count}}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $employess_count }}</span>
+                                </h3>
                                 <p class="text-muted mb-1 text-truncate">Employees</p>
                             </div>
                         </div>
@@ -70,7 +67,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$branches_count}}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $branches_count }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Branches</p>
                             </div>
                         </div>
@@ -88,7 +85,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{$jobs_count}}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $jobs_count }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Jobs</p>
                             </div>
                         </div>
@@ -97,7 +94,38 @@
             </div> <!-- end col-->
         </div>
         <!-- end row-->
+        <div class="w-100">
+            <center>
+                <div>
+                    <div class="card-box">
+                        <div class="dropdown float-right">
 
+                        </div>
+
+                        <p class=" h3 mb-0">Registeration Number : {{ $registeration_number }}</p>
+
+                        <div class="widget-chart text-center" dir="ltr">
+
+                            <div id="chart">
+                            </div>
+
+                            @if ($diffDays == 0)
+                                <p class="text-danger">Your service will be closed at {{ $final_end_date }}</p>
+                            @endif
+                            {{-- <div id="total-revenue" class="mt-0"  data-colors="#f1556c"></div> --}}
+
+                            <h5 class="text-muted mt-0">Maximum Employees</h5>
+                            <h2>{{ $plan->count_employees }}</h2>
+
+
+                        </div>
+                    </div> <!-- end card-box -->
+                </div> <!-- end col-->
+            </center>
+
+        </div>
+
+        <!-- end row -->
         <div class="row">
             <div class="col-xl-6">
                 <div class="card-box">
@@ -112,21 +140,38 @@
                                     <th>Phone</th>
                                     <th>Request</th>
                                     <th>Date</th>
+                                    <th>Accept</th>
+                                    <th>Reject</th>
                                     {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (count($empRequestsRevs) > 0)
-                                @foreach ($empRequestsRevs as $empRequestsRev)
-                                <tr>
-                                    <td>{{optional($empRequestsRev->employee)->name}}</td>
-                                    <td>{{optional($empRequestsRev->employee)->phone}}</td>
-                                    <td>{{$empRequestsRev->request}}</td>
-                                    <td>{{$empRequestsRev->date}}</td>
-                                </tr>
-                                @endforeach
+                                    @foreach ($empRequestsRevs as $empRequestsRev)
+                                        <tr>
+                                            <td>{{ optional($empRequestsRev->employee)->name }}</td>
+                                            <td>{{ optional($empRequestsRev->employee)->phone }}</td>
+                                            <td>{{ $empRequestsRev->request }}</td>
+                                            <td>{{ $empRequestsRev->date }}</td>
+                                            <td>
+                                                <form action="{{route('accept_response',$empRequestsRev->id)}}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success"><i class="fe-check-circle "></i></button>
+                                                </form>
+                                          
+                                            </td>
+                                            <td>
+                                                <form action="{{route('reject_response',$empRequestsRev->id)}}" method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-danger">
+                                                        <i class="fe-x-circle "></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr>thir is no Requests to Review</tr>
+                                    <tr>thir is no Requests to Review</tr>
                                 @endif
                                 {{-- <tr>
                                     <td style="width: 36px;">
@@ -179,16 +224,16 @@
                             </thead>
                             <tbody>
                                 @if (count($loginHistories) > 0)
-                                @foreach ($loginHistories as $index=>$loginHistory)
-                                <tr>
-                                    <td>{{$index+1}}</td>
-                                    <td>{{$loginHistory->ip}}</td>
-                                    <td>{{$loginHistory->datetime}}</td>
-                                    <td>{{$loginHistory->details}}</td>
-                                </tr>
-                                @endforeach
+                                    @foreach ($loginHistories as $index => $loginHistory)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $loginHistory->ip }}</td>
+                                            <td>{{ $loginHistory->datetime }}</td>
+                                            <td>{{ $loginHistory->details }}</td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr>thir is no login history</tr>
+                                    <tr>thir is no login history</tr>
                                 @endif
                                 {{-- <tr>
                                     <td>
@@ -219,66 +264,100 @@
         </div>
         <!-- end row -->
 
-        <div class="row">
-            <center>
-                <div class="col-lg-12">
-                    <div class="card-box">
-                        <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical"></i>
-                            </a>
-                        
-                        </div>
 
-                        <h4 class="header-title mb-0">Plan Analysis</h4>
 
-                        <div class="widget-chart text-center" dir="ltr">
 
-                            <div id="chart">
-                            </div>
-                            {{-- <div id="total-revenue" class="mt-0"  data-colors="#f1556c"></div> --}}
-
-                            <h5 class="text-muted mt-0">Maximum Employees</h5>
-                            <h2>{{$plan->count_employees}}</h2>
-
-                            <p class="text-muted w-75 mx-auto sp-line-2">Traditional heading elements are designed to work best in the meat of your page content.</p>
-
-                        
-
-                        </div>
-                    </div> <!-- end card-box -->
-                </div> <!-- end col-->
-            </center>
-
-          
-        </div>
-        <!-- end row -->
-
-        
 
     </div> <!-- container -->
 @endsection
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js')}}"></script>
-    <script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
-    <script src="{{asset('assets/libs/selectize/selectize.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
 
     <!-- Dashboar 1 init js-->
-    <script src="{{asset('assets/js/pages/dashboard-1.init.js')}}"></script>
+    <script src="{{ asset('assets/js/pages/dashboard-1.init.js') }}"></script>
     <script>
-        var options = {
-        chart: {
-            height: 350,
-            type: 'radialBar',
-        },
-        series: [{{$percentDays}}],
-        labels: ['Progress'],
+        var percent = {{ $percentDays }}
+        let color_a = "#168be2"
+        let color_b = "#9248e0"
+
+        if (percent < 25) {
+            color_a = "#de0d26"
+            color_b = "#eb3d34"
         }
+
+        // var options = {
+        //     chart: {
+        //         height: 350,
+        //         type: 'radialBar',
+        //     },
+        //     series: [percent],
+        //     labels: ['Progress'],
+        //     fill: {
+        //         colors: [color]
+        //     }
+
+        // }
+
+        var options = {
+            chart: {
+                height: 280,
+                type: "radialBar",
+            },
+
+            series: [{{ $percentDays }}],
+
+            colors: [color_a],
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        margin: 0,
+                        size: "70%",
+                    },
+                    track: {
+                        dropShadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            blur: 4,
+                            opacity: 0.15
+                        }
+                    },
+                    dataLabels: {
+                        name: {
+                            offsetY: -10,
+                            color: "#fff",
+                            fontSize: "18px"
+                        },
+                        value: {
+                            color: "#fff",
+                            fontSize: "30px",
+                            show: true
+                        }
+                    }
+                }
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shade: "light",
+                    type: "vertical",
+                    gradientToColors: [color_b],
+                    stops: [0, 100]
+                }
+            },
+            stroke: {
+                lineCap: "round"
+            },
+            labels: ["{{ $diffDays }} days left"]
+        };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
 
         chart.render();
+
     </script>
 @endsection

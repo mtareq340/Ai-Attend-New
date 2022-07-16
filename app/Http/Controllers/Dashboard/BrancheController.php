@@ -6,17 +6,13 @@ use App\AttendenceSettings;
 use App\Branch;
 use App\Branch_Setting;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class BrancheController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,41 +20,42 @@ class BrancheController extends Controller
 
     public function index(Request $request)
     {
+
         if (!Gate::allows('show_branches')) {
             return abort(401);
         }
-        if (auth()->user()->hasRole('super_admin')) {
+        $user = auth()->user();
+        if ($user->hasRole('super_admin')) {
             return view('branches.index_table', ['branches' => Branch::all()]);
+        } else {
+            $branches =  Branch::where('id', $user->branch_id)->orWhere('parent_id', $user->branch_id)->get();
+            return view('branches.index_table', ['branches' => $branches]);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //this was added by using ajax call in the index view
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'address' => '',
-            'notes' => '',
-            // 'long' => 'required|numeric',
-            // 'lat' => 'required|numeric',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|unique:branches',
+                'phone' => '',
+                'address' => ''
+            ],
 
+            [
+                'name.required' => "لا يجب ترك اسم الفرع فارغ",
+                'name.unique' => "هذا الفرع تمت اضافته سابقا"
+            ]
+        );
+
+        if ($validator->fails()) {
+            $err_msg = $validator->errors()->first();
+            return back()->with('error', $err_msg)->withInput();
+        }
+        $data = $request->except('_token');
 
         $branch = new Branch($data);
         $branch->save();
@@ -70,7 +67,8 @@ class BrancheController extends Controller
             'over_time_count' => '0'
         ]);
         ///////////////////////////////////
-        // $AttendenceSettings = AttendenceSettings::create($data);
+        $AttendenceSettings = AttendenceSettings::create($data);
+
         // return $request->parent_id;
         if ($request->parent_id) {
             // $parent = Branch::find($request->parent_id);
@@ -89,7 +87,6 @@ class BrancheController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -108,22 +105,31 @@ class BrancheController extends Controller
         return view('branches.edit', ['branch' => $branch]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'name' => 'required',
-                'phone' => 'required|numeric',
-                'address' => ''
-            ]);
             $branch = Branch::findOrFail($id);
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required|unique:branches,name,' . $id,
+                    'phone' => '',
+                    'address' => ''
+                ],
+
+                [
+                    'name.required' => "لا يجب ترك اسم الفرع فارغ",
+                    'name.unique' => "هذا الفرع تمت اضافته سابقا"
+                ]
+            );
+
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
             //update in db
             $branch->update($request->all());
             return redirect()->route('branches.index', ['type' => 'table'])->with(['success' => 'تم تحديث الفرع بنجاح']);
@@ -142,15 +148,22 @@ class BrancheController extends Controller
     {
         try {
             $branch = Branch::findOrFail($id);
-            if ($branch->can_delete) {
-                //delete in db
-                $branch->delete();
-                return back()->with(['success' => 'تم حذف الفرع بنجاح']);
-            } else {
-                return back()->with(['error' => 'هذا الفرع يوجد عليه موظفين لا يمكن مسحه']);
+            $deleted = $branch->delete();
+            if (!$deleted) {
+                return back()->with(['error' => 'هذا الفرع لا يمكن مسحه']);
             }
+            $branch->branch_settings->delete();
+            return back()->with(['success' => 'تم حذف الفرع بنجاح']);
         } catch (\Exception $ex) {
             return back()->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
+    }
+  
+    public function getBranchLocations(Request $req)
+    {
+        $id = $req->branch_id;
+        if (!$id) return 'no id provided';
+
+        return Branch::find($id)->locations;
     }
 }

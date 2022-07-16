@@ -34,7 +34,7 @@ class EmployeeRequestController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
-        }
+        }   
         $request_data = $request->all();
         $employee = Employee::FindOrFail($request->id);
 

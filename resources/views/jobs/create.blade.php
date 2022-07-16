@@ -48,11 +48,11 @@
                     <div class="card-body">
                         <h4 class="header-title">Jobs</h4>
                       
-                        <form action="{{ route('jobs.store')}}" method="post">
+                        <form action="{{ route('jobs.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Name</label>
-                                <input type="name" name="name" class="form-control" id="name" placeholder="Name">
+                                <label for="name" class="col-form-label">Name @include('red_star')</label>
+                                <input type="name" name="name" class="form-control" id="name" placeholder="Name" required>
                             </div>
 
                             <div class="form-group shadow-textarea">

@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 
 
 Auth::routes();
+
 
 
 
@@ -36,6 +38,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   // employees attend methods
   Route::resource('employees_attend_methods', 'Dashboard\EmployeeAttendMethodController');
   // branches
+  Route::get('branches/locations', 'Dashboard\BrancheController@getBranchLocations')->name('getBranchLocations');
   Route::resource('branches', 'Dashboard\BrancheController');
   // employees (this order should remain the same)
   Route::get('employees/add-from-excel', 'Dashboard\EmployeeController@excelPage')->name('employees.excelPage');
@@ -67,6 +70,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   //employeee Attendace //
   Route::resource('employee_attendance', 'Dashboard\EmployeeAttendanceController');
 
+  Route::get('get_location_from_branch', 'Dashboard\AppointmentController@getlocationfrombranch')->name('get_location_from_branch');
   // start settings
 
   Route::patch('settings/cover', 'Dashboard\CompanySettingsController@uploadCover')->name('changeCover');
@@ -100,7 +104,20 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   Route::resource('roles', 'Dashboard\RoleController');
 
   Route::post('/addvication', 'Dashboard\CompanySettingsController@addvication')->name('addvication');
+
+  //update attendance method employee
+  Route::get('edit_employee_attend_method/{id}', 'Dashboard\EmployeeController@edit_employee_attend_method')->name('edit_employee_attend_method');
+  Route::patch('store_employee_attend_method/{id}', 'Dashboard\EmployeeController@store_employee_attend_method')->name('store_employee_attend_method');
+
+  //make response
+  Route::post('accept_response/{id}', 'Dashboard\EmployeeRequestReviewController@accept_response')->name('accept_response');
+  Route::post('reject_response/{id}', 'Dashboard\EmployeeRequestReviewController@reject_response')->name('reject_response');
+
+  Route::post('make_employees_attendance_success', 'Dashboard\EmployeeAttendanceController@make_employees_attendance_success')->name('make_employees_attendance_success');
 });
+
+
+
 
 Route::group(['prefix' => '/'], function () {
   Route::get('{first}/{second}/{third}', 'RoutingController@thirdLevel')->name('third');

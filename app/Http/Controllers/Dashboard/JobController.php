@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {
@@ -50,9 +51,21 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|unique:jobs',
+            ],
+            [
+                'name.required' => "لا يجب ترك اسم الوظيفة فارغ",
+                'name.unique' => "تم اضافة هذه الوظيفة من قبل"
+            ]
+        );
+
+        if ($validator->fails()) {
+            $err_msg = $validator->errors()->first();
+            return back()->with('error', $err_msg)->withInput();
+        }
         // Save The Request Into DataBase
         $data = $request->all();
         $job = Job::create($data);
@@ -96,9 +109,24 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'name' => 'required'
-            ]);
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required|unique:jobs,name,' . $id,
+                ],
+                [
+                    'name.required' => "لا يجب ترك اسم الوظيفة فارغ",
+                    'name.unique' => "تم اضافة هذه الوظيفة من قبل"
+                ]
+            );
+
+            if ($validator->fails()) {
+                $err_msg = $validator->errors()->first();
+                return back()->with('error', $err_msg)->withInput();
+            }
+
+
             $job = Job::findOrFail($id);
 
             //update in db
@@ -117,14 +145,13 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        /*
-            Delete The Job Where id = id request
-            And redirect -> with msg [  ]
-        */
+
         try {
             $job = Job::find($id);
-
-            $job->delete();
+            $deleted =  $job->delete();
+            if (!$deleted) {
+                return redirect()->route('jobs.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            }
             return redirect()->route('jobs.index')->with(['success' => 'تم حذف الوظيفة بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('jobs.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);

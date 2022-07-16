@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Device;
 use App\Http\Controllers\Controller;
+use App\Location;
 use Exception;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
@@ -42,7 +43,8 @@ class DeviceController extends Controller
         /*
             return view in path view/devices/create.blade.php
         */
-        return view('devices.create');
+        $locations = Location::all();
+        return view('devices.create' ,compact('locations'));
     }
 
     /**
@@ -57,7 +59,6 @@ class DeviceController extends Controller
             $request->all(),
             [
                 'name' => 'required',
-
             ],
             [
                 'name.required' => 'برجاء ادخال الاسم الجهاز',
@@ -70,6 +71,7 @@ class DeviceController extends Controller
         }
         // Save The Request Into DataBase
         $data = $request->all();
+        // dd($data);
         $devices = Device::create($data);
         return redirect()->route('devices.index')->with(['success' => 'تم الحفظ بنجاح']);
     }
@@ -97,7 +99,9 @@ class DeviceController extends Controller
             return abort(401);
         }
         $device = Device::FindOrFail($id);
-        return view('devices.update', compact('device'));
+        $locations = Location::all();
+
+        return view('devices.update', compact('device' , 'locations'));
     }
 
     /**
@@ -117,7 +121,7 @@ class DeviceController extends Controller
 
             //update in db
             $devices->update($request->all());
-            return redirect()->route('devices.index')->with(['success' => 'تم تحديث المستخدم بنجاح']);
+            return redirect()->route('devices.index')->with(['success' => 'تم تحديث الجهاز بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('devices.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
@@ -133,10 +137,14 @@ class DeviceController extends Controller
     {
         try {
             $devices = Device::find($id);
-
-            $devices->delete();
-            return redirect()->route('devices.index')->with(['success' => 'تم حذف الحضور بنجاح']);
-        } catch (\Exception $ex) {
+            $delete = $devices->delete();
+            //check if data is deleted or not
+            if (!$delete) {
+                return redirect()->route('devices.index')->with(['error' => 'لايمكن حذف هذا الجهاز لانه يتيع لموقع']);
+            } else {
+                return redirect()->route('devices.index')->with(['success' => 'تم الحذف بنجاح']);
+            }
+        } catch (Exception $ex) {
             return redirect()->route('devices.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
         }
     }

@@ -11,7 +11,6 @@
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
         type="text/css" />
-
     <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
         type="text/css" />
 @endsection
@@ -196,13 +195,15 @@
                                                 </div>
 
                                                 <div class="form-group row mb-3">
+
                                                     <label class="col-md-3 col-form-label" for="password3"> Attendance
                                                         Days</label>
+
                                                     <div class="col-md-9">
                                                         @foreach ($days as $day)
                                                             <div class="checkbox checkbox-success form-check-inline">
                                                                 <input {{ $day->id == 7 ? '' : 'checked' }}
-                                                                    name="attendence_days" type="checkbox"
+                                                                    name="attendance_days" type="checkbox"
                                                                     id="day-{{ $day->id }}"
                                                                     value="{{ $day->id }}">
                                                                 <label
@@ -230,13 +231,28 @@
                                         <div class="row">
 
                                             <div class="form-group mb-2 w-100">
-                                                <label for="inputLocation">Location *</label>
-                                                <select id="inputLocation" onchange="getLocationDevices(event)"
-                                                    data-toggle="select2" class="select2" name="location_id">
-                                                    @foreach ($locations as $location)
-                                                        <option value="{{ $location->id }}">{{ $location->name }}
+                                                <label for="inputBranch">Branch *</label>
+                                                <select onchange="getBranchLocations(event)" id="inputBranch"
+                                                    data-toggle="select2" class="select2" name="branch_id">
+                                                    @if (auth()->user()->hasRole('super_admin'))
+                                                        @foreach ($branches as $branch)
+                                                            <option value="{{ $branch->id }}">{{ $branch->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @else
+                                                        <option selected value="{{ $branches->id }}">
+                                                            {{ $branches->name }}
                                                         </option>
-                                                    @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group mb-2 w-100">
+                                                <label for="inputLocation">Location *</label>
+                                                <select id="inputLocation" onchange="getdevicesFromLocation(event)"
+                                                    data-toggle="select2" class="select2" name="location_id"
+                                                    data-placeholder="Choose ...">
+
                                                 </select>
                                             </div>
 
@@ -264,7 +280,6 @@
                                                             <select id="job_id_input" data-toggle="select2"
                                                                 onchange="getJobEmployees(event)" class="select2">
                                                                 <option value="">All</option>
-
                                                                 @foreach ($jobs as $job)
                                                                     <option value="{{ $job->name }}">
                                                                         {{ $job->name }}
@@ -356,7 +371,8 @@
 
     <script>
         $('#inputLocation').val('')
-        const getLocationDevices = (event) => {
+        $('#inputBranch').val('')
+        const getdevicesFromLocation = (event) => {
             const id = event.target.value
             $.ajax({
                 url: "{{ route('getLocationDevices') }}",
@@ -377,6 +393,40 @@
                             )
                         )
                     });
+                    $devices_select.val('')
+                },
+                error: () => {
+                    alert('something went wrong try again later')
+                }
+            });
+        }
+
+
+        const getBranchLocations = (event) => {
+            const id = event.target.value
+            $.ajax({
+                url: "{{ route('getBranchLocations') }}",
+                type: 'GET',
+                data: {
+                    branch_id: id
+                },
+                success: (res) => {
+                    const $locations_select = $('#inputLocation')
+                    $locations_select.empty()
+                    $('#devices_input').empty()
+                    res.forEach(location => {
+                        $locations_select.append(
+                            new Option(
+                                location.name,
+                                location.id,
+                                false,
+                                false
+                            )
+                        )
+                    });
+
+                    $('#inputLocation').val('')
+
 
                 },
                 error: () => {
@@ -394,7 +444,6 @@
     <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
@@ -428,6 +477,7 @@
                 }
             }
         });
+
 
 
 
@@ -498,26 +548,26 @@
                     return $(this).val();
                 }).get();
 
-            
+
             var devices = $("#devices_input")
                 .map(function() {
                     return $(this).val();
                 }).get();
 
-          
+
             var emps = []
-            $("input:checkbox[name=emps]:checked").each(function(){
-                    emps.push($(this).val());
+            $("input:checkbox[name=emps]:checked").each(function() {
+                emps.push($(this).val());
             });
-           
-            var attendence_days = []
-            $("input:checkbox[name=attendence_days]:checked").each(function(){
-                    attendence_days.push($(this).val());
+
+            var attendance_days = []
+            $("input:checkbox[name=attendance_days]:checked").each(function() {
+                attendance_days.push($(this).val());
             });
 
             values['emps'] = emps
             values['devices'] = devices
-            values['attendence_days'] = attendence_days
+            values['attendance_days'] = attendance_days
             $.ajax({
                 type: 'POST',
                 url: "{{ route('appointment.store') }}",
@@ -527,13 +577,13 @@
                 contentType: 'application/json',
                 data: JSON.stringify(values),
                 success: function(data) {
-                    notyf.success('appointment is added successfully')
+                    notyf.success('تم اضافة خطة الدوام بنجاح')
                     window.location = '/dashboard/appointment'
                 },
                 error: function(error) {
                     const msg = error.responseJSON.msg
                     notyf.error(msg)
-                
+
                 },
                 processData: false,
 

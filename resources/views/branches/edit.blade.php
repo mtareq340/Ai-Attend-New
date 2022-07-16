@@ -17,7 +17,7 @@
                             <li class="breadcrumb-item active">Edit Branchs</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit Branch</h4>
+                    <h4 class="page-title">Edit {{ $branch->name }}</h4>
                 </div>
             </div>
         </div>
@@ -31,21 +31,19 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Edit {{ $branch->name }}</h4>
-
-                        <form action="{{ route('branches.update', $branch->id) }}" method="post">
+                        <form action="{{ route('branches.update', $branch->id) }}" method="post" class="needs-validation" novalidate>
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Name</label>
+                                <label for="name" class="col-form-label">Name @include('red_star')</label>
                                 <input type="name" value="{{ $branch->name }}" name="name" class="form-control" id="name"
-                                    placeholder="Name">
+                                    placeholder="Name" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="inputEmail4" class="col-form-label">Phone number</label>
+                                <label for="inputphone" class="col-form-label">Phone number</label>
                                 <input type="tel" value="{{ $branch->phone }}" name="phone" class="form-control"
-                                    id="inputEmail4" placeholder="branch phone number">
+                                    id="inputphone" placeholder="branch phone number" required>
                             </div>
 
                             <div class="form-group">
@@ -56,10 +54,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputPhone" class="col-form-label">Notes <span
+                                <label for="inputNotes" class="col-form-label">Notes <span
                                         class="text-muted">(optional)</span></label>
                                 <input type="text" value="{{ $branch->notes }}" name="notes" class="form-control"
-                                    id="inputPhone" placeholder="...">
+                                    id="inputNotes" placeholder="...">
                             </div>
 
                             <center> <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>

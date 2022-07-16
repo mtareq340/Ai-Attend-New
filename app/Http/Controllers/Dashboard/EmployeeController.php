@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Attendmethods;
 use App\Branch;
+use App\EmpAttendMethods;
 use App\Employee;
 use App\Setting;
 use App\Plan;
@@ -11,10 +13,10 @@ use App\Imports\EmployeeImport;
 use App\Job;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -91,11 +93,13 @@ class EmployeeController extends Controller
                 $request->all(),
                 [
                     'phone' => 'required',
+                    'job_number' => 'required|unique:employees'
 
                 ],
                 [
                     'phone.required' => 'برجاء ادخال رقم الهاتف',
-
+                    'job_number.required' => 'برجاء ادخال رقم الموظف',
+                    'job_number.unique' => 'هذا الرقم تم تسجيله من قبل'
                 ]
             );
             if ($validator->fails()) {
@@ -108,11 +112,9 @@ class EmployeeController extends Controller
             // if ($plan->count_employees <= $employees_count)
             //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
             $data = $request->except('_token');
-            // $data['password'] = Hash::make($data['password']);
-            // if($data['password']){
-            // $data['password'] = Hash::make($data['password']);
-            // }
-            // dd($data);
+            if($data['password']){
+                $data['password'] = Hash::make($data['password']);
+            }
             $emp = Employee::create($data);
             return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
@@ -192,7 +194,6 @@ class EmployeeController extends Controller
             ],
             [
                 'file.required' => "يجب اختيار ملف اكسيل اولا",
-
             ]
 
         );
@@ -232,7 +233,7 @@ class EmployeeController extends Controller
                 'email' => $row[2],
                 'address' => $row[3],
                 'phone' => $row[4],
-                'password' => $row[5],
+                'password' => $row[5] ? Hash::make($row[5]) : null,
                 'gender' => $row[6],
                 'age' => $row[7],
                 'branch_id' => $request->branch_id,
@@ -250,19 +251,16 @@ class EmployeeController extends Controller
     }
 
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try {
             $emp = Employee::findOrFail($id);
-            //delete in db
-            $emp->delete();
+            $emp->attend_methods()->detach();
+            $emp->requests()->delete();
+            $deleted = $emp->delete();
+            if (!$deleted) {
+                return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
+            }
             return redirect()->route('employees.index')->with(['success' => 'تم حذف الموظف بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('employees.index')->with(['error' => 'هناك خطأ برجاء المحاولة ثانيا']);
@@ -319,5 +317,54 @@ class EmployeeController extends Controller
             }
         }
         return $employees;
+    }
+
+    public function edit_employee_attend_method($id)
+    {
+        if (!Gate::allows('edit_employee_attend_method')) {
+            return abort(401);
+        }
+        $emp = Employee::find($id);
+        $allattendmethod = Attendmethods::all();
+        $attend_methods = $emp->attend_methods;
+        return view('employees.edit_attendance_method', compact('emp', 'attend_methods', 'allattendmethod'));
+    }
+
+    public function store_employee_attend_method(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'attend_methods' => 'required',
+            ]);
+            $emp = Employee::find($id);
+            $old = $emp->attend_methods;
+            $new = $request->attend_methods;
+            // dd($old);
+
+            //first delete old attend method for employee //
+            $oldlist = [];
+            foreach ($old as $o) {
+                array_push($oldlist, [
+                    'employee_id' => $id,
+                    'attend_method_id' => $o->id,
+                ]);
+            }
+            // dd($oldlist);
+            $attend = EmpAttendMethods::where('employee_id', $id);
+            $attend->delete($oldlist);
+
+            //add new attend methods//
+            $newlist = [];
+            foreach ($new as $n) {
+                array_push($newlist, [
+                    'employee_id' => $id,
+                    'attend_method_id' => $n,
+                ]);
+            }
+            EmpAttendMethods::insert($newlist);
+            return redirect()->route('employees.index')->with(['success' => 'تم التحديث بنجاح']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'حدث خطا برجاء المحاوله']);
+        }
     }
 }

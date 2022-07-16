@@ -84,7 +84,7 @@
             <div class="form-group">
                 <label class="col-form-label">Regestration Number</label>
                 <input disabled readonly type="text" class="form-control"
-                    value="will be gotten from the api (can't be edited)">
+                    value="{{$company_settings->registeration_num}}">
             </div>
 
             <div class="form-group">

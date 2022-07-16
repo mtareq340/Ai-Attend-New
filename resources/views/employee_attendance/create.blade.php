@@ -36,11 +36,12 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('assign_appointment.index')}}">Assign Appointment</a></li>
-                            <li class="breadcrumb-item active">Add Assign Appointment</li>
+                            <li class="breadcrumb-item"><a href="{{route('employee_attendance.index')}}">Employees Attendance</a></li>
+                            <li class="breadcrumb-item active">Add Employees Attendance</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Add Assign Appointment</h4>
+                    <h4 class="page-title">Add Employee Attendance</h4>
+                
                 </div>
             </div>
         </div>     
@@ -54,38 +55,27 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Add Employee Attendance Manullay</h4>
-                        {{-- <p class="text-warning font-weight-bold">Note* Employee Input Will Appear After Selecting Branch and Job </p>
-                        <p class="text-warning font-weight-bold">Note* Appointment Input Will Appear After Selecting Branch and Location</p> --}}
                         <form action="{{ route('employee_attendance.store')}}" method="post" class="needs-validation" novalidate>
                             @csrf
-                            <div class="form-group">
-                                <label for="job">Job Name *</label>
-                                <select name="job_id" id="inputjob" class="selectize-drop-header">
-                                    <option selected disabled value="" >Select Job</option>
-                                    @foreach (  $jobs as $j )
-                                    <option value="{{$j->id}}" >{{$j->name}}</option>                                    
-                                    @endforeach                                    
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="branch">Branch *</label>
-                                <select id="branch" onchange="getemployess()" name="branch_id" class="form-control " data-toggle="select2" >
-                                    <option selected disabled value="" >Select Branch</option>
-                                    @foreach ( $branchs as $b )
-                                    <option value="{{$b->id}}" >{{$b->name}}</option>
-                                    @endforeach                                    
-                                </select>
-                            </div>
-        
-                            <div class="form-group" id="employee" style="display: none">
+                          
+                            <div class="form-group" id="employee">
                                 <label for="location">Employees *</label>
-                                <select name="employee_id" id="select2-multiple" class="selectemp form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
-                                    <option value=""></option>  
+                                <select name="employee_id[]" id="select2-multiple" class="selectemp form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
+                                    @foreach ($employees as $emp )
+                                    <option value="{{$emp->id}}" >{{$emp->name}}</option>                                    
+                                    @endforeach                                     
                                     </select>
                                 </div>
+                            <div class="form-group">
+                                <label for="attend">Attendance Methods *</label>
+                                <select id="atten"  name="attendance_method_id" class="form-control " data-toggle="select2" >
+                                    <option selected disabled value="" >Select Attendance</option>
+                                    @foreach ( $attendance as $a )
+                                    <option value="{{$a->id}}" >{{$a->name}}</option>
+                                    @endforeach                                    
+                                </select>
+                            </div>
                             <center><button type="submit" class="btn btn-success waves-effect waves-light">Add</button></center>
-
                         </form>
 
                     </div> <!-- end card-body -->

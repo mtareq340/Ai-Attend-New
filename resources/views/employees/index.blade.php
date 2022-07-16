@@ -29,40 +29,38 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Employees</li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">Employees</h4>
+        <div class="row align-items-center">
+            <div class="col-3">
+                <h4 class="page-title">Employees</h4>
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    @can('add_employee')
+
+                        <button type="button" class="btn  btn-primary waves-effect waves-light " data-toggle="modal"
+                            data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
+
+                        <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light ml-1 btn-success"><i
+                                class="fa fa-plus"></i> Upload Excel
+                            Sheet</a>
+
+                        <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light ml-1 btn-dark"><i
+                                class="fa fa-plus"></i> Download
+                            excel file</a>
+                    @endcan
+
+                </div>
+            </div>
+            <div class="page-title-box col-4">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Employees</li>
+                    </ol>
                 </div>
             </div>
         </div>
         <!-- end page title -->
-        {{-- <div class="col-4"> --}}
-        @can('add_employee')
-            <div class="mb-2">
-                {{-- <button class="btn btn btn-primary">
-            <a href="{{ route('employees.create')}}" style="color:white"><i class="fa fa-plus"></i> Add Employee</a>
-        </button> --}}
-                <button type="button" class="btn  btn-primary waves-effect waves-light" data-toggle="modal"
-                    data-target="#con-close-modal"><i class="fa fa-plus"></i> Add Employee</button>
-
-                <a href="{{ route('employees.excelPage') }}" class="btn waves-effect waves-light btn-success"><i
-                        class="fa fa-plus"></i> Upload Excel
-                    Sheet</a>
-
-                <a href="{{ route('downloadExcelEmps') }}" class="btn waves-effect waves-light btn-dark"><i
-                        class="fa fa-plus"></i> Download
-                    excel file</a>
-                {{-- </div> --}}
-            @endcan
-
-        </div>
 
         <div class="row">
             <div class="col-12">
@@ -106,6 +104,11 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
+                                            <a href="/dashboard/edit_employee_attend_method/{{ $emp->id }}"
+                                                type="button" class="btn btn-sm btn-primary float-right">
+                                                <i class="mdi mdi-square-edit-outline"></i>
+
+                                            </a>
                                         </td>
                                         <td>{{ $emp->job->name }}</td>
                                         <td>
@@ -117,7 +120,7 @@
                                             @endcan
                                         </td>
                                         <td>
-                                            @can('active_employee')
+                                            @can('edit_employee')
                                                 <input type="checkbox"
                                                     onchange="toggleActivationAndLocked(event,'{{ $emp->id }}' , 'locked')"
                                                     class="js-switch-red" {{ $emp->locked ? 'checked' : '' }}
@@ -142,7 +145,31 @@
                                                     </form>
                                                 @endcan
                                             </div>
+
+
+                                            {{-- <div class="row row-xs wd-xl-4p">
+                                                @can('edit_employee')
+                                                    <a href="{{ route('employees.edit', $emp->id) }}" class="btn btn-sm btn-info mr-1">
+                                                        <i class="mdi text-white mdi-square-edit-outline"></i>
+                                                    </a>
+                                                @endcan
+                                                <!-- <button type="button" class="btn btn-warning btn-xs waves-effect waves-light">Btn Xs</button> -->
+                                                @can('delete_employee')
+                                                    <form action="{{ route('employees.destroy', $emp->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm delete" type="submit">
+                                                            <i class="mdi text-white mdi-delete"></i>
+
+                                                        </button>
+                                                    </form>
+                                                @endcan
+                                            </div> --}}
+
+
                                         </td>
+
+
                                     </tr>
                                 @endforeach
 
@@ -156,9 +183,6 @@
         <!-- end row-->
 
 
-        {{-- //////////////////////////////////////////////////////////////// --}}
-        {{-- insert modal --}}
-        {{-- //////////////////////////////////////////////////////////////// --}}
 
 
         <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -176,7 +200,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name" class="control-label">Name</label>
+                                        <label for="name" class="control-label">Name *</label>
                                         <input type="text" name="name" class="form-control" id="field-1"
                                             placeholder="Jone Doe" required>
                                     </div>
@@ -192,9 +216,35 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="inputJob" class="col-form-label">Job *</label>
+                                        <select name="job_id" id="inputJob" class="form-control selectize-drop-header"
+                                            placeholder="Select a job..." required>
+                                            @foreach ($jobs as $job)
+                                                <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputJob" class="col-form-label">Job Number *</label>
+                                        <input type="number" name="job_number" class="form-control" id="job_num"
+                                            placeholder="Select Job Number">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="field-3" class="control-label">Phone num 1 *</label>
-                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="phone num 1"
-                                            required>
+                                        <input type="text" name="phone" class="form-control" id="phone"
+                                            placeholder="phone num 1" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -214,23 +264,20 @@
                                             placeholder="1234 Main St">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Gender </label>
-                                        <div class="d-flex">
-                                            <div class="radio mx-1">
-                                                <input type="radio" name="gender" id="genderM" value="male" required=""
-                                                    checked>
-                                                <label for="genderM">
-                                                    Male
-                                                </label>
-                                            </div>
-                                            <div class="radio mx-1">
-                                                <input type="radio" name="gender" id="genderF" value="female">
-                                                <label for="genderF">
-                                                    Female
-                                                </label>
-                                            </div>
+                                <div class="col-md-12">
+                                    <label>Gender </label>
+                                    <div class="d-flex">
+                                        <div class="radio mr-1">
+                                            <input type="radio" name="gender" id="genderM" value="male" required="" checked>
+                                            <label for="genderM" class="pl-1 m-0">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" name="gender" id="genderF" value="female">
+                                            <label for="genderF" class="pl-1">
+                                                Female
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -245,27 +292,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inputJob" class="col-form-label">Job *</label>
-                                        <select name="job_id" id="inputJob" class="form-control selectize-drop-header"
-                                            placeholder="Select a job..." required>
-                                            @foreach ($jobs as $job)
-                                                <option value="{{ $job->id }}">{{ $job->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inputJob" class="col-form-label">Job Number *</label>
-                                        <input type="number" name="job_number" class="form-control" id="job_num" placeholder="Select Job Number">
-                                    </div>
-                                </div>
-                                
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="input-age" class="col-form-label">Age <span
@@ -275,6 +302,9 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
                         </div>
                         <div class="modal-footer">
                             <a href="" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</a>
@@ -461,20 +491,21 @@
         }
 
     </script>
-      <script>
-        function activevication(){
+    <script>
+        function activevication() {
             let isChecked = $('#qr')[0].checked
             // console.log(isChecked);
             return isChecked;
         }
 
-        function activebar(){
+        function activebar() {
             let isChecked = $('#bar')[0].checked
             // console.log(isChecked);
             return isChecked;
         }
+
     </script>
-  
+
     <script>
         $(document).ready(function() {
             // ////////////////////////////

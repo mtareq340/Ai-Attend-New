@@ -110,14 +110,16 @@ $(document).ready(function() {
     // Scroll Horizantal Datatable
     //***************** */ edited by mohammed ahmed*********************
     var scrollableDatatableWithButtons = $('#scroll-horizontal-datatable').DataTable({
-        "ordering": false,
         "scrollX": true,
+        "ordering": false,
         lengthChange: false,
+        buttons: ['copy', 'print', 'pdf'],
         buttons: [
             { extend: 'copy', className: 'btn-light' },
             { extend: 'print', className: 'btn-light' },
             { extend: 'pdf', className: 'btn-light' },
             { extend: 'csv', className: 'btn-light' },
+
         ],
         "language": {
             "paginate": {

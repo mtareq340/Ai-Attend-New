@@ -33,7 +33,8 @@
                                     <th>Employee Name</th>
                                     <th>Request</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th>Accept</th>
+                                    <th>Reject</th>
                                 </tr>
                             </thead>
                         
@@ -45,11 +46,20 @@
                                     <td>{{ $emp->request }}</td>
                                     <td>{{ $emp->date }}</td>
                                     <td>
-                                        {{-- @can('make_response') --}}
-                                        <a href="{{route('employee_request',$emp->reqid)}}" class="action-icon"> <i class="fe-check-square"></i> </a>
-                                        {{-- @endcan --}}
-                                    </td>    
-                                    
+                                        <form action="{{route('accept_response',$emp->reqid)}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success"><i class="fe-check-circle "></i></button>
+                                        </form>
+                                  
+                                    </td>
+                                    <td>
+                                        <form action="{{route('reject_response',$emp->reqid)}}" method="POST">
+                                            @csrf
+                                            <button class="btn btn-danger">
+                                                <i class="fe-x-circle "></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                
                                 @endforeach
