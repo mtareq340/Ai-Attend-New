@@ -87,7 +87,8 @@ class DepartureController extends Controller
                 }
             } else {
                 // he can't leave
-                return response()->json(['status' => 0, 'msg' => 'you still have ' . $end->copy()->diff($now) . 'minutes to go'] , 401);
+            // $plan_id = Setting::find(1)->value;
+                return response()->json(['status' => 0, 'msg' => 'you still have ' . $end->copy()->diffInMinutes($now) . ' minutes to go'] , 401);
             }
         }
 

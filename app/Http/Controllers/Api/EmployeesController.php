@@ -20,31 +20,31 @@ class EmployeesController extends Controller
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
+            return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
         $email = $request->email;
         $password = $request->password;
 
         $employee = Employee::where('email', $email)->with(['appointments.location' , 'attend_methods'])->first();
         if (!$employee) {
-            return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
+            return Response()->json(['status' => 0, 'message' => 'Invalid email or password']);
         }
 
         if(! $employee->password){
             // check with job number
             if($employee->job_number != $password){
-                return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
+                return Response()->json(['status' => 0, 'message' => 'Invalid email or password']);
             }
         }else{
             // check with password
             if (!Hash::check($password, $employee->password)) {
-                return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
+                return Response()->json(['status' => 0, 'message' => 'Invalid email or password']);
             }
         }
         
         // the employee passed the authentication
 
-        return Response()->json(['status' => 1, 'message' => 'Successful..!', 'data' => $employee]);
+        return Response()->json(['status' => 1, 'message' => 'success', 'data' => $employee]);
     }
 
     public function getData(Request $request)
@@ -68,9 +68,9 @@ class EmployeesController extends Controller
         $employee = Employee::where('phone', $phone)->first();
 
         if ($employee) {
-            return Response()->json(['status' => 1, 'message' => 'Successful..! Your Phone is Exist']);
+            return Response()->json(['status' => 1, 'message' => 'success Your Phone is Exist']);
         } else {
-            return Response()->json(['status' => 0, 'message' => 'Invalid phone']);
+            return Response()->json(['status' => 0, 'message' => 'Invalid phone'] , 404);
         }
     }
 
@@ -89,9 +89,9 @@ class EmployeesController extends Controller
         $employee = Employee::where('otp', $otp)->first();
 
         if ($employee) {
-            return Response()->json(['status' => 1, 'message' => 'Successful..! Your OTP is Exist']);
+            return Response()->json(['status' => 1, 'message' => 'success Your OTP is Exist']);
         } else {
-            return Response()->json(['status' => 0, 'message' => 'Invalid OTP']);
+            return Response()->json(['status' => 0, 'message' => 'Invalid OTP'] , 401);
         }
     }
     function resetPassword(Request $request)
@@ -111,7 +111,7 @@ class EmployeesController extends Controller
             $employee->update([
                 'password' => $request->password
             ]);
-            return Response()->json(['status' => 1, 'message' => 'Successful..! Your password is changed']);
+            return Response()->json(['status' => 1, 'message' => 'success Your password is changed']);
         } else {
             return Response()->json(['status' => 0, 'message' => 'password not equal Re-Password']);
         }
@@ -133,7 +133,7 @@ class EmployeesController extends Controller
             $employee->update([
                 'password' => Hash::make($request->new_password)
             ]);
-            return Response()->json(['status' => 1, 'message' => 'Successful..! Your password is changed']);
+            return Response()->json(['status' => 1, 'message' => 'success Your password is changed']);
         } catch (\Exception $e) {
             return Response()->json(['status' => 0, 'message' => $e->getMessage()]);
         }
@@ -141,10 +141,10 @@ class EmployeesController extends Controller
 
     function employeeUpdate(Request $request)
     {
-
         $rules = array(
             'id' => 'required',
         );
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
@@ -188,10 +188,10 @@ class EmployeesController extends Controller
         }
         $emp = Employee::find($req->id);
         if (!$emp) {
-            return response()->json(['status' => 0, 'message' => 'errors', 'errors' => [
-                'employee' => 'the employee is not found'
-            ]], 404);
+            return response()->json(['status' => 0, 'message' => 'the employee is not found', 404]);
         }
-        return $emp->attend_methods()->where('active', 1)->get();
+        $data = $emp->attend_methods()->where('active', 1)->get();
+
+        return Response()->json(['status' => 1, 'message' => '__', 'data' => $data]);
     }
 }

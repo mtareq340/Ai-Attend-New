@@ -6,7 +6,6 @@ use App\Attendmethods;
 use App\Branch;
 use App\EmpAttendMethods;
 use App\Employee;
-use App\Setting;
 use App\Plan;
 use App\Http\Controllers\Controller;
 use App\Imports\EmployeeImport;
@@ -98,7 +97,7 @@ class EmployeeController extends Controller
                 ],
                 [
                     'phone.required' => 'برجاء ادخال رقم الهاتف',
-                    'job_number.required' => 'برجاء ادخال رقم الموظف',
+                    'job_number.rpequired' => 'برجاء ادخال رقم الموظف',
                     'job_number.unique' => 'هذا الرقم تم تسجيله من قبل'
                 ]
             );
@@ -106,12 +105,13 @@ class EmployeeController extends Controller
                 $err_msg = $validator->errors()->first();
                 return back()->with('error', $err_msg)->withInput();
             }
-            $plan_id = Setting::find(1)->value;
-            $plan = Plan::find($plan_id);
-            // $employees_count = Employee::count();
-            // if ($plan->count_employees <= $employees_count)
-            //     return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
-            $data = $request->except('_token');
+            $plan = Plan::first();
+          
+            $employees_count = Employee::count() + 1;
+            if ($plan->count_employees < $employees_count)
+                return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
+            
+                $data = $request->except('_token');
             if($data['password']){
                 $data['password'] = Hash::make($data['password']);
             }
@@ -123,23 +123,13 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function edit($id)
     {
         if (!Gate::allows('edit_employee')) {
@@ -151,13 +141,7 @@ class EmployeeController extends Controller
         return view('employees.edit', compact('emp', 'branches', 'jobs'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
         //
@@ -221,6 +205,11 @@ class EmployeeController extends Controller
             return back()->with('error', 'من فضلك قم بتحميل و استخدام ملف الايكسيل الخاص بالموظفين')->withInput();
         }
         // if($data[0])
+
+        $plan = Plan::first();
+        $employees_count = Employee::count() + count($data[0]) - 1;
+            if ($plan->count_employees < $employees_count)
+                return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
 
         $emps = [];
         for ($i = 0; $i < count($data[0]); $i++) {

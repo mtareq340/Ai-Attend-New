@@ -17,6 +17,14 @@ class EmployeeRequestController extends Controller
     public function getData(Request $request)
     {
         // $employee =  Employee::where('id', $request->id)->get();
+        $rules = array(
+            'id' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()], 400);
+        }
+        
         $data =  Employee_Request_Review::where('employee_id', $request->id)->get();
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);
     }
