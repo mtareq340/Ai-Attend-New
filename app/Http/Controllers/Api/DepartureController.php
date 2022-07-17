@@ -46,7 +46,7 @@ class DepartureController extends Controller
 
         // the employee is on this plan
         $is_valid_attend_methods = true;
-        foreach ($request->attendance_methods as $method) {
+        foreach ($request->departure_methods as $method) {
             if (!$method['state']) {
                 $is_valid_attend_methods = false;
                 return;
@@ -87,7 +87,7 @@ class DepartureController extends Controller
                 }
             } else {
                 // he can't leave
-                return response()->json(['status' => 0, 'msg' => 'you still have ' . $end->copy()->diff($now) . 'minutes to go'], 401);
+                return response()->json(['status' => 0, 'msg' => 'you still have ' . $end->copy()->diffInMinutes($now) . ' minutes to go'], 401);
             }
         }
 

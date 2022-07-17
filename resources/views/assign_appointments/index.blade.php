@@ -44,26 +44,19 @@
                         <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>Employee Name</th>
                                     <th>Job Name</th>
                                     <th>Branch Name</th>
                                     <th>Location Name</th>
                                     <th>Appointment</th>
                                     <th>Over time</th>
-                                    <th>Actions</th>
+                                   
                                 </tr>
                             </thead>
+                            <tbody>
                             @foreach ($appoints as $a)
                                 <tr>
-                                    <td>{{ $a->employees->name }}</td>
-                                    <td>{{ $a->job->name }}</td>
-                                    <td>{{ $a->branch->name }}</td>
-                                    <td>{{ $a->location->name }}</td>
-                                    <td>{{ $a->appointment->name }}</td>
-                                    <td>
-                                        <button onclick="editExtraTime('{{ $a->over_time }}','{{ $a->id }}')"
-                                            class="btn btn-sm btn-info">Edit OverTime</button>
-                                    </td>
                                     <td>
                                         <div class="row row-xs wd-xl-4p">
                                             @can('edit_assign_appointment')
@@ -84,11 +77,18 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    <td>{{ $a->employees->name }}</td>
+                                    <td>{{ $a->job->name }}</td>
+                                    <td>{{ $a->branch->name }}</td>
+                                    <td>{{ $a->location->name }}</td>
+                                    <td>{{ $a->appointment->name }}</td>
+                                    <td>
+                                        <button onclick="editExtraTime('{{ $a->over_time }}','{{ $a->id }}')"
+                                            class="btn btn-sm btn-info">Edit OverTime</button>
+                                    </td>
                                 </tr>
                             @endforeach
-                            <tbody>
-
-                            </tbody>
+                        </tbody>
                         </table>
 
                         <div class="modal fade" id="details-modal" tabindex="-1" role="dialog"
@@ -103,7 +103,7 @@
                                     <div class="modal-body" id="details-content">
                                         <form action="{{ route('update_over_time') }}" id="details" method="POST">
                                             @csrf
-                                            <input type="text" class="form-control" name="over_time" id="details-value"
+                                            <input type="time" class="form-control" name="over_time" id="details-value"
                                                 class="24hours-timepicker form-control" value="">
                                             <input type="hidden" name="assign_appointment_id" id="assign_appointment_id">
                                             <button type="submit" class="mt-1 btn btn-primary">Edit</button>
