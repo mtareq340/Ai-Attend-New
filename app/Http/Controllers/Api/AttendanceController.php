@@ -86,12 +86,12 @@ class AttendanceController extends Controller
             
 
             // check if the now between the start and end
-            if($now->gte($start) && $now->lte($start->copy()->addMinutes($allow_delay_minutes))){
+            if($now->gte($start->copy()->subMinutes(15)) && $now->lte($start->copy()->addMinutes($allow_delay_minutes))){
                 $emp_attendence['state'] = true;
             }else{
                 // get the different in minutes
                 // to know how many minutes the employee is late
-                $diff_minutes = $now->diffInMinutes($start);
+                $diff_minutes = $now->copy()->diffInMinutes($start);
                 $emp_attendence['state'] = false;
                 $emp_attendence['reason'] = "the employee is late ". $diff_minutes . ' minutes';
                 if($now->lt($start)){
@@ -113,7 +113,7 @@ class AttendanceController extends Controller
                 'attend_mthod_id' => (int) $method['method_id'],
                 'plan_id' => $request->appointment_id,
                 'location_id' => $appointment->location_id,
-                'success' => $method['state'],
+                'state' => $method['state'],
                 'attendance_id' => $emp_attendence->id
             ]);
         }
