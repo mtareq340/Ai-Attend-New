@@ -40,7 +40,6 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
-
     Route::post('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
 
     // Company Apis

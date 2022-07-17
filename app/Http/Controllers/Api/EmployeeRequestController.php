@@ -57,8 +57,7 @@ class EmployeeRequestController extends Controller
                         $constraint->aspectRatio();
                     })->save($destinationPath.'/'.$filename);
                
-                    $destinationPath = public_path('/images');
-                    $image->move($destinationPath, $filename);
+                
 
                     $emp_request['attachment'] = '/uploads/requests/'. $filename;
                 }
