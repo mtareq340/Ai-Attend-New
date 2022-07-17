@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Appointment;
+use App\Branch;
+use App\Employee_Attendance;
 use App\Employee_Departure;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,15 +16,32 @@ class EmployeesDepartureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $work_appointments = Appointment::all();
         if (auth()->user()->hasRole('super_admin')) {
-            $employees_departure = Employee_Departure::all();
+            $work_appointments = Appointment::all();
+            $branches = Branch::all();
+            $employees_departure = Employee_Departure::query();
+            if (isset($request->appointment_id)) {
+                $employees_departure = Employee_Departure::where('appointment_id', $request->appointment_id);
+            }
+            if (isset($request->branch_id)) {
+                $employees_departure = Employee_Departure::where('branch_id', $request->branch_id);
+            }
+            if (isset($request->state)) {
+                $employees_departure = $employees_departure->where('state', $request->state);
+            }
+            $employees_departure = $employees_departure->get();
         } else {
-            $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id)->get();
+            if (isset($request->appointment_id)) {
+                $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id)->where('appointment_id', $request->appointment_id);
+            } else {
+                $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id);
+            }
         }
-        return view('employees_departure.index', compact('employees_departure'));
+        return view('employees_departure.index', compact('employees_departure', 'work_appointments', 'branches'));
     }
 
     public function make_employees_departure_success(Request $request)

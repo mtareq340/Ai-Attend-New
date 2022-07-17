@@ -179,4 +179,17 @@ class Assign_AppointmentController extends Controller
             return $e;
         }
     }
+
+    // update overtime to employee
+    public function update_over_time(Request $request)
+    {
+        try {
+            $assign_appointment = Assign_Appointment::find($request->assign_appointment_id);
+            $over_time =  $request->over_time;
+            $assign_appointment->update(['over_time' => $over_time]);
+            return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => 'حدثت مشكله برجاء المحاوله مره اخري']);
+        }
+    }
 }

@@ -158,7 +158,7 @@
                                                     @csrf
                                                     <button type="submit" class="btn btn-success"><i class="fe-check-circle "></i></button>
                                                 </form>
-                                          
+
                                             </td>
                                             <td>
                                                 <form action="{{route('reject_response',$empRequestsRev->id)}}" method="POST">
@@ -217,6 +217,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
                                     <th>IP</th>
                                     <th>DateTime</th>
                                     <th>Details</th>
@@ -227,6 +228,7 @@
                                     @foreach ($loginHistories as $index => $loginHistory)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
+                                            <td>{{ auth()->user()->name }}</td>
                                             <td>{{ $loginHistory->ip }}</td>
                                             <td>{{ $loginHistory->datetime }}</td>
                                             <td>{{ $loginHistory->details }}</td>
