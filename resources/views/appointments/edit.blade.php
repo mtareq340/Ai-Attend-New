@@ -196,9 +196,11 @@
                                                 {{-- /////////////////// --}}
                                                 <div class="form-group">
                                                     <label for="attendance_plan_types">Attendance Plan Type</label>
-                                                    <select name="attendance_plan_type_id" id="attendance_plan_types" data-toggle="select2" class="select2">
-                                                        @foreach ($attendance_plan_types as $plan )
-                                                            <option value="{{$plan->id}}">{{$plan->name}}</option>
+                                                    <select name="attendance_plan_type_id" id="attendance_plan_types"
+                                                        data-toggle="select2" class="select2">
+                                                        @foreach ($attendance_plan_types as $plan)
+                                                            <option value="{{ $plan->id }}">{{ $plan->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -403,7 +405,8 @@
                     res.forEach(device => {
                         $devices_select.append(
                             new Option(
-                                device.name,
+                                device.type == 'becon' ? `becon-${device.code}` :
+                                `wifi-${device.ssid}`,
                                 device.id,
                                 false,
                                 false

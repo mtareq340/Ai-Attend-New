@@ -1,0 +1,17 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class RegisteredAttendanceMethod extends Model
+{
+    protected $table = "registered_employees_attendance_methods";
+    protected $fillable = [
+        'employee_id' , 
+        'attend_mthod_id' , 
+        'plan_id',
+        'location_id',
+        'attendance_id'
+    ];
+}
