@@ -67,7 +67,6 @@ class AttendanceController extends Controller
             if(! $method['state']) {
                 $pass_attendance_methods = false;
             }
-        
         }
 
         if(! $pass_attendance_methods){
@@ -98,7 +97,6 @@ class AttendanceController extends Controller
                     $emp_attendence['reason'] = "the employee is early ". $diff_minutes . ' minutes';
                 }
             }
-
         }
 
         $emp_attendence->save();
@@ -106,9 +104,7 @@ class AttendanceController extends Controller
         $registered_attendance_methods = [];
         // save attendence methods status
         foreach ($request->attendance_methods as $method) {
-            if(! $method['state']) {
-                $pass_attendance_methods = false;
-            }
+           
             array_push($registered_attendance_methods , [
                 'employee_id' => $request->emp_id,
                 'attend_mthod_id' => (int) $method['method_id'],
@@ -119,8 +115,13 @@ class AttendanceController extends Controller
             ]);
         }
         RegisteredAttendanceMethod::insert($registered_attendance_methods);
-    
-        return response()->json(['success' => 1]);
+        $status = 1;
+        $msg = '';
+        if(! $emp_attendence['status']){
+            $status = 0;
+            $msg = $emp_attendence['reason'];
+        }
+        return response()->json(['status' => $status , 'msg' => $msg]);
     }
 
     public function set_employee_checkout(Request $request)
