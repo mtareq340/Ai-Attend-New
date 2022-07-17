@@ -66,6 +66,7 @@ class AttendanceController extends Controller
         foreach ($request->attendance_methods as $method) {
             if(! $method['state']) {
                 $pass_attendance_methods = false;
+                return;
             }
         }
 
@@ -85,7 +86,7 @@ class AttendanceController extends Controller
             
 
             // check if the now between the start and end
-            if($now->greaterThanOrEqualTo($start) && $now->lessThanOrEqualTo($start->addMinutes($allow_delay_minutes))){
+            if($now->gte($start) && $now->lte($start->copy()->addMinutes($allow_delay_minutes))){
                 $emp_attendence['state'] = true;
             }else{
                 // get the different in minutes
