@@ -25,23 +25,23 @@ class EmployeesController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        $employee = Employee::where('email', $email)->with(['appointments.location' , 'attend_methods'])->first();
+        $employee = Employee::where('email', $email)->with(['appointments.location', 'appointments.devices', 'attend_methods'])->first();
         if (!$employee) {
             return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
         }
 
-        if(! $employee->password){
+        if (!$employee->password) {
             // check with job number
-            if($employee->job_number != $password){
+            if ($employee->job_number != $password) {
                 return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
             }
-        }else{
+        } else {
             // check with password
             if (!Hash::check($password, $employee->password)) {
                 return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
             }
         }
-        
+
         // the employee passed the authentication
 
         return Response()->json(['status' => 1, 'message' => 'Successful..!', 'data' => $employee]);
@@ -130,6 +130,11 @@ class EmployeesController extends Controller
         }
         try {
             $employee = Employee::FindOrFail($request->id);
+            //  check old password
+            if (!Hash::check($request->old_password, $employee->password)) {
+                return Response()->json(['status' => 0, 'message' => 'the old password is not correct'], 403);
+            }
+
             $employee->update([
                 'password' => Hash::make($request->new_password)
             ]);
@@ -144,12 +149,20 @@ class EmployeesController extends Controller
 
         $rules = array(
             'id' => 'required',
+            'name' => '',
+            'email' => '',
+            'avatar' => '',
+            'phone' => '',
+            'phone_num2' => '',
+            'address' => '',
+            'gender' => '',
+            'age' => '',
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
-        $request_data = $request->all();
+        $request_data = $validator->validate();
         $employee = Employee::find($request->id);
 
         if ($employee) {
@@ -157,23 +170,23 @@ class EmployeesController extends Controller
             $avatar = $request->file("avatar");
             if ($avatar) {
                 $image       = $request->file('avatar');
-                $filename    = $employee->id.'-'.'avatar.jpg';
+                $filename    = $employee->id . '-' . 'avatar.jpg';
 
                 $destinationPath = public_path('/uploads/avatars');
                 $img = Image::make($image->path());
                 $img->resize(200, 200, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($destinationPath.'/'.$filename);
-           
-               
-                $employee['avatar'] = '/uploads/avatars/'. $filename;
+                })->save($destinationPath . '/' . $filename);
+
+
+                $employee['avatar'] = '/uploads/avatars/' . $filename;
             }
 
 
             $employee->update($request_data);
             return Response()->json(['status' => 1, 'message' => 'Data updated successfuly', 'data' => $employee]);
         } else {
-            return Response()->json(['status' => 0, 'message' => 'No employee found'] , 404);
+            return Response()->json(['status' => 0, 'message' => 'No employee found'], 404);
         }
     }
 

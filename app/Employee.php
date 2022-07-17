@@ -11,7 +11,7 @@ class Employee extends Model
 {
 
     protected $fillable = [
-        'name', 'email', 'address', 'phone', 'password', 'age', 'branch_id', 'gender', 'job_id', 'job_number', 'otp', 'created_at', 'updated_at'
+        'name', 'email', 'address', 'phone', 'password', 'age', 'branch_id', 'gender', 'job_id', 'job_number', 'otp', 'created_at', 'updated_at', 'avatar'
     ];
     //
     public function branch()
@@ -37,7 +37,7 @@ class Employee extends Model
     }
     public function appointments()
     {
-        return $this->belongsToMany(Appointment::class , 'assign_appointments' , 'employee_id' , 'work_appointment_id');
+        return $this->belongsToMany(Appointment::class, 'assign_appointments', 'employee_id', 'work_appointment_id');
     }
     public function appointmentsIds()
     {

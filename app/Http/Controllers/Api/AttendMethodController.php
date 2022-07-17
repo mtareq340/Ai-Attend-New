@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AttendMethodController extends Controller
 {
-    public function getEmployeeAttenance(Request $request)
+    public function getEmployeeAttenance()
     {
         $data =  Attendmethods::where('active', 1)->get();
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);

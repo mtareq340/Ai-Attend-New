@@ -16,6 +16,13 @@ class EmployeeRequestController extends Controller
 {
     public function getData(Request $request)
     {
+        $rules = array(
+            'id' => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()], 400);
+        }
         // $employee =  Employee::where('id', $request->id)->get();
         $data =  Employee_Request_Review::where('employee_id', $request->id)->get();
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);
@@ -55,11 +62,11 @@ class EmployeeRequestController extends Controller
                     $img = Image::make($image->path());
                     $img->resize(500, 500, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save($destinationPath.'/'.$filename);
-               
-                
+                    })->save($destinationPath . '/' . $filename);
 
-                    $emp_request['attachment'] = '/uploads/requests/'. $filename;
+
+
+                    $emp_request['attachment'] = '/uploads/requests/' . $filename;
                 }
 
 

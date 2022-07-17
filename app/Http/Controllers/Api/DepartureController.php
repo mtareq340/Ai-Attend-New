@@ -60,7 +60,7 @@ class DepartureController extends Controller
 
         //check if there is problem with in mobile phone then check if time is greater than or equal to end time of attendance plan
         if (!$request->reason) {
-            if ($now->gte($end_with_overtime)) {
+            if ($now->gte($end)  || $now->gte($end_with_overtime)) {
                 $emp_departure->save();
                 return response()->json([
                     'state' => '1',
