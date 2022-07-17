@@ -21,22 +21,30 @@ class EmployeeAttendanceController extends Controller
     public function index(Request $request)
     {
 
-        $work_appointments = Appointment::all();
-
         if (auth()->user()->hasRole('super_admin')) {
-            if (isset($request->appointment_id)) {
-                $employees = Employee_Attendance::where('appointment_id', $request->appointment_id)->get();
-            } else {
-                $employees = Employee_Attendance::all();
+            $work_appointments = Appointment::all();
+            $branches = Branch::all();
+            $employees = Employee_Attendance::query();
+
+            if ($request->appointment_id) {
+                $employees = $employees->where('appointment_id', $request->appointment_id);
             }
+            if (isset($request->branch_id)) {
+                $employees = $employees->where('branch_id', $request->branch_id);
+            }
+            if (isset($request->state)) {
+                $employees = $employees->where('state', $request->state);
+            }
+            $employees = $employees->get();
         } else {
+            $work_appointments = Appointment::where('branch_id', auth()->user()->branch_id)->get();
+            $branches =  Branch::find(auth()->user()->branch_id);
+            $employees = Employee_Attendance::where('branch_id', auth()->user()->branch_id);
             if (isset($request->appointment_id)) {
-                $employees = Employee_Attendance::where('appointment_id', $request->appointment_id)->where('branch_id', auth()->user()->branch_id)->get();
-            } else {
-                $employees = Employee_Attendance::where('branch_id', auth()->user()->branch_id)->get();
+                $employees = $employees->where('appointment_id', $request->appointment_id)->where('branch_id', auth()->user()->branch_id)->get();
             }
         }
-        return view('employee_attendance.index', compact('employees', 'work_appointments'));
+        return view('employee_attendance.index', compact('employees', 'work_appointments', 'branches'));
     }
 
 

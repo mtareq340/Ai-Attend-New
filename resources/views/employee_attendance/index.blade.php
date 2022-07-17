@@ -30,15 +30,36 @@
                 </div>
         </div>
         <div class="row">
-            <div class="form-group col-6">
+            <div class="form-group col-4">
                     <select name="appointment_id" id="sel_appointment" class="form-control">
-                        <option value="" selected disabled>Select Attendance Plan</option>
+                        <option value="0" selected disabled>Select Attendance Plan</option>
                         @foreach ($work_appointments as $work_appointment)
-                            <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
+                            <option
+                            {{ app('request')->input('appointment_id') == $work_appointment->id ? 'selected' : '' }}
+                            value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
                         @endforeach
                     </select>
-            
-            
+            </div>
+            @if (auth()->user()->hasRole('super_admin'))
+                <div class="form-group col-4">
+                    <select name="branch_id" id="sel_branch" class="form-control">
+                        <option value="" selected disabled>Select Branch</option>
+                        @foreach ($branches as $branch)
+                            <option
+                            {{ app('request')->input('branch_id') == $branch->id ? 'selected' : '' }}
+                            value="{{ $branch->id }}">{{ $branch->name }}</option>
+                        @endforeach
+                    </select>
+                </div>    
+            @endif
+            <div class="form-group col-4">
+                <select name="state" id="sel_state" class="form-control">
+                        <option value="" selected disabled>Select State</option>  
+                        
+                        <option value="1" {{app('request')->input('state')== '1' ? 'selected':'' }}>Success</option>
+                        <option value="0" {{app('request')->input('state')== '0' ? 'selected':'' }}>Fail</option>
+                        
+                </select>
             </div>
             </div>  
 
@@ -120,15 +141,60 @@
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
+
+function insertParam(key, value) {
+    key = encodeURIComponent(key);
+    value = encodeURIComponent(value);
+
+    // kvp looks like ['key1=value1', 'key2=value2', ...]
+    var kvp = document.location.search.substr(1).split('&');
+    let i=0;
+
+    for(; i<kvp.length; i++){
+        if (kvp[i].startsWith(key + '=')) {
+            let pair = kvp[i].split('=');
+            pair[1] = value;
+            kvp[i] = pair.join('=');
+            break;
+        }
+    }
+
+    if(i >= kvp.length){
+        kvp[kvp.length] = [key,value].join('=');
+    }
+
+    // can return this or...
+    let params = kvp.join('&');
+
+    // reload page with new params
+    document.location.search = params;
+}
+        $(document).ready(function(){
+  
+          $('#sel_branch').change(function(e){
+            let branch_id = $('#sel_branch').val();
+            insertParam('branch_id' , branch_id)
+          });
+        });  
+
+        $(document).ready(function(){
+  
+          $('#sel_state').change(function(e){
+            let state = $('#sel_state').val();
+            insertParam('state' , state);
+          });
+        });  
+      </script>
+<script>
       $(document).ready(function(){
 
         $('#sel_appointment').change(function(e){
-            let appoitment_id = $('#sel_appointment').val();
-            window.location = `/dashboard/employee_attendance?appointment_id=${appoitment_id}`;
-            
+            let appointment_id = $('#sel_appointment').val();
+            insertParam('appointment_id' , appointment_id)
         });
       });  
     </script>
+
     <script>
         $(document).ready(function(){
            

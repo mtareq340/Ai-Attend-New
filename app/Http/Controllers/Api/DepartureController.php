@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Appointment;
+use App\Assign_Appointment;
 use App\Employee;
 use App\Employee_Departure;
 use App\Http\Controllers\Controller;
@@ -45,22 +46,41 @@ class DepartureController extends Controller
         $emp_departure->branch_id = $appointment->branch_id;
         $emp_departure->appointment_id = $request->appointment_id;
         $emp_departure->attendance_method_id = $request->attend_method_id;
+        $emp_departure->state = $request->state;
 
+        //get overtime to the employee //
+        $assign_appointment  = Assign_Appointment::where('work_appointment_id', $request->appointment_id)->where('employee_id', $request->emp_id)->first();
+        $overtime = Carbon::parse($assign_appointment->over_time);
+
+        // overtime + endtime //
         $now = Carbon::now();
         $period = $request->period;
-        // $start = Carbon::parse($appointment['start_from_period_' . $period]);
         $end = Carbon::parse($appointment['end_to_period_' . $period]);
-        //check if time is greater than or equal to end time of attendance plan
-        if ($now->gte($end)) {
+        $end_with_overtime = $end->addHours($overtime)->format('H:i:s');
+
+        //check if there is problem with in mobile phone then check if time is greater than or equal to end time of attendance plan
+        if (!$request->reason) {
+            if ($now->gte($end_with_overtime)) {
+                $emp_departure->save();
+                return response()->json([
+                    'state' => '1',
+                    'message' => 'Successful Departure'
+                ]);
+            } else {
+                $emp_departure->reason = "Departure Time has not comming yet";
+                $emp_departure->save();
+
+                return response()->json([
+                    'state' => '0',
+                    'message' => 'Departure time has not comming yet'
+                ]);
+            }
+        } else {
+            $emp_departure->reason = $request->reason;
             $emp_departure->save();
             return response()->json([
-                'state' => '1',
-                'message' => 'Successful Departure'
-            ]);
-        } else {
-            return response()->json([
                 'state' => '0',
-                'message' => 'Departure time has not comming yet'
+                'message' => 'error'
             ]);
         }
     }

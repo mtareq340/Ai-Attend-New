@@ -27,13 +27,13 @@ class HomeController extends Controller
         $jobs_count = Job::count();
 
         $companySettings = CompanySettings::first();
-        $empRequestsRevs = Employee_Request_Review::latest()->take(10)->get();
+        $empRequestsRevs = Employee_Request_Review::where('status', '1')->latest()->take(10)->get();
 
         $plan = Plan::first();
 
         $startDate = Carbon::parse($plan->start_date);
         $endDate = Carbon::parse($plan->end_date);
-        
+
         $datework = Carbon::createFromDate($endDate);
         $now = Carbon::now();
         $diffDays = $datework->diffInDays($now);

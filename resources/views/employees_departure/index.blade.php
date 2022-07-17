@@ -10,7 +10,7 @@
         <!-- start page title -->
         <div class="row align-items-center pt-1">
             <div class="col-4">
-                <h4 class="page-title">Employee Attendance</h4>
+                <h4 class="page-title">Employee Departure</h4>
             </div>
             <div class="col-4">
                     <button id="departure_submit" class="btn btn-success" >Make Succesful Departures</button>
@@ -31,7 +31,30 @@
         </div>
          
         </div>
+        <div class="row">
+            <div class="form-group col-4">
+                    <select name="appointment_id" id="sel_appointment" class="form-control">
+                        <option value="" selected disabled>Select Attendance Plan</option>
+                        @foreach ($work_appointments as $work_appointment)
+                            <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
+                        @endforeach
+                    </select>
+            
+            
+            </div>
+
+            <div class="form-group col-4">
+                <select name="branch_id" id="sel_branch" class="form-control">
+                    <option value="" selected disabled>Select Branch</option>
+                    @foreach ($branches as $branch)
+                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                    @endforeach
+                </select>
         
+        
+        </div>
+            </div>  
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -100,6 +123,7 @@
 
 @section('script')
     <!-- Plugins js-->
+
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
 
@@ -110,7 +134,7 @@
 
         $('#sel_appointment').change(function(e){
             let appoitment_id = $('#sel_appointment').val();
-            window.location = `/dashboard/employee_attendance?appointment_id=${appoitment_id}`;
+            window.location = `/dashboard/employees_departures?appointment_id=${appoitment_id}`;
             
         });
       });  

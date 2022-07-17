@@ -11,7 +11,7 @@ class Assign_Appointment extends Model
     use Notifiable;
     protected $table = 'assign_appointments';
     protected $fillable = [
-        'location_id', 'employee_id', 'work_appointment_id', 'job_id', 'branch_id', 'location_id', 'created_at', 'updated_at'
+        'location_id', 'employee_id', 'work_appointment_id', 'job_id', 'branch_id', 'location_id', 'created_at', 'updated_at', 'over_time'
     ];
 
     public function location()
