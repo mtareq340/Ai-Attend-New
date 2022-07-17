@@ -94,10 +94,12 @@ class AttendanceController extends Controller
                 $emp_attendence['state'] = false;
                 $emp_attendence['reason'] = "the employee is late ". $diff_minutes . ' minutes';
                 if($now->lt($start)){
-                    $emp_attendence['reason'] = "the employee is early ". $diff_minutes . ' minutes';
+                    // employee is early
+                    return response()->json(['status' => 0 , 'message' => "the employee is early ". $diff_minutes . ' minutes'] , 401);
                 }
             }
         }
+
 
         $emp_attendence->save();
         // store the attend methods ids with status
@@ -117,11 +119,13 @@ class AttendanceController extends Controller
         RegisteredAttendanceMethod::insert($registered_attendance_methods);
         $status = 1;
         $msg = '';
+        $code = 204;
         if(! $emp_attendence['status']){
             $status = 0;
             $msg = $emp_attendence['reason'];
+            $code = 401; 
         }
-        return response()->json(['status' => $status , 'msg' => $msg]);
+        return response()->json(['status' => $status , 'msg' => $msg] , $code);
     }
 
     public function set_employee_checkout(Request $request)
