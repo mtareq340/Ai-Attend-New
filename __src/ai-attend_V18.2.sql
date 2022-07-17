@@ -78,6 +78,25 @@ INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `
 (57, 11, 8, 1, 2, 33, '06:00', NULL, NULL);
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `attendance_plan_details`
+--
+
+CREATE TABLE `attendance_plan_details` (
+  `id` int(11) NOT NULL,
+  `work_appointment_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `update_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendance_plan_details`
+--
+
+INSERT INTO `attendance_plan_details` (`id`, `work_appointment_id`, `start_date`, `end_date`, `created_at`, `update_at`) VALUES
+(2, 4, '2022-07-16', '2022-07-16', NULL, NULL);
 
 --
 -- Table structure for table `attendance_plan_types`
