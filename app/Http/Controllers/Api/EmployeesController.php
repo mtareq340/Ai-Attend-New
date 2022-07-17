@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class EmployeesController extends Controller
 {
@@ -24,7 +25,7 @@ class EmployeesController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        $employee = Employee::where('email', $email)->with(['appointments' , 'attend_methods'])->first();
+        $employee = Employee::where('email', $email)->with(['appointments.location' , 'attend_methods'])->first();
         if (!$employee) {
             return Response()->json(['status' => 'failure', 'message' => 'errors', 'errors' => ['employee' => 'invalid email or password']]);
         }
@@ -149,13 +150,30 @@ class EmployeesController extends Controller
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
         $request_data = $request->all();
-        $employee = Employee::FindOrFail($request->id);
+        $employee = Employee::find($request->id);
 
         if ($employee) {
+
+            $avatar = $request->file("avatar");
+            if ($avatar) {
+                $image       = $request->file('avatar');
+                $filename    = $employee->id.'-'.'avatar.jpg';
+
+                $destinationPath = public_path('/uploads/avatars');
+                $img = Image::make($image->path());
+                $img->resize(200, 200, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath.'/'.$filename);
+           
+               
+                $employee['avatar'] = '/uploads/avatars/'. $filename;
+            }
+
+
             $employee->update($request_data);
             return Response()->json(['status' => 1, 'message' => 'Data updated successfuly', 'data' => $employee]);
         } else {
-            return Response()->json(['status' => 0, 'message' => 'there is no data']);
+            return Response()->json(['status' => 0, 'message' => 'No employee found'] , 404);
         }
     }
 

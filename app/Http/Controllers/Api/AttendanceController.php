@@ -19,7 +19,7 @@ class AttendanceController extends Controller
             'emp_id' => 'required',
             'appointment_id' => 'required',
             'period' => 'required|in:1,2',
-            'attend_method_id' => 'required',
+            'attend_methods_ids' => 'required',
             'state' => 'required|in:1,0'
         );
         $validator = Validator::make($request->all(), $rules);
@@ -53,14 +53,7 @@ class AttendanceController extends Controller
         $period = $request->period;
         $start = Carbon::parse($appointment['start_from_period_' . $period]);
         $end = Carbon::parse($appointment['end_to_period_' . $period]);
-        return Carbon::parse($appointment['delay_period_' . $period])->format('h:m:s');
-        // if(
-        //     $now->gt($start)
-        //     &&
-        //     $now->lt( $end-> )
-
-        // )
-
+     
 
         $emp_attendence->save();
     }
