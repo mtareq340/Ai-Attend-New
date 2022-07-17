@@ -77,7 +77,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Job Number</th>
-                                    <th>Appointment Name</th>
+                                    <th>Attendance Plan</th>
                                     <th>Branch Name</th>
                                     <th>Attendance Method</th>
                                     <th>State</th>

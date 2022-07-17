@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Appointment;
 use App\Branch;
+use App\Employee_Attendance;
 use App\Employee_Departure;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,16 +23,22 @@ class EmployeesDepartureController extends Controller
         if (auth()->user()->hasRole('super_admin')) {
             $work_appointments = Appointment::all();
             $branches = Branch::all();
+            $employees_departure = Employee_Departure::query();
             if (isset($request->appointment_id)) {
-                $employees_departure = Employee_Departure::where('appointment_id', $request->appointment_id)->get();
-            } else {
-                $employees_departure = Employee_Departure::all();
+                $employees_departure = Employee_Departure::where('appointment_id', $request->appointment_id);
             }
+            if (isset($request->branch_id)) {
+                $employees_departure = Employee_Departure::where('branch_id', $request->branch_id);
+            }
+            if (isset($request->state)) {
+                $employees_departure = $employees_departure->where('state', $request->state);
+            }
+            $employees_departure = $employees_departure->get();
         } else {
             if (isset($request->appointment_id)) {
-                $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id)->where('appointment_id', $request->appointment_id)->get();
+                $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id)->where('appointment_id', $request->appointment_id);
             } else {
-                $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id)->get();
+                $employees_departure = Employee_Departure::where('branch_id', auth()->user()->branch_id);
             }
         }
         return view('employees_departure.index', compact('employees_departure', 'work_appointments', 'branches'));

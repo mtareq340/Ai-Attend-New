@@ -42,6 +42,15 @@
             
             
             </div>
+            <div class="form-group col-4">
+                <select name="state" id="sel_state" class="form-control">
+                        <option value="" selected disabled>Select State</option>  
+                        
+                        <option value="1" {{app('request')->input('state')== '1' ? 'selected':'' }}>Success</option>
+                        <option value="0" {{app('request')->input('state')== '0' ? 'selected':'' }}>Fail</option>
+                        
+                </select>
+            </div>
 
             <div class="form-group col-4">
                 <select name="branch_id" id="sel_branch" class="form-control">
@@ -66,7 +75,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Job Number</th>
-                                    <th>Appointment Name</th>
+                                    <th>Attendance Plan</th>
                                     <th>Branch Name</th>
                                     <th>Attendance Method</th>
                                     <th>State</th>
@@ -130,16 +139,58 @@
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
-      $(document).ready(function(){
+        function insertParam(key, value) {
+            key = encodeURIComponent(key);
+            value = encodeURIComponent(value);
 
-        $('#sel_appointment').change(function(e){
-            let appoitment_id = $('#sel_appointment').val();
-            window.location = `/dashboard/employees_departures?appointment_id=${appoitment_id}`;
-            
-        });
-      });  
-    </script>
-    <script>
+            // kvp looks like ['key1=value1', 'key2=value2', ...]
+            var kvp = document.location.search.substr(1).split('&');
+            let i=0;
+
+            for(; i<kvp.length; i++){
+                if (kvp[i].startsWith(key + '=')) {
+                    let pair = kvp[i].split('=');
+                    pair[1] = value;
+                    kvp[i] = pair.join('=');
+                    break;
+                }
+            }
+        
+            if(i >= kvp.length){
+                kvp[kvp.length] = [key,value].join('=');
+            }
+        
+            // can return this or...
+            let params = kvp.join('&');
+        
+            // reload page with new params
+            document.location.search = params;
+    }
+
+    $(document).ready(function(){
+
+            $('#sel_appointment').change(function(e){
+                let appointment_id = $('#sel_appointment').val();
+                insertParam('appointment_id',appointment_id)
+
+            });
+        });  
+
+        $(document).ready(function(){
+  
+          $('#sel_branch').change(function(e){
+            let branch_id = $('#sel_branch').val();
+            insertParam('branch_id' , branch_id)
+          });
+        });  
+
+        $(document).ready(function(){
+  
+          $('#sel_state').change(function(e){
+            let state = $('#sel_state').val();
+            insertParam('state' , state);
+          });
+        });  
         $(document).ready(function(){
            
 
