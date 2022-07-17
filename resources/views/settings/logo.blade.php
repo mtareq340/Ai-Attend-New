@@ -7,7 +7,7 @@
             <label class="custom-input">
                 <input type="file" id="logo" name="logo" accept="image/png, image/jpeg" class="d-none">
             </label>
-            <img class="logo"
+            <img class="logo" style="box-shadow: box-shadow: rgb(28 32 93 / 24%) 0 2px 8px 0;"
                 src="{{ $company_settings['logo'] ? '/assets/images/' . $company_settings['logo'] : '/assets/images/default-logo.png' }}"
                 alt="logo" />
         </div>
