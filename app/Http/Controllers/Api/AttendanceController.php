@@ -66,6 +66,7 @@ class AttendanceController extends Controller
         foreach ($request->attendance_methods as $method) {
             if(! $method['state']) {
                 $pass_attendance_methods = false;
+                return;
             }
         }
 
@@ -85,19 +86,21 @@ class AttendanceController extends Controller
             
 
             // check if the now between the start and end
-            if($now->greaterThanOrEqualTo($start) && $now->lessThanOrEqualTo($start->addMinutes($allow_delay_minutes))){
+            if($now->gte($start->copy()->subMinutes(15)) && $now->lte($start->copy()->addMinutes($allow_delay_minutes))){
                 $emp_attendence['state'] = true;
             }else{
                 // get the different in minutes
                 // to know how many minutes the employee is late
-                $diff_minutes = $now->diffInMinutes($start);
+                $diff_minutes = $now->copy()->diffInMinutes($start);
                 $emp_attendence['state'] = false;
                 $emp_attendence['reason'] = "the employee is late ". $diff_minutes . ' minutes';
                 if($now->lt($start)){
-                    $emp_attendence['reason'] = "the employee is early ". $diff_minutes . ' minutes';
+                    // employee is early
+                    return response()->json(['status' => 0 , 'message' => "the employee is early ". $diff_minutes . ' minutes'] , 401);
                 }
             }
         }
+
 
         $emp_attendence->save();
         // store the attend methods ids with status
@@ -110,18 +113,20 @@ class AttendanceController extends Controller
                 'attend_mthod_id' => (int) $method['method_id'],
                 'plan_id' => $request->appointment_id,
                 'location_id' => $appointment->location_id,
-                'success' => $method['state'],
+                'state' => $method['state'],
                 'attendance_id' => $emp_attendence->id
             ]);
         }
         RegisteredAttendanceMethod::insert($registered_attendance_methods);
         $status = 1;
         $msg = '';
+        $code = 204;
         if(! $emp_attendence['status']){
             $status = 0;
             $msg = $emp_attendence['reason'];
+            $code = 401; 
         }
-        return response()->json(['status' => $status , 'msg' => $msg]);
+        return response()->json(['status' => $status , 'msg' => $msg] , $code);
     }
 
     public function set_employee_checkout(Request $request)

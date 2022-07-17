@@ -7,6 +7,7 @@ use App\Assign_Appointment;
 use App\Employee;
 use App\Employee_Departure;
 use App\Http\Controllers\Controller;
+use App\RegisteredDepartureMethod;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -20,13 +21,14 @@ class DepartureController extends Controller
             'emp_id' => 'required',
             'appointment_id' => 'required',
             'period' => 'required|in:1,2',
-            'attend_method_id' => 'required',
-            'state' => 'required|in:1,0'
+            'departure_methods' => 'required',
         );
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
+
         $emp = Employee::find($request->emp_id);
         if (!$emp) {
             return response()->json(['status' => 0, 'message' => 'errors', 'errors' => [
@@ -34,54 +36,79 @@ class DepartureController extends Controller
             ]], 404);
         }
         // employees is found
+        // check if employee on this plan or not
         $emp_appointments_ids = $emp->appointmentsIds();
         if (!in_array($request->appointment_id, $emp_appointments_ids)) {
             return response()->json(['status' => 0, 'message' => 'errors', 'errors' => [
                 'employee' => 'the employee is not associated in this appointment'
             ]], 404);
         }
-        $appointment = Appointment::find($request->appointment_id);
+
+        // the employee is on this plan
+        $is_valid_attend_methods = true;
+        foreach ($request->attendance_methods as $method) {
+            if (!$method['state']) {
+                $is_valid_attend_methods = false;
+                return;
+            }
+        }
+
         $emp_departure = new Employee_Departure();
+
+        $appointment = Appointment::find($request->appointment_id);
         $emp_departure->employee_id = $request->emp_id;
         $emp_departure->branch_id = $appointment->branch_id;
         $emp_departure->appointment_id = $request->appointment_id;
-        $emp_departure->attendance_method_id = $request->attend_method_id;
-        $emp_departure->state = $request->state;
 
-        //get overtime to the employee //
-        $assign_appointment  = Assign_Appointment::where('work_appointment_id', $request->appointment_id)->where('employee_id', $request->emp_id)->first();
-        $overtime = Carbon::parse($assign_appointment->over_time);
-
-        // overtime + endtime //
-        $now = Carbon::now();
-        $period = $request->period;
-        $end = Carbon::parse($appointment['end_to_period_' . $period]);
-        $end_with_overtime = $end->addHours($overtime)->format('H:i:s');
-
-        //check if there is problem with in mobile phone then check if time is greater than or equal to end time of attendance plan
-        if (!$request->reason) {
-            if ($now->gte($end)  || $now->gte($end_with_overtime)) {
-                $emp_departure->save();
-                return response()->json([
-                    'state' => '1',
-                    'message' => 'Successful Departure'
-                ]);
-            } else {
-                $emp_departure->reason = "Departure Time has not comming yet";
-                $emp_departure->save();
-
-                return response()->json([
-                    'state' => '0',
-                    'message' => 'Departure time has not comming yet'
-                ]);
-            }
+        if (!$is_valid_attend_methods) {
+            $emp_departure->state = false;
         } else {
-            $emp_departure->reason = $request->reason;
-            $emp_departure->save();
-            return response()->json([
-                'state' => '0',
-                'message' => 'error'
+            // every attend methods is valid
+            // check the time
+            //get overtime to the employee //
+            $assign_appointment  = Assign_Appointment::where('work_appointment_id', $request->appointment_id)->where('employee_id', $request->emp_id)->first();
+            $overtime_minutes = Carbon::parse($assign_appointment->over_time)->secondsSinceMidnight() / 60;
+            $now = Carbon::now();
+
+
+            $period = $request->period;
+            $end = Carbon::parse($appointment['end_to_period_' . $period]);
+            $end_with_overtime = $end->copy()->addMinutes($overtime_minutes);
+
+            if ($now->gte($end)) {
+                // he can leave
+                $emp_departure->state = true;
+
+                // check if the employee didn't complete his/her overtime
+                if ($now->lt($end_with_overtime)) {
+                    // get different overtime
+                    $overtime_minutes_diff = $now->diffInMinutes($end);
+                    $emp_departure->overtime_minutes_diff = $overtime_minutes_diff;
+                }
+            } else {
+                // he can't leave
+                return response()->json(['status' => 0, 'msg' => 'you still have ' . $end->copy()->diff($now) . 'minutes to go'], 401);
+            }
+        }
+
+        $emp_departure->save();
+        // store the attend methods ids with status
+        $registered_departure_methods = [];
+        // save attendence methods status
+        foreach ($request->departure_methods as $method) {
+
+            array_push($registered_departure_methods, [
+                'employee_id' => $request->emp_id,
+                'attend_mthod_id' => (int) $method['method_id'],
+                'plan_id' => $request->appointment_id,
+                'location_id' => $appointment->location_id,
+                'state' => $method['state'],
+                'departure_id' => $emp_departure->id
             ]);
         }
+        RegisteredDepartureMethod::insert($registered_departure_methods);
+
+
+        return response()->json(['status' => 1, 'msg' => 'successful departure']);
     }
 }
