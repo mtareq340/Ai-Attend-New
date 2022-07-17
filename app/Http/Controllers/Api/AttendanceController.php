@@ -46,7 +46,7 @@ class AttendanceController extends Controller
         $appointment = Appointment::find($request->appointment_id);
         // check if today is a workday
         $today = Carbon::parse('07/14/2022')->dayOfWeek + 2;
-        if($today == 8) $today = 1;
+        if($today > 7) $today = 1;
 
         // return in_array($today , explode(',',$appointment->attendance_days));
         if(! in_array((string)$today , explode(',',$appointment->attendance_days))){
