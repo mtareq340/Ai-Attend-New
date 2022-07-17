@@ -3,7 +3,15 @@
 @section('css')
     <!-- Plugins css -->
     <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+    type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+    type="text/css" />
+    <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+    type="text/css" />
+<link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
+    type="text/css" />
 @endsection
 
 @section('content')
@@ -41,6 +49,7 @@
                                 <th>Branch Name</th>
                                 <th>Location Name</th>
                                 <th>Appointment</th>
+                                <th>Over time</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -51,6 +60,10 @@
                             <td>{{ $a->branch->name }}</td>
                             <td>{{ $a->location->name }}</td>
                             <td>{{ $a->appointment->name }}</td>
+                            <td>
+                                <button onclick="editExtraTime('{{ $a->over_time }}','{{$a->id}}')"
+                                    class="btn btn-sm btn-info">Edit OverTime</button>
+                            </td>
                             <td>
                                 <div class="row row-xs wd-xl-4p">
                                     @can('edit_assign_appointment')
@@ -74,6 +87,26 @@
 
                         </tbody>
                     </table>
+                    
+    <div class="modal fade" id="details-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="mySmallModalLabel">Over Time</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" id="details-content">
+                    <form action="{{route('update_over_time')}}" id="details" method="POST">
+                        @csrf
+                        <input type="text" class="form-control" name="over_time" id="details-value"  class="24hours-timepicker form-control" value="">
+                        <input type="hidden" name="assign_appointment_id" id="assign_appointment_id">
+                        <button type="submit" class="mt-1 btn btn-primary">Edit</button>
+                    </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
                 </div> <!-- end card body-->
             </div> <!-- end card -->
@@ -83,9 +116,26 @@
 @endsection
 
 @section('script')
+<script>
+       $('.24hours-timepicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
+</script>
     <!-- Plugins js-->
     <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
-    <!-- Page js-->
+    <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+
+    <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
+    <script>
+          const editExtraTime = (details,id) => {
+        $('#details-modal').modal('show')
+        $('#details-value').val(details)
+        $('#assign_appointment_id').val(id)
+    }
+    </script>
 @endsection

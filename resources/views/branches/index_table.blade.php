@@ -18,10 +18,10 @@
             </div>
             <div class="col-4">
                 @can('add_branch')
-                    <button onclick="showAddFormRoot(event)" class="btn btn btn-primary  ">
+                  <a href="{{route('branches.create')}}" class="btn btn-primary">
                         <i class="fa fa-plus"></i>
                         Add Branch
-                    </button>
+                    </a>
                 @endcan
             </div>
             <div class="page-title-box col-4">
@@ -56,6 +56,8 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>Name</th>
+                                    <th>Location Latitude</th>
+                                    <th>Location  longituide</th>
                                     <th>Phone</th>
                                     <th>Address</th>
                                 </tr>
@@ -97,6 +99,9 @@
                                             </div>
                                         </td>
                                         <td>{{ $branch->name }}</td>
+                                        <td>{{$branch->latitude}}</td>
+
+                                        <td>{{$branch->longituide}}</td>
                                         <td>{{ $branch->phone }}</td>
                                         <td>{{ $branch->address }}</td>
                                         {{-- <td>
@@ -120,7 +125,7 @@
             </div><!-- end col-->
         </div>
         <!-- end row-->
-
+{{-- 
         <div class="modal fade" id="branch-modal" tabindex="-1" role="dialog" aria-labelledby="branch-modalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -184,7 +189,7 @@
                 </div>
             </div>
         </div>
-
+ --}}
 
 
 
@@ -213,5 +218,8 @@
 
         }
 
+    </script>
+    <script>
+        
     </script>
 @endsection

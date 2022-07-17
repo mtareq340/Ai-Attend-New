@@ -15,7 +15,9 @@ class Branch extends Model
         'address',
         'notes',
         'long',
-        'lat'
+        'lat',
+        'latitude',
+        'longituide'
     ];
 
 

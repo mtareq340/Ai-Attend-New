@@ -178,7 +178,8 @@ class AppointmentController extends Controller
                         'work_appointment_id' => $appointment->id,
                         'job_id' => $emp->job_id,
                         'branch_id' => $request->branch_id,
-                        'location_id' => $request->location_id
+                        'location_id' => $request->location_id,
+                        'over_time' => $appointment->overtime
                     ]
                 );
             }
