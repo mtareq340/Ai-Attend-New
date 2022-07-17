@@ -21,6 +21,7 @@ class BrancheController extends Controller
     public function index(Request $request)
     {
 
+        // $location = json_encode($data);
         if (!Gate::allows('show_branches')) {
             return abort(401);
         }
@@ -33,7 +34,16 @@ class BrancheController extends Controller
         }
     }
 
-
+    public function create()
+    {
+        $user = auth()->user();
+        if ($user->hasRole('super_admin')) {
+            return view('branches.create', ['branches' => Branch::orderBy('id', 'DESC')->get()]);
+        } else {
+            $branches =  Branch::where('id', $user->branch_id)->orWhere('parent_id', $user->branch_id)->orderBy('id', 'DESC')->get();
+            return view('branches.create', ['branches' => $branches]);
+        }
+    }
 
     public function store(Request $request)
     {

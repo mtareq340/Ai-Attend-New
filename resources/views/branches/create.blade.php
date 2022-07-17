@@ -14,10 +14,10 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('branches.index') }}">Branchs</a></li>
-                            <li class="breadcrumb-item active">Edit Branchs</li>
+                            <li class="breadcrumb-item active">Add New Branch</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit {{ $branch->name }}</h4>
+                    <h4 class="page-title">Add New Branch</h4>
                 </div>
             </div>
         </div>
@@ -31,45 +31,46 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('branches.update', $branch->id) }}" method="post" class="needs-validation" novalidate>
-                            {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
+                        <form action="{{ route('branches.store') }}" method="post" class="needs-validation" novalidate>
+                         @csrf
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Name @include('red_star')</label>
-                                <input type="name" value="{{ $branch->name }}" name="name" class="form-control" id="name"
+                                <input type="name"  name="name" class="form-control" id="name"
                                     placeholder="Name" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputphone" class="col-form-label">Phone number</label>
-                                <input type="tel" value="{{ $branch->phone }}" name="phone" class="form-control"
+                                <input type="tel"  name="phone" class="form-control"
                                     id="inputphone" placeholder="branch phone number" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputAddress" class="col-form-label">Address <span
                                         class="text-muted">(optional)</span></label>
-                                <input type="text" value="{{ $branch->address }}" name="address" class="form-control"
+                                <input type="text"  name="address" class="form-control"
                                     id="inputAddress" placeholder="1234 Main St">
                             </div>
 
-                            <input type="text" value="{{ $branch->latitude }}" name="latitude"
-                            class="form-control" id="lat" placeholder="Latitude" hidden>
+                            <input hidden type="text" name="latitude" class="form-control" id="lat"
+                            placeholder="Latitude" required>
 
-                            <input type="text" value="{{ $branch->longituide }}" name="longituide"
-                                class="form-control" id="lng" placeholder="Longituide" hidden>
+                        <input hidden type="text" name="longituide" class="form-control" id="lng"
+                            placeholder="Longituide" required>
+
+
                             <div class="my-4">
-                                <div id="map" style="height: 500px"></div>
+                                <div id="map" style="height: 300px"></div>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputNotes" class="col-form-label">Notes <span
                                         class="text-muted">(optional)</span></label>
-                                <input type="text" value="{{ $branch->notes }}" name="notes" class="form-control"
+                                <input type="text"  name="notes" class="form-control"
                                     id="inputNotes" placeholder="...">
                             </div>
 
-                            <center> <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                            <center> <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
                             </center>
 
                         </form>
@@ -88,26 +89,29 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn1ZmThbXMe-8C-boHXrWFupCBpT8LmnU">
 </script>
 <script>
-    window.onload = function() {
-        var latlng = new google.maps.LatLng($('#lat').val(), $('#lng').val());
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: latlng,
-            zoom: 11,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title: 'Set lat/lon values for this property',
-            draggable: true
-        });
-        google.maps.event.addListener(marker, 'dragend', function(a) {
-            var lat = a.latLng.lat();
-            var lng = a.latLng.lng();
-            $('#lat').val(lat)
-            $('#lng').val(lng)
+         window.onload = function() {
+            $('#lat').val(30.0444)
+            $('#lng').val(31.2357)
+            var latlng = new google.maps.LatLng(30.0444, 31.2357);
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: latlng,
+                zoom: 11,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'Set lat/lon values for this property',
+                draggable: true
+            });
+            google.maps.event.addListener(marker, 'dragend', function(a) {
+                var lat = a.latLng.lat();
+                var lng = a.latLng.lng();
+                $('#lat').val(lat)
+                $('#lng').val(lng)
 
-        });
-    };
+            });
+        };
+
 </script>
 @endsection

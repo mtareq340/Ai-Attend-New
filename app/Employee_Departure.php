@@ -13,6 +13,7 @@ class Employee_Departure extends Model
         'appointment_id',
         'attendance_method_id',
         'state',
+        'reason',
         'created_at',
         'updated_at'
     ];
