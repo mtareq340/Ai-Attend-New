@@ -63,7 +63,6 @@ class CompanySettingsController extends Controller
 
     public function uploadCover(Request $request)
     {
-
         if ($request->cover) {
             $img = $request->cover;
             $folderPath = "assets/images/"; //path location

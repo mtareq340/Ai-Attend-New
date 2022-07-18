@@ -1,28 +1,11 @@
 @extends('layouts.vertical', ['title' => 'Datatables'])
 
 @section('css')
-    <!-- Plugins css -->
-    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
-        type="text/css" />
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('assets/libs/multiselect/multiselect.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <style>
-        .selectize-dropdown-header {
-            display: none !important
-        }
-
-    </style>
-    <link href="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
+
 
 @section('content')
     <!-- Start Content-->
@@ -75,10 +58,10 @@
                                     <th>Action</th>
                                     <th>Name</th>
                                     <th>Job</th>
-                                    <th>Job number</th> 
+                                    <th>Job number</th>
                                     <th>Branch</th>
                                     <th>Attendance Plan</th>
-                                    <th>Attend methods</th>                
+                                    <th>Attend methods</th>
                                     <th>Active</th>
                                     <th>Locked</th>
                                     <th>Email</th>
@@ -115,8 +98,8 @@
                                         <td>{{ $emp->branch->name }}</td>
                                         <td>
                                             <ul>
-                                                @foreach ($emp->appointments as $appointment )
-                                                    <li>{{$appointment->name}}</li>
+                                                @foreach ($emp->appointments as $appointment)
+                                                    <li>{{ $appointment->name }}</li>
                                                 @endforeach
                                             </ul>
                                         </td>
@@ -154,8 +137,8 @@
                                         <td>{{ $emp->email }}</td>
                                         <td>{{ $emp->phone }}</td>
                                         <td>{{ $emp->address }}</td>
-                                    
-                                       
+
+
 
                                     </tr>
                                 @endforeach
@@ -428,21 +411,10 @@
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
-
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- Page js-->
-    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
     <script src="{{ asset('assets/libs/mohithg-switchery/mohithg-switchery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/devbridge-autocomplete/devbridge-autocomplete.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/jquery-mockjax/jquery-mockjax.min.js') }}"></script>
 
-
+    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
         const toggleActivationAndLocked = async (e, id, type) => {
@@ -528,10 +500,7 @@
                 var Dob = $("#dob").val();
                 var Branch = $("#brach").val();
                 var deaprtment = $("#department").val();
-                // console.log(name_en);
-                // console.log(jobNum);
-                // console.log(Dob);
-                // console.log(tel_1);
+
                 console.log(deaprtment);
                 $.ajax({
                     url: 'employee/edit/' + id,

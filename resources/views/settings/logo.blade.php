@@ -11,10 +11,7 @@
                 src="{{ $company_settings['logo'] ? '/assets/images/' . $company_settings['logo'] : '/assets/images/default-logo.png' }}"
                 alt="logo" />
         </div>
-
     </form>
-
-
 </div>
 <div class="d-flex justify-content-center my-2">
 

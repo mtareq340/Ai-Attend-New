@@ -2,7 +2,7 @@
 
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -16,7 +16,7 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Attend Method</li>
                         </ol>
                     </div>
@@ -42,26 +42,27 @@
                             </thead>
                             <tbody>
                                 @foreach ($emps as $emp)
-                                <tr>
-                                <td>{{$emp->name}}</td>
-                                    <td>{{$emp->branch->name}}</td>
-                                    <td>{{$emp->job->name}}</td>
-                                    <td>
-                                        <ul class="list">
-                                            @foreach ($emp->attend_methods as $attend_method)
-                                                    <li>{{$attend_method->name}}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        @can('edit_employee_attend_method')
-                                        <a href="/dashboard/employees_attend_methods/{{$emp->id}}/edit" type="button"class="action-icon">
-                                        <i class="mdi mdi-square-edit-outline"></i> 
-                                        </a>
-                                        @endcan
-                                     
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $emp->name }}</td>
+                                        <td>{{ $emp->branch->name }}</td>
+                                        <td>{{ $emp->job->name }}</td>
+                                        <td>
+                                            <ul class="list">
+                                                @foreach ($emp->attend_methods as $attend_method)
+                                                    <li>{{ $attend_method->name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            @can('edit_employee_attend_method')
+                                                <a href="/dashboard/employees_attend_methods/{{ $emp->id }}/edit"
+                                                    type="button" class="action-icon">
+                                                    <i class="mdi mdi-square-edit-outline"></i>
+                                                </a>
+                                            @endcan
+
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -77,10 +78,8 @@
 
 @section('script')
     <!-- Plugins js-->
-    <script src="{{asset('assets/libs/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/libs/pdfmake/pdfmake.min.js')}}"></script>
-
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Page js-->
-    <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
-
+    <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 @endsection
