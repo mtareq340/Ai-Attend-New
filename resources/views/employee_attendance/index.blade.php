@@ -14,7 +14,7 @@
             </div>
             <div class="col-5">
                     <button id="attendance_submit" class="btn btn-success" >Make Succesful Attendance</button>
-                    <a href="{{route('employee_attendance.create')}}" class="btn btn-primary">Create Attendance Manually</a>
+                    {{-- <a href="{{route('employee_attendance.create')}}" class="btn btn-primary">Create Attendance Manually</a> --}}
             </div>
                 <div class="page-title-box col-4">
                     <div class="page-title-right">
