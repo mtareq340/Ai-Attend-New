@@ -16,7 +16,8 @@ class Employee_Attendance extends Model
         'created_at',
         'updated_at',
         'departure_time',
-        'statue'
+        'statue',
+        'user_id'
     ];
     public function employee()
     {

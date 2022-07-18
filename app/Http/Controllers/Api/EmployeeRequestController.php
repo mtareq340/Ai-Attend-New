@@ -23,15 +23,8 @@ class EmployeeRequestController extends Controller
         if ($validator->fails()) {
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()], 400);
         }
-        // $employee =  Employee::where('id', $request->id)->get();
-        $rules = array(
-            'id' => 'required',
-        );
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()], 400);
-        }
-        
+
+
         $data =  Employee_Request_Review::where('employee_id', $request->id)->get();
         return Response()->json(['status' => 1, 'message' => 'success', 'data' => $data]);
     }
@@ -76,7 +69,6 @@ class EmployeeRequestController extends Controller
 
                     $emp_request['attachment'] = '/uploads/requests/' . $filename;
                 }
-
 
                 $employeeRequest = $emp_request->save();
                 return Response()->json(['status' => 1, 'message' => 'Data added successfuly', 'data' => $employeeRequest]);

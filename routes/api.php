@@ -37,7 +37,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employees/change_password', 'EmployeesController@changePassword'); // parameters ($id,$oldpassword,$newpassword)
 
     Route::get('employees/getData', 'EmployeesController@getData');
-    Route::post('employee_requests/getData', 'EmployeeRequestController@getData');
+    Route::get('employee_requests/getData', 'EmployeeRequestController@getData');
 
     Route::put('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');

@@ -14,6 +14,7 @@ class Employee_Departure extends Model
         'attendance_method_id',
         'state',
         'reason',
+        'user_id',
         'created_at',
         'updated_at'
     ];

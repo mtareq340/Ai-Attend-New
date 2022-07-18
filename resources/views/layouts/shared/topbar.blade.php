@@ -332,11 +332,11 @@
         <div class="logo-box">
             <a href="{{route('any', ['dashboard'])}}" class="logo logo-dark text-center">
                 <span class="logo-sm">
-                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="22">
+                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="50px" width="100px" >
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
                 <span class="logo-lg">
-                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="20">
+                    <img src="{{asset('assets/images/logo.jpg')}}"alt="" height="50px" width="100px">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
             

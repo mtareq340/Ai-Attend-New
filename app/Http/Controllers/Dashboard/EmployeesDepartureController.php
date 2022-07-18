@@ -18,7 +18,7 @@ class EmployeesDepartureController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        $branches = '';
         $work_appointments = Appointment::all();
         if (auth()->user()->hasRole('super_admin')) {
             $work_appointments = Appointment::all();
