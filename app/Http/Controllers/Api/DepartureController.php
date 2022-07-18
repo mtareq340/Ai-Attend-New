@@ -48,7 +48,7 @@ class DepartureController extends Controller
 
         // the employee is on this plan
         $is_valid_attend_methods = true;
-        foreach ($request->attendance_methods as $method) {
+        foreach ($request->departure_methods as $method) {
             if (!$method['state']) {
                 $is_valid_attend_methods = false;
                 return;
@@ -99,7 +99,8 @@ class DepartureController extends Controller
         $registered_departure_methods = [];
         // save attendence methods status
         foreach ($request->departure_methods as $method) {
-            array_push($registered_departure_methods , [
+
+            array_push($registered_departure_methods, [
                 'employee_id' => $request->emp_id,
                 'attend_mthod_id' => (int) $method['method_id'],
                 'plan_id' => $request->appointment_id,
@@ -111,6 +112,5 @@ class DepartureController extends Controller
         RegisteredDepartureMethod::insert($registered_departure_methods);
 
         return response()->json(['status' => 1, 'msg' => 'successful departure']);
-
     }
 }

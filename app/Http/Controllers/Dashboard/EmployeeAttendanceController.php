@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Appointment;
+use App\Assign_Appointment;
 use App\Attendmethods;
 use App\Branch;
 use App\Employee;
@@ -43,6 +44,9 @@ class EmployeeAttendanceController extends Controller
             if (isset($request->appointment_id)) {
                 $employees = $employees->where('appointment_id', $request->appointment_id)->where('branch_id', auth()->user()->branch_id)->get();
             }
+            if (isset($request->state)) {
+                $employees = $employees->where('state', $request->state);
+            }
         }
         return view('employee_attendance.index', compact('employees', 'work_appointments', 'branches'));
     }
@@ -63,17 +67,15 @@ class EmployeeAttendanceController extends Controller
     {
         //
         if (auth()->user()->hasRole('super_admin')) {
-            $branch = Branch::all();
             $employees = Employee::all();
             $attendance = Attendmethods::all();
             $appointments = Appointment::all();
         } else {
-            $branch = Branch::find(auth()->user()->branch_id);
             $employees = Employee::where('branch_id', auth()->user()->branch_id);
             $appointments = Appointment::where('branch_id', auth()->user()->branch_id);
             $attendance = Attendmethods::all();
         }
-        return view('employee_attendance.create', compact('branch', 'employees', 'attendance'));
+        return view('employee_attendance.create', compact('employees', 'appointments', 'attendance'));
     }
 
     /**
@@ -109,6 +111,18 @@ class EmployeeAttendanceController extends Controller
         }
     }
 
+    //filter Employees form Attendance plan
+
+    public function getEmployeesFromAttendanceplan(Request $request)
+    {
+        $data = Assign_Appointment::where('work_appointment_id', $request->appointment)->get();
+        $text = '';
+
+        foreach ($data as $d) {
+            $text  .= "<option value = '$d->id'>" . $d->employees->name . "</option>";
+        }
+        return $text;
+    }
     /**
      * Display the specified resource.
      *

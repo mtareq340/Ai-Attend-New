@@ -51,17 +51,17 @@
                         
                 </select>
             </div>
-
-            <div class="form-group col-4">
-                <select name="branch_id" id="sel_branch" class="form-control">
-                    <option value="" selected disabled>Select Branch</option>
-                    @foreach ($branches as $branch)
-                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
-                    @endforeach
-                </select>
-        
-        
-        </div>
+            @if (auth()->user()->hasRole('super_admin'))
+                <div class="form-group col-4">
+                    <select name="branch_id" id="sel_branch" class="form-control">
+                        <option value="" selected disabled>Select Branch</option>
+                        @foreach ($branches as $branch)
+                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                        @endforeach
+                    </select>
+                 </div>    
+            @endif
+            
             </div>  
 
         <div class="row">

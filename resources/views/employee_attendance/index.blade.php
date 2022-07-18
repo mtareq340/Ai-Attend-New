@@ -9,11 +9,12 @@
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row align-items-center pt-1">
-            <div class="col-4">
+            <div class="col-3">
                 <h4 class="page-title">Employee Attendance</h4>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                     <button id="attendance_submit" class="btn btn-success" >Make Succesful Attendance</button>
+                    {{-- <a href="{{route('employee_attendance.create')}}" class="btn btn-primary">Create Attendance Manually</a> --}}
             </div>
                 <div class="page-title-box col-4">
                     <div class="page-title-right">
@@ -82,6 +83,7 @@
                                     <th>Attendance Method</th>
                                     <th>State</th>
                                     <th>Date</th>
+                                    <th>Created By</th>
                                     {{-- <th>Actions</th> --}}
                                 </tr>
                             </thead>
@@ -118,7 +120,7 @@
                                             {{-- {{$emp->state}} --}}
                                         </td>
                                         <td>{{$emp->created_at}}</td>
-                                        <td>{{$emp->departure_time}}</td>
+                                        <td></td>
                                     </tr>
                                 @endforeach
                             </tbody>

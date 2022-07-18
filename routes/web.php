@@ -118,9 +118,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   //employees Departure 
   Route::resource('employees_departures', 'Dashboard\EmployeesDepartureController');
   Route::post('make_employees_departure_success', 'Dashboard\EmployeesDepartureController@make_employees_departure_success')->name('make_employees_departure_success');
-
   //update over time to Employees
   Route::post('update_over_time', 'Dashboard\Assign_AppointmentController@update_over_time')->name('update_over_time');
+
+  //get employees from attendance plan in attendce & departure
+  Route::get('get_employees_from_attendanceplan', 'Dashboard\EmployeeAttendanceController@getEmployeesFromAttendanceplan')->name('get_employees_from_attendanceplan');
 });
 
 
