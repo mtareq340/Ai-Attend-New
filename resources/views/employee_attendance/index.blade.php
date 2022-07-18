@@ -9,10 +9,10 @@
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row align-items-center pt-1">
-            <div class="col-3">
+            <div class="col-4">
                 <h4 class="page-title">Employee Attendance</h4>
             </div>
-            <div class="col-5">
+            <div class="col-4">
                     <button id="attendance_submit" class="btn btn-success" >Make Succesful Attendance</button>
                     {{-- <a href="{{route('employee_attendance.create')}}" class="btn btn-primary">Create Attendance Manually</a> --}}
             </div>
