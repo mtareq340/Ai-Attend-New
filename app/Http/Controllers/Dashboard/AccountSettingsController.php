@@ -64,12 +64,6 @@ class AccountSettingsController extends Controller
         return back()->with('success', 'تم تحديث كلمة السر بنجاح');
     }
 
-
-    public function update(Request $request, $id)
-    {
-    }
-
-
     public function updateCompanySettings(Request $req)
     {
         try {

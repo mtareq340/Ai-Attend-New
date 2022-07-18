@@ -26,7 +26,7 @@ class DepartureController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
+            return response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
 
         $emp = Employee::find($request->emp_id);
@@ -35,6 +35,7 @@ class DepartureController extends Controller
                 'employee' => 'the employee is not found'
             ]], 404);
         }
+
         // employees is found
         // check if employee on this plan or not
         $emp_appointments_ids = $emp->appointmentsIds();
@@ -43,6 +44,7 @@ class DepartureController extends Controller
                 'employee' => 'the employee is not associated in this appointment'
             ]], 404);
         }
+
 
         // the employee is on this plan
         $is_valid_attend_methods = true;
@@ -87,7 +89,7 @@ class DepartureController extends Controller
                 }
             } else {
                 // he can't leave
-            // $plan_id = Setting::find(1)->value;
+                // $plan_id = Setting::find(1)->value;
                 return response()->json(['status' => 0, 'msg' => 'you still have ' . $end->copy()->diffInMinutes($now) . ' minutes to go'] , 401);
             }
         }
@@ -97,7 +99,6 @@ class DepartureController extends Controller
         $registered_departure_methods = [];
         // save attendence methods status
         foreach ($request->departure_methods as $method) {
-           
             array_push($registered_departure_methods , [
                 'employee_id' => $request->emp_id,
                 'attend_mthod_id' => (int) $method['method_id'],
@@ -108,7 +109,6 @@ class DepartureController extends Controller
             ]);
         }
         RegisteredDepartureMethod::insert($registered_departure_methods);
-
 
         return response()->json(['status' => 1, 'msg' => 'successful departure']);
 

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 
 class Assign_AppointmentController extends Controller
 {
-    //
+ 
     public function index()
     {
         if (!Gate::allows('show_assign_appointments')) {

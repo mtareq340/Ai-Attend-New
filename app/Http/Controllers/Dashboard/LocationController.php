@@ -163,11 +163,9 @@ class LocationController extends Controller
 
             }
 
-
             $data = $req->all();
             $location = Location::findOrFail($id);
             $location->update($data);
-
 
             $devices = $req->devices;
             // save the devices
