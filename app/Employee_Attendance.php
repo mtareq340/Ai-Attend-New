@@ -15,6 +15,7 @@ class Employee_Attendance extends Model
         'departure_time',
         'statue',
         'user_name',
+        'date',
         'created_at',
         'updated_at',
     ];
