@@ -110,7 +110,13 @@
                                         <td>{{$emp->employee->job_number}}</td>
                                         <td>{{$emp->appointment->name}}</td>
                                         <td>{{$emp->branch->name}}</td>
-                                        <td>{{$emp->attendanc_method->name}}</td>
+                                        <td>
+                                            @foreach ( $emp->registered_attendance_method as $e )
+                                            <li>
+                                                {{ $e->name }}
+                                            </li>
+                                            @endforeach
+                                        </td>
                                         <td>
                                             @if ($emp->state)
                                                 <p class="badge badge-success badge-pill" style="font-size: 12px">Success</p>
@@ -120,7 +126,7 @@
                                             {{-- {{$emp->state}} --}}
                                         </td>
                                         <td>{{$emp->created_at}}</td>
-                                        <td></td>
+                                        <td>{{$emp->user_name}}</td>                                            
                                     </tr>
                                 @endforeach
                             </tbody>

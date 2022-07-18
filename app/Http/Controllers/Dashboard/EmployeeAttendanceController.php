@@ -55,7 +55,7 @@ class EmployeeAttendanceController extends Controller
     public function make_employees_attendance_success(Request $request)
     {
         $employee_attendances = $request->employees_attendance;
-        Employee_Attendance::whereIn('id', $employee_attendances)->update(['state' => 1]);
+        Employee_Attendance::whereIn('id', $employee_attendances)->update(['state' => 1, 'user_name' => auth()->user()->name]);
         return redirect()->back()->with(['success' => 'تم التحديث']);
     }
     /**

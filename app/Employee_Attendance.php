@@ -12,12 +12,11 @@ class Employee_Attendance extends Model
         'employee_id',
         'branch_id',
         'appointment_id',
-        'attendance_method_id',
-        'created_at',
-        'updated_at',
         'departure_time',
         'statue',
-        'user_id'
+        'user_name',
+        'created_at',
+        'updated_at',
     ];
     public function employee()
     {
@@ -27,9 +26,11 @@ class Employee_Attendance extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
-    public function attendanc_method()
+    public function registered_attendance_method()
     {
-        return $this->belongsTo(Attendmethods::class, 'attendance_method_id');
+        return $this->belongsToMany(Attendmethods::class, 'registered_employees_attendance_methods', 'attendance_id', 'attend_mthod_id');
+        // return $this->belongsToMany(Attendmethods::class, 'employee_attend_methods', 'employee_id', 'attend_method_id');
+
     }
     public function appointment()
     {
