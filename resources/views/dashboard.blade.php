@@ -4,6 +4,12 @@
     <!-- Plugins css -->
     <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        /* .apexcharts-radialbar-hollow {
+                fill: rgb(39, 38, 38) !important;
+            } */
+
+    </style>
 @endsection
 
 @section('content')
@@ -19,80 +25,9 @@
             @endif
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-xl-3">
-                <div class="widget-rounded-circle card-box">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
-                                <i class="fe-user font-22 avatar-title text-primary"></i>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="text-right">
-                                <h3 class="mt-1"><span data-plugin="counterup">{{ $plan->count_employees }}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Max Employees</p>
-                            </div>
-                        </div>
-                    </div> <!-- end row-->
-                </div> <!-- end widget-rounded-circle-->
-            </div> <!-- end col-->
 
-            <div class="col-md-6 col-xl-3">
-                <div class="widget-rounded-circle card-box">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                <i class="fas fa-user-tie font-22 avatar-title text-success"></i>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $employess_count }}</span>
-                                </h3>
-                                <p class="text-muted mb-1 text-truncate">Employees</p>
-                            </div>
-                        </div>
-                    </div> <!-- end row-->
-                </div> <!-- end widget-rounded-circle-->
-            </div> <!-- end col-->
 
-            <div class="col-md-6 col-xl-3">
-                <div class="widget-rounded-circle card-box">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="avatar-lg rounded-circle bg-soft-info border-info border">
-                                <i class="fas fa-building font-22 avatar-title text-info"></i>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $branches_count }}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Branches</p>
-                            </div>
-                        </div>
-                    </div> <!-- end row-->
-                </div> <!-- end widget-rounded-circle-->
-            </div> <!-- end col-->
 
-            <div class="col-md-6 col-xl-3">
-                <div class="widget-rounded-circle card-box">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
-                                <i class="icon-briefcase font-22 avatar-title text-warning"></i>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $jobs_count }}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Jobs</p>
-                            </div>
-                        </div>
-                    </div> <!-- end row-->
-                </div> <!-- end widget-rounded-circle-->
-            </div> <!-- end col-->
-        </div>
         <!-- end row-->
         <div class="w-100">
             <center>
@@ -154,14 +89,17 @@
                                             <td>{{ $empRequestsRev->request }}</td>
                                             <td>{{ $empRequestsRev->date }}</td>
                                             <td>
-                                                <form action="{{route('accept_response',$empRequestsRev->id)}}" method="POST">
+                                                <form action="{{ route('accept_response', $empRequestsRev->id) }}"
+                                                    method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-success"><i class="fe-check-circle "></i></button>
+                                                    <button type="submit" class="btn btn-success"><i
+                                                            class="fe-check-circle "></i></button>
                                                 </form>
 
                                             </td>
                                             <td>
-                                                <form action="{{route('reject_response',$empRequestsRev->id)}}" method="POST">
+                                                <form action="{{ route('reject_response', $empRequestsRev->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     <button class="btn btn-danger">
                                                         <i class="fe-x-circle "></i>
@@ -354,7 +292,8 @@
             stroke: {
                 lineCap: "round"
             },
-            labels: ["{{ $diffDays }} days left"]
+            labels: ["{{ $diffDays }} days left"],
+
         };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
