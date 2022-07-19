@@ -13,7 +13,8 @@
                 <h4 class="page-title">Make Employee Departure</h4>
             </div>
             <div class="col-4">
-                    <button id="departure_submit" class="btn btn-success" >Make Manually Departure</button>
+                <button
+                    class="btn btn btn-success" id="departure_submit" onclick="editExtraTime('','')">Make Manually Departure</button>
             </div>
                 <div class="page-title-box col-4">
                     <div class="page-title-right">
@@ -73,11 +74,11 @@
                                             <div
                                                 class="checkbox checkbox-success form-check-inline">
                                                 <input type="checkbox"
-                                                    id="checkbox-{{ $emp->id }}"
+                                                    id="checkbox-{{ $emp->employee_id }}"
                                                     name="emps"
-                                                    value="{{ $emp->id }}"
+                                                    value="{{ $emp->employee_id }}"
                                                     >
-                                                <label for="checkbox-{{ $emp->id }}"
+                                                <label for="checkbox-{{ $emp->employee_id }}"
                                                     class="w-100"></label>
                                             </div>
                                         </td>
@@ -105,6 +106,26 @@
    
     </div>
 
+    <div class="modal fade" id="details-modal" tabindex="-1" role="dialog"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="mySmallModalLabel">Add Over Time</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" id="details-content">
+                <form id="details">
+                    @csrf
+                    <input type="time" class="form-control" name="over_time" id="details-value"
+                        class="24hours-timepicker form-control" value="">
+                    <button type="submit" id="departure" class="mt-1 btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 @endsection
@@ -118,6 +139,7 @@
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
     <script>
+     
         function insertParam(key, value) {
             key = encodeURIComponent(key);
             value = encodeURIComponent(value);
@@ -147,7 +169,7 @@
     }
 
     $(document).ready(function(){
-
+            
             $('#sel_appointment').change(function(e){
                 let appointment_id = $('#sel_appointment').val();
                 insertParam('appointment_id',appointment_id)
@@ -155,38 +177,47 @@
             });
         });  
  
+        const editExtraTime = (details, id) => {
+            $('#details-modal').modal('show')
+            $('#details-value').val(details)
+            $('#assign_appointment_id').val(id)
+        }
         $(document).ready(function(){
            
-
-             $('#departure_submit').click(function(e){
+             $('#departure').click(function(e){
                e.preventDefault();
                let employees_departure = []
-
+               let appointment_id = $('#sel_appointment').val();
+               let overtime = $("#details-value").val();
+               console.log(overtime);
                $("input:checkbox[name=emps]:checked").each(function() {
                 employees_departure.push($(this).val());
                  });
+                 
                  $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                   }
               });
               $.ajax({
-                 url: "",
-                 method: 'post',
+                 url: "{{route('store_employees_departures')}}",
+                 method: 'POST',
                  data: {
-                   employees_departure,
+                    'employees_departure':employees_departure,
+                    'appointment_id':appointment_id,
+                    'overtime':overtime,
                    '_token' : "{{ csrf_token() }}"
                  
                 },
                  success: function(result){
-                    // notyf.success('تم التحديث بنجاح')
-                    // window.location.reload();
-                    console.log(result);
+                    notyf.success('تم التحديث بنجاح')
+                    window.location.reload();
+                    // console.log(result);
                 },
                  error:function(err)
                  {
                     notyf.error('حدثت مشكله برجاء المحاوله مره اخري')
-                    console.log(err);
+                    // console.log(err);
                  }
                  
                 });
