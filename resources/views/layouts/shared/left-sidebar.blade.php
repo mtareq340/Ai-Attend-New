@@ -255,7 +255,7 @@
                         <div class="collapse" id="sidebardevices">
                             <ul class="nav-second-level">
                                 @can('show_devices')
-                                    <li>
+                                    <li>k
                                         <a href="{{ route('devices.index') }}">Devices</a>
                                     </li>
                                 @endcan
@@ -300,7 +300,7 @@
 
 
                 {{-- start of employee - attend methods --}}
-                @can('show_employee_attend_methods')
+                {{-- @can('show_employee_attend_methods')
                     <li>
                         <a href="#sidebarempatt" data-toggle="collapse">
                             <i class="fa fa-users"></i>.
@@ -322,7 +322,7 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- end of employee - attend methods --}}
 
                 {{-- Appointment --}}

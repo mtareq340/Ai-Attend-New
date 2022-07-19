@@ -3,7 +3,7 @@
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -18,8 +18,8 @@
                     <h4 class="page-title">Basic Elements</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
         <div class="row">
             <div class="col-12">
@@ -27,7 +27,11 @@
                     <div class="card-body">
                         <h4 class="header-title">Input Types</h4>
                         <p class="sub-header">
-                            Most common form control, text-based input fields. Includes support for all HTML5 types: <code>text</code>, <code>password</code>, <code>datetime</code>, <code>datetime-local</code>, <code>date</code>, <code>month</code>, <code>time</code>, <code>week</code>, <code>number</code>, <code>email</code>, <code>url</code>, <code>search</code>, <code>tel</code>, and <code>color</code>.
+                            Most common form control, text-based input fields. Includes support for all HTML5 types:
+                            <code>text</code>, <code>password</code>, <code>datetime</code>, <code>datetime-local</code>,
+                            <code>date</code>, <code>month</code>, <code>time</code>, <code>week</code>,
+                            <code>number</code>, <code>email</code>, <code>url</code>, <code>search</code>,
+                            <code>tel</code>, and <code>color</code>.
                         </p>
 
                         <div class="row">
@@ -41,7 +45,8 @@
 
                                     <div class="form-group mb-3">
                                         <label for="example-email">Email</label>
-                                        <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
+                                        <input type="email" id="example-email" name="example-email" class="form-control"
+                                            placeholder="Email">
                                     </div>
 
                                     <div class="form-group mb-3">
@@ -52,7 +57,8 @@
                                     <div class="form-group mb-3">
                                         <label for="password">Show/Hide Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" id="password" class="form-control" placeholder="Enter your password">
+                                            <input type="password" id="password" class="form-control"
+                                                placeholder="Enter your password">
                                             <div class="input-group-append" data-password="false">
                                                 <div class="input-group-text">
                                                     <span class="password-eye"></span>
@@ -63,7 +69,8 @@
 
                                     <div class="form-group mb-3">
                                         <label for="example-palaceholder">Placeholder</label>
-                                        <input type="text" id="example-palaceholder" class="form-control" placeholder="placeholder">
+                                        <input type="text" id="example-palaceholder" class="form-control"
+                                            placeholder="placeholder">
                                     </div>
 
                                     <div class="form-group mb-3">
@@ -73,23 +80,28 @@
 
                                     <div class="form-group mb-3">
                                         <label for="example-readonly">Readonly</label>
-                                        <input type="text" id="example-readonly" class="form-control" readonly="" value="Readonly value">
+                                        <input type="text" id="example-readonly" class="form-control" readonly=""
+                                            value="Readonly value">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="example-disable">Disabled</label>
-                                        <input type="text" class="form-control" id="example-disable" disabled="" value="Disabled value">
+                                        <input type="text" class="form-control" id="example-disable" disabled=""
+                                            value="Disabled value">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="example-static">Static control</label>
-                                        <input type="text" readonly class="form-control-plaintext" id="example-static" value="email@example.com">
+                                        <input type="text" readonly class="form-control-plaintext" id="example-static"
+                                            value="email@example.com">
                                     </div>
 
                                     <div class="form-group mb-0">
                                         <label for="example-helping">Helping text</label>
-                                        <input type="text" id="example-helping" class="form-control" placeholder="Helping text">
-                                        <span class="help-block"><small>A block of help text that breaks onto a new line and may extend beyond one line.</small></span>
+                                        <input type="text" id="example-helping" class="form-control"
+                                            placeholder="Helping text">
+                                        <span class="help-block"><small>A block of help text that breaks onto a new line and
+                                                may extend beyond one line.</small></span>
                                     </div>
 
                                 </form>
@@ -152,12 +164,14 @@
 
                                     <div class="form-group mb-3">
                                         <label for="example-color">Color</label>
-                                        <input class="form-control" id="example-color" type="color" name="color" value="#727cf5">
+                                        <input class="form-control" id="example-color" type="color" name="color"
+                                            value="#727cf5">
                                     </div>
 
                                     <div class="form-group mb-0">
                                         <label for="example-range">Range</label>
-                                        <input class="custom-range" id="example-range" type="range" name="range" min="0" max="100">
+                                        <input class="custom-range" id="example-range" type="range" name="range" min="0"
+                                            max="100">
                                     </div>
 
                                 </form>
@@ -179,7 +193,8 @@
                             <div class="col-md-6">
                                 <h4 class="header-title">Select menu</h4>
                                 <p class="sub-header">
-                                    Custom <code>&lt;select&gt;</code> menus need only a custom class, <code>.custom-select</code> to trigger the custom styles.
+                                    Custom <code>&lt;select&gt;</code> menus need only a custom class,
+                                    <code>.custom-select</code> to trigger the custom styles.
                                 </p>
 
                                 <select class="custom-select ">
@@ -191,12 +206,15 @@
 
                                 <h4 class="header-title mt-4">Switches</h4>
                                 <p class="sub-header">
-                                    A switch has the markup of a custom checkbox but uses the <code>.custom-switch</code> class to render a toggle switch. Switches also support the <code>disabled</code> attribute.
+                                    A switch has the markup of a custom checkbox but uses the <code>.custom-switch</code>
+                                    class to render a toggle switch. Switches also support the <code>disabled</code>
+                                    attribute.
                                 </p>
 
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                    <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                                    <label class="custom-control-label" for="customSwitch1">Toggle this switch
+                                        element</label>
                                 </div>
                                 <div class="custom-control custom-switch mt-1">
                                     <input type="checkbox" class="custom-control-input" disabled id="customSwitch2">
@@ -210,21 +228,27 @@
                                 <div class="mt-3">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                                        <label class="custom-control-label" for="customCheck1">Check this custom
+                                            checkbox</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                        <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
+                                        <label class="custom-control-label" for="customCheck2">Check this custom
+                                            checkbox</label>
                                     </div>
                                 </div>
                                 <div class="mt-3">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+                                        <input type="radio" id="customRadio1" name="customRadio"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio1">Toggle this custom
+                                            radio</label>
                                     </div>
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+                                        <input type="radio" id="customRadio2" name="customRadio"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio2">Or toggle this other custom
+                                            radio</label>
                                     </div>
                                 </div>
                             </div> <!-- end col -->
@@ -244,30 +268,35 @@
 
                         <h4 class="header-title">Input Sizes</h4>
                         <p class="sub-header">
-                            Set heights using classes like <code>.input-lg</code>, and set widths using grid column classes like <code>.col-lg-*</code>.
+                            Set heights using classes like <code>.input-lg</code>, and set widths using grid column classes
+                            like <code>.col-lg-*</code>.
                         </p>
 
                         <form>
                             <div class="form-group mb-3">
                                 <label for="example-input-small">Small</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control form-control-sm" placeholder=".input-sm">
+                                <input type="text" id="example-input-small" name="example-input-small"
+                                    class="form-control form-control-sm" placeholder=".input-sm">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="example-input-normal">Normal</label>
-                                <input type="text" id="example-input-normal" name="example-input-normal" class="form-control" placeholder="Normal">
+                                <input type="text" id="example-input-normal" name="example-input-normal"
+                                    class="form-control" placeholder="Normal">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="example-input-large">Large</label>
-                                <input type="text" id="example-input-large" name="example-input-large" class="form-control form-control-lg" placeholder=".input-lg">
+                                <input type="text" id="example-input-large" name="example-input-large"
+                                    class="form-control form-control-lg" placeholder=".input-lg">
                             </div>
 
                             <div class="form-group mb-2">
                                 <label for="example-gridsize">Grid Sizes</label>
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <input type="text" id="example-gridsize" class="form-control" placeholder=".col-sm-4">
+                                        <input type="text" id="example-gridsize" class="form-control"
+                                            placeholder=".col-sm-4">
                                     </div>
                                 </div>
                             </div>
@@ -283,18 +312,20 @@
 
                         <h4 class="header-title">Input Group</h4>
                         <p class="sub-header">
-                            Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs, custom selects, and custom file inputs
+                            Easily extend form controls by adding text, buttons, or button groups on either side of textual
+                            inputs, custom selects, and custom file inputs
                         </p>
 
                         <form>
-                            
+
                             <div class="form-group mb-3">
                                 <label>Static</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">@</span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                                        aria-describedby="basic-addon1">
                                 </div>
                             </div>
 
@@ -302,21 +333,25 @@
                                 <label>Dropdowns</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <button class="btn btn-primary waves-effect waves-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                                        <button class="btn btn-primary waves-effect waves-light dropdown-toggle"
+                                            type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">Dropdown</button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="#">Action</a>
                                             <a class="dropdown-item" href="#">Another action</a>
                                             <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" placeholder="" aria-label=""
+                                        aria-describedby="basic-addon1">
                                 </div>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label>Buttons</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username">
+                                    <input type="text" class="form-control" placeholder="Recipient's username"
+                                        aria-label="Recipient's username">
                                     <div class="input-group-append">
                                         <button class="btn btn-dark waves-effect waves-light" type="button">Button</button>
                                     </div>
@@ -350,12 +385,15 @@
                         <form>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                    else.</small>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1"
+                                    placeholder="Password">
                             </div>
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
@@ -393,7 +431,8 @@
                             <div class="form-group row mb-3">
                                 <label for="inputPassword5" class="col-3 col-form-label">Re Password</label>
                                 <div class="col-9">
-                                    <input type="password" class="form-control" id="inputPassword5" placeholder="Retype Password">
+                                    <input type="password" class="form-control" id="inputPassword5"
+                                        placeholder="Retype Password">
                                 </div>
                             </div>
                             <div class="form-group row mb-3 justify-content-end">
@@ -411,9 +450,9 @@
                             </div>
                         </form>
 
-                    </div>  <!-- end card-body -->
-                </div>  <!-- end card -->
-            </div>  <!-- end col -->
+                    </div> <!-- end card-body -->
+                </div> <!-- end card -->
+            </div> <!-- end col -->
 
         </div>
         <!-- end row -->
@@ -428,13 +467,17 @@
                         <h4 class="header-title">Inline Form</h4>
 
                         <p class="sub-header">
-                            Use the <code>.form-inline</code> class to display a series of labels, form controls, and buttons on a single horizontal row. Form controls within inline forms vary slightly from their default states. Controls only appear inline in viewports that are at least 576px wide to account for narrow viewports on mobile devices.
+                            Use the <code>.form-inline</code> class to display a series of labels, form controls, and
+                            buttons on a single horizontal row. Form controls within inline forms vary slightly from their
+                            default states. Controls only appear inline in viewports that are at least 576px wide to account
+                            for narrow viewports on mobile devices.
                         </p>
 
                         <form class="form-inline">
                             <div class="form-group">
                                 <label for="staticEmail2" class="sr-only">Email</label>
-                                <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
+                                <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+                                    value="email@example.com">
                             </div>
                             <div class="form-group mx-sm-3">
                                 <label for="inputPassword2" class="sr-only">Password</label>
@@ -449,7 +492,8 @@
                             <div class="form-row align-items-center">
                                 <div class="col-auto">
                                     <label class="sr-only" for="inlineFormInput">Name</label>
-                                    <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Jane Doe">
+                                    <input type="text" class="form-control mb-2" id="inlineFormInput"
+                                        placeholder="Jane Doe">
                                 </div>
                                 <div class="col-auto">
                                     <label class="sr-only" for="inlineFormInputGroup">Username</label>
@@ -457,7 +501,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">@</div>
                                         </div>
-                                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+                                        <input type="text" class="form-control" id="inlineFormInputGroup"
+                                            placeholder="Username">
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -467,7 +512,8 @@
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light mb-2">Submit</button>
+                                    <button type="submit"
+                                        class="btn btn-primary waves-effect waves-light mb-2">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -487,7 +533,9 @@
                     <div class="card-body">
                         <h4 class="header-title">Form row</h4>
                         <p class="text-muted font-13">
-                            You may also swap <code class="highlighter-rouge">.row</code> for <code class="highlighter-rouge">.form-row</code>, a variation of our standard grid row that overrides the default column gutters for tighter and more compact layouts.
+                            You may also swap <code class="highlighter-rouge">.row</code> for <code
+                                class="highlighter-rouge">.form-row</code>, a variation of our standard grid row that
+                            overrides the default column gutters for tighter and more compact layouts.
                         </p>
 
                         <form>
@@ -509,7 +557,8 @@
 
                             <div class="form-group">
                                 <label for="inputAddress2" class="col-form-label">Address 2</label>
-                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                                <input type="text" class="form-control" id="inputAddress2"
+                                    placeholder="Apartment, studio, or floor">
                             </div>
 
                             <div class="form-row">
@@ -535,7 +584,8 @@
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="customCheck11">
-                                    <label class="custom-control-label" for="customCheck11">Check this custom checkbox</label>
+                                    <label class="custom-control-label" for="customCheck11">Check this custom
+                                        checkbox</label>
                                 </div>
                             </div>
 
@@ -558,9 +608,10 @@
                             <h4 class="header-title">Custom checkbox - Basic</h4>
 
                             <p class="sub-header">
-                                Supports bootstrap brand colors: <code>.checkbox-primary</code>, <code>.checkbox-info</code> etc.
+                                Supports bootstrap brand colors: <code>.checkbox-primary</code>, <code>.checkbox-info</code>
+                                etc.
                             </p>
-                            
+
                             <div class="checkbox mb-2">
                                 <input id="checkbox0" type="checkbox">
                                 <label for="checkbox0">
@@ -621,11 +672,13 @@
 
                             <p class="text-muted mt-3 mb-2">Checkboxes without label text <code>.checkbox-single</code></p>
                             <div class="checkbox checkbox-single">
-                                <input type="checkbox" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
+                                <input type="checkbox" id="singleCheckbox1" value="option1"
+                                    aria-label="Single checkbox One">
                                 <label></label>
                             </div>
                             <div class="checkbox checkbox-primary checkbox-single">
-                                <input type="checkbox" id="singleCheckbox2" value="option2" checked aria-label="Single checkbox Two">
+                                <input type="checkbox" id="singleCheckbox2" value="option2" checked
+                                    aria-label="Single checkbox Two">
                                 <label></label>
                             </div>
 
@@ -774,9 +827,10 @@
                             <h4 class="header-title">Custom radio - Basic</h4>
 
                             <p class="sub-header">
-                                Supports bootstrap brand colors: <code>.radio-primary</code>, <code>.radio-danger</code> etc.
+                                Supports bootstrap brand colors: <code>.radio-primary</code>, <code>.radio-danger</code>
+                                etc.
                             </p>
-                            
+
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="radio mb-2">
@@ -844,7 +898,7 @@
                                             Default
                                         </label>
                                     </div>
-                                    
+
                                     <div class="radio radio-primary mb-2">
                                         <input type="radio" name="radio3" id="radio13" value="option3">
                                         <label for="radio13">
@@ -900,11 +954,13 @@
 
                             <p class="text-muted mt-3 mb-2">Radios without label text <code>.radio-single</code></p>
                             <div class="radio radio-single">
-                                <input type="radio" id="singleRadio1" value="option1.1" name="radioSingle1" aria-label="Single radio One">
+                                <input type="radio" id="singleRadio1" value="option1.1" name="radioSingle1"
+                                    aria-label="Single radio One">
                                 <label for="singleRadio1"></label>
                             </div>
                             <div class="radio radio-success radio-single">
-                                <input type="radio" id="singleRadio2" value="option2.1" name="radioSingle1" checked aria-label="Single radio Two">
+                                <input type="radio" id="singleRadio2" value="option2.1" name="radioSingle1" checked
+                                    aria-label="Single radio Two">
                                 <label for="singleRadio2"></label>
                             </div>
 
@@ -957,6 +1013,6 @@
                 </div> <!-- end card-box-->
             </div> <!-- end col-->
         </div><!-- end row -->
-        
+
     </div> <!-- container -->
 @endsection
