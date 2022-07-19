@@ -68,14 +68,21 @@ class MakeDepartureController extends Controller
         $appointment_id = $request->appointment_id;
         $over_time = $request->overtime;
         $update_employees = Assign_Appointment::whereIn('employee_id', $employees_id)->where('work_appointment_id', $appointment_id)->get();
+        $period = '1';
+        // check if period is 1 or 2 from overtime //
+        if ($request->overtime) {
+            $period = '2';
+        }
         foreach ($update_employees as $update) {
             $update->update(['over_time' => $over_time]);
             Employee_Departure::create([
                 'employee_id' => $update->employee_id,
                 'branch_id' => $update->branch->id,
+                'date' => date('Y-m-d'),
+                'period' => $period,
                 'appointment_id' => $appointment_id,
                 'user_name' => auth()->user()->name,
-                'overtime_minutes_diff' => $over_time
+                'overtime' => $over_time
             ]);
         }
     }
