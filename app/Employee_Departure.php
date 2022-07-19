@@ -15,6 +15,7 @@ class Employee_Departure extends Model
         'state',
         'reason',
         'user_name',
+        'date',
         'created_at',
         'updated_at'
     ];
