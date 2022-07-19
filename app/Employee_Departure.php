@@ -16,6 +16,8 @@ class Employee_Departure extends Model
         'reason',
         'user_name',
         'date',
+        'period',
+        'overtime',
         'created_at',
         'updated_at'
     ];
