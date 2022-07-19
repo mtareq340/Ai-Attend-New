@@ -165,6 +165,10 @@
                                 <li>
                                     <a href="{{ route('employees_departures.index') }}">Employees Departures</a>
                                 </li>
+
+                                <li>
+                                    <a href="{{ route('make_departure.index') }}">Make Employees Departure</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
