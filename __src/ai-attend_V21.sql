@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2022 at 08:32 AM
+-- Generation Time: Jul 19, 2022 at 02:00 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -50,7 +50,8 @@ INSERT INTO `appointment_device` (`id`, `appointment_id`, `device_id`) VALUES
 (20, 8, 32),
 (21, 7, 32),
 (22, 6, 50),
-(23, 2, 50);
+(23, 2, 50),
+(24, 9, 50);
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,9 @@ INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `
 (62, 5, 6, 1, 2, 34, NULL, NULL, NULL),
 (63, 6, 6, 3, 2, 34, NULL, NULL, NULL),
 (64, 3, 2, 1, 2, 34, NULL, NULL, NULL),
-(65, 4, 2, 1, 2, 34, NULL, NULL, NULL);
+(65, 4, 2, 1, 2, 34, NULL, NULL, NULL),
+(76, 7, 9, 1, 2, 34, NULL, NULL, NULL),
+(77, 12, 9, 1, 2, 34, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -354,7 +357,7 @@ CREATE TABLE `employees` (
 
 INSERT INTO `employees` (`id`, `name`, `job_number`, `email`, `password`, `phone`, `phone_num2`, `address`, `gender`, `age`, `branch_id`, `job_id`, `active`, `locked`, `otp`, `avatar`, `created_at`, `updated_at`) VALUES
 (1, 'mohamed', '', 'mtareq340@gmail.com', '123456789', '01011305995', NULL, 'abo sleem', 'male', 25, 2, 1, 1, 1, NULL, '', NULL, '2022-06-25 12:07:36'),
-(3, 'moahamed magdy', '', 'magdy@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '01066018340', NULL, '1234 main ST', 'male', 20, 7, 1, 1, 0, NULL, '', '2022-06-29 06:33:01', '2022-07-03 10:02:56'),
+(3, 'moahamed magdy', '226688', 'magdy@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '01066018340', NULL, '1234 main ST', 'male', 20, 7, 1, 1, 0, NULL, '', '2022-06-29 06:33:01', '2022-07-19 10:59:44'),
 (4, 'moahamed salah', '', 'salah@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '012154785522222', NULL, '1234 main ST', 'male', 25, 7, 1, 1, 1, NULL, '', '2022-06-29 06:33:01', '2022-06-29 07:52:41'),
 (5, 'john doe', '123456', 'ex@ex.com', NULL, '0106601834', NULL, '1234 main st', 'male', 15, 5, 1, 1, 1, NULL, '', '2022-07-03 07:37:11', '2022-07-04 07:05:12'),
 (6, 'join doe', '7864521', 'ex@gmail.com', NULL, '05102', NULL, '1234 main st', 'male', 20, 5, 3, 1, 0, NULL, '', '2022-07-03 07:40:06', '2022-07-05 05:18:02'),
@@ -362,7 +365,8 @@ INSERT INTO `employees` (`id`, `name`, `job_number`, `email`, `password`, `phone
 (8, 'oraby', '777889955', 'oraby@gmail.com', NULL, '01066018340', NULL, NULL, 'male', NULL, 8, 3, 0, 1, NULL, '', '2022-07-05 22:47:42', '2022-07-11 17:24:18'),
 (9, 'Nour', '3335', 'nour@nour.com', NULL, '01066018340', NULL, '1234 mona', 'female', 25, 6, 1, 1, 1, NULL, '', '2022-07-10 16:52:24', '2022-07-10 16:52:24'),
 (10, 'mohammed ahmed', '321421', 'mohammed18200118@gmail.com', '$2y$10$vZTVTNulAAaMV8A6sLkDB.3oXIMAjclPDWAXcmlo4fI5MDRuBujwi', '4214214', NULL, 'address', 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-12 21:28:26', '2022-07-12 21:28:26'),
-(11, 'employee test', '21421', 't@t.com', NULL, '32124512421', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-12 21:29:52', '2022-07-12 21:29:52');
+(11, 'employee test', '21421', 't@t.com', NULL, '32124512421', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-12 21:29:52', '2022-07-12 21:29:52'),
+(12, 'brad', '69933', 'brand@gmail.com', NULL, '0106601122', NULL, NULL, 'male', 20, 2, 1, 1, 1, NULL, NULL, '2022-07-19 07:30:31', '2022-07-19 07:30:31');
 
 -- --------------------------------------------------------
 
@@ -389,17 +393,8 @@ CREATE TABLE `employees_departure` (
 --
 
 INSERT INTO `employees_departure` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `user_name`, `date`, `overtime_minutes_diff`, `created_at`, `updated_at`) VALUES
-(1, 5, 5, 3, 1, '', NULL, NULL, '0', '2022-07-15 18:34:28', '2022-07-15 18:39:17'),
-(2, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:39:19', '2022-07-16 12:39:19'),
-(3, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:40:04', '2022-07-16 12:40:04'),
-(4, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:40:11', '2022-07-16 12:40:11'),
-(5, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:41:47', '2022-07-16 12:41:47'),
-(6, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:44:48', '2022-07-16 12:44:48'),
-(7, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:46:02', '2022-07-16 12:46:02'),
-(8, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:46:49', '2022-07-16 12:46:49'),
-(9, 3, 2, 7, 1, NULL, NULL, NULL, '0', '2022-07-16 12:48:38', '2022-07-16 12:48:38'),
-(10, 3, 2, 7, 1, NULL, 'superadmin', NULL, '0', '2022-07-16 12:51:59', '2022-07-18 11:13:24'),
-(11, 11, 2, 8, 1, NULL, 'superadmin', NULL, '0', '2022-07-16 20:32:20', '2022-07-18 22:38:59');
+(12, 5, 2, 8, 1, ' c ', NULL, '2022-07-19', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01'),
+(13, 4, 2, 8, 1, ' c ', NULL, '2022-07-19', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01');
 
 -- --------------------------------------------------------
 
@@ -425,7 +420,10 @@ CREATE TABLE `employee_attendance` (
 --
 
 INSERT INTO `employee_attendance` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `user_name`, `date`, `created_at`, `updated_at`) VALUES
-(44, 11, 2, 8, 1, NULL, NULL, '2022-07-19', '2022-07-18 22:24:19', '2022-07-18 22:24:19');
+(44, 5, 2, 8, 1, NULL, NULL, '2022-07-19', '2022-07-18 22:24:19', '2022-07-18 22:24:19'),
+(45, 4, 2, 9, 1, NULL, NULL, '2022-07-19', '2022-07-19 07:13:16', '2022-07-19 07:13:16'),
+(46, 3, 2, 9, 1, NULL, NULL, '2022-07-19', '2022-07-19 07:13:16', '2022-07-19 07:13:16'),
+(47, 6, 2, 9, 1, NULL, NULL, '2022-07-19', '2022-07-19 07:13:16', '2022-07-19 07:13:16');
 
 -- --------------------------------------------------------
 
@@ -456,10 +454,10 @@ INSERT INTO `employee_attend_methods` (`id`, `employee_id`, `attend_method_id`, 
 (109, 4, 4, NULL, NULL),
 (110, 4, 2, NULL, NULL),
 (111, 5, 3, NULL, NULL),
-(112, 11, 2, NULL, NULL),
-(113, 11, 4, NULL, NULL),
 (114, 10, 2, NULL, NULL),
-(115, 10, 4, NULL, NULL);
+(115, 10, 4, NULL, NULL),
+(116, 11, 2, NULL, NULL),
+(117, 11, 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -657,7 +655,8 @@ INSERT INTO `login_histories` (`id`, `user_id`, `ip`, `datetime`, `created_at`, 
 (58, 30, '127.0.0.1', '2022-07-16 19:52:59', '2022-07-16 19:52:59', '2022-07-16 19:52:59', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (59, 30, '127.0.0.1', '2022-07-17 02:47:45', '2022-07-17 02:47:45', '2022-07-17 02:47:45', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (60, 30, '127.0.0.1', '2022-07-17 07:56:35', '2022-07-17 07:56:35', '2022-07-17 07:56:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(61, 30, '127.0.0.1', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}');
+(61, 30, '127.0.0.1', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(62, 30, '127.0.0.1', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}');
 
 -- --------------------------------------------------------
 
@@ -948,7 +947,8 @@ INSERT INTO `registered_employees_attendance_methods` (`id`, `employee_id`, `att
 (10, 11, 4, 8, 33, 41, 1),
 (11, 11, 4, 8, 33, 42, 1),
 (12, 11, 4, 8, 33, 43, 1),
-(13, 11, 4, 8, 33, 44, 1);
+(13, 11, 4, 8, 33, 44, 1),
+(14, 4, 4, 9, 34, 45, 1);
 
 -- --------------------------------------------------------
 
@@ -1149,7 +1149,8 @@ INSERT INTO `work_appointments` (`id`, `name`, `attendance_plan_type_id`, `atten
 (4, 'Alzohor', 1, '1,2,3,4,5,6', 1, 35, '12:13:00', '12:14:00', NULL, NULL, '12:00:00', NULL, 2, '02:00', '2022-07-16', '2022-07-15 08:08:51', '2022-07-16 20:06:31'),
 (6, 'test123', 1, '1,2,3,4,5,6', 1, 34, '14:36:00', '19:35:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-19', '2022-07-16 10:35:45', '2022-07-18 22:42:50'),
 (7, 'mohamed', 1, '1,2,3,4,5,6', 1, 33, '14:52:00', '19:51:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-17', '2022-07-16 10:49:33', '2022-07-17 08:31:06'),
-(8, 'test', 2, '1,2,3,4,5,6', 1, 33, '00:14:00', '12:13:00', NULL, NULL, '00:30:00', NULL, 2, '06:00', '2022-07-18', '2022-07-16 20:15:08', '2022-07-16 20:15:08');
+(8, 'test', 2, '1,2,3,4,5,6', 1, 33, '00:14:00', '12:13:00', NULL, NULL, '00:30:00', NULL, 2, '06:00', '2022-07-18', '2022-07-16 20:15:08', '2022-07-16 20:15:08'),
+(9, 'facebook', 1, '1,2,3,4,5,6', 1, 34, '09:08:00', '16:08:00', NULL, NULL, '02:00:00', NULL, 2, '05:00', '2022-07-19', '2022-07-19 07:11:45', '2022-07-19 11:48:31');
 
 --
 -- Indexes for dumped tables
@@ -1350,13 +1351,13 @@ ALTER TABLE `work_appointments`
 -- AUTO_INCREMENT for table `appointment_device`
 --
 ALTER TABLE `appointment_device`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `assign_appointments`
 --
 ALTER TABLE `assign_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `attendance_plan_details`
@@ -1416,25 +1417,25 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `employees_departure`
 --
 ALTER TABLE `employees_departure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `employee_attendance`
 --
 ALTER TABLE `employee_attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `employee_attend_methods`
 --
 ALTER TABLE `employee_attend_methods`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `employee_requests`
@@ -1464,7 +1465,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `login_histories`
 --
 ALTER TABLE `login_histories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1482,7 +1483,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `registered_employees_attendance_methods`
 --
 ALTER TABLE `registered_employees_attendance_methods`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `registered_employees_departure_methods`
@@ -1524,7 +1525,7 @@ ALTER TABLE `week_days`
 -- AUTO_INCREMENT for table `work_appointments`
 --
 ALTER TABLE `work_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
