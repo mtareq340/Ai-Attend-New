@@ -9,16 +9,12 @@ class Device extends Model
 {
     use Notifiable;
     protected $fillable = [
-        'type' ,'ssid', 'location_id', 'code', 'notes', 'created_at', 'updated_at' 
+        'type' ,'ssid', 'bssid','location_id', 'code', 'notes', 'created_at', 'updated_at' 
     ];
 
     public function location()
     {
         return $this->belongsTo(Location::class , 'location_id');
-    }
-    public function appointment()
-    {
-        return $this->belongsToMany(Appointment::class, 'appointment_device', 'appointment_id');
     }
 
     protected static function boot()

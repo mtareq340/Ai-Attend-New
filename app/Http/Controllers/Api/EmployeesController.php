@@ -12,6 +12,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class EmployeesController extends Controller
 {
 
+  
     function employeeLogin(Request $request)
     {
         $rules = array(
@@ -25,7 +26,7 @@ class EmployeesController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        $employee = Employee::where('email', $email)->with(['appointments.location', 'appointments.devices', 'attend_methods'])->first();
+        $employee = Employee::where('email', $email)->with(['appointments.location', 'appointments.location.wifi:ssid,bssid,location_id','appointments.location.becon:code,location_id', 'attend_methods'])->first();
         if (!$employee) {
             return Response()->json(['status' => 0, 'message' => 'Invalid email or password']);
         }
@@ -107,9 +108,9 @@ class EmployeesController extends Controller
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
         if ($request->password == $request->re_password) {
-            $employee = Employee::FindOrFail($request->id);
+            $employee = Employee::find($request->id);
             $employee->update([
-                'password' => $request->password
+                'password' => Hash::make($request->password)
             ]);
             return Response()->json(['status' => 1, 'message' => 'success Your password is changed']);
         } else {
@@ -177,7 +178,6 @@ class EmployeesController extends Controller
                 $img->resize(200, 200, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($destinationPath . '/' . $filename);
-
 
                 $employee['avatar'] = '/uploads/avatars/' . $filename;
             }

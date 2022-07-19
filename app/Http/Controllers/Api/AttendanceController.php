@@ -41,10 +41,10 @@ class AttendanceController extends Controller
             [
                 ['date', Carbon::today()->format('Y-m-d')],
                 ['appointment_id', $request->appointment_id],
+                ['period', $request->period],
                 ['employee_id', $request->emp_id],
             ]
         )->first();
-
         if ($check != null) {
             //emp make attendance before
             return response()->json([
@@ -75,6 +75,7 @@ class AttendanceController extends Controller
 
         $emp_attendence->employee_id = $request->emp_id;
         $emp_attendence->branch_id = $appointment->branch_id;
+        $emp_attendence->period = $request->period;
         $emp_attendence->appointment_id = $request->appointment_id;
 
 

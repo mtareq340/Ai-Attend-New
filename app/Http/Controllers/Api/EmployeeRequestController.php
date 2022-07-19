@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Employee;
 use App\Employee_Request_Review;
-use App\EmployeeRequest;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;

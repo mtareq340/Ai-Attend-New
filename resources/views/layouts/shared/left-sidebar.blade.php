@@ -241,7 +241,7 @@
                 {{-- end of locations --}}
 
                 {{-- Here devices  Sidebar --}}
-                @can('show_devices')
+                {{-- @can('show_devices')
                     <li>
                         <a href="#sidebardevices" data-toggle="collapse">
                             <i class="icon-mouse"></i>.
@@ -263,7 +263,7 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- EndSidebar devices --}}
 
 

@@ -80,15 +80,19 @@
                                             <ul>
                                                 @foreach ($l->devices as $device)
                                                     @if ($device->code)
-                                                        <li>becon-{{ $device->code }}</li>
+                                                        <li class="mb-1">becon-{{ $device->code }}</li>
                                                     @elseif($device->ssid)
-                                                        <li>wifi-{{ $device->ssid }}</li>
+                                                        <li class="mb-1">
+                                                            <span>wifi</span>
+                                                            <p class="mb-0">{{ $device->ssid }} (ssid)</p>
+                                                            <p class="mb-0">{{ $device->bssid }} (bssid)</p>
+                                                        </li>
                                                     @endif
                                                 @endforeach
                                             </ul>
                                         </td>
                                         <td>{{ $l->location_address }}</td>
-                                        <td>{{ $l->distance }}</td>
+                                        <td>{{ $l->boundary_raduis }}</td>
                                         <td>{{ $l->location_latitude }}</td>
                                         <td>{{ $l->location_longituide }}</td>
                                         <td>{{ $l->notes }}</td>

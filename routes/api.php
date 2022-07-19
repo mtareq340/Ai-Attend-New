@@ -32,17 +32,17 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
     Route::post('employees/is_employee_phone_exist', 'EmployeesController@isEmployeePhoneExist'); // parameters ($phone)
 
-    Route::post('employees/is_otp_true', 'EmployeesController@isOtpTrue'); // parameters ($otp)
-    Route::post('employees/reset_password', 'EmployeesController@resetPassword'); // parameters ($id,$password,$newpassword)
-    Route::post('employees/change_password', 'EmployeesController@changePassword'); // parameters ($id,$oldpassword,$newpassword)
+    Route::get('employees/is_otp_true', 'EmployeesController@isOtpTrue'); // parameters ($otp)
+    Route::patch('employees/reset_password', 'EmployeesController@resetPassword'); // parameters ($id,$password,$newpassword)
+    Route::patch('employees/change_password', 'EmployeesController@changePassword'); // parameters ($id,$oldpassword,$newpassword)
 
     Route::get('employees/getData', 'EmployeesController@getData');
     Route::get('employee_requests/getData', 'EmployeeRequestController@getData');
 
-    Route::put('employee/update', 'EmployeesController@employeeUpdate');
+    Route::patch('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
-    Route::post('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
+    Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
 
     // Company Apis
     Route::get('company/get_settings', 'CompanySettingsController@getData'); // parameters ()
@@ -50,8 +50,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     // Attenance Methodd Apis
     Route::get('attend_methods/getData', 'AttendMethodController@getEmployeeAttenance');
 
-    // employee attenance 
+    // employee attenance and departure
     Route::post('employees/set_employees_attenance', 'AttendanceController@set_employee_attendence');
-
     Route::post('employees/set_employees_departure', 'DepartureController@set_employee_departure');
 });

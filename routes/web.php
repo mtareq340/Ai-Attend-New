@@ -1,15 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
-
-
 Auth::routes();
-
-
-
 
 // Dashboard Routes
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
@@ -31,9 +25,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   Route::resource('plans', 'Dashboard\PlanController');
   Route::resource('jobs',               'Dashboard\JobController');
   Route::resource('attend_methods', 'Dashboard\AttendmethodController');
-  Route::resource('devices',             'Dashboard\DeviceController');
+  // Route::resource('devices',             'Dashboard\DeviceController');
 
-  Route::get('locations/devices', 'Dashboard\LocationController@getLocationDevices')->name('getLocationDevices');
+  // Route::get('locations/devices', 'Dashboard\LocationController@getLocationDevices')->name('getLocationDevices');
   Route::resource('locations', 'Dashboard\LocationController');
   // employees attend methods
   Route::resource('employees_attend_methods', 'Dashboard\EmployeeAttendMethodController');
@@ -88,7 +82,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   // end settings
 
   //active devices
-  Route::patch('active_device', 'Dashboard\DeviceController@changeStatus')->name('active_device');
+  // Route::patch('active_device', 'Dashboard\DeviceController@changeStatus')->name('active_device');
 
   //active attendace method //
   Route::patch('active_attendance_method', 'Dashboard\AttendmethodController@toggleactivate')->name('active_attendance_method');

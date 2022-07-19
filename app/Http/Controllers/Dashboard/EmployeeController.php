@@ -40,6 +40,7 @@ class EmployeeController extends Controller
         }
         $branches = Branch::all();
         $jobs = Job::all();
+        $attend_methods = Attendmethods::all();
         //
         if (auth()->user()->hasRole('super_admin')) {
             $employees = Employee::latest()->get();
@@ -47,7 +48,7 @@ class EmployeeController extends Controller
         } else {
             $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
         }
-        return view('employees.index', compact('employees', 'branches', 'jobs'));
+        return view('employees.index', compact('employees', 'branches', 'jobs' , 'attend_methods'));
     }
 
     /**

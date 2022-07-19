@@ -8,12 +8,9 @@ use App\Branch;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Location;
-use App\Device;
 use App\Job;
-use App\Plan_Attendance_Types;
 use App\Week_Day;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -73,7 +70,6 @@ class AppointmentController extends Controller
                     'branch_id' => 'required',
 
                     'attendance_days' => 'required',
-                    'devices' => 'required',
                     'emps' => 'required',
                 ],
                 [
@@ -88,7 +84,6 @@ class AppointmentController extends Controller
                     'location_id.required' => 'برجاء اختيار الموقع',
                     'branch_id.required' => 'برجاء اختيار الفرع',
                     'attendance_days.required' => 'يجب اختيار على الاقل يوم عمل واحد',
-                    'devices.required' => 'يجب اختيار على الاقل جهاز واحد',
                     'emps.required' => 'يجب اختيار على الاقل موظف واحد',
 
                 ]
@@ -156,8 +151,7 @@ class AppointmentController extends Controller
             ]);
             $appointment->save();
 
-            // fill appointments devices
-            $appointment->devices()->attach($request->devices);
+            
 
             // foreach ($request->emps as $emp) {
             //     $emp = json_decode($emp);
@@ -251,7 +245,6 @@ class AppointmentController extends Controller
                     'branch_id' => 'required',
 
                     'attendance_days' => 'required',
-                    'devices' => 'required',
                     'emps' => 'required',
                 ],
                 [
@@ -266,7 +259,6 @@ class AppointmentController extends Controller
                     'location_id.required' => 'برجاء اختيار الموقع',
                     'branch_id.required' => 'برجاء اختيار الفرع',
                     'attendance_days.required' => 'يجب اختيار على الاقل يوم عمل واحد',
-                    'devices.required' => 'يجب اختيار على الاقل جهاز واحد',
                     'emps.required' => 'يجب اختيار على الاقل موظف واحد',
 
                 ]
@@ -329,9 +321,6 @@ class AppointmentController extends Controller
                 $appointment_data
             );
 
-
-            // fill appointments devices
-            $appointment->devices()->sync($request->devices);
 
             $emps = [];
             foreach ($request->emps as $emp) {

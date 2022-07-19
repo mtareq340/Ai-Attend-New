@@ -61,7 +61,7 @@
                                     <li class="nav-item" data-target-form="#profileForm">
                                         <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                             <i class="mdi mdi-face-profile mr-1"></i>
-                                            <span class="d-none d-sm-inline">Location & Devices</span>
+                                            <span class="d-none d-sm-inline">Location</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" data-target-form="#otherForm">
@@ -270,21 +270,12 @@
 
                                             <div class="form-group mb-2 w-100">
                                                 <label for="inputLocation">Location *</label>
-                                                <select id="inputLocation" onchange="getdevicesFromLocation(event)"
-                                                    data-toggle="select2" class="select2" name="location_id"
-                                                    data-placeholder="Choose ...">
+                                                <select id="inputLocation" data-toggle="select2" class="select2"
+                                                    name="location_id" data-placeholder="Choose ...">
 
                                                 </select>
                                             </div>
 
-                                            <div class="form-group w-100">
-                                                <label for="devices_input">Devices</label>
-                                                <select name="devices[]" id="devices_input"
-                                                    class="form-control select2-multiple" data-toggle="select2"
-                                                    multiple="multiple" data-placeholder="Choose ...">
-                                                </select>
-
-                                            </div>
 
 
                                         </div>
@@ -391,37 +382,6 @@
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
 
     <script>
-        const getdevicesFromLocation = (event) => {
-            let id = event.target?.value || event
-            $.ajax({
-                url: "{{ route('getLocationDevices') }}",
-                type: 'GET',
-                data: {
-                    location_id: id
-                },
-                success: (res) => {
-                    const $devices_select = $('#devices_input')
-                    $devices_select.empty()
-                    res.forEach(device => {
-                        $devices_select.append(
-                            new Option(
-                                device.type == 'becon' ? `becon-${device.code}` :
-                                `wifi-${device.ssid}`,
-                                device.id,
-                                false,
-                                false
-                            )
-                        )
-                    });
-
-                },
-                error: () => {
-                    alert('something went wrong try again later')
-                }
-            });
-        }
-
-
         const getBranchLocations = (event) => {
             let id = event.target?.value || event
             $('#inputLocation').val('')
@@ -434,7 +394,6 @@
                 success: (res) => {
                     const $locations_select = $('#inputLocation')
                     $locations_select.empty()
-                    $('#devices_input').empty()
                     res.forEach(location => {
                         $locations_select.append(
                             new Option(
@@ -457,31 +416,6 @@
 
         $('#inputBranch').val({{ $appointment->branch_id }})
         $('#inputBranch').trigger('change')
-        $.ajax({
-            url: "{{ route('getLocationDevices') }}",
-            type: 'GET',
-            data: {
-                location_id: {{ $appointment->location_id }}
-            },
-            success: (res) => {
-                const $devices_select = $('#devices_input')
-                res.forEach(device => {
-                    $devices_select.append(
-                        new Option(
-                            device.name,
-                            device.id,
-                            false,
-                            false
-                        )
-                    )
-                });
-
-                $devices_select.val({{ $appointment->getDevicesIdsAttribute() }})
-            },
-            error: () => {
-                alert('something went wrong try again later')
-            }
-        });
 
     </script>
     <!-- Plugins js-->
@@ -615,10 +549,7 @@
                 }).get();
 
 
-            var devices = $("#devices_input")
-                .map(function() {
-                    return $(this).val();
-                }).get();
+
 
 
             var emps = []
@@ -632,7 +563,6 @@
             });
 
             values['emps'] = emps
-            values['devices'] = devices
             values['attendance_days'] = attendance_days
             $.ajax({
                 type: 'PUT',

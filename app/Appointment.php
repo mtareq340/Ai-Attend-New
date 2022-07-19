@@ -22,10 +22,7 @@ class Appointment extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
-    public function devices()
-    {
-        return $this->belongsToMany(Device::class, 'appointment_device', 'appointment_id', 'device_id');
-    }
+  
     public function getDevicesIdsAttribute()
     {
         return $this->devices()->pluck('device_id');
