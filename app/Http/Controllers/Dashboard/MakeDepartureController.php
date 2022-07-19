@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Appointment;
+use App\Assign_Appointment;
 use App\Employee;
 use App\Employee_Attendance;
 use App\Employee_Departure;
@@ -41,9 +42,6 @@ class MakeDepartureController extends Controller
         } else {
             $employees = [];
         }
-
-
-
         return view('make_departure.index', compact('employees', 'work_appointments'));
     }
 
@@ -63,9 +61,28 @@ class MakeDepartureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function store_employees_departures(Request $request)
+    {
+        $employees_id = $request->employees_departure;
+        $appointment_id = $request->appointment_id;
+        $over_time = $request->overtime;
+        $update_employees = Assign_Appointment::whereIn('employee_id', $employees_id)->where('work_appointment_id', $appointment_id)->get();
+        foreach ($update_employees as $update) {
+            $update->update(['over_time' => $over_time]);
+            Employee_Departure::create([
+                'employee_id' => $update->employee_id,
+                'branch_id' => $update->branch->id,
+                'appointment_id' => $appointment_id,
+                'user_name' => auth()->user()->name,
+                'overtime_minutes_diff' => $over_time
+            ]);
+        }
+    }
     public function store(Request $request)
     {
         //
+
     }
 
     /**

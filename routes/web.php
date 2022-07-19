@@ -120,6 +120,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
   //make Departure 
   Route::resource('make_departure', 'Dashboard\MakeDepartureController');
+
+  Route::post('store_employees_departures', 'Dashboard\MakeDepartureController@store_employees_departures')->name('store_employees_departures');
 });
 
 
