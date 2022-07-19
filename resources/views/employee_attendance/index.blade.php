@@ -9,10 +9,10 @@
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row align-items-center pt-1">
-            <div class="col-3">
+            <div class="col-4">
                 <h4 class="page-title">Employee Attendance</h4>
             </div>
-            <div class="col-5">
+            <div class="col-4">
                     <button id="attendance_submit" class="btn btn-success" >Make Succesful Attendance</button>
                     {{-- <a href="{{route('employee_attendance.create')}}" class="btn btn-primary">Create Attendance Manually</a> --}}
             </div>
@@ -110,7 +110,13 @@
                                         <td>{{$emp->employee->job_number}}</td>
                                         <td>{{$emp->appointment->name}}</td>
                                         <td>{{$emp->branch->name}}</td>
-                                        <td>{{$emp->attendanc_method->name}}</td>
+                                        <td>
+                                            @foreach ( $emp->registered_attendance_method as $e )
+                                            <li>
+                                                {{ $e->name }}
+                                            </li>
+                                            @endforeach
+                                        </td>
                                         <td>
                                             @if ($emp->state)
                                                 <p class="badge badge-success badge-pill" style="font-size: 12px">Success</p>
@@ -120,7 +126,7 @@
                                             {{-- {{$emp->state}} --}}
                                         </td>
                                         <td>{{$emp->created_at}}</td>
-                                        <td></td>
+                                        <td>{{$emp->user_name}}</td>                                            
                                     </tr>
                                 @endforeach
                             </tbody>

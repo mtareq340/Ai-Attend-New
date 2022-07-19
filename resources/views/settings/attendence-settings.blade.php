@@ -98,6 +98,13 @@
             <button type="submit" class="btn btn-success mt-2">Add Vacation</button>
         </form>
         </div>
+
+        <div class="form-group mb-3 ml-2">
+            <form action="" method="POST">
+                @csrf
+                <input type="submit" class="btn btn-success" value="automatic Departure">
+            </form>
+        </div>
     </div>
 
     {{-- <form action="{{}}">

@@ -14,7 +14,8 @@ class Employee_Departure extends Model
         'attendance_method_id',
         'state',
         'reason',
-        'user_id',
+        'user_name',
+        'date',
         'created_at',
         'updated_at'
     ];
@@ -26,12 +27,13 @@ class Employee_Departure extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
-    public function attendanc_method()
-    {
-        return $this->belongsTo(Attendmethods::class, 'attendance_method_id');
-    }
     public function appointment()
     {
         return $this->belongsTo(Appointment::class, 'appointment_id');
+    }
+
+    public function registered_departure_method()
+    {
+        return $this->belongsToMany(Attendmethods::class, 'registered_employees_departure_methods', 'departure_id', 'attend_mthod_id');
     }
 }

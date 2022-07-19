@@ -47,7 +47,7 @@ class EmployeesDepartureController extends Controller
     public function make_employees_departure_success(Request $request)
     {
         $employees_departure = $request->employees_departure;
-        Employee_Departure::whereIn('id', $employees_departure)->update(['state' => 1]);
+        Employee_Departure::whereIn('id', $employees_departure)->update(['state' => 1, 'user_name' => auth()->user()->name]);
         return redirect()->back()->with(['success' => 'تم التحديث']);
     }
     /**
