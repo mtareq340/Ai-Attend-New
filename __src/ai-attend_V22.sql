@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2022 at 02:50 PM
+-- Generation Time: Jul 19, 2022 at 10:55 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -39,7 +39,7 @@ CREATE TABLE `assign_appointments` (
 --
 
 INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `job_id`, `branch_id`, `location_id`, `over_time`, `created_at`, `updated_at`) VALUES
-(57, 11, 8, 1, 2, 33, '00:00', NULL, '2022-07-18 22:40:15'),
+(57, 11, 8, 1, 2, 33, '02:00', NULL, '2022-07-19 18:22:17'),
 (58, 10, 7, 1, 2, 33, '05:00', NULL, NULL),
 (59, 1, 6, 1, 2, 34, NULL, NULL, NULL),
 (60, 3, 6, 1, 2, 34, NULL, NULL, NULL),
@@ -48,8 +48,11 @@ INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `
 (63, 6, 6, 3, 2, 34, NULL, NULL, NULL),
 (64, 3, 2, 1, 2, 34, NULL, NULL, NULL),
 (65, 4, 2, 1, 2, 34, NULL, NULL, NULL),
-(76, 7, 9, 1, 2, 34, NULL, NULL, NULL),
-(77, 12, 9, 1, 2, 34, NULL, NULL, NULL);
+(78, 3, 9, 1, 2, 34, '17:37', NULL, '2022-07-19 15:35:07'),
+(79, 5, 9, 1, 2, 34, NULL, NULL, NULL),
+(80, 6, 9, 3, 2, 34, '19:35', NULL, '2022-07-19 15:36:00'),
+(81, 7, 9, 1, 2, 34, NULL, NULL, NULL),
+(82, 12, 9, 1, 2, 34, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -177,9 +180,8 @@ INSERT INTO `branches` (`id`, `name`, `phone`, `address`, `latitude`, `longituid
 (7, 'Cairo', '0123212324', 'Cairo', NULL, NULL, NULL, '2022-06-28 18:28:28', '2022-06-28 18:28:28', 7, 8, NULL),
 (8, 'testbranch', '01033', NULL, NULL, NULL, NULL, '2022-07-04 08:05:09', '2022-07-04 08:05:09', 9, 10, NULL),
 (9, 'test category', '457868', NULL, NULL, NULL, NULL, '2022-07-04 08:07:31', '2022-07-04 08:07:31', 11, 12, NULL),
-(10, 'test123', '01066018340', 'cairo', '-0.109177', '-0.129089', NULL, '2022-07-14 11:48:54', '2022-07-16 09:37:37', 13, 14, NULL),
-(12, 'test', '01066018340', 'cairo', '30.130549', '31.515851', NULL, '2022-07-16 08:58:49', '2022-07-16 09:04:31', 15, 16, NULL),
-(13, 'test5', '01066018340', 'cairo', '30.044400', '31.235700', NULL, '2022-07-16 09:06:01', '2022-07-16 09:06:01', 17, 18, NULL);
+(10, 'test123', '01066018340', 'cairo', '49.451066', '40.628234', NULL, '2022-07-14 11:48:54', '2022-07-19 18:00:22', 13, 14, NULL),
+(12, 'test', '01066018340', 'cairo', '30.130549', '31.515851', NULL, '2022-07-16 08:58:49', '2022-07-16 09:04:31', 15, 16, NULL);
 
 -- --------------------------------------------------------
 
@@ -208,8 +210,7 @@ INSERT INTO `branch_setting` (`id`, `branch_id`, `over_time_count`, `vication_da
 (5, 9, 0, NULL, '2022-07-04 08:07:31', '2022-07-04 08:07:31'),
 (8, 10, 0, NULL, '2022-07-14 11:48:54', '2022-07-14 11:48:54'),
 (9, 11, 0, NULL, '2022-07-15 10:17:02', '2022-07-15 10:17:02'),
-(10, 12, 0, NULL, '2022-07-16 08:58:49', '2022-07-16 08:58:49'),
-(11, 13, 0, NULL, '2022-07-16 09:06:02', '2022-07-16 09:06:02');
+(10, 12, 0, NULL, '2022-07-16 08:58:49', '2022-07-16 08:58:49');
 
 -- --------------------------------------------------------
 
@@ -347,7 +348,7 @@ CREATE TABLE `employees_departure` (
   `user_name` varchar(50) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `period` enum('1','2') NOT NULL,
-  `overtime_minutes_diff` varchar(100) DEFAULT NULL,
+  `overtime` time DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -356,9 +357,11 @@ CREATE TABLE `employees_departure` (
 -- Dumping data for table `employees_departure`
 --
 
-INSERT INTO `employees_departure` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `user_name`, `date`, `period`, `overtime_minutes_diff`, `created_at`, `updated_at`) VALUES
+INSERT INTO `employees_departure` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `user_name`, `date`, `period`, `overtime`, `created_at`, `updated_at`) VALUES
 (12, 5, 2, 8, 1, ' c ', NULL, '2022-07-19', '1', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01'),
-(13, 4, 2, 8, 1, ' c ', NULL, '2022-07-19', '1', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01');
+(13, 4, 2, 8, 1, ' c ', NULL, '2022-07-19', '1', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01'),
+(24, 3, 2, 9, 1, NULL, 'superadmin', '2022-07-19', '1', '17:37:00', '2022-07-19 15:35:07', '2022-07-19 15:35:07'),
+(25, 6, 2, 9, 1, NULL, 'superadmin', '2022-07-19', '2', '19:35:00', '2022-07-19 15:36:00', '2022-07-19 15:36:00');
 
 -- --------------------------------------------------------
 
@@ -621,7 +624,8 @@ INSERT INTO `login_histories` (`id`, `user_id`, `ip`, `datetime`, `created_at`, 
 (59, 30, '127.0.0.1', '2022-07-17 02:47:45', '2022-07-17 02:47:45', '2022-07-17 02:47:45', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (60, 30, '127.0.0.1', '2022-07-17 07:56:35', '2022-07-17 07:56:35', '2022-07-17 07:56:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (61, 30, '127.0.0.1', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(62, 30, '127.0.0.1', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}');
+(62, 30, '127.0.0.1', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(63, 30, '127.0.0.1', '2022-07-19 17:56:28', '2022-07-19 17:56:28', '2022-07-19 17:56:28', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Edge\"}');
 
 -- --------------------------------------------------------
 
@@ -849,9 +853,9 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (128, 1),
 (129, 1),
 (130, 1),
-(131, 1),
-(132, 1),
-(133, 1);
+(124, 1),
+(125, 1),
+(126, 1);
 
 -- --------------------------------------------------------
 
@@ -1115,7 +1119,7 @@ INSERT INTO `work_appointments` (`id`, `name`, `attendance_plan_type_id`, `atten
 (6, 'test123', 1, '1,2,3,4,5,6', 1, 34, '14:36:00', '19:35:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-19', '2022-07-16 10:35:45', '2022-07-18 22:42:50'),
 (7, 'mohamed', 1, '1,2,3,4,5,6', 1, 33, '14:52:00', '19:51:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-17', '2022-07-16 10:49:33', '2022-07-17 08:31:06'),
 (8, 'test', 2, '1,2,3,4,5,6', 1, 33, '00:14:00', '12:13:00', NULL, NULL, '00:30:00', NULL, 2, '06:00', '2022-07-18', '2022-07-16 20:15:08', '2022-07-16 20:15:08'),
-(9, 'facebook', 1, '1,2,3,4,5,6', 1, 34, '09:08:00', '16:08:00', NULL, NULL, '02:00:00', NULL, 2, '05:00', '2022-07-19', '2022-07-19 07:11:45', '2022-07-19 11:48:31');
+(9, 'facebook', 1, '1,2,3,4,5,6', 1, 34, '09:08:00', '16:08:00', NULL, NULL, '02:00:00', NULL, 2, '05:00', '2022-07-19', '2022-07-19 07:11:45', '2022-07-19 14:28:59');
 
 --
 -- Indexes for dumped tables
@@ -1310,7 +1314,7 @@ ALTER TABLE `work_appointments`
 -- AUTO_INCREMENT for table `assign_appointments`
 --
 ALTER TABLE `assign_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `attendance_plan_details`
@@ -1340,13 +1344,13 @@ ALTER TABLE `attend_methods`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `branch_setting`
 --
 ALTER TABLE `branch_setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `company_plans`
@@ -1376,7 +1380,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `employees_departure`
 --
 ALTER TABLE `employees_departure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `employee_attendance`
@@ -1418,7 +1422,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `login_histories`
 --
 ALTER TABLE `login_histories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `permissions`
