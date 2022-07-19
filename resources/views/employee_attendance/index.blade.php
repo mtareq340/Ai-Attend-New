@@ -80,7 +80,7 @@
                                     <th>Job Number</th>
                                     <th>Attendance Plan</th>
                                     <th>Branch Name</th>
-                                    <th>Attendance Method</th>
+                                    <th>Attendance Methods</th>
                                     <th>State</th>
                                     <th>Date</th>
                                     <th>Created By</th>

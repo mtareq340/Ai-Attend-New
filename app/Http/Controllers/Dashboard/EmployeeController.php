@@ -43,10 +43,9 @@ class EmployeeController extends Controller
         $attend_methods = Attendmethods::all();
         //
         if (auth()->user()->hasRole('super_admin')) {
-            $employees = Employee::latest()->get();
-            // dd($employees);
+            $employees = Employee::with('attend_methods')->latest()->get();
         } else {
-            $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+            $employees = Employee::with('attend_methods')->where('branch_id', auth()->user()->branch_id)->get();
         }
         return view('employees.index', compact('employees', 'branches', 'jobs' , 'attend_methods'));
     }
@@ -356,5 +355,22 @@ class EmployeeController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => 'حدث خطا برجاء المحاوله']);
         }
+    }
+
+    function toggleAttendMethod(Request $req){
+        $req->validate([
+            'emp_id' => 'required',
+            'method_id' => 'required',
+        ]);
+
+        $employee = Employee::find($req->emp_id);
+        $employee->attend_methods()->toggle($req->method_id);
+    }
+    function getEmpAttendMethods(Request $req){
+        $req->validate([
+            'emp_id' => 'required',
+        ]);
+
+        return Employee::findOrFail($req->emp_id)->attend_methods;
     }
 }

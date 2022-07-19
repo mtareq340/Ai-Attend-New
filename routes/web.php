@@ -12,16 +12,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
   Route::get('/', 'Dashboard\HomeController@index');
 
   Route::resource('users', 'Dashboard\UserController');
-  /*
-        the List Of route name
-        1- jobs.index    => return The View Path => Jobs/index.blade.php
-        2- jobs.create   => return The View Path => Jobs/create.blade.php
-        3- jobs.edit     => return The view Path => Jobs/Update.blade.php
-        4- jobs.store    => Save   The Request Into DataBase
-        6- jobs.update   => Update The Request Into DataBase
-        5- jobs.destroy  => Delete The Data From Table Jobs
-    */
-  // branches
+
   Route::resource('plans', 'Dashboard\PlanController');
   Route::resource('jobs',               'Dashboard\JobController');
   Route::resource('attend_methods', 'Dashboard\AttendmethodController');
@@ -99,7 +90,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
   Route::post('/addvication', 'Dashboard\CompanySettingsController@addvication')->name('addvication');
 
+  // toggle attendance methods
+  Route::patch('/attendance_methods/toggle' , 'Dashboard\EmployeeController@toggleAttendMethod')->name('toggleAttendMethod');
+  Route::get('/employee/attendance_methods' , 'Dashboard\EmployeeController@getEmpAttendMethods')->name('getEmpAttendMethod');
+
+
   //update attendance method employee
+  // legacy
   Route::get('edit_employee_attend_method/{id}', 'Dashboard\EmployeeController@edit_employee_attend_method')->name('edit_employee_attend_method');
   Route::patch('store_employee_attend_method/{id}', 'Dashboard\EmployeeController@store_employee_attend_method')->name('store_employee_attend_method');
 
@@ -120,6 +117,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
   //make Departure 
   Route::resource('make_departure', 'Dashboard\MakeDepartureController');
+
+  Route::post('store_employees_departures', 'Dashboard\MakeDepartureController@store_employees_departures')->name('store_employees_departures');
 });
 
 
