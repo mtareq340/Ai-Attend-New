@@ -117,6 +117,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
   //get employees from attendance plan in attendce & departure
   Route::get('get_employees_from_attendanceplan', 'Dashboard\EmployeeAttendanceController@getEmployeesFromAttendanceplan')->name('get_employees_from_attendanceplan');
+
+  //make Departure 
+  Route::resource('make_departure', 'Dashboard\MakeDepartureController');
 });
 
 

@@ -107,15 +107,15 @@ class EmployeeController extends Controller
                 return back()->with('error', $err_msg)->withInput();
             }
             $plan = Plan::first();
-          
+
             $employees_count = Employee::count() + 1;
             if ($plan->count_employees < $employees_count)
                 return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
-            
-                $data = $request->except('_token');
-            if($data['password']){
-                $data['password'] = Hash::make($data['password']);
-            }
+
+            $data = $request->except('_token');
+            // if($data['password']){
+            //     $data['password'] = Hash::make($data['password']);
+            // }
             $emp = Employee::create($data);
             return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
@@ -124,13 +124,13 @@ class EmployeeController extends Controller
         }
     }
 
-   
+
     public function show($id)
     {
         //
     }
 
- 
+
     public function edit($id)
     {
         if (!Gate::allows('edit_employee')) {
@@ -142,7 +142,7 @@ class EmployeeController extends Controller
         return view('employees.edit', compact('emp', 'branches', 'jobs'));
     }
 
-   
+
     public function update(Request $request, $id)
     {
         //
@@ -209,8 +209,8 @@ class EmployeeController extends Controller
 
         $plan = Plan::first();
         $employees_count = Employee::count() + count($data[0]) - 1;
-            if ($plan->count_employees < $employees_count)
-                return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
+        if ($plan->count_employees < $employees_count)
+            return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
 
         $emps = [];
         for ($i = 0; $i < count($data[0]); $i++) {
