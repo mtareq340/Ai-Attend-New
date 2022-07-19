@@ -69,9 +69,7 @@
                             <div class="form-group" id="employee">                                
                                 <label for="employees">Employees *</label>
                                 <select name="employee_id[]" id="select2-multiple" class="selectemp form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true">    
-                                    @foreach ($employees as $emp )
-                                    <option value="{{$emp->id}}" >{{$emp->name}}</option>                                    
-                                    @endforeach                                     
+                                    <option value=""></option>                                    
                                     </select>
                                 </div>
                             <div class="form-group">
@@ -120,16 +118,16 @@
     $("#appointment").val(''); 
     function getemployeesfromattendance()
     {
-        let appointment_id =  $('#countery').find(":selected").val();
-            // alert(countery);
-
+        let appointment_id =  $('#appointment').find(":selected").val();
             $.ajax(
                 {
-                    "type":"get",
-                    'url':`{{route('get_employees_from_attendanceplan')}}`,
-                    'data':{appointment_id:appointment_id},
+                    url:"{{route('get_employees_from_attendanceplan')}}",
+                    type:"GET",
+                    data:{
+                        appointment_id : appointment_id
+                    },
                     "success":function(data){
-                        console.log(data);
+                        $(".selectemp").html(data);
                     },
                     "error":function(){
                         

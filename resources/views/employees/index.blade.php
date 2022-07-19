@@ -111,11 +111,15 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
-                                            <a href="/dashboard/edit_employee_attend_method/{{ $emp->id }}"
+                                            {{-- <a href="/dashboard/edit_employee_attend_method/{{ $emp->id }}"
                                                 type="button" class="btn btn-sm btn-primary float-right">
                                                 <i class="mdi mdi-square-edit-outline"></i>
 
-                                            </a>
+                                            </a> --}}
+                                            <button
+                                                onclick="onClickEditAttendMethods('{{ json_encode($emp->attend_methods) }}' , '{{ $emp->id }}')"
+                                                class="btn btn-xs btn-primary float-right"><i
+                                                    class="mdi mdi-square-edit-outline"></i></button>
                                         </td>
                                         <td>
                                             @can('edit_employee')
@@ -407,6 +411,27 @@
 
 
     </div> <!-- container -->
+
+
+
+    {{-- attend method modal --}}
+    <div id="attendMethods-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="attendMethods-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="attendMethods-modalLabel">Attend Methods</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <ul id="selected_atten_methods"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection
 
 @section('script')
@@ -434,7 +459,6 @@
                     })
                 });
                 const content = await rawResponse.json();
-                console.log(content);
 
                 if (content.error) {
                     // notify error
@@ -449,8 +473,7 @@
 
         }
 
-    </script>
-    <script>
+
         function activevication() {
             let isChecked = $('#qr')[0].checked
             // console.log(isChecked);
@@ -463,9 +486,6 @@
             return isChecked;
         }
 
-    </script>
-
-    <script>
         $(document).ready(function() {
             // ////////////////////////////
             $('body').on('click', '#updatesubmit', function(event) {
@@ -536,6 +556,69 @@
             });
 
         });
+
+
+
+        const all_methods = JSON.parse('@json($attend_methods)')
+        const onClickEditAttendMethods = (attend_methods, emp_id) => {
+            const list = $('#selected_atten_methods')
+            $('#attendMethods-modal').modal('show')
+            list.empty()
+
+            $.ajax({
+                    url: '{{route('getEmpAttendMethod')}}',
+                    type: "get",
+                    data: {
+                        emp_id
+                    },
+                    success: function(data) {
+                    // getEmpAttendMethod
+                    all_methods.forEach(method => {
+                        const found = data.some(_m => _m.name == method.name)
+                        console.log(found);
+                        if (found) method['selected'] = true
+                        else method['selected'] = false
+                    });
+
+                    all_methods.forEach(method => {
+                        list.append(`
+                            <li class="row">
+                                <div class="custom-control custom-checkbox">
+                                        <input  ${method.selected ? 'checked' : ''} onchange="update_attend_method(${method.id} , ${emp_id} , ${! method.selected})" type="checkbox" class="custom-control-input" id="${method.id}">
+                                        <label class="custom-control-label" for="${method.id}">${method.name}</label>
+                                </div>
+                            </li>
+                        `)
+                    });
+
+                    },
+                    error: function(error) {
+                        notyf.error('حدث خطا ما حاول لاحقا')
+                        console.log(error);
+                    }
+                });
+
+        }
+
+        const update_attend_method = (method_id, emp_id , state) => {
+            $.ajax({
+                    url: '{{route('toggleAttendMethod')}}',
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    type: "patch",
+                    data: {
+                        method_id,
+                        emp_id
+                    },
+                    success: function(data) {
+                        notyf.success('تم التعديل بنجاح')
+                    },
+                    error: function(error) {
+                        notyf.error('حدث خطا ما حاول لاحقا')
+                    }
+                });
+        }
 
     </script>
 @endsection

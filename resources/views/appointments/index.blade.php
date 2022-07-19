@@ -56,7 +56,7 @@
                                     <th>Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th> Active Extra time </th>
+                                    {{-- <th> Active Extra time </th> --}}
                                 </tr>
                             </thead>
 
@@ -85,7 +85,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $appoint->name }}</td>
-                                        <td>{{$appoint->attendance_plan_type->name}}</td>
+                                        <td>{{ $appoint->attendance_plan_type->name }}</td>
                                         <td>{{ $appoint->location->name }}</td>
                                         <td>{{ $appoint->branch->name }}</td>
                                         <td>{{ $appoint->start_from_period_1 }}</td>
@@ -101,10 +101,10 @@
                                         <td>{{ $appoint->date }}</td>
                                         <td>{{ $appoint->created_at }}</td>
                                         <td>{{ $appoint->updated_at }}</td>
-                                        
-                                        <td>
+
+                                        {{-- <td>
                                             <input type="checkbox" class="js-switch" data-plugin="switchery" />
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -128,7 +128,7 @@
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
     <!-- Page js-->
-    <script>
+    {{-- <script>
         const toggleActivationextratime = (e, id, type) => {
 
             (async () => {
@@ -164,6 +164,6 @@
 
         }
 
-    </script>
+    </script> --}}
 
 @endsection

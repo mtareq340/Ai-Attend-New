@@ -11,7 +11,7 @@ class Location extends Model
     use Notifiable;
     protected $table = 'locations';
 
-    protected $fillable = ['name', 'branch_id', 'location_address', 'distance', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
+    protected $fillable = ['name', 'branch_id', 'location_address', 'boundary_raduis', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
 
  
     public function appointment()
@@ -25,6 +25,16 @@ class Location extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    public function wifi()
+    {
+        return $this->hasMany(Device::class)->where('type' , 'wifi');
+    }
+
+    public function becon()
+    {
+        return $this->hasMany(Device::class)->where('type' , 'becon');
     }
 
     protected static function boot()

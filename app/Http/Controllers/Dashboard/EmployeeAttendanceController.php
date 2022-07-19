@@ -55,7 +55,7 @@ class EmployeeAttendanceController extends Controller
     public function make_employees_attendance_success(Request $request)
     {
         $employee_attendances = $request->employees_attendance;
-        Employee_Attendance::whereIn('id', $employee_attendances)->update(['state' => 1]);
+        Employee_Attendance::whereIn('id', $employee_attendances)->update(['state' => 1, 'user_name' => auth()->user()->name]);
         return redirect()->back()->with(['success' => 'تم التحديث']);
     }
     /**
@@ -115,11 +115,12 @@ class EmployeeAttendanceController extends Controller
 
     public function getEmployeesFromAttendanceplan(Request $request)
     {
-        $data = Assign_Appointment::where('work_appointment_id', $request->appointment)->get();
+        $data = Assign_Appointment::where('work_appointment_id', $request->appointment_id)->get();
+
         $text = '';
 
         foreach ($data as $d) {
-            $text  .= "<option value = '$d->id'>" . $d->employees->name . "</option>";
+            $text  .= "<option value = '$d->employee_id'>" . $d->employees->name . "</option>";
         }
         return $text;
     }

@@ -58,7 +58,7 @@ class LocationController extends Controller
                     'name' => 'required',
                     'branch_id' => 'required',
                     'location_address' => 'required',
-                    'distance' => 'required|numeric',
+                    'boundary_radius' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
                     'location_longituide' => 'required|numeric',
                 ],
@@ -66,7 +66,7 @@ class LocationController extends Controller
                     'name.required' => 'برجاء ادخال الاسم',
                     'branch_id.required' => 'برجاء اختيار الفرع',
                     'location_address.required' => 'برجاء ادخال العنوان',
-                    'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
+                    'boundary_radius.required' => 'برجاء تحديد اقصي مسافه للحضور',
                     'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
                     'location_longituide.required' => 'برجاء ادخال الاحدثيات الطول',
                 ]
@@ -74,7 +74,6 @@ class LocationController extends Controller
             if ($validator->fails()) {
                 $err_msg = $validator->errors()->first();
                 return response()->json(['msg' => $err_msg], 400);
-
             }
 
             $data = $req->except('devices');
@@ -88,10 +87,10 @@ class LocationController extends Controller
                 array_push($devices , [
                     "code" => $device['code'] ?? '',
                     "ssid" => $device['ssid'] ?? '' ,
+                    "bssid" => $device['bssid'] ?? '' ,
                     "type" => $device['type'],
                     "location_id" => $location->id,
                 ]);
-
             }
             Device::insert($devices);
             return response()->json(['msg' => 'تم اضافة الموقع بنجاح'], 200);
@@ -106,7 +105,7 @@ class LocationController extends Controller
             $location = Location::find($id);
             $delete = $location->delete();
             if (!$delete) {
-                return redirect()->route('locations.index')->with(['error' => 'لا يمكن حذف الموقع لانه مسجل علي فرع']);
+                return redirect()->route('locations.index')->with(['error' => 'لا يمكن حذف الموقع لانه مستخدم']);
             } else {
                 return redirect()->route('locations.index')->with(['success' => 'تم حذف الموقع بنجاح']);
             }
@@ -122,7 +121,7 @@ class LocationController extends Controller
         }
         $selected_branch = '';
         $location = Location::with(['devices' => function ($query) {
-            $query->select('code', 'type' , 'ssid' , 'location_id' );
+            $query->select('code', 'type' , 'ssid' , 'bssid' , 'location_id' );
         }])->find($id);
         if (auth()->user()->hasRole('super_admin')) {
             $selected_branch = Branch::find($location->branch_id);
@@ -143,7 +142,7 @@ class LocationController extends Controller
                     'name' => 'required',
                     'location_address' => 'required',
                     'branch_id' => 'required',
-                    'distance' => 'required|numeric',
+                    'boundary_radius' => 'required|numeric',
                     'location_latitude' => 'required|numeric',
                     'location_longituide' => 'required|numeric',
                 ],
@@ -151,7 +150,7 @@ class LocationController extends Controller
                     'name.required' => 'برجاء ادخال الاسم',
                     'branch_id.required' => 'برجاء اختيار الفرع',
                     'location_address.required' => 'برجاء ادخال العنوان',
-                    'distance.required' => 'برجاء تحديد اقصي مسافه للحضور',
+                    'boundary_radius.required' => 'برجاء تحديد اقصي مسافه للحضور',
                     'location_latitude.required' => 'برجاء ادخال الاحدثيات العرض',
                     'location_longituide.required' => 'برجاء ادخال الاحدثيات الطول',
 

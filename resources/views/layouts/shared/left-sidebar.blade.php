@@ -165,6 +165,10 @@
                                 <li>
                                     <a href="{{ route('employees_departures.index') }}">Employees Departures</a>
                                 </li>
+
+                                <li>
+                                    <a href="{{ route('make_departure.index') }}">Make Employees Departure</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -241,7 +245,7 @@
                 {{-- end of locations --}}
 
                 {{-- Here devices  Sidebar --}}
-                @can('show_devices')
+                {{-- @can('show_devices')
                     <li>
                         <a href="#sidebardevices" data-toggle="collapse">
                             <i class="icon-mouse"></i>.
@@ -251,7 +255,7 @@
                         <div class="collapse" id="sidebardevices">
                             <ul class="nav-second-level">
                                 @can('show_devices')
-                                    <li>
+                                    <li>k
                                         <a href="{{ route('devices.index') }}">Devices</a>
                                     </li>
                                 @endcan
@@ -263,7 +267,7 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- EndSidebar devices --}}
 
 
@@ -296,7 +300,7 @@
 
 
                 {{-- start of employee - attend methods --}}
-                @can('show_employee_attend_methods')
+                {{-- @can('show_employee_attend_methods')
                     <li>
                         <a href="#sidebarempatt" data-toggle="collapse">
                             <i class="fa fa-users"></i>.
@@ -318,7 +322,7 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- end of employee - attend methods --}}
 
                 {{-- Appointment --}}

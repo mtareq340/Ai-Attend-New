@@ -36,6 +36,23 @@ class DepartureController extends Controller
             ]], 404);
         }
 
+        // if employees make attendance today before //
+        // return Carbon::today();
+        $check = Employee_Departure::where(
+            [
+                ['date', Carbon::today()->format('Y-m-d')],
+                ['appointment_id', $request->appointment_id],
+                ['period', $request->period],
+                ['employee_id', $request->emp_id],
+            ]
+        )->first();
+        if ($check != null) {
+            //emp make attendance before
+            return response()->json([
+                'status' => 0, 'message' => 'You Have Made an Departure before'
+            ], 400);
+        }
+
         // employees is found
         // check if employee on this plan or not
         $emp_appointments_ids = $emp->appointmentsIds();
@@ -94,6 +111,8 @@ class DepartureController extends Controller
             }
         }
 
+        $emp_departure->date = date('Y-m-d');
+        $emp_departure->perido = $request->period;
         $emp_departure->save();
         // store the attend methods ids with status
         $registered_departure_methods = [];

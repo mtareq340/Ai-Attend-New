@@ -40,14 +40,14 @@ class EmployeeController extends Controller
         }
         $branches = Branch::all();
         $jobs = Job::all();
+        $attend_methods = Attendmethods::all();
         //
         if (auth()->user()->hasRole('super_admin')) {
-            $employees = Employee::latest()->get();
-            // dd($employees);
+            $employees = Employee::with('attend_methods')->latest()->get();
         } else {
-            $employees = Employee::where('branch_id', auth()->user()->branch_id)->get();
+            $employees = Employee::with('attend_methods')->where('branch_id', auth()->user()->branch_id)->get();
         }
-        return view('employees.index', compact('employees', 'branches', 'jobs'));
+        return view('employees.index', compact('employees', 'branches', 'jobs' , 'attend_methods'));
     }
 
     /**
@@ -106,15 +106,15 @@ class EmployeeController extends Controller
                 return back()->with('error', $err_msg)->withInput();
             }
             $plan = Plan::first();
-          
+
             $employees_count = Employee::count() + 1;
             if ($plan->count_employees < $employees_count)
                 return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
-            
-                $data = $request->except('_token');
-            if($data['password']){
-                $data['password'] = Hash::make($data['password']);
-            }
+
+            $data = $request->except('_token');
+            // if($data['password']){
+            //     $data['password'] = Hash::make($data['password']);
+            // }
             $emp = Employee::create($data);
             return redirect()->route('employees.index')->with(['success' => 'تم الحفظ بنجاح']);
         } catch (Exception $e) {
@@ -123,13 +123,13 @@ class EmployeeController extends Controller
         }
     }
 
-   
+
     public function show($id)
     {
         //
     }
 
- 
+
     public function edit($id)
     {
         if (!Gate::allows('edit_employee')) {
@@ -141,7 +141,7 @@ class EmployeeController extends Controller
         return view('employees.edit', compact('emp', 'branches', 'jobs'));
     }
 
-   
+
     public function update(Request $request, $id)
     {
         //
@@ -208,8 +208,8 @@ class EmployeeController extends Controller
 
         $plan = Plan::first();
         $employees_count = Employee::count() + count($data[0]) - 1;
-            if ($plan->count_employees < $employees_count)
-                return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
+        if ($plan->count_employees < $employees_count)
+            return back()->with(['error' => 'هذا اقصي عدد للموظفين لا يمكن التسجيل الان']);
 
         $emps = [];
         for ($i = 0; $i < count($data[0]); $i++) {
@@ -355,5 +355,22 @@ class EmployeeController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => 'حدث خطا برجاء المحاوله']);
         }
+    }
+
+    function toggleAttendMethod(Request $req){
+        $req->validate([
+            'emp_id' => 'required',
+            'method_id' => 'required',
+        ]);
+
+        $employee = Employee::find($req->emp_id);
+        $employee->attend_methods()->toggle($req->method_id);
+    }
+    function getEmpAttendMethods(Request $req){
+        $req->validate([
+            'emp_id' => 'required',
+        ]);
+
+        return Employee::findOrFail($req->emp_id)->attend_methods;
     }
 }

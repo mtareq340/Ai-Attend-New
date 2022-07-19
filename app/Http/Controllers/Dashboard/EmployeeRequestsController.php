@@ -17,13 +17,13 @@ class EmployeeRequestsController extends Controller
      */
     public function index(Request $request)
     {
-        // Return view in path EmployeeRequests/index
+        // Return view in path employeerequests/index
         if (isset($request->request_type_id)) {
             $employee_requests = EmployeeRequest::where('request_type_id', $request->request_type_id)->get();
         } else {
             $employee_requests = EmployeeRequest::all();
         }
-        return view('EmployeeRequestReview.EmployeeRequest.index', compact(
+        return view('employeerequestreview.employeerequest.index', compact(
             'employee_requests'
         ));
     }
@@ -71,7 +71,7 @@ class EmployeeRequestsController extends Controller
         //
         $request_emp = employee_requests::FindOrFail($id);
         $emp         = Employee::FindOrFail($id);
-        return view('EmployeeRequests.Accept', compact('request_emp', 'emp'));
+        return view('employeerequests.Accept', compact('request_emp', 'emp'));
     }
 
     /**
@@ -129,14 +129,14 @@ class EmployeeRequestsController extends Controller
     public function show_request_emp_info()
     {
         $employees  = Employee::all();
-        return view("EmployeeRequests.Employee.index", compact('employees'));
+        return view("employeerequests.Employee.index", compact('employees'));
     }
 
     public function get_new_request()
     {
-        // Return view in path EmployeeRequests/index
+        // Return view in path employeerequests/index
         $employee_requests = employee_requests::where('Action', '=', '0')->get();
-        return view('EmployeeRequests.index', compact(
+        return view('employeerequests.index', compact(
             'employee_requests'
         ));
     }
@@ -144,19 +144,19 @@ class EmployeeRequestsController extends Controller
     public function get_accept_request()
     {
         $employee_requests = employee_requests::where('accepted', '=', '1')->get();
-        return view('EmployeeRequests.Accept_Request', compact(
+        return view('employeerequests.Accept_Request', compact(
             'employee_requests'
         ));
-        // return view('EmployeeRequests.Accept_Request');
+        // return view('employeerequests.Accept_Request');
     }
 
     public function get_reject_request()
     {
         $employee_requests = employee_requests::where('accepted', '=', '0')->get();
-        return view('EmployeeRequests.Reject', compact(
+        return view('employeerequests.Reject', compact(
             'employee_requests'
         ));
-        // return view('EmployeeRequests.Reject');   
+        // return view('employeerequests.Reject');   
     }
     public function show_request_emp_info_data($id)
     {
@@ -178,7 +178,7 @@ class EmployeeRequestsController extends Controller
         $count_accepted  = employee_requests::where('employee_id', '=', $id)
             ->where('accepted', '=', 1)
             ->count();
-        return view("EmployeeRequests.Employee.info_employee_req", compact(
+        return view("employeerequests.Employee.info_employee_req", compact(
             'employees',
             'employee_request_reject',
             'employee_request_accepted',

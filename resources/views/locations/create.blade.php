@@ -71,9 +71,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="distance" class="col-form-label">Distance</label>
-                            <input type="number" name="distance" class="form-control" id="distance"
-                                placeholder="Distance" required>
+                            <label for="boundary_radius" class="col-form-label">boundary_radius</label>
+                            <input type="number" name="boundary_radius" class="form-control" id="boundary_radius"
+                                placeholder="boundary_radius" required>
                         </div>
 
 
@@ -163,6 +163,13 @@
                         <label>Wifi ssid</label>
                         <input id="wifi-ssid" type="text" class="form-control" />
                     </div>
+
+                    <div class="form-group">
+                        <label>Wifi bssid</label>
+                        <input id="wifi-bssid" type="text" class="form-control" />
+                    </div>
+
+
                     <button type="button" onclick="addWifiDevice()" class="btn btn-secondary">Add</button>
                 </div>
             </div><!-- /.modal-content -->
@@ -245,7 +252,8 @@
                 <div class="my-1 p-2 bg-white justify-content-between align-items-center d-flex">
                   <div>
                     <i class="fa fa-wifi"></i>
-                    <span class="ml-1">wifi-${device.ssid}</span>
+                    <p class="m-0">wifi-${device.ssid} (ssid)</p>
+                    <p class="m-0">wifi-${device.bssid} (bssid)</p>
                   </div>
                     <button class="btn btn-danger" onclick="deletewifi('${device.ssid}')">
                     <i class="fa fa-trash "></i>
@@ -261,11 +269,6 @@
             const code = $('#becon-code').val()
             if (!code) return
 
-            if (devices.filter(d => d.type == 'becon').length == 1) {
-                return
-            }
-            $('#becon-add-btn').addClass('d-none')
-
             devices.push({
                 code,
                 type: 'becon'
@@ -276,16 +279,16 @@
 
             $('#becon-code').val('')
             $('#becon-modal').modal('hide')
-
         }
-
 
         const addWifiDevice = () => {
             const ssid = $('#wifi-ssid').val()
-            if (!ssid) return
+            const bssid = $('#wifi-bssid').val()
+            if (!ssid || !bssid) return
 
             devices.push({
                 ssid,
+                bssid,
                 type: 'wifi'
             })
 
@@ -294,6 +297,7 @@
 
 
             $('#wifi-ssid').val('')
+            $('#wifi-bssid').val('')
             $('#wifi-modal').modal('hide')
 
         }
@@ -303,7 +307,6 @@
                 if ((device.code && device.code != code) || device.ssid) return true
             })
 
-            $('#becon-add-btn').removeClass('d-none')
 
             showDevices()
         }
