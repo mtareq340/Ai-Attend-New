@@ -453,7 +453,22 @@
                 @endcan
                 {{-- end of users --}}
 
-
+                    {{-- start reports --}}
+                <li>
+                    <a href="#reports" data-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> Reports </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="reports">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('reports.attend-report') }}">Attend Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {{-- end reports --}}
 
                 <li class="menu-title">Some Pages For Design</li>
 
