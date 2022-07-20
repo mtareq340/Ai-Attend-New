@@ -6,6 +6,8 @@
 
     <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
         type="text/css" />
+        <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -38,8 +40,8 @@
         </div>
         <div class="row">
             <div class="form-group col-4">
-                    <select name="appointment_id" id="sel_appointment" class="form-control">
-                        <option value="" selected disabled>Select Attendance Plan</option>
+                    <select name="appointment_id" id="sel_appointment" class="form-control select2">
+                        <option value="0" selected >Select Attendance Plan</option>
                         @foreach ($work_appointments as $work_appointment)
                             <option {{ app('request')->input('appointment_id') == $work_appointment->id ? 'selected' : '' }}
                              value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
@@ -142,6 +144,9 @@
   <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
   {{-- <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
   <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+  <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+ 
   
     <script>
         
@@ -155,7 +160,7 @@
 
     </script>
     <script>
-     
+         $('.select2').select2()
         function insertParam(key, value) {
             key = encodeURIComponent(key);
             value = encodeURIComponent(value);
@@ -228,12 +233,12 @@
                  success: function(result){
                     notyf.success('تم التحديث بنجاح')
                     window.location.reload();
-                    // console.log(result);
+                    console.log(result);
                 },
                  error:function(err)
                  {
                     notyf.error('حدثت مشكله برجاء المحاوله مره اخري')
-                    // console.log(err);
+                    console.log(err);
                  }
                  
                 });

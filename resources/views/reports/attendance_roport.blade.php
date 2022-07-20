@@ -10,11 +10,11 @@
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row align-items-center pt-1">
-            <div class="col-4">
+            <div class="col-6">
                 <h4 class="page-title">Attendance Report</h4>
             </div>
 
-            <div class="page-title-box col-4">
+            <div class="page-title-box col-6">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
