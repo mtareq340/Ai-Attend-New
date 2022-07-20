@@ -452,8 +452,7 @@
                 {{-- end of users --}}
 
 
-
-                <!-- <li class="menu-title">Some Pages For Design</li>
+               {{-- <li class="menu-title">Some Pages For Design</li>
 
                 <li>
                     <a href="{{ route('second', ['apps', 'calendar']) }}">
@@ -1147,7 +1146,7 @@
                             </li>
                         </ul>
                     </div>
-                </li> -->
+                </li>  --}}
             </ul>
 
         </div>
