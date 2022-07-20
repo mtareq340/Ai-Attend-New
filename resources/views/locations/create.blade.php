@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="boundary_radius" class="col-form-label">boundary_radius</label>
+                            <label for="boundary_radius" class="col-form-label">boundary_radius (m)</label>
                             <input type="number" name="boundary_radius" class="form-control" id="boundary_radius"
                                 placeholder="boundary_radius" required>
                         </div>

@@ -48,13 +48,17 @@ class Employee extends Model
         return $this->hasMany(employee_requests::class);
     }
 
+    public function attendeces()
+    {
+        return $this->hasMany(Employee_Attendance::class , 'appointment_id');
+    }
 
     protected static function boot()
     {
         parent::boot();
 
         static::deleting(function ($employee) {
-            $relationMethods = ['assign_appointments', 'attend_methods'];
+            $relationMethods = ['assign_appointments', 'attend_methods' ];
             foreach ($relationMethods as $relationMethod) {
                 if ($employee->$relationMethod()->count() > 0) {
                     return false;
