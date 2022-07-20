@@ -20,10 +20,10 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Assign Appointment</li>
+                            <li class="breadcrumb-item active">Manage attendance plan</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Assign Appointment</h4>
+                    <h4 class="page-title">Manage attendance plan</h4>
                 </div>
             </div>
         </div>
@@ -42,8 +42,9 @@
                                 <tr>
                                     <th>Actions</th>
                                     <th>Employee Name</th>
-                                    <th>Job Name</th>
-                                    <th>Branch Name</th>
+                                    <th>Job number</th>
+                                    {{-- <th>Job Name</th> --}}
+                                    {{-- <th>Branch Name</th> --}}
                                     <th>Location Name</th>
                                     <th>Appointment</th>
                                     <th>current overtime</th>
@@ -74,8 +75,9 @@
                                         </div>
                                     </td>
                                     <td>{{ $a->employees->name }}</td>
-                                    <td>{{ $a->job->name }}</td>
-                                    <td>{{ $a->branch->name }}</td>
+                                    <td>{{ $a->employees->job_number }}</td>
+                                    {{-- <td>{{ $a->job->name }}</td> --}}
+                                    {{-- <td>{{ $a->branch->name }}</td> --}}
                                     <td>{{ $a->location->name }}</td>
                                     <td>{{ $a->appointment->name }}</td>
                                     <td>{{ $a->over_time }}</td>

@@ -14,6 +14,6 @@ $factory->define(Employee::class, function (Faker $faker) {
         'email' => $this->faker->unique()->safeEmail(),
         'phone' => random_int(10000000000, 99999999999),
         'branch_id' => 7,
-        'job_id' => 3,
+        'job_id' => 4,
     ];
 });
