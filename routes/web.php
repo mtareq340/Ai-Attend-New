@@ -107,10 +107,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth' , 'namespace' => '
   //get employees from attendance plan in attendce & departure
   Route::get('get_employees_from_attendanceplan', 'EmployeeAttendanceController@getEmployeesFromAttendanceplan')->name('get_employees_from_attendanceplan');
 
-  //make Departure 
+  //make Departure
   Route::resource('make_departure', 'MakeDepartureController');
-
   Route::post('store_employees_departures', 'MakeDepartureController@store_employees_departures')->name('store_employees_departures');
+  //reports route
+  Route::get('reports/attendance-report', 'Report\AttendanceReportController@index')->name('reports.attend-report');
+
 });
 
 Route::group(['prefix' => '/'], function () {
