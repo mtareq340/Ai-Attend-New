@@ -98,7 +98,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth' , 'namespace' => '
 
   Route::post('make_employees_attendance_success', 'EmployeeAttendanceController@make_employees_attendance_success')->name('make_employees_attendance_success');
 
-  //employees Departure 
+  //employees Departure
   Route::resource('employees_departures', 'EmployeesDepartureController');
   Route::post('make_employees_departure_success', 'EmployeesDepartureController@make_employees_departure_success')->name('make_employees_departure_success');
   //update over time to Employees
@@ -112,6 +112,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth' , 'namespace' => '
   Route::post('store_employees_departures', 'MakeDepartureController@store_employees_departures')->name('store_employees_departures');
   //reports route
   Route::get('reports/attendance-report', 'Report\AttendanceReportController@index')->name('reports.attend-report');
+  Route::get('reports/departure-report', 'Report\DepartureReportController@index')->name('reports.departure-report');
 
 });
 
