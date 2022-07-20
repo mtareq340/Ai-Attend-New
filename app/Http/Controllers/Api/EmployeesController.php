@@ -12,7 +12,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class EmployeesController extends Controller
 {
 
-  
+
     function employeeLogin(Request $request)
     {
         $rules = array(
@@ -26,7 +26,7 @@ class EmployeesController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        $employee = Employee::where('email', $email)->with(['appointments.location', 'appointments.location.wifi:ssid,bssid,location_id','appointments.location.becon:code,location_id', 'attend_methods'])->first();
+        $employee = Employee::where('email', $email)->with(['appointments.location', 'appointments.location.wifi:ssid,bssid,location_id', 'appointments.location.becon:code,location_id', 'attend_methods'])->first();
         if (!$employee) {
             return Response()->json(['status' => 0, 'message' => 'Invalid email or password']);
         }
@@ -161,6 +161,7 @@ class EmployeesController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
+
             return Response()->json(['status' => 0, 'message' => 'errors', 'errors' => $validator->getMessageBag()->toArray()]);
         }
         $request_data = $validator->validate();
