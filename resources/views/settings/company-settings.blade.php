@@ -50,6 +50,10 @@
             background-color: rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: 0.5s ease-in-out all;
+            background-image: url('/assets/images/camera.png');
+            background-size: 50%;
+            background-position: center center;
+            background-repeat: no-repeat
         }
 
         .custom-input:hover {
@@ -57,7 +61,9 @@
         }
 
         .custom-input::before {
-            content: "change logo";
+            /* content: url('/assets/images/camera.png'); */
+            content: '';
+          
             color: white;
             position: absolute;
             top: 50%;
