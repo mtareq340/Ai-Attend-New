@@ -30,7 +30,6 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
     Route::post('employees/is_employee_phone_exist', 'EmployeesController@isEmployeePhoneExist'); // parameters ($phone)
-    Route::post('employees/is_otp_true', 'EmployeesController@isOtpTrue'); // parameters ($otp)
     Route::post('employees/reset_password', 'EmployeesController@resetPassword'); // parameters ($id,$password,$newpassword)
     Route::post('employees/change_password', 'EmployeesController@changePassword'); // parameters ($id,$oldpassword,$newpassword)
     Route::post('employees/getData', 'EmployeesController@getData');
@@ -39,11 +38,9 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
     Route::post('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
     // Comppost Apis
-    Route::post('company/get_settings', 'CompanySettingsController@getData'); // parameters ()
     // Attepostce Methodd Apis
     Route::post('attend_methods/getData', 'AttendMethodController@getEmployeeAttenance');
 
     // employee attenance and departure
     Route::post('employees/set_employees_attenance', 'AttendanceController@set_employee_attendence');
-    Route::post('employees/set_employees_departure', 'DepartureController@set_employee_departure');
 });

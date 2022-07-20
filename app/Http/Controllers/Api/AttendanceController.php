@@ -99,7 +99,7 @@ class AttendanceController extends Controller
             // add the delay time to the start time
             $start = Carbon::parse($appointment['start_from_period_' . $period]);
             // $end = Carbon::parse($appointment['end_to_period_' . $period]);
-            $allow_delay_minutes = Carbon::parse($appointment['delay_period_' . $period])->secondsSinceMidnight() / 60;
+            $allow_delay_minutes =  Carbon::parse($appointment['delay_period_' . $period])->secondsSinceMidnight() / 60;
 
 
             // check if the now between the start and end

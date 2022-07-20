@@ -50,6 +50,10 @@
             background-color: rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: 0.5s ease-in-out all;
+            background-image: url('/assets/images/camera.png');
+            background-size: 50%;
+            background-position: center center;
+            background-repeat: no-repeat
         }
 
         .custom-input:hover {
@@ -57,7 +61,9 @@
         }
 
         .custom-input::before {
-            content: "change logo";
+            /* content: url('/assets/images/camera.png'); */
+            content: '';
+          
             color: white;
             position: absolute;
             top: 50%;
@@ -176,6 +182,7 @@
             image = $('#image').cropper(options)
 
         }).on('hidden.bs.modal', function() {
+            $('#cover').val('')
             image.cropper('destroy');
         });
 
@@ -252,6 +259,7 @@
             imageLogo = $('#image-logo').cropper(optionsLogo)
 
         }).on('hidden.bs.modal', function() {
+            $('#logo').val('')
             imageLogo.cropper('destroy');
         });
 
@@ -261,7 +269,7 @@
             // canvas = cropper.getCroppedCanvas();
 
             canvas.toBlob(function(blob) {
-                $('#loader').removeClass('d-none')
+                $('#loader-logo').removeClass('d-none')
                 var url = URL.createObjectURL(blob);
                 var reader = new FileReader();
                 reader.readAsDataURL(blob);
@@ -280,6 +288,7 @@
                             $modalLogo.modal('hide');
                             window.location.reload()
                             $('#loader-logo').addClass('d-none')
+
 
                         },
                         error: function(error) {
