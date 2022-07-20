@@ -176,6 +176,7 @@
             image = $('#image').cropper(options)
 
         }).on('hidden.bs.modal', function() {
+            $('#cover').val('')
             image.cropper('destroy');
         });
 
@@ -252,6 +253,7 @@
             imageLogo = $('#image-logo').cropper(optionsLogo)
 
         }).on('hidden.bs.modal', function() {
+            $('#logo').val('')
             imageLogo.cropper('destroy');
         });
 
@@ -261,7 +263,7 @@
             // canvas = cropper.getCroppedCanvas();
 
             canvas.toBlob(function(blob) {
-                $('#loader').removeClass('d-none')
+                $('#loader-logo').removeClass('d-none')
                 var url = URL.createObjectURL(blob);
                 var reader = new FileReader();
                 reader.readAsDataURL(blob);
@@ -280,6 +282,7 @@
                             $modalLogo.modal('hide');
                             window.location.reload()
                             $('#loader-logo').addClass('d-none')
+
 
                         },
                         error: function(error) {

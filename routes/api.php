@@ -39,7 +39,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     Route::get('employees/getData', 'EmployeesController@getData');
     Route::get('employee_requests/getData', 'EmployeeRequestController@getData');
 
-    Route::patch('employee/update', 'EmployeesController@employeeUpdate');
+    Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
 
     Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
