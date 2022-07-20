@@ -69,7 +69,7 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
-                        <table id="datatable-buttons" class="table table-striped nowrap w-100 " >
+                        <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100 " >
                             <thead>
                                 <tr>
                                     <th>#</th>

@@ -151,7 +151,7 @@
                     <li>
                         <a href="#sidebaratt_dep" data-toggle="collapse">
                             <i class="fas fa-user-tie"></i>
-                            <span>Attend & Departure</span>
+                            <span>Attend & Departs</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebaratt_dep">

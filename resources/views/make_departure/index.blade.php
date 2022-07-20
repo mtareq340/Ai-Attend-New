@@ -1,7 +1,11 @@
 @extends('layouts.vertical', ['title' => 'Datatables'])
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+        type="text/css" />
 
 @endsection
 
@@ -51,7 +55,7 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
-                        <table id="datatable-buttons" class="table table-striped nowrap w-100 " >
+                        <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100 " >
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -118,8 +122,7 @@
             <div class="modal-body" id="details-content">
                 <form id="details">
                     @csrf
-                    <input type="time" class="form-control" name="over_time" id="details-value"
-                        class="24hours-timepicker form-control" value="">
+                    <input type="text" name="over_time" class="form-control 24hours-timepicker" id="details-value">
                     <button type="submit" id="departure" class="mt-1 btn btn-success">Submit</button>
                 </form>
             </div>
@@ -133,11 +136,24 @@
 @section('script')
     <!-- Plugins js-->
 
-    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+  <!-- Plugins js-->
+  <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+  {{-- <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
+  <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+  
+    <script>
+        
+        $('.24hours-timepicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            defaultHour : 0,
+        });
 
-    <!-- Page js-->
-    <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    </script>
     <script>
      
         function insertParam(key, value) {

@@ -127,6 +127,7 @@
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     {{-- <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    
     <script>
         const editExtraTime = (details, id) => {
             $('#details-modal').modal('show')
