@@ -138,7 +138,7 @@
                                             @endcan
                                         </td>
 
-                                        <td>{{ $emp->email }}</td>
+                                        <td><a href="mailto:{{ $emp->email }}">{{ $emp->email }}</a></td>
                                         <td>{{ $emp->phone }}</td>
                                         <td>{{ $emp->address }}</td>
 
@@ -600,6 +600,7 @@
 
         }
 
+        let changed = false;
         const update_attend_method = (method_id, emp_id , state) => {
             $.ajax({
                     url: '{{route('toggleAttendMethod')}}',
@@ -613,12 +614,21 @@
                     },
                     success: function(data) {
                         notyf.success('تم التعديل بنجاح')
+                        changed = true
                     },
                     error: function(error) {
                         notyf.error('حدث خطا ما حاول لاحقا')
                     }
                 });
         }
+
+        $('#attendMethods-modal').on('hide.bs.modal' , () => {
+            if(changed)
+            {
+                location.reload()
+                changed = false;                
+            }
+        })
 
     </script>
 @endsection
