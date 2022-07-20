@@ -29,26 +29,19 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
 
     // Employees Apis
     Route::post('employees/employee_login', 'EmployeesController@employeeLogin'); // parameters ($email, $password)
-
     Route::post('employees/is_employee_phone_exist', 'EmployeesController@isEmployeePhoneExist'); // parameters ($phone)
-
-    Route::get('employees/is_otp_true', 'EmployeesController@isOtpTrue'); // parameters ($otp)
-    Route::patch('employees/reset_password', 'EmployeesController@resetPassword'); // parameters ($id,$password,$newpassword)
-    Route::patch('employees/change_password', 'EmployeesController@changePassword'); // parameters ($id,$oldpassword,$newpassword)
-
-    Route::get('employees/getData', 'EmployeesController@getData');
-    Route::get('employee_requests/getData', 'EmployeeRequestController@getData');
-
-    Route::patch('employee/update', 'EmployeesController@employeeUpdate');
+    Route::post('employees/is_otp_true', 'EmployeesController@isOtpTrue'); // parameters ($otp)
+    Route::post('employees/reset_password', 'EmployeesController@resetPassword'); // parameters ($id,$password,$newpassword)
+    Route::post('employees/change_password', 'EmployeesController@changePassword'); // parameters ($id,$oldpassword,$newpassword)
+    Route::post('employees/getData', 'EmployeesController@getData');
+    Route::post('employee_requests/getData', 'EmployeeRequestController@getData');
+    Route::post('employee/update', 'EmployeesController@employeeUpdate');
     Route::post('employee_requests/store', 'EmployeeRequestController@store');
-
-    Route::get('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
-
-    // Company Apis
-    Route::get('company/get_settings', 'CompanySettingsController@getData'); // parameters ()
-
-    // Attenance Methodd Apis
-    Route::get('attend_methods/getData', 'AttendMethodController@getEmployeeAttenance');
+    Route::post('employees/attend_methods', [EmployeesController::class, 'get_employee_attendenceMethods']);
+    // Comppost Apis
+    Route::post('company/get_settings', 'CompanySettingsController@getData'); // parameters ()
+    // Attepostce Methodd Apis
+    Route::post('attend_methods/getData', 'AttendMethodController@getEmployeeAttenance');
 
     // employee attenance and departure
     Route::post('employees/set_employees_attenance', 'AttendanceController@set_employee_attendence');
