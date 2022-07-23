@@ -2,7 +2,8 @@
 @section('css')
     <!-- Plugins css -->
     <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -32,8 +33,8 @@
         </div>
         <div class="row">
             <div class="form-group col-4">
-                    <select name="appointment_id" id="sel_appointment" class="form-control">
-                        <option value="0" selected disabled>Select Attendance Plan</option>
+                    <select name="appointment_id" id="sel_appointment" data-toggle="select2" class="form-control select2">
+                        <option value="0" selected >Select Attendance Plan</option>
                         @foreach ($work_appointments as $work_appointment)
                             <option
                             {{ app('request')->input('appointment_id') == $work_appointment->id ? 'selected' : '' }}
@@ -43,8 +44,8 @@
             </div>
             @if (auth()->user()->hasRole('super_admin'))
                 <div class="form-group col-4">
-                    <select name="branch_id" id="sel_branch" class="form-control">
-                        <option value="" selected disabled>Select Branch</option>
+                    <select name="branch_id" id="sel_branch" data-toggle="select2" class="form-control select2">
+                        <option value="" selected >Select Branch</option>
                         @foreach ($branches as $branch)
                             <option
                             {{ app('request')->input('branch_id') == $branch->id ? 'selected' : '' }}
@@ -54,8 +55,8 @@
                 </div>    
             @endif
             <div class="form-group col-4">
-                <select name="state" id="sel_state" class="form-control">
-                        <option value="" selected disabled>Select State</option>  
+                <select name="state" id="sel_state" data-toggle="select2" class="form-control select2">
+                        <option value="" selected >Select State</option>  
                         
                         <option value="1" {{app('request')->input('state')== '1' ? 'selected':'' }}>Success</option>
                         <option value="0" {{app('request')->input('state')== '0' ? 'selected':'' }}>Fail</option>
@@ -72,7 +73,7 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
-                        <table id="datatable-buttons" class="table table-striped nowrap w-100 " >
+                        <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100 " >
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -80,11 +81,10 @@
                                     <th>Job Number</th>
                                     <th>Attendance Plan</th>
                                     <th>Branch Name</th>
-                                    <th>Attendance Method</th>
+                                    <th>Attendance Methods</th>
                                     <th>State</th>
                                     <th>Date</th>
                                     <th>Created By</th>
-                                    {{-- <th>Actions</th> --}}
                                 </tr>
                             </thead>
 
@@ -143,13 +143,16 @@
 
 @section('script')
     <!-- Plugins js-->
+
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
 
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+   
     <script>
-
 function insertParam(key, value) {
     key = encodeURIComponent(key);
     value = encodeURIComponent(value);
@@ -206,6 +209,8 @@ function insertParam(key, value) {
     <script>
         $(document).ready(function(){
            
+            $('.select2').select2()
+
 
              $('#attendance_submit').click(function(e){
                e.preventDefault();

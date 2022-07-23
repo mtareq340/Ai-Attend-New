@@ -3,15 +3,11 @@
 @section('css')
     <!-- Plugins css -->
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css') }}" rel="stylesheet"
-        type="text/css" />
+
 @endsection
 
 @section('content')
@@ -24,10 +20,10 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Assign Appointment</li>
+                            <li class="breadcrumb-item active">Manage attendance plan</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Assign Appointment</h4>
+                    <h4 class="page-title">Manage attendance plan</h4>
                 </div>
             </div>
         </div>
@@ -46,12 +42,13 @@
                                 <tr>
                                     <th>Actions</th>
                                     <th>Employee Name</th>
-                                    <th>Job Name</th>
-                                    <th>Branch Name</th>
+                                    <th>Job number</th>
+                                    {{-- <th>Job Name</th> --}}
+                                    {{-- <th>Branch Name</th> --}}
                                     <th>Location Name</th>
                                     <th>Appointment</th>
-                                    <th>Over time</th>
-                                   
+                                    <th>current overtime</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,10 +75,12 @@
                                         </div>
                                     </td>
                                     <td>{{ $a->employees->name }}</td>
-                                    <td>{{ $a->job->name }}</td>
-                                    <td>{{ $a->branch->name }}</td>
+                                    <td>{{ $a->employees->job_number }}</td>
+                                    {{-- <td>{{ $a->job->name }}</td> --}}
+                                    {{-- <td>{{ $a->branch->name }}</td> --}}
                                     <td>{{ $a->location->name }}</td>
                                     <td>{{ $a->appointment->name }}</td>
+                                    <td>{{ $a->over_time }}</td>
                                     <td>
                                         <button onclick="editExtraTime('{{ $a->over_time }}','{{ $a->id }}')"
                                             class="btn btn-sm btn-info">Edit OverTime</button>
@@ -103,8 +102,8 @@
                                     <div class="modal-body" id="details-content">
                                         <form action="{{ route('update_over_time') }}" id="details" method="POST">
                                             @csrf
-                                            <input type="time" class="form-control" name="over_time" id="details-value"
-                                                class="24hours-timepicker form-control" value="">
+                                           <input type="text" name="over_time" class="form-control 24hours-timepicker" id="details-value">
+
                                             <input type="hidden" name="assign_appointment_id" id="assign_appointment_id">
                                             <button type="submit" class="mt-1 btn btn-primary">Edit</button>
                                         </form>
@@ -121,28 +120,29 @@
 @endsection
 
 @section('script')
-    <script>
-        $('.24hours-timepicker').flatpickr({
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-            time_24hr: true
-        });
-
-    </script>
+  
     <!-- Plugins js-->
+    <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-
-    <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    
     <script>
         const editExtraTime = (details, id) => {
             $('#details-modal').modal('show')
             $('#details-value').val(details)
             $('#assign_appointment_id').val(id)
         }
+
+        $('.24hours-timepicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            defaultHour : 0,
+        });
+
 
     </script>
 @endsection

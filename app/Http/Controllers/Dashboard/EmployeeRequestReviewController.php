@@ -41,7 +41,7 @@ class EmployeeRequestReviewController extends Controller
             }
             $requestreviews = $requestreviews->get();
         }
-        return view('EmployeeRequestReview.index', compact('requestreviews'));
+        return view('employeerequestreview.index', compact('requestreviews'));
     }
     //apply Employee request
     public function make_reponse(Request $request, $id)
@@ -49,7 +49,7 @@ class EmployeeRequestReviewController extends Controller
         // $request_types = RequestType::all();
         $request_review = Employee_Request_Review::find($id);
         // dd($user_id);
-        return view('EmployeeRequestReview.EmployeeRequest.create', compact('request_review'));
+        return view('employeerequestreview.employeerequest.create', compact('request_review'));
     }
 
     //insert to Employee requests and delete from employee request reviews//

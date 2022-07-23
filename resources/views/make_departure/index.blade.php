@@ -1,7 +1,13 @@
 @extends('layouts.vertical', ['title' => 'Datatables'])
 @section('css')
     <!-- Plugins css -->
-    <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+        type="text/css" />
+        <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -34,8 +40,8 @@
         </div>
         <div class="row">
             <div class="form-group col-4">
-                    <select name="appointment_id" id="sel_appointment" class="form-control">
-                        <option value="" selected disabled>Select Attendance Plan</option>
+                    <select name="appointment_id" id="sel_appointment" class="form-control select2">
+                        <option value="0" selected >Select Attendance Plan</option>
                         @foreach ($work_appointments as $work_appointment)
                             <option {{ app('request')->input('appointment_id') == $work_appointment->id ? 'selected' : '' }}
                              value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
@@ -51,7 +57,7 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
-                        <table id="datatable-buttons" class="table table-striped nowrap w-100 " >
+                        <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100 " >
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -118,8 +124,7 @@
             <div class="modal-body" id="details-content">
                 <form id="details">
                     @csrf
-                    <input type="time" class="form-control" name="over_time" id="details-value"
-                        class="24hours-timepicker form-control" value="">
+                    <input type="text" name="over_time" class="form-control 24hours-timepicker" id="details-value">
                     <button type="submit" id="departure" class="mt-1 btn btn-success">Submit</button>
                 </form>
             </div>
@@ -133,13 +138,29 @@
 @section('script')
     <!-- Plugins js-->
 
-    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-
-    <!-- Page js-->
-    <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+  <!-- Plugins js-->
+  <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+  {{-- <script src="{{ asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script> --}}
+  <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+  <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+ 
+  
     <script>
-     
+        
+        $('.24hours-timepicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            defaultHour : 0,
+        });
+
+    </script>
+    <script>
+         $('.select2').select2()
         function insertParam(key, value) {
             key = encodeURIComponent(key);
             value = encodeURIComponent(value);
@@ -212,12 +233,12 @@
                  success: function(result){
                     notyf.success('تم التحديث بنجاح')
                     window.location.reload();
-                    // console.log(result);
+                    console.log(result);
                 },
                  error:function(err)
                  {
                     notyf.error('حدثت مشكله برجاء المحاوله مره اخري')
-                    // console.log(err);
+                    console.log(err);
                  }
                  
                 });

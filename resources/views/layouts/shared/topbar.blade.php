@@ -347,7 +347,7 @@
             <a href="{{ route('any', ['dashboard']) }}" class="logo logo-dark text-center">
                 <span class="logo-sm">
                     <img src="{{ DB::table('company_settings')->first()->logo ? '/assets/images/' . DB::table('company_settings')->first()->logo : '/assets/images/default-logo.png' }}"
-                        alt="logo" width="50px" class="rounded-circle my-auto">
+                        alt="logo" width="50px" class="rounded-circle my-auto d-none">
                 </span>
                 <span class="logo-lg">
                     <img src="{{ DB::table('company_settings')->first()->logo ? '/assets/images/' . DB::table('company_settings')->first()->logo : '/assets/images/default-logo.png' }}"
@@ -359,7 +359,7 @@
             <a href="{{ route('any', ['dashboard']) }}" class="logo logo-light text-center">
                 <span class="logo-sm">
                     <img src="{{ DB::table('company_settings')->first()->logo ? '/assets/images/' . DB::table('company_settings')->first()->logo : '/assets/images/default-logo.png' }}"
-                        alt="logo" width="50px" class="rounded-circle my-auto">
+                        alt="logo" width="50px" class="rounded-circle my-auto d-none">
 
                 </span>
                 <span class="logo-lg">

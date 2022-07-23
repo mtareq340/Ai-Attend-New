@@ -82,7 +82,7 @@ class MakeDepartureController extends Controller
                 'period' => $period,
                 'appointment_id' => $appointment_id,
                 'user_name' => auth()->user()->name,
-                'overtime' => $over_time
+                'overtime_minutes_diff' => $over_time
             ]);
         }
     }

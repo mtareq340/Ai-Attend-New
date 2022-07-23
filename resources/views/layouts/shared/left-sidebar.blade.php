@@ -46,7 +46,6 @@
 
             <ul id="side-menu">
 
-                <li class="menu-title">Navigation</li>
 
                 <li>
                     <a href="{{ route('any', 'dashboard') }}">
@@ -56,7 +55,6 @@
 
                 </li>
 
-                <li class="menu-title mt-2">Apps</li>
 
 
                 {{-- start of account settings --}}
@@ -153,7 +151,7 @@
                     <li>
                         <a href="#sidebaratt_dep" data-toggle="collapse">
                             <i class="fas fa-user-tie"></i>
-                            <span>Attend & Departure</span>
+                            <span>Attend & Departs</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebaratt_dep">
@@ -255,7 +253,7 @@
                         <div class="collapse" id="sidebardevices">
                             <ul class="nav-second-level">
                                 @can('show_devices')
-                                    <li>
+                                    <li>k
                                         <a href="{{ route('devices.index') }}">Devices</a>
                                     </li>
                                 @endcan
@@ -300,7 +298,7 @@
 
 
                 {{-- start of employee - attend methods --}}
-                @can('show_employee_attend_methods')
+                {{-- @can('show_employee_attend_methods')
                     <li>
                         <a href="#sidebarempatt" data-toggle="collapse">
                             <i class="fa fa-users"></i>.
@@ -322,7 +320,7 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
+                @endcan --}}
                 {{-- end of employee - attend methods --}}
 
                 {{-- Appointment --}}
@@ -453,7 +451,25 @@
                 @endcan
                 {{-- end of users --}}
 
-
+                    {{-- start reports --}}
+                <li>
+                    <a href="#reports" data-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> Reports </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="reports">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('reports.attend-report') }}">Attend Report</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('reports.departure-report') }}">Departure Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {{-- end reports --}}
 
                 <li class="menu-title">Some Pages For Design</li>
 
@@ -1149,7 +1165,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li>  --}}
             </ul>
 
         </div>

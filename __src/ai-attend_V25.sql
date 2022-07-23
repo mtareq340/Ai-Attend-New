@@ -1,19 +1,24 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2022 at 10:55 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Jul 20, 2022 at 01:56 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `ai-attend-agaza`
+-- Database: `ai-attend`
 --
 
 -- --------------------------------------------------------
@@ -39,20 +44,52 @@ CREATE TABLE `assign_appointments` (
 --
 
 INSERT INTO `assign_appointments` (`id`, `employee_id`, `work_appointment_id`, `job_id`, `branch_id`, `location_id`, `over_time`, `created_at`, `updated_at`) VALUES
-(57, 11, 8, 1, 2, 33, '02:00', NULL, '2022-07-19 18:22:17'),
-(58, 10, 7, 1, 2, 33, '05:00', NULL, NULL),
-(59, 1, 6, 1, 2, 34, NULL, NULL, NULL),
-(60, 3, 6, 1, 2, 34, NULL, NULL, NULL),
-(61, 4, 6, 1, 2, 34, NULL, NULL, NULL),
-(62, 5, 6, 1, 2, 34, NULL, NULL, NULL),
-(63, 6, 6, 3, 2, 34, NULL, NULL, NULL),
-(64, 3, 2, 1, 2, 34, NULL, NULL, NULL),
-(65, 4, 2, 1, 2, 34, NULL, NULL, NULL),
-(78, 3, 9, 1, 2, 34, '17:37', NULL, '2022-07-19 15:35:07'),
-(79, 5, 9, 1, 2, 34, NULL, NULL, NULL),
-(80, 6, 9, 3, 2, 34, '19:35', NULL, '2022-07-19 15:36:00'),
-(81, 7, 9, 1, 2, 34, NULL, NULL, NULL),
-(82, 12, 9, 1, 2, 34, NULL, NULL, NULL);
+(108, 6, 11, 3, 2, 36, '04:00', NULL, '2022-07-20 11:17:58'),
+(109, 8, 11, 3, 2, 36, '03:00', NULL, NULL),
+(110, 34, 11, 3, 2, 36, '03:00', NULL, NULL),
+(111, 35, 11, 3, 2, 36, '03:00', NULL, NULL),
+(112, 36, 11, 3, 2, 36, '03:00', NULL, NULL),
+(113, 37, 11, 3, 2, 36, '03:00', NULL, NULL),
+(114, 38, 11, 3, 2, 36, '03:00', NULL, NULL),
+(115, 39, 11, 3, 2, 36, '03:00', NULL, NULL),
+(116, 40, 11, 3, 2, 36, '03:00', NULL, NULL),
+(117, 41, 11, 3, 2, 36, '03:00', NULL, NULL),
+(118, 42, 11, 3, 2, 36, '03:00', NULL, NULL),
+(119, 43, 11, 3, 2, 36, '03:00', NULL, NULL),
+(120, 44, 11, 3, 2, 36, '03:00', NULL, NULL),
+(121, 45, 11, 3, 2, 36, '03:00', NULL, NULL),
+(122, 46, 11, 3, 2, 36, '03:00', NULL, NULL),
+(123, 47, 11, 3, 2, 36, '03:00', NULL, NULL),
+(124, 48, 11, 3, 2, 36, '03:00', NULL, NULL),
+(125, 49, 11, 3, 2, 36, '03:00', NULL, NULL),
+(126, 50, 11, 3, 2, 36, '03:00', NULL, NULL),
+(127, 51, 11, 3, 2, 36, '03:00', NULL, NULL),
+(128, 52, 11, 3, 2, 36, '03:00', NULL, NULL),
+(129, 53, 11, 3, 2, 36, '03:00', NULL, NULL),
+(130, 54, 11, 3, 2, 36, '03:00', NULL, NULL),
+(131, 55, 11, 3, 2, 36, '03:00', NULL, NULL),
+(132, 56, 11, 3, 2, 36, '03:00', NULL, NULL),
+(133, 57, 11, 3, 2, 36, '03:00', NULL, NULL),
+(134, 58, 11, 3, 2, 36, '03:00', NULL, NULL),
+(135, 59, 11, 3, 2, 36, '03:00', NULL, NULL),
+(136, 60, 11, 3, 2, 36, '03:00', NULL, NULL),
+(137, 61, 11, 3, 2, 36, '03:00', NULL, NULL),
+(138, 62, 11, 3, 2, 36, '03:00', NULL, NULL),
+(139, 63, 11, 3, 2, 36, '03:00', NULL, NULL),
+(140, 74, 12, 4, 2, 36, '12:00', NULL, NULL),
+(141, 75, 12, 4, 2, 36, '12:00', NULL, NULL),
+(142, 76, 12, 4, 2, 36, '12:00', NULL, NULL),
+(143, 77, 12, 4, 2, 36, '12:00', NULL, NULL),
+(144, 78, 12, 4, 2, 36, '01:00', NULL, '2022-07-20 11:17:27'),
+(145, 79, 12, 4, 2, 36, '12:00', NULL, NULL),
+(146, 80, 12, 4, 2, 36, '12:00', NULL, NULL),
+(147, 81, 12, 4, 2, 36, '12:00', NULL, NULL),
+(148, 82, 12, 4, 2, 36, '12:00', NULL, NULL),
+(149, 83, 12, 4, 2, 36, '12:00', NULL, NULL),
+(154, 30, 10, 1, 2, 36, NULL, NULL, NULL),
+(155, 31, 10, 1, 2, 36, '00:30', NULL, '2022-07-20 11:10:45'),
+(156, 32, 10, 1, 2, 36, NULL, NULL, NULL),
+(157, 33, 10, 1, 2, 36, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -133,7 +170,7 @@ INSERT INTO `attendance_settings` (`id`, `branch_id`, `allow_delay`, `automatic_
 CREATE TABLE `attend_methods` (
   `id` bigint(20) NOT NULL,
   `name` varchar(191) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT '1',
+  `active` tinyint(1) DEFAULT 1,
   `notes` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -180,8 +217,9 @@ INSERT INTO `branches` (`id`, `name`, `phone`, `address`, `latitude`, `longituid
 (7, 'Cairo', '0123212324', 'Cairo', NULL, NULL, NULL, '2022-06-28 18:28:28', '2022-06-28 18:28:28', 7, 8, NULL),
 (8, 'testbranch', '01033', NULL, NULL, NULL, NULL, '2022-07-04 08:05:09', '2022-07-04 08:05:09', 9, 10, NULL),
 (9, 'test category', '457868', NULL, NULL, NULL, NULL, '2022-07-04 08:07:31', '2022-07-04 08:07:31', 11, 12, NULL),
-(10, 'test123', '01066018340', 'cairo', '49.451066', '40.628234', NULL, '2022-07-14 11:48:54', '2022-07-19 18:00:22', 13, 14, NULL),
-(12, 'test', '01066018340', 'cairo', '30.130549', '31.515851', NULL, '2022-07-16 08:58:49', '2022-07-16 09:04:31', 15, 16, NULL);
+(10, 'test123', '01066018340', 'cairo', '-0.109177', '-0.129089', NULL, '2022-07-14 11:48:54', '2022-07-16 09:37:37', 13, 14, NULL),
+(12, 'test', '01066018340', 'cairo', '30.130549', '31.515851', NULL, '2022-07-16 08:58:49', '2022-07-16 09:04:31', 15, 16, NULL),
+(13, 'test5', '01066018340', 'cairo', '30.044400', '31.235700', NULL, '2022-07-16 09:06:01', '2022-07-16 09:06:01', 17, 18, NULL);
 
 -- --------------------------------------------------------
 
@@ -194,8 +232,8 @@ CREATE TABLE `branch_setting` (
   `branch_id` int(11) NOT NULL,
   `over_time_count` int(11) NOT NULL,
   `vication_days` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -210,7 +248,8 @@ INSERT INTO `branch_setting` (`id`, `branch_id`, `over_time_count`, `vication_da
 (5, 9, 0, NULL, '2022-07-04 08:07:31', '2022-07-04 08:07:31'),
 (8, 10, 0, NULL, '2022-07-14 11:48:54', '2022-07-14 11:48:54'),
 (9, 11, 0, NULL, '2022-07-15 10:17:02', '2022-07-15 10:17:02'),
-(10, 12, 0, NULL, '2022-07-16 08:58:49', '2022-07-16 08:58:49');
+(10, 12, 0, NULL, '2022-07-16 08:58:49', '2022-07-16 08:58:49'),
+(11, 13, 0, NULL, '2022-07-16 09:06:02', '2022-07-16 09:06:02');
 
 -- --------------------------------------------------------
 
@@ -270,6 +309,7 @@ CREATE TABLE `devices` (
   `type` enum('becon','wifi') NOT NULL,
   `code` varchar(100) DEFAULT NULL,
   `ssid` varchar(200) DEFAULT NULL,
+  `bssid` varchar(200) DEFAULT NULL,
   `location_id` int(30) NOT NULL,
   `notes` varchar(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -280,13 +320,9 @@ CREATE TABLE `devices` (
 -- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`id`, `type`, `code`, `ssid`, `location_id`, `notes`, `created_at`, `updated_at`) VALUES
-(20, 'becon', '451245', '', 32, NULL, NULL, NULL),
-(21, 'wifi', '', 'rwasfas', 32, NULL, NULL, NULL),
-(32, 'wifi', NULL, '4124512rdxcvfwegtvsdfg', 33, NULL, NULL, NULL),
-(50, 'becon', '4321412412412', NULL, 34, NULL, NULL, NULL),
-(51, 'becon', 'gggg', '', 35, NULL, NULL, NULL),
-(52, 'wifi', '', 'gggg', 35, NULL, NULL, NULL);
+INSERT INTO `devices` (`id`, `type`, `code`, `ssid`, `bssid`, `location_id`, `notes`, `created_at`, `updated_at`) VALUES
+(53, 'becon', '24231s', '', '', 36, NULL, NULL, NULL),
+(54, 'wifi', '', 'TP-Link_015040', 'dsa2q42-fasfasf-r42424fas', 36, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -307,8 +343,8 @@ CREATE TABLE `employees` (
   `age` bigint(20) DEFAULT NULL,
   `branch_id` bigint(20) DEFAULT NULL,
   `job_id` bigint(20) DEFAULT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `locked` int(11) NOT NULL DEFAULT '1',
+  `active` int(11) NOT NULL DEFAULT 1,
+  `locked` int(11) NOT NULL DEFAULT 1,
   `otp` varchar(191) DEFAULT NULL,
   `avatar` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -320,17 +356,88 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `name`, `job_number`, `email`, `password`, `phone`, `phone_num2`, `address`, `gender`, `age`, `branch_id`, `job_id`, `active`, `locked`, `otp`, `avatar`, `created_at`, `updated_at`) VALUES
-(1, 'mohamed', '', 'mtareq340@gmail.com', '123456789', '01011305995', NULL, 'abo sleem', 'male', 25, 2, 1, 1, 1, NULL, '', NULL, '2022-06-25 12:07:36'),
+(1, 'mohamed', '3600', 'mtareq340@gmail.com', '123456789', '01011305995', NULL, 'abo sleem', 'male', 25, 2, 1, 1, 1, NULL, '', NULL, '2022-06-25 12:07:36'),
 (3, 'moahamed magdy', '226688', 'magdy@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '01066018340', NULL, '1234 main ST', 'male', 20, 7, 1, 1, 0, NULL, '', '2022-06-29 06:33:01', '2022-07-19 10:59:44'),
-(4, 'moahamed salah', '', 'salah@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '012154785522222', NULL, '1234 main ST', 'male', 25, 7, 1, 1, 1, NULL, '', '2022-06-29 06:33:01', '2022-06-29 07:52:41'),
+(4, 'moahamed salah', '777755', 'salah@gmail.com', '$2y$10$42suyc0J5NCxYhnCQWmNnejLPFTzQOacxxgAswjC.XgM7ij0SvW36', '012154785522222', NULL, '1234 main ST', 'male', 25, 7, 1, 1, 1, NULL, '', '2022-06-29 06:33:01', '2022-06-29 07:52:41'),
 (5, 'john doe', '123456', 'ex@ex.com', NULL, '0106601834', NULL, '1234 main st', 'male', 15, 5, 1, 1, 1, NULL, '', '2022-07-03 07:37:11', '2022-07-04 07:05:12'),
 (6, 'join doe', '7864521', 'ex@gmail.com', NULL, '05102', NULL, '1234 main st', 'male', 20, 5, 3, 1, 0, NULL, '', '2022-07-03 07:40:06', '2022-07-05 05:18:02'),
-(7, 'moahmed', '', NULL, NULL, '01066018340', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-03 09:40:37', '2022-07-03 09:40:37'),
+(7, 'moahmed', '63354', NULL, NULL, '01066018340', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-03 09:40:37', '2022-07-03 09:40:37'),
 (8, 'oraby', '777889955', 'oraby@gmail.com', NULL, '01066018340', NULL, NULL, 'male', NULL, 8, 3, 0, 1, NULL, '', '2022-07-05 22:47:42', '2022-07-11 17:24:18'),
 (9, 'Nour', '3335', 'nour@nour.com', NULL, '01066018340', NULL, '1234 mona', 'female', 25, 6, 1, 1, 1, NULL, '', '2022-07-10 16:52:24', '2022-07-10 16:52:24'),
 (10, 'mohammed ahmed', '321421', 'mohammed18200118@gmail.com', '$2y$10$vZTVTNulAAaMV8A6sLkDB.3oXIMAjclPDWAXcmlo4fI5MDRuBujwi', '4214214', NULL, 'address', 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-12 21:28:26', '2022-07-12 21:28:26'),
 (11, 'employee test', '21421', 't@t.com', NULL, '32124512421', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, '', '2022-07-12 21:29:52', '2022-07-12 21:29:52'),
-(12, 'brad', '69933', 'brand@gmail.com', NULL, '0106601122', NULL, NULL, 'male', 20, 2, 1, 1, 1, NULL, NULL, '2022-07-19 07:30:31', '2022-07-19 07:30:31');
+(12, 'brad', '69933', 'brand@gmail.com', NULL, '0106601122', NULL, NULL, 'male', 20, 2, 1, 1, 1, NULL, NULL, '2022-07-19 07:30:31', '2022-07-19 07:30:31'),
+(13, '13jto3QVvz', '89984', 'rBnsyHehnd@gmail.com', NULL, '71685423026', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 07:57:01', '2022-07-20 07:57:01'),
+(14, 'Mr. Will Wuckert', '16770', 'myrtis58@example.com', NULL, '29723558744', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(15, 'Julius Russel', '88609', 'skozey@example.net', NULL, '91147583344', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(16, 'Marlene Macejkovic', '11972', 'juana.mertz@example.org', NULL, '95631034577', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(17, 'Osborne Moore', '86114', 'garrison52@example.com', NULL, '97863692181', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(18, 'Jayne Purdy', '11789', 'sipes.nigel@example.com', NULL, '76780723434', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(19, 'Stephany Bogisich', '95394', 'wilma00@example.com', NULL, '26275335558', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(20, 'Corbin Wiegand', '32347', 'julio90@example.org', NULL, '85610397778', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(21, 'Jarrell Blanda', '21688', 'wwhite@example.org', NULL, '55792022154', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(22, 'Mr. Chase Torphy', '36746', 'damaris.ortiz@example.net', NULL, '32955278916', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(23, 'Miss Josianne Mayer', '23605', 'qkulas@example.org', NULL, '30088047840', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(24, 'Tom VonRueden', '23105', 'telly.cole@example.net', NULL, '67400086265', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:10', '2022-07-20 08:21:10'),
+(25, 'Miss Cora Schiller I', '76608', 'kemmer.jaiden@example.net', NULL, '24238259452', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(26, 'Miss Cathy Wisoky', '36384', 'mckenzie82@example.com', NULL, '35052734120', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(27, 'Alisha Koch V', '23849', 'aufderhar.casimir@example.com', NULL, '53174377781', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(28, 'Lea Gerlach', '29735', 'bpouros@example.org', NULL, '89332866424', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(29, 'Michele Willms', '56480', 'pkreiger@example.net', NULL, '57519567058', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(30, 'Daryl Hayes Jr.', '69495', 'hirthe.dominique@example.org', NULL, '78994516367', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(31, 'Quinn Gulgowski', '96646', 'cwisoky@example.org', NULL, '46230423098', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(32, 'Prof. Enrico Heathcote IV', '53651', 'mueller.anne@example.com', NULL, '28332345194', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(33, 'Dr. Valentine Stiedemann DDS', '33616', 'gheaney@example.org', NULL, '25479464771', NULL, NULL, 'male', NULL, 2, 1, 1, 1, NULL, NULL, '2022-07-20 08:21:11', '2022-07-20 08:21:11'),
+(34, 'Mr. Tracey Schimmel', '90521', 'bryana.stoltenberg@example.org', NULL, '60422354627', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:38', '2022-07-20 08:22:38'),
+(35, 'Rene Brakus', '77841', 'skiles.zelda@example.com', NULL, '15476587045', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(36, 'Leda Nolan', '73176', 'claudie41@example.com', NULL, '24868037652', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(37, 'Jake Gorczany', '12525', 'welch.pat@example.org', NULL, '85267557070', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(38, 'Marilyne Bartell', '41999', 'bobbie55@example.net', NULL, '54695041584', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(39, 'Lucy Zieme', '68398', 'baumbach.margarete@example.com', NULL, '91349262060', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(40, 'Darrin Dickinson', '71341', 'carleton79@example.com', NULL, '80263992529', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(41, 'Prof. Josue Greenholt Sr.', '76700', 'timmothy12@example.net', NULL, '40557389484', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(42, 'Kayleigh Johnson', '57145', 'sipes.jillian@example.net', NULL, '92530728268', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(43, 'Bruce Pagac', '27112', 'grover89@example.com', NULL, '51798351834', NULL, NULL, 'male', NULL, 5, 3, 1, 1, NULL, NULL, '2022-07-20 08:22:39', '2022-07-20 08:22:39'),
+(44, 'Cletus Pfeffer Jr.', '27269', 'jeromy.denesik@example.org', NULL, '88259348858', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:05', '2022-07-20 08:23:05'),
+(45, 'Dr. Jaylon Jerde II', '31726', 'verda.little@example.com', NULL, '86069392804', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(46, 'Ivah Baumbach', '62595', 'vlesch@example.com', NULL, '64906612054', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(47, 'Jed Lakin', '33559', 'breana57@example.org', NULL, '72762320799', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(48, 'Rosalind Gulgowski', '13294', 'cecelia.murphy@example.org', NULL, '34646726573', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(49, 'Prof. Chase Pfannerstill I', '47399', 'lind.elnora@example.com', NULL, '78996913660', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(50, 'Dr. Shanny Torphy', '75920', 'ugulgowski@example.org', NULL, '99844487305', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(51, 'Terence Crona', '65617', 'maida.mertz@example.com', NULL, '37593609088', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(52, 'Sandrine Armstrong', '48735', 'velva.ohara@example.net', NULL, '48277678866', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(53, 'Pauline Lind', '13363', 'bradford.mitchell@example.com', NULL, '24566572990', NULL, NULL, 'male', NULL, 6, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:07', '2022-07-20 08:23:07'),
+(54, 'Frieda McKenzie MD', '80618', 'hellen35@example.org', NULL, '82887712320', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(55, 'Shannon Botsford', '12019', 'effertz.krista@example.net', NULL, '57235260208', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(56, 'Xander Mitchell', '42781', 'perdman@example.net', NULL, '49346463329', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(57, 'Dr. Ulices Gerlach V', '68767', 'maxwell68@example.net', NULL, '60453867796', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(58, 'Prof. Troy Prosacco DVM', '54403', 'rosetta.kris@example.org', NULL, '21617885638', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(59, 'Odie Cronin', '34365', 'koelpin.alexa@example.org', NULL, '89049894013', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(60, 'Naomie Kreiger', '86740', 'donnie.gusikowski@example.com', NULL, '58694121781', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(61, 'Marilou Marvin', '26857', 'satterfield.chesley@example.net', NULL, '19707794068', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(62, 'Prof. Johnnie Jacobson', '21420', 'ron19@example.org', NULL, '72852050647', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(63, 'Virgie Nicolas', '43103', 'koconnell@example.com', NULL, '79415141153', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 08:23:28', '2022-07-20 08:23:28'),
+(64, 'Nyah Considine', '48056', 'hintz.raymundo@example.org', NULL, '48261054353', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:09', '2022-07-20 09:39:09'),
+(65, 'Miss Lessie Farrell Sr.', '28571', 'cbosco@example.net', NULL, '18775395599', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:09', '2022-07-20 09:39:09'),
+(66, 'Lisa Kreiger', '74413', 'rreichel@example.com', NULL, '27121893879', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:09', '2022-07-20 09:39:09'),
+(67, 'Miss Rosalind Davis PhD', '11850', 'aufderhar.maryam@example.org', NULL, '15409166313', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:09', '2022-07-20 09:39:09'),
+(68, 'Aurore Wilderman III', '70118', 'winnifred75@example.net', NULL, '32876382792', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:10', '2022-07-20 09:39:10'),
+(69, 'Nellie Kshlerin', '61296', 'padberg.allan@example.net', NULL, '93610785328', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:10', '2022-07-20 09:39:10'),
+(70, 'Alanis Wilkinson', '45682', 'von.elisha@example.org', NULL, '32482364044', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:10', '2022-07-20 09:39:10'),
+(71, 'Rosalind Robel', '68762', 'wilfred.grady@example.org', NULL, '56564883682', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:10', '2022-07-20 09:39:10'),
+(72, 'Ms. Ines Hyatt', '53607', 'alejandra.swaniawski@example.com', NULL, '85294674617', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:10', '2022-07-20 09:39:10'),
+(73, 'Terrence Flatley', '54423', 'nelson.casper@example.org', NULL, '91566124946', NULL, NULL, 'male', NULL, 7, 3, 1, 1, NULL, NULL, '2022-07-20 09:39:10', '2022-07-20 09:39:10'),
+(74, 'Jasmin Nolan', '97144', 'bfeeney@example.net', NULL, '93863571250', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(75, 'Alvena Dietrich', '31729', 'delores.kreiger@example.org', NULL, '93760824742', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(76, 'Savion Little', '34976', 'lstoltenberg@example.org', NULL, '44056295717', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(77, 'Alexa Kozey I', '83268', 'vspinka@example.com', NULL, '25946123325', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(78, 'Triston Lowe', '50392', 'bernhard46@example.net', NULL, '54026935558', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(79, 'Kari Bartell', '30068', 'julian12@example.net', NULL, '89838697761', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(80, 'Ada Stiedemann', '95069', 'cremin.arvilla@example.org', NULL, '75072169194', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(81, 'Myron Maggio IV', '30796', 'veda.rolfson@example.com', NULL, '83173632686', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(82, 'Vernice Runolfsdottir', '52177', 'rath.petra@example.org', NULL, '13649851442', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42'),
+(83, 'Prof. Hardy Gutmann', '38199', 'roberts.rowan@example.org', NULL, '74994570297', NULL, NULL, 'male', NULL, 7, 4, 1, 1, NULL, NULL, '2022-07-20 09:40:42', '2022-07-20 09:40:42');
 
 -- --------------------------------------------------------
 
@@ -343,25 +450,22 @@ CREATE TABLE `employees_departure` (
   `employee_id` int(11) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `appointment_id` int(11) DEFAULT NULL,
-  `state` tinyint(1) NOT NULL DEFAULT '1',
+  `state` tinyint(1) NOT NULL DEFAULT 1,
   `reason` varchar(255) DEFAULT NULL,
   `user_name` varchar(50) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `period` enum('1','2') NOT NULL,
-  `overtime` time DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `overtime_minutes_diff` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employees_departure`
 --
 
-INSERT INTO `employees_departure` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `user_name`, `date`, `period`, `overtime`, `created_at`, `updated_at`) VALUES
-(12, 5, 2, 8, 1, ' c ', NULL, '2022-07-19', '1', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01'),
-(13, 4, 2, 8, 1, ' c ', NULL, '2022-07-19', '1', NULL, '2022-07-19 09:38:01', '2022-07-19 09:38:01'),
-(24, 3, 2, 9, 1, NULL, 'superadmin', '2022-07-19', '1', '17:37:00', '2022-07-19 15:35:07', '2022-07-19 15:35:07'),
-(25, 6, 2, 9, 1, NULL, 'superadmin', '2022-07-19', '2', '19:35:00', '2022-07-19 15:36:00', '2022-07-19 15:36:00');
+INSERT INTO `employees_departure` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `user_name`, `date`, `period`, `overtime_minutes_diff`, `created_at`, `updated_at`) VALUES
+(14, 78, 2, 12, 1, NULL, 'superadmin', '2022-07-20', '2', NULL, '2022-07-20 11:17:27', '2022-07-20 11:17:27');
 
 -- --------------------------------------------------------
 
@@ -374,13 +478,13 @@ CREATE TABLE `employee_attendance` (
   `employee_id` int(11) DEFAULT NULL,
   `branch_id` int(11) NOT NULL,
   `appointment_id` int(11) DEFAULT NULL,
-  `state` tinyint(1) DEFAULT '0',
+  `state` tinyint(1) DEFAULT 0,
   `reason` varchar(250) DEFAULT NULL,
   `period` enum('1','2') NOT NULL,
   `user_name` varchar(50) DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -388,10 +492,12 @@ CREATE TABLE `employee_attendance` (
 --
 
 INSERT INTO `employee_attendance` (`id`, `employee_id`, `branch_id`, `appointment_id`, `state`, `reason`, `period`, `user_name`, `date`, `created_at`, `updated_at`) VALUES
-(44, 5, 2, 8, 1, NULL, '1', NULL, '2022-07-19', '2022-07-18 22:24:19', '2022-07-18 22:24:19'),
-(45, 4, 2, 9, 1, NULL, '1', NULL, '2022-07-19', '2022-07-19 07:13:16', '2022-07-19 07:13:16'),
-(46, 3, 2, 9, 1, NULL, '1', NULL, '2022-07-19', '2022-07-19 07:13:16', '2022-07-19 07:13:16'),
-(47, 6, 2, 9, 1, NULL, '1', NULL, '2022-07-19', '2022-07-19 07:13:16', '2022-07-19 07:13:16');
+(48, 31, 2, 10, 1, 'the employee is late 727 minutes', '1', 'superadmin', '2022-07-20', '2022-07-20 10:37:32', '2022-07-20 10:40:49'),
+(49, 78, 2, 12, 1, 'the employee is late 218 minutes', '1', 'superadmin', '2022-07-20', '2022-07-20 10:38:41', '2022-07-20 10:40:49'),
+(50, 80, 2, 12, 1, 'the employee is late 219 minutes', '1', 'superadmin', '2022-07-20', '2022-07-20 10:39:18', '2022-07-20 10:40:49'),
+(51, 81, 2, 12, 0, 'the employee is late 219 minutes', '1', NULL, '2022-07-20', '2022-07-20 10:39:27', '2022-07-20 10:39:27'),
+(52, 82, 2, 12, 0, 'the employee is late 219 minutes', '1', NULL, '2022-07-20', '2022-07-20 10:39:34', '2022-07-20 10:39:34'),
+(53, 30, 2, 10, 0, 'the employee is late 729 minutes', '1', NULL, '2022-07-20', '2022-07-20 10:39:52', '2022-07-20 10:39:52');
 
 -- --------------------------------------------------------
 
@@ -425,7 +531,30 @@ INSERT INTO `employee_attend_methods` (`id`, `employee_id`, `attend_method_id`, 
 (114, 10, 2, NULL, NULL),
 (115, 10, 4, NULL, NULL),
 (116, 11, 2, NULL, NULL),
-(117, 11, 4, NULL, NULL);
+(117, 11, 4, NULL, NULL),
+(118, 54, 2, NULL, NULL),
+(119, 54, 3, NULL, NULL),
+(120, 54, 4, NULL, NULL),
+(121, 61, 3, NULL, NULL),
+(122, 61, 4, NULL, NULL),
+(123, 74, 2, NULL, NULL),
+(124, 74, 3, NULL, NULL),
+(126, 75, 3, NULL, NULL),
+(127, 75, 2, NULL, NULL),
+(128, 75, 4, NULL, NULL),
+(129, 76, 2, NULL, NULL),
+(130, 76, 3, NULL, NULL),
+(131, 76, 4, NULL, NULL),
+(132, 77, 2, NULL, NULL),
+(133, 77, 3, NULL, NULL),
+(134, 77, 4, NULL, NULL),
+(135, 78, 2, NULL, NULL),
+(136, 78, 3, NULL, NULL),
+(137, 79, 2, NULL, NULL),
+(138, 79, 4, NULL, NULL),
+(139, 80, 3, NULL, NULL),
+(140, 80, 2, NULL, NULL),
+(141, 80, 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -476,8 +605,8 @@ CREATE TABLE `employee_request_review` (
   `details` varchar(255) NOT NULL,
   `status` enum('1','2','3') NOT NULL DEFAULT '1',
   `date` datetime NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -485,9 +614,32 @@ CREATE TABLE `employee_request_review` (
 --
 
 INSERT INTO `employee_request_review` (`id`, `employee_id`, `request`, `attachment`, `details`, `status`, `date`, `created_at`, `updated_at`) VALUES
-(27, 11, 'I nee a day off', '/uploads/requests/1657924788mohammed-ahmed-editied0000020007.jpg', 'اللالانيشلبسشكمبمستشكبتسشختبسشكتبكشسمتبمشسةبمسشةب ب تشسحخبتسشكم بؤ تشسخحبتسشةنمبشس بليشسبسش بشسبسش  بسش بشسي', '2', '2022-07-15 00:00:00', '2022-07-15 20:39:48', '2022-07-16 10:02:44'),
-(28, 11, 'I nee a day off', '/uploads/requests/165792673006a35f16927ca22d4f74fa2c390548ad.jpg', 'اللالانيشلبسشكمبمستشكبتسشختبسشكتبكشسمتبمشسةبمسشةب ب تشسحخبتسشكم بؤ تشسخحبتسشةنمبشس بليشسبسش بشسبسش  بسش بشسي', '3', '2022-07-15 00:00:00', '2022-07-15 21:12:10', '2022-07-16 10:05:47'),
-(29, 11, 'I nee a day off', '/uploads/requests/16579267689cb4842b2d30d2b6f7885a341253e470.jpg', 'extra details', '2', '2022-07-15 00:00:00', '2022-07-15 21:12:48', '2022-07-16 10:05:41');
+(30, 1, 'Vacation Request', NULL, 'need 2 days off', '1', '2022-07-20 00:00:00', '2022-07-20 10:10:16', '2022-07-20 10:10:16'),
+(31, 10, 'Vacation Request', NULL, 'need 2 days off', '3', '2022-07-20 00:00:00', '2022-07-20 10:10:31', '2022-07-20 10:15:24'),
+(32, 5, 'Vacation Request', NULL, 'need 2 days off', '1', '2022-07-20 00:00:00', '2022-07-20 10:10:44', '2022-07-20 10:10:44'),
+(33, 6, 'Vacation Request', NULL, 'need 2 days off', '3', '2022-07-20 00:00:00', '2022-07-20 10:10:50', '2022-07-20 10:15:28'),
+(34, 7, 'Vacation Request', NULL, 'need 2 days off', '3', '2022-07-20 00:00:00', '2022-07-20 10:10:55', '2022-07-20 10:15:19'),
+(35, 8, 'Vacation Request', NULL, 'need 2 days off', '3', '2022-07-20 00:00:00', '2022-07-20 10:11:03', '2022-07-20 10:15:34'),
+(36, 15, 'Vacation Request', NULL, 'need 2 days off', '1', '2022-07-20 00:00:00', '2022-07-20 10:11:16', '2022-07-20 10:11:16'),
+(37, 16, 'Vacation Request', NULL, 'need 2 days off', '2', '2022-07-20 00:00:00', '2022-07-20 10:11:21', '2022-07-20 11:27:11'),
+(38, 17, 'Vacation Request', NULL, 'need 2 days off', '3', '2022-07-20 00:00:00', '2022-07-20 10:11:26', '2022-07-20 10:15:35'),
+(39, 18, 'Vacation Request', NULL, 'need 2 days off', '3', '2022-07-20 00:00:00', '2022-07-20 10:11:31', '2022-07-20 10:15:12'),
+(40, 19, 'Vacation Request', NULL, 'need 2 days off', '1', '2022-07-20 00:00:00', '2022-07-20 10:11:36', '2022-07-20 10:11:36'),
+(41, 20, 'Vacation Request', NULL, 'need 2 days off', '2', '2022-07-20 00:00:00', '2022-07-20 10:11:44', '2022-07-20 10:14:48'),
+(42, 26, 'Vacation Request', NULL, 'need 2 days off', '1', '2022-07-20 00:00:00', '2022-07-20 10:11:54', '2022-07-20 10:11:54'),
+(43, 26, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:13:15', '2022-07-20 10:13:15'),
+(44, 5, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:13:20', '2022-07-20 10:13:20'),
+(45, 30, 'Bones Request', NULL, 'Request for a salary increase', '2', '2022-07-20 00:00:00', '2022-07-20 10:13:26', '2022-07-20 10:15:01'),
+(46, 31, 'Bones Request', NULL, 'Request for a salary increase', '3', '2022-07-20 00:00:00', '2022-07-20 10:13:32', '2022-07-20 10:15:42'),
+(47, 32, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:13:35', '2022-07-20 10:13:35'),
+(48, 33, 'Bones Request', NULL, 'Request for a salary increase', '2', '2022-07-20 00:00:00', '2022-07-20 10:13:39', '2022-07-20 10:15:05'),
+(49, 34, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:13:42', '2022-07-20 10:13:42'),
+(50, 35, 'Bones Request', NULL, 'Request for a salary increase', '3', '2022-07-20 00:00:00', '2022-07-20 10:13:47', '2022-07-20 10:15:44'),
+(51, 36, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:13:54', '2022-07-20 10:13:54'),
+(52, 38, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:13:58', '2022-07-20 10:13:58'),
+(53, 39, 'Bones Request', NULL, 'Request for a salary increase', '1', '2022-07-20 00:00:00', '2022-07-20 10:14:03', '2022-07-20 10:14:03'),
+(54, 20, 'Bones Request', NULL, 'Request for a salary increase', '2', '2022-07-20 00:00:00', '2022-07-20 10:14:11', '2022-07-20 10:14:52'),
+(55, 40, 'Bones Request', NULL, 'Request for a salary increase', '2', '2022-07-20 00:00:00', '2022-07-20 10:14:17', '2022-07-20 10:14:56');
 
 -- --------------------------------------------------------
 
@@ -509,7 +661,9 @@ CREATE TABLE `jobs` (
 
 INSERT INTO `jobs` (`id`, `name`, `notes`, `created_at`, `updated_at`) VALUES
 (1, 'engineers', NULL, NULL, NULL),
-(3, 'job test', NULL, '2022-07-05 05:17:42', '2022-07-05 05:17:42');
+(3, 'workers', NULL, '2022-07-05 05:17:42', '2022-07-05 05:17:42'),
+(4, 'doctors', NULL, NULL, NULL),
+(5, 'teachers', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -535,12 +689,7 @@ CREATE TABLE `locations` (
 --
 
 INSERT INTO `locations` (`id`, `name`, `location_address`, `boundary_radius`, `location_latitude`, `location_longituide`, `branch_id`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'Giza location', '123 main AT', '100', '30.014082', '31.482892', 2, NULL, '2022-06-29 06:56:21', '2022-06-29 06:56:21'),
-(2, 'water fall', '1234 main ST', '150', '29.934973', '30.921903', 5, NULL, '2022-06-29 06:57:08', '2022-06-29 06:57:08'),
-(5, 'test', '123 main AT', '100', '30.042022', '30.963788', 7, NULL, '2022-07-06 09:22:01', '2022-07-06 09:22:01'),
-(33, 'test location', 'address', '100', '30.012298', '31.497312', 2, NULL, '2022-07-14 14:50:29', '2022-07-14 14:52:50'),
-(34, 'locationnnnn', 'e4124214', '100', '30.044400', '31.235700', 2, NULL, '2022-07-15 21:01:18', '2022-07-15 21:01:18'),
-(35, 'test', 'cairo', '100', '30.044994', '30.980955', 2, NULL, '2022-07-16 10:30:40', '2022-07-16 10:30:40');
+(36, 'sphinx-company', 'king faisal street', '500', '30.044521', '31.237245', 2, NULL, '2022-07-20 09:09:38', '2022-07-20 09:09:38');
 
 -- --------------------------------------------------------
 
@@ -625,7 +774,25 @@ INSERT INTO `login_histories` (`id`, `user_id`, `ip`, `datetime`, `created_at`, 
 (60, 30, '127.0.0.1', '2022-07-17 07:56:35', '2022-07-17 07:56:35', '2022-07-17 07:56:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (61, 30, '127.0.0.1', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '2022-07-18 22:36:35', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
 (62, 30, '127.0.0.1', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '2022-07-19 06:38:55', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
-(63, 30, '127.0.0.1', '2022-07-19 17:56:28', '2022-07-19 17:56:28', '2022-07-19 17:56:28', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Edge\"}');
+(63, 30, '127.0.0.1', '2022-07-20 08:25:36', '2022-07-20 08:25:36', '2022-07-20 08:25:36', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(64, 33, '127.0.0.1', '2022-07-20 10:41:52', '2022-07-20 10:41:52', '2022-07-20 10:41:52', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(65, 30, '127.0.0.1', '2022-07-20 10:42:46', '2022-07-20 10:42:46', '2022-07-20 10:42:46', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(66, 33, '127.0.0.1', '2022-07-20 10:43:16', '2022-07-20 10:43:16', '2022-07-20 10:43:16', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(67, 30, '127.0.0.1', '2022-07-20 10:44:46', '2022-07-20 10:44:46', '2022-07-20 10:44:46', '{\"device\":\"WebKit\",\"platform\":\"Windows\",\"browser\":\"Chrome\"}'),
+(68, 33, '127.0.0.1', '2022-07-20 10:48:18', '2022-07-20 10:48:18', '2022-07-20 10:48:18', '{\"device\":false,\"platform\":\"Windows\",\"browser\":\"Firefox\"}'),
+(69, 30, '127.0.0.1', '2022-07-20 10:48:47', '2022-07-20 10:48:47', '2022-07-20 10:48:47', '{\"device\":false,\"platform\":\"Windows\",\"browser\":\"Firefox\"}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -853,9 +1020,10 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (128, 1),
 (129, 1),
 (130, 1),
-(124, 1),
-(125, 1),
-(126, 1);
+(131, 1),
+(132, 1),
+(133, 1),
+(130, 2);
 
 -- --------------------------------------------------------
 
@@ -904,20 +1072,12 @@ CREATE TABLE `registered_employees_attendance_methods` (
 --
 
 INSERT INTO `registered_employees_attendance_methods` (`id`, `employee_id`, `attend_mthod_id`, `plan_id`, `location_id`, `attendance_id`, `state`) VALUES
-(1, 10, 2, 7, 33, 32, 0),
-(2, 10, 2, 7, 33, 33, 1),
-(3, 10, 4, 7, 33, 34, 1),
-(4, 10, 4, 7, 33, 35, 1),
-(5, 10, 4, 7, 33, 36, 1),
-(6, 11, 4, 8, 33, 37, 1),
-(7, 11, 4, 8, 33, 38, 1),
-(8, 11, 4, 8, 33, 39, 1),
-(9, 11, 4, 8, 33, 40, 1),
-(10, 11, 4, 8, 33, 41, 1),
-(11, 11, 4, 8, 33, 42, 1),
-(12, 11, 4, 8, 33, 43, 1),
-(13, 11, 4, 8, 33, 44, 1),
-(14, 4, 4, 9, 34, 45, 1);
+(15, 31, 3, 10, 36, 48, 1),
+(16, 78, 3, 12, 36, 49, 1),
+(17, 80, 3, 12, 36, 50, 1),
+(18, 81, 3, 12, 36, 51, 1),
+(19, 82, 3, 12, 36, 52, 1),
+(20, 30, 3, 10, 36, 53, 1);
 
 -- --------------------------------------------------------
 
@@ -944,9 +1104,9 @@ CREATE TABLE `registered_employees_departure_methods` (
 CREATE TABLE `request_type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `note` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `note` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -1020,8 +1180,8 @@ CREATE TABLE `users` (
   `password` varchar(191) DEFAULT NULL,
   `role_id` bigint(20) DEFAULT NULL,
   `branch_id` bigint(20) DEFAULT NULL,
-  `active` int(11) NOT NULL DEFAULT '1',
-  `locked` int(11) NOT NULL DEFAULT '1',
+  `active` int(11) NOT NULL DEFAULT 1,
+  `locked` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1065,8 +1225,8 @@ INSERT INTO `vications` (`id`, `week_day_id`, `attendance_setting_id`) VALUES
 CREATE TABLE `week_days` (
   `id` int(11) NOT NULL,
   `days` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_At` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_At` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -1093,7 +1253,7 @@ CREATE TABLE `work_appointments` (
   `name` varchar(50) NOT NULL,
   `attendance_plan_type_id` int(11) DEFAULT NULL,
   `attendance_days` varchar(50) NOT NULL,
-  `attendance_repeat` int(1) NOT NULL DEFAULT '1',
+  `attendance_repeat` int(1) NOT NULL DEFAULT 1,
   `location_id` bigint(20) NOT NULL,
   `start_from_period_1` time DEFAULT NULL,
   `end_to_period_1` time DEFAULT NULL,
@@ -1113,13 +1273,9 @@ CREATE TABLE `work_appointments` (
 --
 
 INSERT INTO `work_appointments` (`id`, `name`, `attendance_plan_type_id`, `attendance_days`, `attendance_repeat`, `location_id`, `start_from_period_1`, `end_to_period_1`, `start_from_period_2`, `end_to_period_2`, `delay_period_1`, `delay_period_2`, `branch_id`, `overtime`, `date`, `created_at`, `updated_at`) VALUES
-(2, 'com 1', 1, '1,2,3,4', 1, 34, '01:47:00', '04:42:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-19', '2022-07-12 18:43:34', '2022-07-18 22:44:11'),
-(3, 'com 2', 2, '2', 1, 2, '01:47:00', '04:42:00', NULL, NULL, '00:15:00', NULL, 5, '12:00', '2022-07-12', '2022-07-12 18:43:39', '2022-07-12 21:54:07'),
-(4, 'Alzohor', 1, '1,2,3,4,5,6', 1, 35, '12:13:00', '12:14:00', NULL, NULL, '12:00:00', NULL, 2, '02:00', '2022-07-16', '2022-07-15 08:08:51', '2022-07-16 20:06:31'),
-(6, 'test123', 1, '1,2,3,4,5,6', 1, 34, '14:36:00', '19:35:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-19', '2022-07-16 10:35:45', '2022-07-18 22:42:50'),
-(7, 'mohamed', 1, '1,2,3,4,5,6', 1, 33, '14:52:00', '19:51:00', NULL, NULL, '12:00:00', NULL, 2, '12:00', '2022-07-17', '2022-07-16 10:49:33', '2022-07-17 08:31:06'),
-(8, 'test', 2, '1,2,3,4,5,6', 1, 33, '00:14:00', '12:13:00', NULL, NULL, '00:30:00', NULL, 2, '06:00', '2022-07-18', '2022-07-16 20:15:08', '2022-07-16 20:15:08'),
-(9, 'facebook', 1, '1,2,3,4,5,6', 1, 34, '09:08:00', '16:08:00', NULL, NULL, '02:00:00', NULL, 2, '05:00', '2022-07-19', '2022-07-19 07:11:45', '2022-07-19 14:28:59');
+(10, 'attendance plan for engineers', 1, '1,2,3,4,5,6', 1, 36, '00:30:00', '19:00:00', NULL, NULL, '00:20:00', NULL, 2, '03:00', '2022-07-20', '2022-07-20 09:25:12', '2022-07-20 10:27:40'),
+(11, 'attendance plan for workers', 1, '1,2,3,4,5,6', 1, 36, '08:25:00', '13:30:00', NULL, NULL, '00:30:00', NULL, 2, '03:00', '2022-07-27', '2022-07-20 09:27:53', '2022-07-20 09:27:53'),
+(12, 'attendance plan for doctors', 2, '1,2,3,4,5,6', 1, 36, '09:00:00', '16:00:00', NULL, NULL, '00:15:00', NULL, 2, '12:00', '2022-07-27', '2022-07-20 09:43:00', '2022-07-20 09:43:00');
 
 --
 -- Indexes for dumped tables
@@ -1240,6 +1396,12 @@ ALTER TABLE `login_histories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
@@ -1314,7 +1476,7 @@ ALTER TABLE `work_appointments`
 -- AUTO_INCREMENT for table `assign_appointments`
 --
 ALTER TABLE `assign_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `attendance_plan_details`
@@ -1344,13 +1506,13 @@ ALTER TABLE `attend_methods`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `branch_setting`
 --
 ALTER TABLE `branch_setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `company_plans`
@@ -1368,31 +1530,31 @@ ALTER TABLE `company_settings`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `employees_departure`
 --
 ALTER TABLE `employees_departure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `employee_attendance`
 --
 ALTER TABLE `employee_attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `employee_attend_methods`
 --
 ALTER TABLE `employee_attend_methods`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `employee_requests`
@@ -1404,25 +1566,31 @@ ALTER TABLE `employee_requests`
 -- AUTO_INCREMENT for table `employee_request_review`
 --
 ALTER TABLE `employee_request_review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `login_histories`
 --
 ALTER TABLE `login_histories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1440,7 +1608,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `registered_employees_attendance_methods`
 --
 ALTER TABLE `registered_employees_attendance_methods`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `registered_employees_departure_methods`
@@ -1482,5 +1650,9 @@ ALTER TABLE `week_days`
 -- AUTO_INCREMENT for table `work_appointments`
 --
 ALTER TABLE `work_appointments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

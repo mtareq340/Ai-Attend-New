@@ -107,6 +107,7 @@ class LocationController extends Controller
             if (!$delete) {
                 return redirect()->route('locations.index')->with(['error' => 'لا يمكن حذف الموقع لانه مستخدم']);
             } else {
+                $location->devices()->delete();
                 return redirect()->route('locations.index')->with(['success' => 'تم حذف الموقع بنجاح']);
             }
         } catch (Exception $e) {

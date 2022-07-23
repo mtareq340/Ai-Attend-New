@@ -11,7 +11,7 @@ class Location extends Model
     use Notifiable;
     protected $table = 'locations';
 
-    protected $fillable = ['name', 'branch_id', 'location_address', 'boundary_raduis', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
+    protected $fillable = ['name', 'branch_id', 'location_address', 'boundary_radius', 'location_latitude', 'location_longituide', 'notes', 'created_at', 'updated_at', 'device_id'];
 
  
     public function appointment()
@@ -42,7 +42,7 @@ class Location extends Model
         parent::boot();
 
         static::deleting(function ($location) {
-            $relationMethods = ['branch' , 'appointment' , 'devices'];
+            $relationMethods = ['appointment'];
 
             foreach ($relationMethods as $relationMethod) {
                 if ($location->$relationMethod()->count() > 0) {

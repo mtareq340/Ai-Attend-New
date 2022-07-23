@@ -56,8 +56,7 @@
                                 <tr>
                                     <th>Action</th>
                                     <th>Name</th>
-                                    <th>Location Latitude</th>
-                                    <th>Location  longituide</th>
+                                    <th>Location (long , lat)</th>
                                     <th>Phone</th>
                                     <th>Address</th>
                                 </tr>
@@ -99,9 +98,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $branch->name }}</td>
-                                        <td>{{$branch->latitude}}</td>
-
-                                        <td>{{$branch->longituide}}</td>
+                                        <td>{{$branch->longituide}} , {{$branch->latitude}}</td>
                                         <td>{{ $branch->phone }}</td>
                                         <td>{{ $branch->address }}</td>
                                         {{-- <td>

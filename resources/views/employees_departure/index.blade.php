@@ -2,7 +2,8 @@
 @section('css')
     <!-- Plugins css -->
     <link href="{{asset('assets/libs/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/selectize/selectize.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -33,8 +34,8 @@
         </div>
         <div class="row">
             <div class="form-group col-4">
-                    <select name="appointment_id" id="sel_appointment" class="form-control">
-                        <option value="" selected disabled>Select Attendance Plan</option>
+                    <select name="appointment_id" id="sel_appointment" class="form-control select2">
+                        <option value="0" selected >Select Attendance Plan</option>
                         @foreach ($work_appointments as $work_appointment)
                             <option value="{{ $work_appointment->id }}">{{ $work_appointment->name }}</option>
                         @endforeach
@@ -43,8 +44,8 @@
             
             </div>
             <div class="form-group col-4">
-                <select name="state" id="sel_state" class="form-control">
-                        <option value="" selected disabled>Select State</option>  
+                <select name="state" id="sel_state" class="form-control select2">
+                        <option value="0" selected >Select State</option>  
                         
                         <option value="1" {{app('request')->input('state')== '1' ? 'selected':'' }}>Success</option>
                         <option value="0" {{app('request')->input('state')== '0' ? 'selected':'' }}>Fail</option>
@@ -53,8 +54,8 @@
             </div>
             @if (auth()->user()->hasRole('super_admin'))
                 <div class="form-group col-4">
-                    <select name="branch_id" id="sel_branch" class="form-control">
-                        <option value="" selected disabled>Select Branch</option>
+                    <select name="branch_id" id="sel_branch" class="form-control select2">
+                        <option value="0" selected >Select Branch</option>
                         @foreach ($branches as $branch)
                             <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                         @endforeach
@@ -69,7 +70,7 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="header-title">locations</h4> --}}
-                        <table id="datatable-buttons" class="table table-striped nowrap w-100 " >
+                        <table id="scroll-horizontal-datatable" class="table table-striped nowrap w-100 " >
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -145,7 +146,13 @@
 
     <!-- Page js-->
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ asset('assets/libs/selectize/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+   
     <script>
+
+        $('.select2').select2()
+
         function insertParam(key, value) {
             key = encodeURIComponent(key);
             value = encodeURIComponent(value);
