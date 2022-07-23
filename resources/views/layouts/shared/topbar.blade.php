@@ -417,14 +417,14 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
+                    {{-- <a href="javascript:void(0);" class="dropdown-item">
                         <i class="fe-headphones mr-1"></i>
                         <span>Help & Support</span>
-                    </a>
+                    </a> --}}
 
                 </div>
             </li>
-
+{{-- 
             <li class="dropdown dropdown-mega d-none d-xl-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
@@ -528,7 +528,7 @@
                     </div>
 
                 </div>
-            </li>
+            </li> --}}
         </ul>
         <div class="clearfix"></div>
     </div>

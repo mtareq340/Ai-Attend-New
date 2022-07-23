@@ -68,10 +68,10 @@
                                     <tr>
                                         <td>
                                             <div class="row row-xs wd-xl-4p">
-                                                <a href="#" onclick="showAddForm('{{ $branch->id }}')"
+                                                {{-- <a href="#" onclick="showAddForm('{{ $branch->id }}')"
                                                     class="action-icon">
                                                     <i class="fa fa-plus"></i>
-                                                </a>
+                                                </a> --}}
                                          
                                                 @can('edit_branch')
                                                 <a href="{{ route('branches.edit', $branch->id) }}" class="action-icon">
