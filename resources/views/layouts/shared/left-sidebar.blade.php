@@ -463,6 +463,9 @@
                             <li>
                                 <a href="{{ route('reports.attend-report') }}">Attend Report</a>
                             </li>
+                            <li>
+                                <a href="{{ route('reports.departure-report') }}">Departure Report</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
